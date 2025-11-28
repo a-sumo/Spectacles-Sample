@@ -30,12 +30,12 @@ export class PictureBehavior extends BaseScriptComponent {
   private rotMat = new mat3();
 
   private updateEvent = null;
+  private surfaceWorldScale = null;
 
   onAwake() {
     this.loadingObj.enabled = false;
     this.loadingTrans = this.loadingObj.getTransform();
-    this.captureRendMesh.mainMaterial =
-      this.captureRendMesh.mainMaterial.clone();
+    this.captureRendMesh.mainMaterial = this.captureRendMesh.mainMaterial.clone();
 
     this.camTrans = this.editorCamObj.getTransform();
 
@@ -46,7 +46,7 @@ export class PictureBehavior extends BaseScriptComponent {
     this.rightHand.onPinchDown.add(this.rightPinchDown);
     this.leftHand.onPinchUp.add(this.leftPinchUp);
     this.leftHand.onPinchDown.add(this.leftPinchDown);
-
+    this.surfaceWorldScale = this.sceneObject.getParent().getTransform().getWorldScale();
     if (this.isEditor) {
       //place this transform in front of camera for testing
       var trans = this.getSceneObject().getTransform();
@@ -63,7 +63,10 @@ export class PictureBehavior extends BaseScriptComponent {
         this.cropRegion.enabled = false;
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
+          print("his.picAnchorTrans.getWorldScale();" + this.picAnchorTrans.getWorldScale());
+        this.captureRendMesh.mainMaterial.mainPass.surfaceWorldScale = this.picAnchorTrans.getWorldScale();
       });
+
       delayedEvent.reset(0.1);
     } else {
       //send offscreen
@@ -148,6 +151,7 @@ export class PictureBehavior extends BaseScriptComponent {
       if (this.screenCropTexture.getColorspace() == 3) {
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
+        
       }
 
       //set top left and bottom right to both pinch positions
@@ -173,7 +177,12 @@ export class PictureBehavior extends BaseScriptComponent {
       this.picAnchorTrans.setWorldPosition(bottomRightPos);
       var worldWidth = bottomRightPos.distance(bottomLeftPos);
       var worldHeight = topRightPos.distance(bottomRightPos);
+      print("worldWidth"+worldWidth);
+      print("worldHeight"+worldHeight);
       this.picAnchorTrans.setWorldScale(new vec3(worldWidth, worldHeight, 1));
+      globalThis.textLogger.log("this.picAnchorTrans" + this.picAnchorTrans.getWorldScale());
+      this.captureRendMesh.mainPass.surfaceWorldScale = this.picAnchorTrans.getWorldScale();
+      print(this.picAnchorTrans.getWorldScale());
       var rectRight = topRightPos.sub(topLeftPos).normalize();
       var rectUp = topLeftPos.sub(bottomLeftPos).normalize();
       var rectForward = rectRight.cross(rectUp).normalize();

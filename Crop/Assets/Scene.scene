@@ -4,6 +4,7 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> b586a2d3-476c-4f34-8ead-ce537d16b6d8
+    - !<own> 1d26d745-b0fb-44ff-bf89-b09fac1f3d91
     - !<own> 3fc7cfa6-1e19-44eb-8ca3-0e571f12481b
     - !<own> c40411fe-69a7-45fa-88dd-61a4550224a0
     - !<own> fd90a2f8-88e2-450a-b523-6bf58bfb55ee
@@ -596,6 +597,24 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/1d26d745-b0fb-44ff-bf89-b09fac1f3d91>
+  PrefabRemaps:
+    - 1d26d745-b0fb-44ff-bf89-b09fac1f3d91: a412389f-ff78-4107-51ba-885cd07b0a1b
+    - 5abf23bb-94de-4a61-a1b0-cb230fd74190: 444bb8b8-f272-48ec-7163-0e73e80a2066
+    - 75100dfe-c04f-455a-9bdf-e9a5613f608f: efbc3128-c761-4f9b-608c-8b35b342f1ce
+    - e8209fb0-c57f-46fb-a602-75f7742fb12d: 935bd9fe-d073-487b-6a42-cff5650c1538
+  Name: TextLogger
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e8209fb0-c57f-46fb-a602-75f7742fb12d
 - !<SceneObject/1d562f03-18af-46d0-b4ed-1960dd472f1d>
   PrefabRemaps:
     []
@@ -1707,7 +1726,7 @@
     {}
   ScriptInputs:
     "":
-      scannerPrefab: !<reference.ObjectPrefab> 1a585bfe-f419-4269-b7bc-c932aa7e842f
+      scannerPrefab: !<reference.ObjectPrefab> e4cff1a7-951f-48e0-b2b9-1256eed49419
   ScriptTypes:
     "":
       {}
@@ -1728,28 +1747,28 @@
     []
 - !<SceneObject/6f787d27-fa28-4e42-9679-f12818ef950e>
   PrefabRemaps:
-    - 1bfae5a9-1d62-4b7a-9a2a-03effcd593ac: 1474ae5a-5400-43e5-5478-d149adb4d4db
-    - 32033dda-17a3-4e6b-a73a-39a8a2abf0da: 35a11d92-e322-4afb-5405-69e8810b7892
-    - 3b7aa394-58c5-4091-98f8-a2d2ff55ea62: f5b47d77-2076-42e7-4e52-dc9b1c5075ce
-    - 3ded3b35-c637-4418-9dfa-c9873eda7dde: 370d72c2-5474-48db-43a0-0eaa9ed40c8b
-    - 5806246c-6ea4-4f7f-9616-51adeba190ed: 0f6f10b4-2427-48d4-49a0-2cc91e379eec
-    - 5b2ffe7b-710c-49ca-bfdf-a480e56dc0db: 103be536-c86d-4be3-7c0c-a502b0d3aaf6
-    - 5bd2161d-a5b7-4e48-8daa-05d5533346b3: 8f4730e4-3708-4480-5c57-20ae3cb1669a
-    - 6efe5be6-1142-4602-ac4b-64c32adbfa82: ffdaa537-f596-4c51-457b-54d3feab4b73
-    - 6f787d27-fa28-4e42-9679-f12818ef950e: 6ac9c6a9-dead-43de-77ce-9676d9b00316
-    - 72eea7fd-9878-4be0-a7d6-0b13cd613e76: 6b3bcbb4-d319-4127-6b1b-27433ff02851
-    - 75a511cb-cfd0-416c-a189-b5e4d78f77de: 7f7c5f44-2c5e-474d-6154-6b21da8627ed
-    - 8c7a252f-124d-4a50-a783-c957e8d30a72: 08054577-12b3-4fc2-4c4c-c454b8021315
-    - 973d7413-3f28-4e76-9153-1e6271499b78: df9fab41-e313-4e2f-5b96-933d176b640f
-    - a9a58ade-4e5b-41ce-8f01-4677abcac6cd: e5c0dc39-d7fa-4ba5-520f-2ddbdaa6fcff
-    - b930990a-525e-4f9f-973d-0f0a4a974cae: a14c8a4c-3e1a-4295-68a9-24daa1d09a97
-    - c05534fc-7652-4dbd-b6c2-d48b6a76e542: db3a3dd9-4571-48e4-7e17-cf3a79424fac
-    - cc57f8ef-c919-4afe-a404-cc3a800e9a36: a3679b01-2d41-4c11-5847-b1f9b7391629
-    - d87b8f5b-8492-451a-a2b4-016ba0ac815b: 85d5a17c-8a54-490c-62d4-a4e016550d62
-    - dc90f91c-1696-433f-b60a-83a41f38a8b2: b07901fb-9080-49f7-753c-957e68a4b276
-    - e4f6ecd2-eb0f-42e2-93d6-d4ec3c357192: 196f3a26-52de-466c-7c87-8353b560b0b5
-    - e7791570-09df-4e00-967c-2ffcaf68e5dc: 7048c94d-441d-44ef-5d8c-f28c59275154
-    - f37a8386-5930-4687-902e-472631f702b7: ea4baa83-3909-428e-441c-cf3366560972
+    - 1bfae5a9-1d62-4b7a-9a2a-03effcd593ac: a7474e37-6cc3-4fe6-6b24-5bc1c44d7b53
+    - 32033dda-17a3-4e6b-a73a-39a8a2abf0da: 9f1b4c5a-e718-409d-4006-1b5a4462e581
+    - 3b7aa394-58c5-4091-98f8-a2d2ff55ea62: 8bd7141d-fbfa-4422-58b4-74c8bc398ca6
+    - 3ded3b35-c637-4418-9dfa-c9873eda7dde: 595ae30d-3989-4365-4c63-a27e215e611f
+    - 5806246c-6ea4-4f7f-9616-51adeba190ed: b4c63c82-6610-4465-5d34-ab11e0ee9013
+    - 5b2ffe7b-710c-49ca-bfdf-a480e56dc0db: a975e8a5-04b0-4774-7fd5-81a29852c757
+    - 5bd2161d-a5b7-4e48-8daa-05d5533346b3: 9ee3f215-dbe3-4fe4-522d-353e8bd1c2ac
+    - 6efe5be6-1142-4602-ac4b-64c32adbfa82: 0ff93017-2c19-4387-7303-9d1d5033ae0a
+    - 6f787d27-fa28-4e42-9679-f12818ef950e: eb0bfc35-3e81-40d5-615d-344da802cf8d
+    - 72eea7fd-9878-4be0-a7d6-0b13cd613e76: 63903432-0435-42fe-5815-5af198c817a0
+    - 75a511cb-cfd0-416c-a189-b5e4d78f77de: e86929c8-9cf3-4bf2-561a-4759f5c2f3f0
+    - 8c7a252f-124d-4a50-a783-c957e8d30a72: 19b806e0-4885-42a5-6090-7d7794c1831d
+    - 973d7413-3f28-4e76-9153-1e6271499b78: cccf7dd9-f33b-452c-456b-12344fad7c91
+    - a9a58ade-4e5b-41ce-8f01-4677abcac6cd: 6ed14e61-5c50-4e91-63ee-03a7a8a58145
+    - b930990a-525e-4f9f-973d-0f0a4a974cae: 4db89d26-c331-4b09-667b-97bd2a2a5630
+    - c05534fc-7652-4dbd-b6c2-d48b6a76e542: e5d30005-627e-433c-6180-f3939f61ba83
+    - cc57f8ef-c919-4afe-a404-cc3a800e9a36: 34d54b90-0b7e-4d6c-43bb-2a71a796887c
+    - d87b8f5b-8492-451a-a2b4-016ba0ac815b: 40b394a6-2bbe-462f-7fc9-89c45f36d02b
+    - dc90f91c-1696-433f-b60a-83a41f38a8b2: c5c3a79b-901d-48c3-4cf5-112e33692a28
+    - e4f6ecd2-eb0f-42e2-93d6-d4ec3c357192: 518926ba-e9cf-4947-71f4-f211aa4e7777
+    - e7791570-09df-4e00-967c-2ffcaf68e5dc: 1401c822-9f30-4150-7d3b-d6bbf77eaf76
+    - f37a8386-5930-4687-902e-472631f702b7: 490c9716-6541-4836-6b32-72672b2a9ce4
   Name: Scanner
   Enabled: true
   Layers: 1
@@ -3373,6 +3392,32 @@
     []
   Components:
     - !<own> f37a8386-5930-4687-902e-472631f702b7
+- !<ScriptComponent/e8209fb0-c57f-46fb-a602-75f7742fb12d>
+  PrefabRemaps:
+    []
+  Name: TextLogger
+  Enabled: true
+  ScriptAsset: !<reference> 16c736b1-3404-4343-9b10-249148d7577b
+  ScriptInputsDefault:
+    loggingEnabled: true
+    logLimit: true
+    logTextSize: true
+    customDisplay: true
+    useStudioLog: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      loggingEnabled: true
+      logColor: !<Vec4> {x: 0.630838, y: 0.821698, z: 0.360967, w: 1.000000}
+      logLimit: 20
+      logTextSize: 25
+      customDisplay: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      useStudioLog: true
+      spectaclesMode: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e8a5d4c9-84d4-49f7-9c02-904f3e94f02e>
   PrefabRemaps:
     []

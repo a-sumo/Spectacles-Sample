@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 767
+    size: 777
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -15,8 +15,6 @@ CollapsedEntities:
       - EyeDropperMaterials.lspkg/CamFeedMat.mat
       - EyeDropperMaterials.lspkg/CaptureVisual.mat
       - EyeDropperMaterials.lspkg/CaptureVisual.ss_graph
-      - EyeDropperMaterials.lspkg/CaptureVisualWithSelection.mat
-      - EyeDropperMaterials.lspkg/CaptureVisualWithSelection.ss_graph
       - EyeDropperMaterials.lspkg/GrayTrans.mat
       - EyeDropperMaterials.lspkg/Green.mat
       - EyeDropperMaterials.lspkg/Images
@@ -66,6 +64,8 @@ CollapsedEntities:
       - Materials/CamFeedMat.mat
       - Materials/CaptureVisual.mat
       - Materials/CaptureVisual.ss_graph
+      - Materials/CaptureVisualWithSelection.mat
+      - Materials/CaptureVisualWithSelection.ss_graph
       - Materials/GrayTrans.mat
       - Materials/Green.mat
       - Materials/LensExp_hover_frame.ss_graph
@@ -770,4 +770,14 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - Text Logger Module.lspkg
+      - Text Logger Module.lspkg/Text Logger Module.js
+      - Text Logger Module.lspkg/package.native
+      - Text Logger V2.lspkg
+      - Text Logger V2.lspkg/Scripts
+      - Text Logger V2.lspkg/Scripts/TextLogger.js
+      - Text Logger V2.lspkg/Scripts/TextLoggerExample.js
+      - Text Logger V2.lspkg/Scripts/TextLoggerModule.js
+      - Text Logger V2.lspkg/TextLogger__PLACE_IN_SCENE.prefab
+      - Text Logger V2.lspkg/package.native
   options: 4
