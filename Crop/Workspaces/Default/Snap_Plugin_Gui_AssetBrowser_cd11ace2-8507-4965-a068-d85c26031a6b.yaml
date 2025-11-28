@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 766
+    size: 767
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,6 +10,7 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - EyeDropperMaterials.lspkg
       - EyeDropperMaterials.lspkg/CamFeedCrop.mat
       - EyeDropperMaterials.lspkg/CamFeedMat.mat
       - EyeDropperMaterials.lspkg/CaptureVisual.mat

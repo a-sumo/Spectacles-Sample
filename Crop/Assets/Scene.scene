@@ -1707,7 +1707,7 @@
     {}
   ScriptInputs:
     "":
-      scannerPrefab: !<reference.ObjectPrefab> 1884207e-6c34-4205-98d4-6f78724d42a0
+      scannerPrefab: !<reference.ObjectPrefab> 1a585bfe-f419-4269-b7bc-c932aa7e842f
   ScriptTypes:
     "":
       {}
@@ -1728,7 +1728,28 @@
     []
 - !<SceneObject/6f787d27-fa28-4e42-9679-f12818ef950e>
   PrefabRemaps:
-    []
+    - 1bfae5a9-1d62-4b7a-9a2a-03effcd593ac: 1474ae5a-5400-43e5-5478-d149adb4d4db
+    - 32033dda-17a3-4e6b-a73a-39a8a2abf0da: 35a11d92-e322-4afb-5405-69e8810b7892
+    - 3b7aa394-58c5-4091-98f8-a2d2ff55ea62: f5b47d77-2076-42e7-4e52-dc9b1c5075ce
+    - 3ded3b35-c637-4418-9dfa-c9873eda7dde: 370d72c2-5474-48db-43a0-0eaa9ed40c8b
+    - 5806246c-6ea4-4f7f-9616-51adeba190ed: 0f6f10b4-2427-48d4-49a0-2cc91e379eec
+    - 5b2ffe7b-710c-49ca-bfdf-a480e56dc0db: 103be536-c86d-4be3-7c0c-a502b0d3aaf6
+    - 5bd2161d-a5b7-4e48-8daa-05d5533346b3: 8f4730e4-3708-4480-5c57-20ae3cb1669a
+    - 6efe5be6-1142-4602-ac4b-64c32adbfa82: ffdaa537-f596-4c51-457b-54d3feab4b73
+    - 6f787d27-fa28-4e42-9679-f12818ef950e: 6ac9c6a9-dead-43de-77ce-9676d9b00316
+    - 72eea7fd-9878-4be0-a7d6-0b13cd613e76: 6b3bcbb4-d319-4127-6b1b-27433ff02851
+    - 75a511cb-cfd0-416c-a189-b5e4d78f77de: 7f7c5f44-2c5e-474d-6154-6b21da8627ed
+    - 8c7a252f-124d-4a50-a783-c957e8d30a72: 08054577-12b3-4fc2-4c4c-c454b8021315
+    - 973d7413-3f28-4e76-9153-1e6271499b78: df9fab41-e313-4e2f-5b96-933d176b640f
+    - a9a58ade-4e5b-41ce-8f01-4677abcac6cd: e5c0dc39-d7fa-4ba5-520f-2ddbdaa6fcff
+    - b930990a-525e-4f9f-973d-0f0a4a974cae: a14c8a4c-3e1a-4295-68a9-24daa1d09a97
+    - c05534fc-7652-4dbd-b6c2-d48b6a76e542: db3a3dd9-4571-48e4-7e17-cf3a79424fac
+    - cc57f8ef-c919-4afe-a404-cc3a800e9a36: a3679b01-2d41-4c11-5847-b1f9b7391629
+    - d87b8f5b-8492-451a-a2b4-016ba0ac815b: 85d5a17c-8a54-490c-62d4-a4e016550d62
+    - dc90f91c-1696-433f-b60a-83a41f38a8b2: b07901fb-9080-49f7-753c-957e68a4b276
+    - e4f6ecd2-eb0f-42e2-93d6-d4ec3c357192: 196f3a26-52de-466c-7c87-8353b560b0b5
+    - e7791570-09df-4e00-967c-2ffcaf68e5dc: 7048c94d-441d-44ef-5d8c-f28c59275154
+    - f37a8386-5930-4687-902e-472631f702b7: ea4baa83-3909-428e-441c-cf3366560972
   Name: Scanner
   Enabled: true
   Layers: 1
