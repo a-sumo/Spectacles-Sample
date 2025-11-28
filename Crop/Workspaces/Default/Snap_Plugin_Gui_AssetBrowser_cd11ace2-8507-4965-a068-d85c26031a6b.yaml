@@ -1,8 +1,9 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 777
+    size: 776
     values:
+      - ""
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
       - 3DModels/SWIS_Frame.mesh
@@ -64,8 +65,6 @@ CollapsedEntities:
       - Materials/CamFeedMat.mat
       - Materials/CaptureVisual.mat
       - Materials/CaptureVisual.ss_graph
-      - Materials/CaptureVisualWithSelection.mat
-      - Materials/CaptureVisualWithSelection.ss_graph
       - Materials/GrayTrans.mat
       - Materials/Green.mat
       - Materials/LensExp_hover_frame.ss_graph
