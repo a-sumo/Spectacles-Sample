@@ -1,7 +1,5 @@
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { CropRegion } from "./CropRegion";
-import { ChatGPT } from "./ChatGPT";
-import { CaptionBehavior } from "./CaptionBehavior";
 
 const BOX_MIN_SIZE = 8; //min size in cm for image capture
 
@@ -14,8 +12,6 @@ export class PictureBehavior extends BaseScriptComponent {
   @input captureRendMesh: RenderMeshVisual;
   @input screenCropTexture: Texture;
   @input cropRegion: CropRegion;
-  @input chatGPT: ChatGPT;
-  @input caption: CaptionBehavior;
 
   private isEditor = global.deviceInfoSystem.isEditor();
 
@@ -67,13 +63,6 @@ export class PictureBehavior extends BaseScriptComponent {
         this.cropRegion.enabled = false;
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
-        this.chatGPT.makeImageRequest(
-          this.captureRendMesh.mainPass.captureImage,
-          (response) => {
-            this.loadingObj.enabled = false;
-            this.loadCaption(response);
-          }
-        );
       });
       delayedEvent.reset(0.1);
     } else {
@@ -112,17 +101,6 @@ export class PictureBehavior extends BaseScriptComponent {
     }
   };
 
-  private loadCaption(text: string) {
-    //position caption 5cm above top of box formed by circles
-    var topCenterPos = this.circleTrans[0]
-      .getWorldPosition()
-      .add(this.circleTrans[1].getWorldPosition())
-      .uniformScale(0.5);
-    var captionPos = topCenterPos.add(this.picAnchorTrans.up.uniformScale(1)); //1.5
-    var captionRot = this.picAnchorTrans.getWorldRotation();
-    this.caption.openCaption(text, captionPos, captionRot);
-  }
-
   private processImage() {
     if (this.updateEvent != null) {
       //remove all events
@@ -141,14 +119,6 @@ export class PictureBehavior extends BaseScriptComponent {
       //remove update loop and process image
       this.loadingObj.enabled = true;
       this.cropRegion.enabled = false;
-
-      this.chatGPT.makeImageRequest(
-        this.captureRendMesh.mainPass.captureImage,
-        (response) => {
-          this.loadingObj.enabled = false;
-          this.loadCaption(response);
-        }
-      );
     }
   }
 

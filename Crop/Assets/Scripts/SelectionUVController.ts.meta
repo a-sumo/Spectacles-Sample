@@ -1,0 +1,47 @@
+- !<AssetImportMetadata/da47b27a-8ab6-4ce4-b2f1-d8f71907c5d1>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 77d1bc44-917c-436a-a6d9-9f9ffd31f90d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/77d1bc44-917c-436a-a6d9-9f9ffd31f90d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: d10d0762-4a12-4358-8140-e89182cbf99a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    initialUV: false
+    targetMesh: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - targetMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject targetMesh {"hint":"Target mesh whose material selectionUV will be updated. If not set, uses this SceneObject."}'
+    - '// @input vec2 initialUV = {0.5,0.5} {"hint":"Initial selection UV position"}'

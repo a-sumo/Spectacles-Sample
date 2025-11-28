@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 722
+    size: 766
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,6 +10,49 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - EyeDropperMaterials.lspkg/CamFeedCrop.mat
+      - EyeDropperMaterials.lspkg/CamFeedMat.mat
+      - EyeDropperMaterials.lspkg/CaptureVisual.mat
+      - EyeDropperMaterials.lspkg/CaptureVisual.ss_graph
+      - EyeDropperMaterials.lspkg/CaptureVisualWithSelection.mat
+      - EyeDropperMaterials.lspkg/CaptureVisualWithSelection.ss_graph
+      - EyeDropperMaterials.lspkg/GrayTrans.mat
+      - EyeDropperMaterials.lspkg/Green.mat
+      - EyeDropperMaterials.lspkg/Images
+      - EyeDropperMaterials.lspkg/Images/PicMask.png
+      - EyeDropperMaterials.lspkg/Images/SWIS_frame.jpg
+      - EyeDropperMaterials.lspkg/Images/loading.gif
+      - EyeDropperMaterials.lspkg/Images/thinOutline.png
+      - EyeDropperMaterials.lspkg/Images/webIcon.png
+      - EyeDropperMaterials.lspkg/LensExp_hover_frame.ss_graph
+      - EyeDropperMaterials.lspkg/PinchButtonDarkRadial.mat
+      - EyeDropperMaterials.lspkg/PinchDarkRadial.ss_graph
+      - EyeDropperMaterials.lspkg/Rendering
+      - EyeDropperMaterials.lspkg/Rendering/Device Camera Texture.deviceCameraTexture
+      - EyeDropperMaterials.lspkg/Rendering/Screen Crop Texture.screenCropTexture
+      - EyeDropperMaterials.lspkg/RoundedRectangleMaterial.mat
+      - EyeDropperMaterials.lspkg/RoundedRectangleShader.ss_graph
+      - EyeDropperMaterials.lspkg/SWIS_flat_color.ss_graph
+      - EyeDropperMaterials.lspkg/SWIS_frame.mat
+      - EyeDropperMaterials.lspkg/SWIS_tile.mat
+      - EyeDropperMaterials.lspkg/SimpleFrameMaterial.mat
+      - EyeDropperMaterials.lspkg/SimpleFrameMaterial.ss_graph
+      - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg
+      - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg/Assets
+      - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg/Assets/Shaders
+      - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg/Assets/Shaders/TargetOutline.ss_graph
+      - EyeDropperMaterials.lspkg/SphereOutline.mat
+      - EyeDropperMaterials.lspkg/TextureSampleGrid.mat
+      - EyeDropperMaterials.lspkg/TextureSampleGrid.ss_graph
+      - EyeDropperMaterials.lspkg/Unlit.mat
+      - EyeDropperMaterials.lspkg/loadingGif.mat
+      - EyeDropperMaterials.lspkg/loadingGif.ss_graph
+      - EyeDropperMaterials.lspkg/package.native
+      - EyeDropperMaterials.lspkg/unlit.ss_graph
+      - EyeDropperMaterials.lspkg/unlitColor.ss_graph
+      - EyeDropperMaterials.lspkg/unlitTexture.ss_graph
+      - EyeDropperMaterials.lspkg/unlitTextureColor.ss_graph
+      - EyeDropperMaterials.lspkg/webIcon.mat
       - Images
       - Images/PicMask.png
       - Images/PicOutline.png
@@ -38,7 +81,6 @@ CollapsedEntities:
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
-      - Prefabs
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
       - Prefabs/SceneHierarchy.prefab
@@ -125,9 +167,11 @@ CollapsedEntities:
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
       - Scripts/ChatGPT.ts
+      - Scripts/CropAreaSelector.ts
       - Scripts/CropRegion.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
+      - Scripts/SelectionUVController.ts
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
