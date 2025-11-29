@@ -32,15 +32,15 @@ function rgbToHex(r: number, g: number, b: number): string {
 @component
 export class SelectionUVController extends BaseScriptComponent {
     @input
-    @hint("Main object with the material whose selectionUV will be updated. If not set, uses this SceneObject.")
-    mainObject: SceneObject;
+    @hint("Camera Crop with the material whose selectionUV will be updated.")
+    cameraCrop: SceneObject;
 
     @input
     @hint("Initial selection UV position")
     initialUV: vec2 = new vec2(0.5, 0.5);
 
     @input
-    @hint("Cursor plane that follows the selection with normal offset. Will be scaled to match mainObject's aspect ratio.")
+    @hint("Cursor plane that follows the selection with normal offset. Will be scaled to match cameraCrop's aspect ratio.")
     cursorPlane: SceneObject;
 
     @input
@@ -106,7 +106,7 @@ export class SelectionUVController extends BaseScriptComponent {
     private uvFilter: OneEuroFilterVec2 | null = null;
 
     // Object transforms
-    private mainObjectTransform: Transform | null = null;
+    private cameraCropTransform: Transform | null = null;
     private cursorPlaneTransform: Transform | null = null;
     private cursorPlaneOriginalScale: vec3 = vec3.one();
 
@@ -141,15 +141,18 @@ export class SelectionUVController extends BaseScriptComponent {
         // Validate grid size (must be odd)
         this.validatedGridSize = this.computeValidGridSize();
 
-        // Setup main object (the one with the material)
-        const mainObj = this.mainObject ?? this.sceneObject;
-        this.mainObjectTransform = mainObj.getTransform();
+        // Setup camera crop
+        if(!this.cameraCrop){
+            print("No CameraCrop object");
+            return;
+        }
+        this.cameraCropTransform = this.cameraCrop.getTransform();
         
-        const renderMesh = mainObj.getComponent("RenderMeshVisual");
+        const renderMesh = this.cameraCrop.getComponent("RenderMeshVisual");
         if (renderMesh) {
             this.material = renderMesh.mainPass;
         } else {
-            this.log.w("No RenderMeshVisual found on main object");
+            this.log.w("No RenderMeshVisual found on camera crop");
         }
 
         // Setup components
@@ -486,10 +489,10 @@ export class SelectionUVController extends BaseScriptComponent {
      * Update cursor plane position, scale, and texture.
      */
     private updateCursorPlane(uv: vec2): void {
-        if (!this.cursorPlaneTransform || !this.mainObjectTransform) return;
+        if (!this.cursorPlaneTransform || !this.cameraCropTransform) return;
 
-        // Get the world scale of the mainObject (the texture plane)
-        const mainObjectScale = this.mainObjectTransform.getWorldScale();
+        // Get the world scale of the cameraCrop (the texture plane)
+        const cameraCropScale = this.cameraCropTransform.getWorldScale();
 
         // Apply UV offset before converting to world position
         const offsetUV = new vec2(
@@ -499,25 +502,25 @@ export class SelectionUVController extends BaseScriptComponent {
 
         // Convert UV (0-1) to local position on the plane
         // UV (0.5, 0.5) = center = local (0, 0)
-        // Use mainObject's world scale to determine actual plane dimensions
-        const localX = (offsetUV.x - 0.5) * mainObjectScale.x;
-        const localY = (offsetUV.y - 0.5) * mainObjectScale.y;
+        // Use cameraCrop's world scale to determine actual plane dimensions
+        const localX = (offsetUV.x - 0.5) * cameraCropScale.x;
+        const localY = (offsetUV.y - 0.5) * cameraCropScale.y;
         const localPos = new vec3(localX, localY, 0);
 
-        // Transform to world position using mainObject's rotation and position
-        const worldRotation = this.mainObjectTransform.getWorldRotation();
-        const worldPosition = this.mainObjectTransform.getWorldPosition();
+        // Transform to world position using cameraCrop's rotation and position
+        const worldRotation = this.cameraCropTransform.getWorldRotation();
+        const worldPosition = this.cameraCropTransform.getWorldPosition();
         let cursorPosition = worldPosition.add(worldRotation.multiplyVec3(localPos));
 
-        // Add normal offset along mainObject's forward direction
+        // Add normal offset along cameraCrop's forward direction
         const planeNormal = worldRotation.multiplyVec3(vec3.forward());
         cursorPosition = cursorPosition.add(planeNormal.uniformScale(this.normalOffset));
 
         // Set the cursor plane's world position (no filtering - instant follow)
         this.cursorPlaneTransform.setWorldPosition(cursorPosition);
 
-        // Compensate cursor plane scale for mainObject's aspect ratio
-        const aspectRatioCompensation = mainObjectScale.y / mainObjectScale.x;
+        // Compensate cursor plane scale for cameraCrop's aspect ratio
+        const aspectRatioCompensation = cameraCropScale.y / cameraCropScale.x;
         this.cursorPlaneTransform.setLocalScale(new vec3(
             this.cursorPlaneOriginalScale.x * aspectRatioCompensation,
             this.cursorPlaneOriginalScale.y,
@@ -531,7 +534,7 @@ export class SelectionUVController extends BaseScriptComponent {
     // ==================== Texture Sampling ====================
 
     /**
-     * Samples a gridSize x gridSize region from the source texture (mainObject's captureImage)
+     * Samples a gridSize x gridSize region from the source texture (cameraCrop's captureImage)
      * centered at the given UV and applies it to the cursor plane's material.
      * Also extracts the center pixel color for display.
      * 
@@ -540,7 +543,7 @@ export class SelectionUVController extends BaseScriptComponent {
     private updateCursorPlaneTexture(uv: vec2): void {
         if (!this.cursorPlaneMaterial || !this.material) return;
 
-        // Get source texture fresh each frame from mainObject's material
+        // Get source texture fresh each frame from cameraCrop's material
         const sourceTexture: Texture = this.material.captureImage;
         if (!sourceTexture) return;
 
@@ -612,7 +615,6 @@ export class SelectionUVController extends BaseScriptComponent {
                 1.0
             );
             this.sampledColorMaterial.mainColor = sampledColor;
-            // this.cursorPlaneMaterial.centerSquareColor = sampledColor;
         }
     }
 

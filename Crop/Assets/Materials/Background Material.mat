@@ -70,7 +70,7 @@
   InstanceCount: 1
   Defines:
     []
-  BlendMode: PremultipliedAlpha
+  BlendMode: AlphaTest
   Properties:
     Port_offset_N005:
       typeIdx: 1
@@ -86,5 +86,8 @@
       value: 0
     Tweak_N3:
       typeIdx: 5
-      value: {x: 0.156863, y: 0.168627, z: 0.168627, w: 0.749996}
+      value: {x: 0.253117, y: 0.266224, z: 0.269276, w: 1.000000}
+    alphaTestThreshold:
+      typeIdx: 1
+      value: 0.500000
   Pass: !<reference> a6301454-94a1-48db-860f-53751930d7b3

@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/95189bcf-4fbb-45e4-87e2-3ff4753f522f>
+- !<AssetImportMetadata/71fa6a65-16a1-4ee2-a845-cdf6557aa8a2>
   ImportedAssetIds:
-    TypeScriptAsset: !<reference> dbe1d244-10d6-49c4-acda-7dac03f0eb03
+    TypeScriptAsset: !<reference> 31ec92b0-5ab8-46bf-9e33-f8f23ac27d9c
   ImporterName: TypeScriptAssetImporter
-  PrimaryAsset: !<reference> dbe1d244-10d6-49c4-acda-7dac03f0eb03
+  PrimaryAsset: !<reference> 31ec92b0-5ab8-46bf-9e33-f8f23ac27d9c
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    TypeScriptAsset: !<own> ba2b4911-607a-4883-a616-ff6c80d10141
+    TypeScriptAsset: !<own> 5a6647ce-ffd9-436b-b23e-cc33cd9e3044
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<TypeScriptAssetData/ba2b4911-607a-4883-a616-ff6c80d10141>
+- !<TypeScriptAssetData/5a6647ce-ffd9-436b-b23e-cc33cd9e3044>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,7 +22,7 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 27a76c87-06b8-422b-92dc-9eb67b7f8cd8
+  ComponentUid: 95117fee-3814-487d-80b5-d8e821c2daea
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
@@ -44,4 +44,4 @@
       {}
   InputLines:
     - // @input Asset.ObjectPrefab scannerPrefab
-    - "// @input string interactablePath = \"imageAnchor/cameraCrop\" {\"hint\":\"Path to the interactable object within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')\"}"
+    - "// @input string interactablePath = \"imageAnchor/cameraCrop\" {\"hint\":\"Path to the interactable object within scanner hierarchy (e.g., 'imageAnchor/cameraCrop')\"}"

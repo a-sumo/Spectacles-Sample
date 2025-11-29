@@ -8,7 +8,6 @@ export class PictureBehavior extends BaseScriptComponent {
   @input circleObjs: SceneObject[];
   @input editorCamObj: SceneObject;
   @input picAnchorObj: SceneObject;
-  @input loadingObj: SceneObject;
   @input captureRendMesh: RenderMeshVisual;
   @input screenCropTexture: Texture;
   @input cropRegion: CropRegion;
@@ -16,7 +15,6 @@ export class PictureBehavior extends BaseScriptComponent {
   private isEditor = global.deviceInfoSystem.isEditor();
 
   private camTrans: Transform;
-  private loadingTrans: Transform;
 
   private circleTrans: Transform[];
 
@@ -33,8 +31,6 @@ export class PictureBehavior extends BaseScriptComponent {
   private surfaceWorldScale = null;
 
   onAwake() {
-    this.loadingObj.enabled = false;
-    this.loadingTrans = this.loadingObj.getTransform();
     this.captureRendMesh.mainMaterial = this.captureRendMesh.mainMaterial.clone();
 
     this.camTrans = this.editorCamObj.getTransform();
@@ -59,7 +55,6 @@ export class PictureBehavior extends BaseScriptComponent {
       //wait for small delay and capture image
       var delayedEvent = this.createEvent("DelayedCallbackEvent");
       delayedEvent.bind(() => {
-        this.loadingObj.enabled = true;
         this.cropRegion.enabled = false;
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
@@ -119,7 +114,6 @@ export class PictureBehavior extends BaseScriptComponent {
         return;
       }
       //remove update loop and process image
-      this.loadingObj.enabled = true;
       this.cropRegion.enabled = false;
     }
   }
@@ -187,12 +181,6 @@ export class PictureBehavior extends BaseScriptComponent {
       this.rotMat.column2 = rectForward;
       var rectRotation = quat.fromRotationMat(this.rotMat);
       this.picAnchorTrans.setWorldRotation(rectRotation);
-
-      //set loader position to center of rectangle
-      this.loadingTrans.setWorldPosition(
-        centerPos.add(rectForward.uniformScale(0.2))
-      );
-      this.loadingTrans.setWorldRotation(rectRotation);
     }
   }
 }

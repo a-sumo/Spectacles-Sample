@@ -1,8 +1,9 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 939
+    size: 963
     values:
+      - ""
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
       - 3DModels/SWIS_Frame.mesh
@@ -10,6 +11,9 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - Destruction Helper Module.lspkg
+      - Destruction Helper Module.lspkg/Destruction Helper Module.js
+      - Destruction Helper Module.lspkg/package.native
       - EyeDropperMaterials.lspkg
       - EyeDropperMaterials.lspkg/CamFeedCrop.mat
       - EyeDropperMaterials.lspkg/CamFeedMat.mat
@@ -61,6 +65,9 @@ CollapsedEntities:
       - Images/thinOutline.png
       - Images/webIcon.png
       - MaterialParams.png
+      - Materials
+      - Materials/Background Material.mat
+      - Materials/Background Material.ss_graph
       - Materials/Base.png
       - Materials/Black.mat
       - Materials/CamFeedCrop.mat
@@ -77,6 +84,8 @@ CollapsedEntities:
       - Materials/SWIS_flat_color.ss_graph
       - Materials/SWIS_frame.mat
       - Materials/SWIS_tile.mat
+      - Materials/Sampled Color Material.mat
+      - Materials/Sampled Color Material.ss_graph
       - Materials/Shapes
       - Materials/Shapes/Rounded Corners
       - Materials/Shapes/Rounded Corners/Rounded Corner Construction.png
@@ -96,10 +105,9 @@ CollapsedEntities:
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
       - Normal.png
-      - Prefabs
+      - Plane.prefab
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
-      - Prefabs/SceneHierarchy.prefab
       - Refraction Material
       - Refraction Material/.hidden
       - Refraction Material/.hidden/Refraction.ss_graph
@@ -191,14 +199,20 @@ CollapsedEntities:
       - Scripts/ChatGPT.ts
       - Scripts/CropAreaSelector.ts
       - Scripts/CropRegion.ts
+      - Scripts/InteractableUVMapper.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
       - Scripts/SelectionUVController.ts
+      - Scripts/Templates
+      - Scripts/Templates/InstanceControllerTemplate.ts
       - Scripts/color.ts
+      - SpectaclesInteractionKit.lspkg
+      - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
       - SpectaclesInteractionKit.lspkg/Assets/Audio/HoverAudioTrack.wav
       - SpectaclesInteractionKit.lspkg/Assets/Audio/TriggerEndAudioTrack.wav
       - SpectaclesInteractionKit.lspkg/Assets/Audio/TriggerStartAudioTrack.wav
+      - SpectaclesInteractionKit.lspkg/Assets/Materials
       - SpectaclesInteractionKit.lspkg/Assets/Materials/BaseHandVisualsMaterials
       - SpectaclesInteractionKit.lspkg/Assets/Materials/BaseHandVisualsMaterials/FingerHighlightLeft.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/BaseHandVisualsMaterials/FingerHighlightRight.mat
@@ -216,6 +230,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PinchButtonToggleOnDefault.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PinchButtonToggleOnIcon.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PinchButtonToggleOnSelect.mat
+      - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ButtonHover.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ButtonIdle.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ButtonPinched.mat
@@ -228,6 +243,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/RoundButtonHover.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/RoundButtonPinched.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/RoundButton_Idle.mat
+      - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ScrollBackground.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ScrollButtonHover.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ScrollButtonIdle.mat
       - SpectaclesInteractionKit.lspkg/Assets/Materials/PlatformUI/ScrollButtonPinched.mat
@@ -278,6 +294,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Meshes/SnapGhost_Mesh.mesh
       - SpectaclesInteractionKit.lspkg/Assets/Meshes/SphereMesh.mesh
       - SpectaclesInteractionKit.lspkg/Assets/Meshes/Uncheck.mesh
+      - SpectaclesInteractionKit.lspkg/Assets/Shaders
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/BaseHandVisualsShaders
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/BaseHandVisualsShaders/FingerHighlightAdd.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/BaseHandVisualsShaders/FingerHighlightOpaque.ss_graph
@@ -287,6 +304,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/NormalBasedTargetOutline.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PinchButton-ActiveOrInActive.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PinchDarkRadial.ss_graph
+      - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ButtonHover.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ButtonIdle.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ButtonPinched.ss_graph
@@ -299,6 +317,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/RoundButtonHover.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/RoundButtonPinched.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/RoundButton_Idle.ss_graph
+      - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ScrollBackground.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ScrollButtonHover.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ScrollButtonIdle.ss_graph
       - SpectaclesInteractionKit.lspkg/Assets/Shaders/PlatformUI/ScrollButtonPinched.ss_graph
@@ -784,11 +803,13 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Audio/HoverAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/SliderProgressionAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/TriggerEndAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/TriggerStartAudioTrack.wav
+      - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Materials/BaseRoundedRectangle.mat
       - SpectaclesUIKit.lspkg/Materials/BaseRoundedRectangle.ss_graph
       - SpectaclesUIKit.lspkg/Materials/CapsuleSphere.mat
@@ -809,6 +830,7 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Materials/DefaultSphereSimple.mat
       - SpectaclesUIKit.lspkg/Materials/DefaultSphereSimpleShader.ss_graph
       - SpectaclesUIKit.lspkg/Materials/DefaultSwitch.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultSwitchBackground.mat
       - SpectaclesUIKit.lspkg/Materials/DefaultSwitchKnob.mat
       - SpectaclesUIKit.lspkg/Materials/DefaultSwitchKnob.ss_graph
       - SpectaclesUIKit.lspkg/Materials/FragRoundedRectangle.mat
@@ -821,10 +843,12 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Materials/RoundedRectangleStrokeShader.ss_graph
       - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMask.mat
       - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMaskShader.ss_graph
+      - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Meshes/CapsuleSphere.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultButton.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultCapsule.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultSphere.mesh
+      - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchBackground.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchKnob.mesh
       - SpectaclesUIKit.lspkg/Meshes/StretchableCircle.mesh
       - SpectaclesUIKit.lspkg/Meshes/Unit Plane.mesh

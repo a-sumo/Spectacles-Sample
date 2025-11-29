@@ -27,11 +27,11 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     beta: false
+    cameraCrop: false
     cursorPlane: false
     dcutoff: false
     gridSize: false
     initialUV: false
-    mainObject: false
     minCutoff: false
     normalOffset: false
     sampledColorObject: false
@@ -47,7 +47,7 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - mainObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+    - cameraCrop: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
       cursorPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       sampledColorText: !<reference.Text> 00000000-0000-0000-0000-000000000000
@@ -63,9 +63,9 @@
     -
       {}
   InputLines:
-    - '// @input SceneObject mainObject {"hint":"Main object with the material whose selectionUV will be updated. If not set, uses this SceneObject."}'
+    - '// @input SceneObject cameraCrop {"hint":"Camera Crop with the material whose selectionUV will be updated."}'
     - '// @input vec2 initialUV = {0.5,0.5} {"hint":"Initial selection UV position"}'
-    - "// @input SceneObject cursorPlane {\"hint\":\"Cursor plane that follows the selection with normal offset. Will be scaled to match mainObject's aspect ratio.\"}"
+    - "// @input SceneObject cursorPlane {\"hint\":\"Cursor plane that follows the selection with normal offset. Will be scaled to match cameraCrop's aspect ratio.\"}"
     - '// @input Component.Text sampledColorText {"hint":"Text component to display the sampled color as HEX code"}'
     - '// @input SceneObject sampledColorObject {"hint":"Object whose material mainColor will be set to the sampled color"}'
     - "// @input float normalOffset = 0.5 {\"hint\":\"Offset distance along the plane's normal direction (positive = towards viewer)\"}"
