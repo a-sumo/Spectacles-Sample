@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 781
+    size: 782
     values:
       - ""
       - 3DModels
@@ -38,8 +38,6 @@ CollapsedEntities:
       - EyeDropperMaterials.lspkg/SimpleFrameMaterial.mat
       - EyeDropperMaterials.lspkg/SimpleFrameMaterial.ss_graph
       - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg
-      - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg/Assets
-      - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg/Assets/Shaders
       - EyeDropperMaterials.lspkg/SpectaclesInteractionKit.lspkg/Assets/Shaders/TargetOutline.ss_graph
       - EyeDropperMaterials.lspkg/SphereOutline.mat
       - EyeDropperMaterials.lspkg/TextureSampleGrid.mat
@@ -77,8 +75,11 @@ CollapsedEntities:
       - Materials/Shapes/Rounded Corners/Rounded Corners.ss_graph
       - Materials/Shapes/Rounded Rectangle Fill
       - Materials/Shapes/Rounded Rectangle Fill/Rounded Rectangle Fill.ss_graph
+      - Materials/Shapes/Rounded Stroke
       - Materials/Shapes/Rounded Stroke/Rounded Square Stroke.ss_graph
       - Materials/SphereOutline.mat
+      - Materials/TextureSampleGrid.mat
+      - Materials/TextureSampleGrid.ss_graph
       - Materials/Unit Plane.mesh
       - Materials/loadingGif.mat
       - Materials/loadingGif.ss_graph

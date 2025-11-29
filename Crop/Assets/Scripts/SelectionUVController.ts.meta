@@ -29,6 +29,7 @@
     beta: false
     cursorPlane: false
     dcutoff: false
+    gridSize: false
     initialUV: false
     mainObject: false
     minCutoff: false
@@ -49,6 +50,7 @@
       cursorPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       normalOffset: 0.500000
       uvOffset: !<Vec2> {x: 0.000000, y: 0.000000}
+      gridSize: !<float> 9.000000
       useFilter: true
       minCutoff: !<float> 2.000000
       beta: 0.015000
@@ -62,6 +64,7 @@
     - "// @input SceneObject cursorPlane {\"hint\":\"Cursor plane that follows the selection with normal offset. Will be scaled to match mainObject's aspect ratio.\"}"
     - "// @input float normalOffset = 0.5 {\"hint\":\"Offset distance along the plane's normal direction (positive = towards viewer)\"}"
     - '// @input vec2 uvOffset = {0,0} {"hint":"Additional offset in UV space (applied before world conversion)"}'
+    - '// @input float gridSize = 9 {"hint":"Grid size for cursor plane texture (odd number, e.g., 9 = 9x9 grid)"}'
     - '// @input bool useFilter = true {"hint":"Apply filtering to smooth interaction"}'
     - '// @input float minCutoff = 2 {"hint":"Filter min cutoff - lower = smoother but more lag", "showIf":"useFilter", "showIfValue":true}'
     - '// @input float beta = 0.015 {"hint":"Filter beta - higher = less lag but more jitter", "showIf":"useFilter", "showIfValue":true}'

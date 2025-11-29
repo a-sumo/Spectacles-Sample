@@ -3,7 +3,7 @@ import { Interactor } from "SpectaclesInteractionKit.lspkg/Core/Interactor/Inter
 import { InteractorEvent } from "SpectaclesInteractionKit.lspkg/Core/Interactor/InteractorEvent";
 import { InteractionManager } from "SpectaclesInteractionKit.lspkg/Core/InteractionManager/InteractionManager";
 import Event, { PublicApi, unsubscribe } from "SpectaclesInteractionKit.lspkg/Utils/Event";
-import { OneEuroFilterConfig, OneEuroFilterVec2, OneEuroFilterVec3 } from "SpectaclesInteractionKit.lspkg/Utils/OneEuroFilter";
+import { OneEuroFilterConfig, OneEuroFilterVec2 } from "SpectaclesInteractionKit.lspkg/Utils/OneEuroFilter";
 import NativeLogger from "SpectaclesInteractionKit.lspkg/Utils/NativeLogger";
 import { validate } from "SpectaclesInteractionKit.lspkg/Utils/validate";
 
@@ -38,6 +38,10 @@ export class SelectionUVController extends BaseScriptComponent {
     @input
     @hint("Additional offset in UV space (applied before world conversion)")
     uvOffset: vec2 = new vec2(0, 0);
+
+    @input
+    @hint("Grid size for cursor plane texture (odd number, e.g., 9 = 9x9 grid)")
+    gridSize: number = 9;
 
     @input
     @hint("Apply filtering to smooth interaction")
@@ -80,12 +84,15 @@ export class SelectionUVController extends BaseScriptComponent {
 
     // Filtering
     private uvFilter: OneEuroFilterVec2 | null = null;
-    private positionFilter: OneEuroFilterVec3 | null = null;
 
     // Object transforms
     private mainObjectTransform: Transform | null = null;
     private cursorPlaneTransform: Transform | null = null;
     private cursorPlaneOriginalScale: vec3 = vec3.one();
+
+    // Cursor plane material (for texture updates)
+    private cursorPlaneMaterial: any = null;
+    private validatedGridSize: number = 9;
 
     // Public events
     private onSelectionChangedEvent = new Event<vec2>();
@@ -110,6 +117,9 @@ export class SelectionUVController extends BaseScriptComponent {
     private onStart(): void {
         this.transform = this.sceneObject.getTransform();
 
+        // Validate grid size (must be odd)
+        this.validatedGridSize = this.computeValidGridSize();
+
         // Setup main object (the one with the material)
         const mainObj = this.mainObject ?? this.sceneObject;
         this.mainObjectTransform = mainObj.getTransform();
@@ -126,14 +136,28 @@ export class SelectionUVController extends BaseScriptComponent {
         this.setupInteractable();
         this.setupFilter();
 
-        // Setup cursor plane transform
+        // Setup cursor plane transform and material
         if (this.cursorPlane) {
             this.cursorPlaneTransform = this.cursorPlane.getTransform();
             this.cursorPlaneOriginalScale = this.cursorPlaneTransform.getLocalScale();
+            
+            const cursorRenderMesh = this.cursorPlane.getComponent("RenderMeshVisual");
+            if (cursorRenderMesh) {
+                this.cursorPlaneMaterial = cursorRenderMesh.mainPass;
+                this.cursorPlaneMaterial.gridScale = this.validatedGridSize;
+            }
         }
 
         // Set initial UV
         this.updateSelectionUV(this.initialUV);
+    }
+
+    private computeValidGridSize(): number {
+        let size = Math.max(1, Math.floor(this.gridSize));
+        if (size % 2 === 0) {
+            size += 1; // Ensure odd number for center pixel
+        }
+        return size;
     }
 
     private onDestroy(): void {
@@ -252,16 +276,14 @@ export class SelectionUVController extends BaseScriptComponent {
     }
 
     private setupFilter(): void {
-        const filterConfig: OneEuroFilterConfig = {
-            frequency: 60,
-            minCutoff: this.minCutoff,
-            beta: this.beta,
-            dcutoff: this.dcutoff
-        };
-
         if (this.useFilter) {
+            const filterConfig: OneEuroFilterConfig = {
+                frequency: 60,
+                minCutoff: this.minCutoff,
+                beta: this.beta,
+                dcutoff: this.dcutoff
+            };
             this.uvFilter = new OneEuroFilterVec2(filterConfig);
-            this.positionFilter = new OneEuroFilterVec3(filterConfig);
         }
     }
 
@@ -318,9 +340,6 @@ export class SelectionUVController extends BaseScriptComponent {
         // Reset filter on new drag
         if (this.uvFilter) {
             this.uvFilter.reset();
-        }
-        if (this.positionFilter) {
-            this.positionFilter.reset();
         }
 
         this.isDragging = true;
@@ -427,7 +446,7 @@ export class SelectionUVController extends BaseScriptComponent {
 
         // Update cursor plane position based on UV
         if (this.cursorPlaneTransform) {
-            this.updateCursorPlanePosition(this.selectionUV);
+            this.updateCursorPlane(this.selectionUV);
         }
 
         // Emit event
@@ -435,10 +454,9 @@ export class SelectionUVController extends BaseScriptComponent {
     }
 
     /**
-     * Convert UV coordinates to world position on the plane, then apply normal offset.
-     * Compensates cursor plane scale for mainObject's aspect ratio.
+     * Update cursor plane position, scale, and texture.
      */
-    private updateCursorPlanePosition(uv: vec2): void {
+    private updateCursorPlane(uv: vec2): void {
         if (!this.cursorPlaneTransform || !this.mainObjectTransform) return;
 
         // Get the world scale of the mainObject (the texture plane)
@@ -466,23 +484,70 @@ export class SelectionUVController extends BaseScriptComponent {
         const planeNormal = worldRotation.multiplyVec3(vec3.forward());
         cursorPosition = cursorPosition.add(planeNormal.uniformScale(this.normalOffset));
 
-        // Apply filtering if enabled
-        if (this.useFilter && this.positionFilter) {
-            cursorPosition = this.positionFilter.filter(cursorPosition, getTime());
-        }
-
-        // Set the cursor plane's world position
+        // Set the cursor plane's world position (no filtering - instant follow)
         this.cursorPlaneTransform.setWorldPosition(cursorPosition);
 
         // Compensate cursor plane scale for mainObject's aspect ratio
-        // If mainObject is stretched (e.g., scaleX=2, scaleY=1), apply inverse aspect to keep cursorPlane undistorted
-        // Using original scale as base to avoid cumulative scaling
         const aspectRatioCompensation = mainObjectScale.y / mainObjectScale.x;
         this.cursorPlaneTransform.setLocalScale(new vec3(
             this.cursorPlaneOriginalScale.x * aspectRatioCompensation,
             this.cursorPlaneOriginalScale.y,
             this.cursorPlaneOriginalScale.z
         ));
+
+        // Update cursor plane texture with sampled grid from source texture
+        this.updateCursorPlaneTexture(uv);
+    }
+
+    // ==================== Texture Sampling ====================
+
+    /**
+     * Samples a gridSize x gridSize region from the source texture (mainObject's captureImage)
+     * centered at the given UV and applies it to the cursor plane's material.
+     * 
+     * All texture operations are self-contained - no class-level texture state needed.
+     */
+    private updateCursorPlaneTexture(uv: vec2): void {
+        if (!this.cursorPlaneMaterial || !this.material) return;
+
+        // Get source texture fresh each frame from mainObject's material
+        const sourceTexture: Texture = this.material.captureImage;
+        if (!sourceTexture) return;
+
+        const width = sourceTexture.getWidth();
+        const height = sourceTexture.getHeight();
+        if (width <= 0 || height <= 0) return;
+
+        const gridSize = this.validatedGridSize;
+        const halfGrid = Math.floor(gridSize / 2);
+
+        // Convert UV to pixel coordinates
+        const centerPixelX = Math.round(uv.x * (width - 1));
+        const centerPixelY = Math.round(uv.y * (height - 1));
+        
+        // Clamp to ensure we don't sample outside texture bounds
+        const startPixelX = Math.max(0, Math.min(width - gridSize, centerPixelX - halfGrid));
+        const startPixelY = Math.max(0, Math.min(height - gridSize, centerPixelY - halfGrid));
+
+        // Create procedural texture provider for pixel access
+        const proceduralTexture = ProceduralTextureProvider.createFromTexture(sourceTexture);
+        const sourceProvider = proceduralTexture.control as ProceduralTextureProvider;
+
+        // Sample pixels from source texture
+        const pixelBuffer = new Uint8Array(gridSize * gridSize * 4);
+        sourceProvider.getPixels(startPixelX, startPixelY, gridSize, gridSize, pixelBuffer);
+
+        // Create output texture and apply sampled pixels
+        const sampledTexture = ProceduralTextureProvider.createWithFormat(
+            gridSize,
+            gridSize,
+            TextureFormat.RGBA8Unorm
+        );
+        const outputProvider = sampledTexture.control as ProceduralTextureProvider;
+        outputProvider.setPixels(0, 0, gridSize, gridSize, pixelBuffer);
+
+        // Apply to cursor plane material
+        this.cursorPlaneMaterial.mainTexture = sampledTexture;
     }
 
     // ==================== Public API ====================
@@ -494,9 +559,6 @@ export class SelectionUVController extends BaseScriptComponent {
         if (this.uvFilter) {
             this.uvFilter.reset();
         }
-        if (this.positionFilter) {
-            this.positionFilter.reset();
-        }
         this.updateSelectionUV(uv);
     }
 
@@ -504,9 +566,6 @@ export class SelectionUVController extends BaseScriptComponent {
      * Programmatically set the cursor plane's world position
      */
     public setCursorPlanePosition(worldPosition: vec3): void {
-        if (this.positionFilter) {
-            this.positionFilter.reset();
-        }
         if (this.cursorPlaneTransform) {
             this.cursorPlaneTransform.setWorldPosition(worldPosition);
         }
@@ -529,5 +588,12 @@ export class SelectionUVController extends BaseScriptComponent {
             this.triggeringInteractor = null;
             this.onDragEndEvent.invoke(this.selectionUV);
         }
+    }
+
+    /**
+     * Get the validated grid size being used
+     */
+    public getGridSize(): number {
+        return this.validatedGridSize;
     }
 }

@@ -590,7 +590,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 39c41230-4848-4655-99be-2f7445ed42b5
+    - !<reference> 698863ab-be8e-4a31-b2c3-f9cea6fe005e
   Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -1454,7 +1454,8 @@
       initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
       cursorPlane: !<reference.SceneObject> 15715fa0-4972-437b-8a48-38a10f52ae18
       normalOffset: 0.100000
-      uvOffset: !<Vec2> {x: 1.000000, y: 0.000000}
+      uvOffset: !<Vec2> {x: 0.300000, y: 0.000000}
+      gridSize: !<float> 7.000000
       useFilter: true
       minCutoff: !<float> 2.000000
       beta: 0.015000
@@ -1811,7 +1812,6 @@
     - a9a58ade-4e5b-41ce-8f01-4677abcac6cd: de9e5224-74f6-44f4-7124-448e36cfd656
     - b930990a-525e-4f9f-973d-0f0a4a974cae: a44dd883-5484-4d12-7205-f659599e61c1
     - c05534fc-7652-4dbd-b6c2-d48b6a76e542: 014c8b66-b9b9-4a3f-6f60-990226d10eab
-    - c0de3151-0afa-4f85-bc28-d95814b5b0ee: 7cc20b95-e0e6-4517-7b32-c55831ca40f2
     - cc57f8ef-c919-4afe-a404-cc3a800e9a36: e9ba7152-2208-4424-5226-1ecc99a32809
     - d87b8f5b-8492-451a-a2b4-016ba0ac815b: 8a686048-9695-490c-4144-096738b63a93
     - dc90f91c-1696-433f-b60a-83a41f38a8b2: e78d4205-e755-478b-61d7-fe26e350d91e

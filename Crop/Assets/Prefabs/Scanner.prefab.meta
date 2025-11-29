@@ -48,17 +48,16 @@
     - !<own> e9ba7152-2208-4424-5226-1ecc99a32809
     - !<own> b114f90e-ebba-4263-78a1-3429d509ca61
     - !<own> 67cce643-8585-4156-5147-a9e986087bdb
-    - !<own> 7cc20b95-e0e6-4517-7b32-c55831ca40f2
 - !<SceneObject/3e088d3b-a81a-4e70-9aaa-ea9d36c5b4bf>
   PrefabRemaps:
     []
-  Name: Texture Grid Plane
+  Name: Cursor Plane
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 0.300000, y: 0.300000, z: 0.300000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -247,71 +246,6 @@
     PackagePath: ""
     objects:
       - !<own> d935d5a4-f0ad-4d2b-674e-a2e31f52bd09
-- !<ScriptComponent/7cc20b95-e0e6-4517-7b32-c55831ca40f2>
-  PrefabRemaps:
-    []
-  Name: ContainerFrame
-  Enabled: false
-  ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
-  ScriptInputsDefault:
-    border: true
-    constantPadding: true
-    allowScaling: true
-    autoScaleContent: true
-    relativeZ: true
-    allowTranslation: true
-    cutOut: true
-    minimumSize: true
-    maximumSize: true
-    useBillboarding: true
-    xOnTranslate: true
-    xAlways: true
-    yOnTranslate: true
-    yAlways: true
-    useSnapping: true
-    itemSnapping: true
-    worldSnapping: true
-    showFollowButton: true
-    useFOVFollow: true
-    isFollowing: true
-    showCloseButton: true
-    _enableInteractionPlane: true
-    _targetingVisual: true
-    isSynced: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      autoShowHide: false
-      innerSize: !<Vec2> {x: 13.300000, y: 10.000000}
-      border: !<float> 4.000000
-      constantPadding: !<Vec2> {x: 0.000000, y: 0.000000}
-      allowScaling: true
-      autoScaleContent: true
-      relativeZ: false
-      isContentInteractable: true
-      allowTranslation: true
-      cutOut: false
-      minimumSize: !<Vec2> {x: 10.000000, y: 10.000000}
-      maximumSize: !<Vec2> {x: 300.000000, y: 300.000000}
-      useBillboarding: false
-      xOnTranslate: false
-      xAlways: false
-      yOnTranslate: false
-      yAlways: false
-      useSnapping: false
-      itemSnapping: false
-      worldSnapping: false
-      showFollowButton: false
-      useFOVFollow: false
-      isFollowing: false
-      showCloseButton: true
-      _enableInteractionPlane: false
-      _targetingVisual: !<float> 1.000000
-      isSynced: false
-  ScriptTypes:
-    "":
-      {}
 - !<RenderMeshVisual/808967da-b7ff-4b2e-4ed1-89007cac3c8e>
   PrefabRemaps:
     []
@@ -441,10 +375,8 @@
   Enabled: true
   ScriptAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
   ScriptInputsDefault:
-    mainObject: true
     initialUV: true
-    cursorPlane: true
-    uvOffset: true
+    gridSize: true
     useFilter: true
     minCutoff: true
     beta: true
@@ -453,11 +385,12 @@
     {}
   ScriptInputs:
     "":
-      mainObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      mainObject: !<reference.SceneObject> 352fd40b-f156-4fdc-76e9-d4683baee63b
       initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
-      cursorPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      normalOffset: 0.050000
-      uvOffset: !<Vec2> {x: 0.000000, y: 0.000000}
+      cursorPlane: !<reference.SceneObject> 3e088d3b-a81a-4e70-9aaa-ea9d36c5b4bf
+      normalOffset: 0.100000
+      uvOffset: !<Vec2> {x: 0.300000, y: 0.000000}
+      gridSize: !<float> 9.000000
       useFilter: true
       minCutoff: !<float> 2.000000
       beta: 0.015000
@@ -478,7 +411,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 39c41230-4848-4655-99be-2f7445ed42b5
+    - !<reference> 698863ab-be8e-4a31-b2c3-f9cea6fe005e
   Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
