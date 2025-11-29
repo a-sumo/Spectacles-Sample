@@ -1,13 +1,21 @@
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
 import { Interactor } from "SpectaclesInteractionKit.lspkg/Core/Interactor/Interactor";
 import { InteractorEvent } from "SpectaclesInteractionKit.lspkg/Core/Interactor/InteractorEvent";
-import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
+import { InteractionManager } from "SpectaclesInteractionKit.lspkg/Core/InteractionManager/InteractionManager";
+import Event, { PublicApi, unsubscribe } from "SpectaclesInteractionKit.lspkg/Utils/Event";
+import { OneEuroFilterConfig, OneEuroFilterVec2 } from "SpectaclesInteractionKit.lspkg/Utils/OneEuroFilter";
+import NativeLogger from "SpectaclesInteractionKit.lspkg/Utils/NativeLogger";
+import { validate } from "SpectaclesInteractionKit.lspkg/Utils/validate";
+
+const TAG = "[SelectionUVController]";
 
 /**
  * SelectionUVController
  * 
  * Handles drag interaction on a mesh to update a material's selectionUV parameter.
  * Attach to any SceneObject with a RenderMeshVisual and collider.
+ * 
+ * Refactored to use robust event handling patterns from InteractableManipulation.
  */
 @component
 export class SelectionUVController extends BaseScriptComponent {
@@ -19,96 +27,345 @@ export class SelectionUVController extends BaseScriptComponent {
     @hint("Initial selection UV position")
     initialUV: vec2 = new vec2(0.5, 0.5);
 
-    private _transform: Transform;
-    private _interactable: Interactable;
-    private _collider: ColliderComponent;
-    private _material: any = null;
+    @input
+    @hint("Apply filtering to smooth interaction")
+    useFilter: boolean = true;
 
-    private _isDragging: boolean = false;
-    private _isHovered: boolean = false;
-    private _selectionUV: vec2 = new vec2(0.5, 0.5);
+    @input
+    @showIf("useFilter", true)
+    @hint("Filter min cutoff - lower = smoother but more lag")
+    minCutoff: number = 2;
 
-    private _onSelectionChangedEvent = new Event<vec2>();
-    readonly onSelectionChanged: PublicApi<vec2> = this._onSelectionChangedEvent.publicApi();
+    @input
+    @showIf("useFilter", true)
+    @hint("Filter beta - higher = less lag but more jitter")
+    beta: number = 0.015;
 
-    get isDragging(): boolean { return this._isDragging; }
-    get isHovered(): boolean { return this._isHovered; }
-    get selectionUV(): vec2 { return this._selectionUV; }
+    @input
+    @showIf("useFilter", true)
+    @hint("Filter derivative cutoff")
+    dcutoff: number = 1;
+
+    // Core references
+    private log = new NativeLogger(TAG);
+    private interactionManager = InteractionManager.getInstance();
+    private transform: Transform;
+    private interactable: Interactable | null = null;
+    private collider: ColliderComponent | null = null;
+    private material: any = null;
+
+    // State tracking
+    private isDragging: boolean = false;
+    private isHovered: boolean = false;
+    private selectionUV: vec2 = new vec2(0.5, 0.5);
+
+    // Interactor caching (pattern from MapManipulation)
+    private hoveringInteractor: Interactor | null = null;
+    private triggeringInteractor: Interactor | null = null;
+
+    // Event cleanup tracking
+    private unsubscribeBag: unsubscribe[] = [];
+
+    // Filtering
+    private uvFilter: OneEuroFilterVec2 | null = null;
+
+    // Public events
+    private onSelectionChangedEvent = new Event<vec2>();
+    readonly onSelectionChanged: PublicApi<vec2> = this.onSelectionChangedEvent.publicApi();
+
+    private onDragStartEvent = new Event<vec2>();
+    readonly onDragStart: PublicApi<vec2> = this.onDragStartEvent.publicApi();
+
+    private onDragEndEvent = new Event<vec2>();
+    readonly onDragEnd: PublicApi<vec2> = this.onDragEndEvent.publicApi();
+
+    // Public getters
+    get currentlyDragging(): boolean { return this.isDragging; }
+    get currentlyHovered(): boolean { return this.isHovered; }
+    get currentSelectionUV(): vec2 { return this.selectionUV; }
 
     onAwake(): void {
-        this.createEvent("OnStartEvent").bind(() => this.initialize());
+        this.createEvent("OnStartEvent").bind(() => this.onStart());
+        this.createEvent("OnDestroyEvent").bind(() => this.onDestroy());
     }
 
-    private initialize(): void {
-        this._transform = this.sceneObject.getTransform();
-        
+    private onStart(): void {
+        this.transform = this.sceneObject.getTransform();
+
+        // Setup material reference
         const target = this.targetMesh ?? this.sceneObject;
         const renderMesh = target.getComponent("RenderMeshVisual");
         if (renderMesh) {
-            this._material = renderMesh.mainPass;
+            this.material = renderMesh.mainPass;
+        } else {
+            this.log.w("No RenderMeshVisual found on target mesh");
         }
 
+        // Setup components
         this.setupCollider();
         this.setupInteractable();
-        this.updateSelectionUV(this.initialUV);
+        this.setupFilter();
 
-        this.createEvent("OnDestroyEvent").bind(() => this.cleanup());
+        // Set initial UV
+        this.updateSelectionUV(this.initialUV);
+    }
+
+    private onDestroy(): void {
+        // Clean up all event subscriptions (critical pattern from MapManipulation)
+        this.unsubscribeBag.forEach((unsubscribeCallback: unsubscribe) => {
+            unsubscribeCallback();
+        });
+        this.unsubscribeBag = [];
     }
 
     private setupCollider(): void {
-        this._collider = this.sceneObject.getComponent("Physics.ColliderComponent");
-        if (!this._collider) {
-            this._collider = this.sceneObject.createComponent("Physics.ColliderComponent");
-            this._collider.fitVisual = true;
+        this.collider = this.sceneObject.getComponent("Physics.ColliderComponent");
+        if (!this.collider) {
+            this.collider = this.sceneObject.createComponent("Physics.ColliderComponent");
+            this.collider.fitVisual = true;
+            this.log.d("Created ColliderComponent with fitVisual");
         }
     }
 
     private setupInteractable(): void {
-        this._interactable = this.sceneObject.getComponent(Interactable.getTypeName());
-        if (!this._interactable) {
-            this._interactable = this.sceneObject.createComponent(Interactable.getTypeName());
+        this.interactable = this.sceneObject.getComponent(Interactable.getTypeName());
+        if (!this.interactable) {
+            this.interactable = this.sceneObject.createComponent(Interactable.getTypeName());
+            this.log.d("Created Interactable component");
         }
-        this._interactable.allowMultipleInteractors = false;
+        this.interactable.allowMultipleInteractors = false;
 
-        this._interactable.onHoverEnter(() => {
-            this._isHovered = true;
-        });
-
-        this._interactable.onHoverExit(() => {
-            this._isHovered = false;
-        });
-
-        this._interactable.onDragStart((e: InteractorEvent) => {
-            if (!e.interactor.targetHitInfo) {
-                return;
-            }
-            const uv = this.computeUV(e.interactor);
-            if (!this.isWithinBounds(uv)) {
-                return;
-            }
-            this._isDragging = true;
-            this.updateSelectionUV(uv);
-        });
-
-        this._interactable.onDragUpdate((e: InteractorEvent) => {
-            if (!this._isDragging || !e.interactor.targetHitInfo) {
-                return;
-            }
-            const uv = this.computeUV(e.interactor);
-            if (!this.isWithinBounds(uv)) {
-                return;
-            }
-            this.updateSelectionUV(uv);
-        });
-
-        this._interactable.onDragEnd(() => {
-            this._isDragging = false;
-        });
+        // Setup all event handlers with proper cleanup tracking
+        this.setupHoverEvents();
+        this.setupTriggerEvents();
     }
 
-    private computeUV(interactor: Interactor): vec2 {
-        const worldPosition = interactor.targetHitInfo?.hit?.position ?? vec3.zero();
-        const localPos = this._transform.getInvertedWorldTransform().multiplyPoint(worldPosition);
+    private setupHoverEvents(): void {
+        validate(this.interactable);
+
+        // Hover Enter
+        this.unsubscribeBag.push(
+            this.interactable.onInteractorHoverEnter.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onHoverEnter(event);
+                }
+            })
+        );
+
+        // Hover Exit
+        this.unsubscribeBag.push(
+            this.interactable.onInteractorHoverExit.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onHoverExit(event);
+                }
+            })
+        );
+
+        // Hover Update
+        this.unsubscribeBag.push(
+            this.interactable.onHoverUpdate.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onHoverUpdate(event);
+                }
+            })
+        );
+    }
+
+    private setupTriggerEvents(): void {
+        validate(this.interactable);
+
+        // Trigger Start
+        this.unsubscribeBag.push(
+            this.interactable.onInteractorTriggerStart.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onTriggerStart(event);
+                }
+            })
+        );
+
+        // Trigger Update
+        this.unsubscribeBag.push(
+            this.interactable.onTriggerUpdate.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onTriggerUpdate(event);
+                }
+            })
+        );
+
+        // Trigger End
+        this.unsubscribeBag.push(
+            this.interactable.onInteractorTriggerEnd.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onTriggerEnd(event);
+                }
+            })
+        );
+
+        // Trigger Canceled (important for robustness)
+        this.unsubscribeBag.push(
+            this.interactable.onTriggerCanceled.add((event: InteractorEvent) => {
+                if (event.propagationPhase === "Target" || 
+                    event.propagationPhase === "BubbleUp") {
+                    event.stopPropagation();
+                    this.onTriggerEnd(event);
+                }
+            })
+        );
+    }
+
+    private setupFilter(): void {
+        if (this.useFilter) {
+            const filterConfig: OneEuroFilterConfig = {
+                frequency: 60,
+                minCutoff: this.minCutoff,
+                beta: this.beta,
+                dcutoff: this.dcutoff
+            };
+            this.uvFilter = new OneEuroFilterVec2(filterConfig);
+        }
+    }
+
+    // ==================== Event Handlers ====================
+
+    private onHoverEnter(event: InteractorEvent): void {
+        if (!this.enabled) return;
+
+        this.hoveringInteractor = this.getHoveringInteractor();
+        this.isHovered = true;
+        this.log.d("Hover started");
+    }
+
+    private onHoverExit(event: InteractorEvent): void {
+        if (!this.enabled) return;
+
+        this.hoveringInteractor = null;
+        this.isHovered = false;
+        this.log.d("Hover ended");
+    }
+
+    private onHoverUpdate(event: InteractorEvent): void {
+        if (!this.enabled || !this.hoveringInteractor) return;
+
+        // Optional: track hover position if needed
+        const hitPoint = this.hoveringInteractor.planecastPoint;
+        if (hitPoint === null || hitPoint === undefined) return;
+
+        // You could emit a hover UV event here if needed
+    }
+
+    private onTriggerStart(event: InteractorEvent): void {
+        if (!this.enabled) return;
+
+        // Cache the triggering interactor
+        this.triggeringInteractor = this.getTriggeringInteractor();
+        if (!this.triggeringInteractor) {
+            this.log.w("No triggering interactor found on trigger start");
+            return;
+        }
+
+        const hitPoint = this.triggeringInteractor.planecastPoint;
+        if (hitPoint === null || hitPoint === undefined) {
+            this.log.w("No planecast point available on trigger start");
+            return;
+        }
+
+        const uv = this.worldToUV(hitPoint);
+        if (!this.isWithinBounds(uv)) {
+            this.log.d("Trigger start outside bounds, ignoring");
+            return;
+        }
+
+        // Reset filter on new drag
+        if (this.uvFilter) {
+            this.uvFilter.reset();
+        }
+
+        this.isDragging = true;
+        this.updateSelectionUV(uv);
+        this.onDragStartEvent.invoke(this.selectionUV);
+        this.log.d("Drag started at UV: " + uv.toString());
+    }
+
+    private onTriggerUpdate(event: InteractorEvent): void {
+        if (!this.enabled || !this.isDragging) return;
+
+        if (!this.triggeringInteractor) {
+            this.triggeringInteractor = this.getTriggeringInteractor();
+        }
+
+        if (!this.triggeringInteractor) return;
+
+        const hitPoint = this.triggeringInteractor.planecastPoint;
+        if (hitPoint === null || hitPoint === undefined) return;
+
+        let uv = this.worldToUV(hitPoint);
+
+        // Clamp to bounds during drag (optional: you could also stop drag)
+        uv = this.clampToBounds(uv);
+
+        this.updateSelectionUV(uv);
+    }
+
+    private onTriggerEnd(event: InteractorEvent): void {
+        if (!this.enabled) return;
+
+        if (this.isDragging) {
+            this.onDragEndEvent.invoke(this.selectionUV);
+            this.log.d("Drag ended at UV: " + this.selectionUV.toString());
+        }
+
+        this.isDragging = false;
+        this.triggeringInteractor = null;
+    }
+
+    // ==================== Interactor Retrieval (from MapManipulation) ====================
+
+    private getHoveringInteractor(): Interactor | null {
+        validate(this.interactable);
+
+        const interactors: Interactor[] = this.interactionManager.getInteractorsByType(
+            this.interactable.hoveringInteractor
+        );
+
+        if (interactors.length === 0) {
+            return null;
+        }
+
+        return interactors[0];
+    }
+
+    private getTriggeringInteractor(): Interactor | null {
+        validate(this.interactable);
+
+        const interactors: Interactor[] = this.interactionManager.getInteractorsByType(
+            this.interactable.triggeringInteractor
+        );
+
+        if (interactors.length === 0) {
+            return null;
+        }
+
+        return interactors[0];
+    }
+
+    // ==================== UV Computation ====================
+
+    private worldToUV(worldPosition: vec3): vec2 {
+        const localPos = this.transform.getInvertedWorldTransform().multiplyPoint(worldPosition);
+        // Assuming the mesh is a unit plane centered at origin
+        // Adjust these calculations based on your actual mesh dimensions
         return new vec2(localPos.x + 0.5, localPos.y + 0.5);
     }
 
@@ -116,25 +373,59 @@ export class SelectionUVController extends BaseScriptComponent {
         return uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0;
     }
 
-    private updateSelectionUV(uv: vec2): void {
-        print("updating");
-        this._selectionUV = new vec2(
+    private clampToBounds(uv: vec2): vec2 {
+        return new vec2(
             Math.max(0.0, Math.min(1.0, uv.x)),
             Math.max(0.0, Math.min(1.0, uv.y))
         );
-        if (this._material) {
-            this._material.selectionUV = this._selectionUV;
-        }
-        this._onSelectionChangedEvent.invoke(this._selectionUV);
     }
 
+    private updateSelectionUV(uv: vec2): void {
+        // Apply filtering if enabled
+        if (this.useFilter && this.uvFilter) {
+            uv = this.uvFilter.filter(uv, getTime());
+        }
+
+        // Clamp final value
+        this.selectionUV = this.clampToBounds(uv);
+
+        // Update material
+        if (this.material) {
+            this.material.selectionUV = this.selectionUV;
+        }
+
+        // Emit event
+        this.onSelectionChangedEvent.invoke(this.selectionUV);
+    }
+
+    // ==================== Public API ====================
+
+    /**
+     * Programmatically set the selection UV position
+     */
     public setSelectionUV(uv: vec2): void {
+        if (this.uvFilter) {
+            this.uvFilter.reset();
+        }
         this.updateSelectionUV(uv);
     }
 
-    private cleanup(): void {
-        if (this._interactable) {
-            this._interactable.destroy();
+    /**
+     * Reset selection to initial UV position
+     */
+    public resetSelection(): void {
+        this.setSelectionUV(this.initialUV);
+    }
+
+    /**
+     * Enable or disable the controller
+     */
+    public setEnabled(enabled: boolean): void {
+        this.enabled = enabled;
+        if (!enabled && this.isDragging) {
+            this.isDragging = false;
+            this.triggeringInteractor = null;
+            this.onDragEndEvent.invoke(this.selectionUV);
         }
     }
 }
