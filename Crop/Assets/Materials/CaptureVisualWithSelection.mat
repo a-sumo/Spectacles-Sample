@@ -142,6 +142,9 @@
     - Port_Input1_N025:
         typeIdx: 1
         value: 0.900000
+    - Port_Input2_N006:
+        typeIdx: 1
+        value: 0.000000
     - Port_Input_N011:
         typeIdx: 5
         value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
@@ -331,21 +334,12 @@
     - Port_aspect_N008:
         typeIdx: 1
         value: 0.000000
-    - Port_fillColor_N005:
-        typeIdx: 5
-        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     - Port_height_N018:
         typeIdx: 1
         value: 0.700000
     - Port_offset;_N018:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
-    - Port_offset_N005:
-        typeIdx: 1
-        value: -0.100000
-    - Port_radius_N005:
-        typeIdx: 1
-        value: 0.050000
     - Port_resolution;_N008:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
@@ -357,7 +351,7 @@
         value: 0.000000
     - Port_scale_N005:
         typeIdx: 1
-        value: 0.950000
+        value: 0.800000
     - Port_scale_N018:
         typeIdx: 1
         value: 0.700000
@@ -430,9 +424,6 @@
     - Port_textureScale_N008:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
-    - Port_uvOffset_N005:
-        typeIdx: 3
-        value: {x: 0.500000, y: 0.500000}
     - Port_uvOffset_N008:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
@@ -489,15 +480,24 @@
     []
   BlendMode: AlphaTest
   Properties:
-    Port_Input2_N006:
-      typeIdx: 1
-      value: 0.000000
     Port_cornerLength_N018:
       typeIdx: 1
       value: 0.100000
+    Port_debugMode_N018:
+      typeIdx: 1
+      value: 0.000000
+    Port_fillColor_N005:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Port_offset_N005:
+      typeIdx: 1
+      value: 0.000000
     Port_offset_N018:
       typeIdx: 1
-      value: 0.100000
+      value: 0.200000
+    Port_radius_N005:
+      typeIdx: 1
+      value: 0.020000
     Port_radius_N008:
       typeIdx: 1
       value: 0.050000
@@ -519,6 +519,9 @@
     Port_strokeWidth_N018:
       typeIdx: 1
       value: 0.010000
+    Port_uvOffset_N005:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
     Port_uvOffset_N018:
       typeIdx: 3
       value: {x: 0.500000, y: 0.500000}
