@@ -1,6 +1,7 @@
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import { CursorPlaneController } from "./CursorPlaneController";
 
 export class ActiveScannerEvent {
     scanner: SceneObject | null;
@@ -25,8 +26,12 @@ export class PictureController extends BaseScriptComponent {
     @input scannerPrefab: ObjectPrefab;
     
     @input
-    @hint("Path to the interactable object within scanner hierarchy (e.g., 'imageAnchor/cameraCrop')")
-    interactablePath: string = "imageAnchor/cameraCrop";
+    @hint("Cursor plane prefab to instantiate on first scanner interaction")
+    cursorPlanePrefab: ObjectPrefab;
+    
+    @input
+    @hint("Path to the interactable object within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')")
+    interactablePath: string = "ImageAnchor/CameraCrop";
     
     private isEditor = global.deviceInfoSystem.isEditor();
     private rightHand = SIK.HandInputData.getHand("right");
@@ -38,6 +43,10 @@ export class PictureController extends BaseScriptComponent {
     private activeScanner: SceneObject | null = null;
     private activeInteractable: SceneObject | null = null;
     private activeScannerId: string | null = null;
+    
+    // Cursor plane instance
+    private cursorPlaneInstance: SceneObject | null = null;
+    private cursorPlaneController: CursorPlaneController | null = null;
     
     // Public event that other components can subscribe to
     public onActiveScannerChanged = new Event<ActiveScannerEvent>();
@@ -113,6 +122,10 @@ export class PictureController extends BaseScriptComponent {
                         this.activeScanner = scanner;
                         this.activeInteractable = interactableObj;
                         this.activeScannerId = scannerId;
+                        
+                        // Instantiate cursor plane on first interaction
+                        this.ensureCursorPlaneExists();
+                        
                         break; // Only one can be active at a time
                     }
                 }
@@ -130,6 +143,28 @@ export class PictureController extends BaseScriptComponent {
             } else {
                 print("No active scanner");
             }
+        }
+    }
+    
+    /**
+     * Instantiate cursor plane if it doesn't exist yet
+     */
+    private ensureCursorPlaneExists(): void {
+        if (this.cursorPlaneInstance || !this.cursorPlanePrefab) return;
+        
+        // Instantiate cursor plane as child of this object
+        this.cursorPlaneInstance = this.cursorPlanePrefab.instantiate(this.sceneObject);
+        this.cursorPlaneInstance.name = "CursorPlane";
+        
+        // Get the controller component
+        this.cursorPlaneController = this.cursorPlaneInstance.getComponent(
+            CursorPlaneController.getTypeName()
+        ) as CursorPlaneController;
+        
+        if (this.cursorPlaneController) {
+            print("PictureController: Cursor plane instantiated");
+        } else {
+            print("PictureController: Warning - CursorPlaneController not found on prefab");
         }
     }
     
@@ -181,6 +216,11 @@ export class PictureController extends BaseScriptComponent {
     // Public getter for scanner data by ID
     public getScannerData(scannerId: string): ScannerData | undefined {
         return this.scannerData.get(scannerId);
+    }
+    
+    // Public getter for cursor plane controller
+    public getCursorPlaneController(): CursorPlaneController | null {
+        return this.cursorPlaneController;
     }
     
     editorTest() {

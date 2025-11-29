@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 963
+    size: 965
     values:
       - ""
       - 3DModels
@@ -107,6 +107,7 @@ CollapsedEntities:
       - Normal.png
       - Plane.prefab
       - Prefabs/Button.prefab
+      - Prefabs/Cursor Plane.prefab
       - Prefabs/Scanner.prefab
       - Refraction Material
       - Refraction Material/.hidden
@@ -199,6 +200,7 @@ CollapsedEntities:
       - Scripts/ChatGPT.ts
       - Scripts/CropAreaSelector.ts
       - Scripts/CropRegion.ts
+      - Scripts/CursorPlaneController.ts
       - Scripts/InteractableUVMapper.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts

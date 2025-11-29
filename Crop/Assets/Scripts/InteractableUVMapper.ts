@@ -5,7 +5,7 @@ import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { PictureController, ActiveScannerEvent } from "./PictureController";
 
 /**
- * Maps interaction points on the active scanner to UV coordinates (0-1 space).
+ * Maps interaction points on the active scanner's cameraCrop to UV coordinates (0-1 space).
  * Automatically finds and subscribes to PictureController via singleton.
  * 
  * This is a pure mapper - it doesn't update materials or visuals,
@@ -16,6 +16,10 @@ export class InteractableUVMapper extends BaseScriptComponent {
     @input
     @hint("Should UV coordinates be clamped to 0-1 range?")
     clampToBounds: boolean = true;
+
+    @input
+    @hint("Path to cameraCrop within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')")
+    cameraCropPath: string = "ImageAnchor/CameraCrop";
 
     // Events
     private onUVChangedEvent = new Event<vec2>();
@@ -31,7 +35,8 @@ export class InteractableUVMapper extends BaseScriptComponent {
     private controller: PictureController | null = null;
     private activeScanner: SceneObject | null = null;
     private activeInteractable: SceneObject | null = null;
-    private activeInteractableTransform: Transform | null = null;
+    private activeCameraCrop: SceneObject | null = null;
+    private activeCameraCropTransform: Transform | null = null;
     private activeInteractableComponent: Interactable | null = null;
     private activeScannerId: string | null = null;
     private currentUV: vec2 = new vec2(0.5, 0.5);
@@ -51,8 +56,6 @@ export class InteractableUVMapper extends BaseScriptComponent {
 
         // Subscribe to active scanner changes
         this.controller.onActiveScannerChanged.add(this.onActiveScannerChanged.bind(this));
-        
-        print("InteractableUVMapper: Initialized and subscribed to PictureController");
     }
 
     private onActiveScannerChanged(event: ActiveScannerEvent) {
@@ -63,25 +66,63 @@ export class InteractableUVMapper extends BaseScriptComponent {
         this.activeInteractable = event.interactableObject;
         this.activeScannerId = event.scannerId;
         
-        if (this.activeInteractable) {
-            this.activeInteractableTransform = this.activeInteractable.getTransform();
+        if (this.activeScanner && this.activeInteractable) {
+            // Find cameraCrop in scanner hierarchy
+            this.activeCameraCrop = this.findCameraCropInScanner(this.activeScanner);
             
-            // Get the Interactable component
-            this.activeInteractableComponent = this.activeInteractable.getComponent(
-                Interactable.getTypeName()
-            ) as Interactable;
-            
-            if (this.activeInteractableComponent) {
-                this.setupInteractableEvents();
-                print("InteractableUVMapper: Tracking scanner " + this.activeScannerId);
+            if (this.activeCameraCrop) {
+                this.activeCameraCropTransform = this.activeCameraCrop.getTransform();
+                
+                // Get the Interactable component from the interactable object
+                this.activeInteractableComponent = this.activeInteractable.getComponent(
+                    Interactable.getTypeName()
+                ) as Interactable;
+                
+                if (this.activeInteractableComponent) {
+                    this.setupInteractableEvents();
+                    print("InteractableUVMapper: Tracking scanner " + this.activeScannerId);
+                } else {
+                    print("InteractableUVMapper: No Interactable component found");
+                }
             } else {
-                print("InteractableUVMapper: No Interactable component found");
+                print("InteractableUVMapper: Could not find cameraCrop in scanner hierarchy");
             }
         } else {
-            this.activeInteractableTransform = null;
+            this.activeCameraCropTransform = null;
+            this.activeCameraCrop = null;
             this.activeInteractableComponent = null;
             print("InteractableUVMapper: No active scanner");
         }
+    }
+
+    /**
+     * Find the cameraCrop object within a scanner's hierarchy
+     */
+    private findCameraCropInScanner(scanner: SceneObject): SceneObject | null {
+        if (!this.cameraCropPath) {
+            return scanner;
+        }
+        
+        const pathParts = this.cameraCropPath.split('/');
+        let current = scanner;
+        
+        for (let part of pathParts) {
+            let found = false;
+            for (let i = 0; i < current.getChildrenCount(); i++) {
+                let child = current.getChild(i);
+                if (child.name === part) {
+                    current = child;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                print("InteractableUVMapper: Could not find path part '" + part + "' in scanner hierarchy");
+                return null;
+            }
+        }
+        
+        return current;
     }
 
     private setupInteractableEvents() {
@@ -90,7 +131,7 @@ export class InteractableUVMapper extends BaseScriptComponent {
         // Trigger Start
         this.unsubscribeInteractable.push(
             this.activeInteractableComponent.onInteractorTriggerStart.add((e: InteractorEvent) => {
-                if (!this.activeInteractableTransform) return;
+                if (!this.activeCameraCropTransform) return;
                 
                 if (e.interactor && e.interactor.planecastPoint) {
                     const uv = this.worldToUV(e.interactor.planecastPoint);
@@ -106,7 +147,7 @@ export class InteractableUVMapper extends BaseScriptComponent {
         // Trigger Update
         this.unsubscribeInteractable.push(
             this.activeInteractableComponent.onTriggerUpdate.add((e: InteractorEvent) => {
-                if (!this.activeInteractableTransform) return;
+                if (!this.activeCameraCropTransform) return;
                 
                 if (this.isDragging && e.interactor && e.interactor.planecastPoint) {
                     const uv = this.worldToUV(e.interactor.planecastPoint);
@@ -134,14 +175,14 @@ export class InteractableUVMapper extends BaseScriptComponent {
     }
 
     /**
-     * Convert world position to UV coordinates on the active interactable plane
+     * Convert world position to UV coordinates on the active cameraCrop plane
      */
     private worldToUV(worldPosition: vec3): vec2 {
-        if (!this.activeInteractableTransform) {
+        if (!this.activeCameraCropTransform) {
             return new vec2(0.5, 0.5);
         }
 
-        const localPos = this.activeInteractableTransform.getInvertedWorldTransform()
+        const localPos = this.activeCameraCropTransform.getInvertedWorldTransform()
             .multiplyPoint(worldPosition);
         
         let uv = new vec2(localPos.x + 0.5, localPos.y + 0.5);
@@ -171,6 +212,10 @@ export class InteractableUVMapper extends BaseScriptComponent {
 
     public getActiveInteractable(): SceneObject | null {
         return this.activeInteractable;
+    }
+
+    public getActiveCameraCrop(): SceneObject | null {
+        return this.activeCameraCrop;
     }
 
     public getActiveScannerId(): string | null {

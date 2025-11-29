@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/56589407-e593-4146-9d3f-05b7ee28aa6b>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 19e2d910-0194-4099-b9e6-bea1e2ca804b
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 19e2d910-0194-4099-b9e6-bea1e2ca804b
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 816ac1e9-accb-4315-9b53-dd4ffcf991ce
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/816ac1e9-accb-4315-9b53-dd4ffcf991ce>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 517ce637-95d0-4f19-bc00-1121a879727d
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    gridSize: false
+    normalOffset: false
+    sampledColorObject: false
+    sampledColorText: false
+    uvOffset: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - sampledColorText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      sampledColorObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      normalOffset: 0.500000
+      uvOffset: !<Vec2> {x: 0.000000, y: 0.000000}
+      gridSize: !<float> 9.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.Text sampledColorText {"hint":"Text component to display the sampled color as HEX code"}'
+    - '// @input SceneObject sampledColorObject {"hint":"Object whose material mainColor will be set to the sampled color"}'
+    - "// @input float normalOffset = 0.5 {\"hint\":\"Offset distance along the plane's normal direction (positive = towards viewer)\"}"
+    - '// @input vec2 uvOffset = {0,0} {"hint":"Additional offset in UV space (applied before world conversion)"}'
+    - '// @input float gridSize = 9 {"hint":"Grid size for cursor plane texture (odd number, e.g., 9 = 9x9 grid)"}'
