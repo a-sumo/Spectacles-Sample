@@ -3,33 +3,32 @@ dock:
   main:
     items:
       - items:
-          - persistentName: Snap.Plugin.Gui.SceneHierarchyEditor
-            Uuid: 6778142c-0629-4c2a-afc3-92a65ce29e1a
-          - persistentName: Snap.Plugin.Gui.Graph.Editor
-            Uuid: e9e9f64c-a36d-4594-a616-b6d9c2ebe069
-        type: section
-        current: 0
-      - items:
           - items:
-              - persistentName: Snap.Plugin.Gui.SceneEditor
-                Uuid: a14d85d7-9a15-42a6-913e-3f24dea267c2
+              - persistentName: Snap.Plugin.Gui.SceneHierarchyEditor
+                Uuid: 6778142c-0629-4c2a-afc3-92a65ce29e1a
+              - persistentName: Snap.Plugin.Gui.Graph.Editor
+                Uuid: e9e9f64c-a36d-4594-a616-b6d9c2ebe069
+              - persistentName: Snap.Plugin.Gui.ScriptEditor
+                Uuid: 2b7e8c61-dd4e-4a06-806e-053ddd2a1a0d
             type: section
             current: 0
           - items:
-              - persistentName: Snap.Plugin.Gui.LoggerPanel
-                Uuid: 81de965d-0c94-4d28-82cf-901740003a1f
+              - persistentName: Snap.Plugin.Gui.AssetBrowser
+                Uuid: cd11ace2-8507-4965-a068-d85c26031a6b
             type: section
             current: 0
         sizes:
-          - 354
-          - 360
+          - 395
+          - 319
         type: splitter
         orientation: vertical
       - items:
+          - persistentName: Snap.Plugin.Gui.LoggerPanel
+            Uuid: 81de965d-0c94-4d28-82cf-901740003a1f
           - persistentName: Snap.Plugin.Gui.InspectorPanel
             Uuid: 780d9164-e681-4de1-b586-5213ed5523b9
         type: section
-        current: 0
+        current: 1
       - items:
           - persistentName: Snap.Plugin.Gui.PreviewPanel
             Uuid: 52fc2a95-41a3-427b-a138-1e00eb1c405e
@@ -38,26 +37,8 @@ dock:
         type: section
         current: 0
     sizes:
-      - 648
-      - 71
-      - 383
-      - 368
+      - 603
+      - 327
+      - 543
     type: splitter
     orientation: horizontal
-  windows:
-    - items:
-        - items:
-            - persistentName: Snap.Plugin.Gui.AssetBrowser
-              Uuid: cd11ace2-8507-4965-a068-d85c26031a6b
-          type: section
-          current: 0
-      sizes:
-        - 274
-      type: splitter
-      orientation: vertical
-      geometry:
-        x: 18
-        y: 552
-        w: 648
-        h: 276
-      screen: Built-in Retina Display

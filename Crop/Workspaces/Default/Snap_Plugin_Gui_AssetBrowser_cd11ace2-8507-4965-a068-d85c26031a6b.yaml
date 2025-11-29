@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 941
+    size: 939
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -61,7 +61,6 @@ CollapsedEntities:
       - Images/thinOutline.png
       - Images/webIcon.png
       - MaterialParams.png
-      - Materials
       - Materials/Base.png
       - Materials/Black.mat
       - Materials/CamFeedCrop.mat
@@ -195,7 +194,7 @@ CollapsedEntities:
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
       - Scripts/SelectionUVController.ts
-      - SpectaclesInteractionKit.lspkg
+      - Scripts/color.ts
       - SpectaclesInteractionKit.lspkg/Assets/Audio
       - SpectaclesInteractionKit.lspkg/Assets/Audio/HoverAudioTrack.wav
       - SpectaclesInteractionKit.lspkg/Assets/Audio/TriggerEndAudioTrack.wav
@@ -785,7 +784,6 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
-      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Audio/HoverAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/SliderProgressionAudioTrack.wav

@@ -58,6 +58,9 @@
     - Port_Input2_N015:
         typeIdx: 1
         value: 1.000000
+    - Port_Input_N021:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     - Port_LODValue_N012:
         typeIdx: 1
         value: 0.000000
@@ -79,6 +82,9 @@
     - Port_Output_N006:
         typeIdx: 5
         value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+    - Port_Output_N015:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     - Port_Output_N020:
         typeIdx: 5
         value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
@@ -94,6 +100,9 @@
     - Port_UVCoord_N012:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
+    - Port_Value_N021:
+        typeIdx: 5
+        value: {x: 0.000000, y: 1.000000, z: 0.955093, w: 1.000000}
     - Port_WorldNormal_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 1.000000, z: 0.000000}
@@ -112,6 +121,12 @@
     - Port_gridColor_N005:
         typeIdx: 5
         value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    - Port_gridColor_N029:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    - Port_selectionUV_N028:
+        typeIdx: 3
+        value: {x: 0.500000, y: 0.500000}
     - Port_size_N006:
         typeIdx: 1
         value: 0.220000
@@ -121,15 +136,24 @@
     - Port_softness_N005:
         typeIdx: 1
         value: 0.020000
+    - Port_softness_N028:
+        typeIdx: 1
+        value: 0.000000
     - Port_strokeColor_N006:
         typeIdx: 5
         value: {x: 0.000000, y: 0.000000, z: 1.000000, w: 1.000000}
+    - Port_strokeColor_N028:
+        typeIdx: 5
+        value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
     - Port_stroke_N005:
         typeIdx: 1
         value: 0.005000
     - Port_surfaceUVCoords_N006:
         typeIdx: 3
         value: {x: 0.500000, y: 0.000000}
+    - gridStrokeWidth:
+        typeIdx: 1
+        value: 0.040000
   DepthWrite: true
   DepthTest: true
   DepthFunction: LessEqual
@@ -142,8 +166,11 @@
   InstanceCount: 1
   Defines:
     []
-  BlendMode: PremultipliedAlpha
+  BlendMode: Screen
   Properties:
+    Port_Amount_N021:
+      typeIdx: 1
+      value: 2.000000
     Port_Center_N003:
       typeIdx: 3
       value: {x: 0.500000, y: 0.500000}
@@ -152,13 +179,10 @@
       value: 1.000000
     Port_Input1_N023:
       typeIdx: 1
-      value: 1.100000
+      value: 1.500000
     Port_Offset_N016:
       typeIdx: 3
       value: {x: 0.000000, y: 0.000000}
-    Port_Value_N021:
-      typeIdx: 5
-      value: {x: 0.000000, y: 1.000000, z: 0.955093, w: 1.000000}
     Port_cellSize_N029:
       typeIdx: 1
       value: 1.000000
@@ -177,22 +201,25 @@
     Port_radius_N011:
       typeIdx: 1
       value: 0.030000
-    Port_selectionUV_N028:
-      typeIdx: 3
-      value: {x: 0.500000, y: 0.500000}
-    Port_softness_N028:
+    Port_radius_N028:
       typeIdx: 1
-      value: 0.000000
+      value: 0.030000
     Port_softness_N029:
       typeIdx: 1
       value: 0.050000
     Port_strokeWidth_N006:
       typeIdx: 1
       value: 0.040000
+    Port_strokeWidth_N028:
+      typeIdx: 1
+      value: 0.000000
     Port_surfaceWorldScale_N006:
       typeIdx: 4
       value: {x: 1.000000, y: 1.000000, z: 1.000000}
     Port_surfaceWorldScale_N011:
+      typeIdx: 4
+      value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Port_surfaceWorldScale_N028:
       typeIdx: 4
       value: {x: 0.000000, y: 0.000000, z: 0.000000}
     Port_uvOffset_N006:
@@ -201,6 +228,9 @@
     Port_uvOffset_N011:
       typeIdx: 3
       value: {x: 0.500000, y: 0.500000}
+    Port_uvOffset_N028:
+      typeIdx: 3
+      value: {x: 0.000000, y: 0.000000}
     PreviewEnabled:
       typeIdx: 0
       value: 0
@@ -210,12 +240,12 @@
     Tweak_N34:
       typeIdx: 5
       value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    centerSquareColor:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     gridScale:
       typeIdx: 1
       value: 1.000000
-    gridStrokeWidth:
-      typeIdx: 1
-      value: 0.020000
     mainTexture:
       typeIdx: 9
       value:

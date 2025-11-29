@@ -63,7 +63,6 @@ export class PictureBehavior extends BaseScriptComponent {
         this.cropRegion.enabled = false;
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
-          print("his.picAnchorTrans.getWorldScale();" + this.picAnchorTrans.getWorldScale());
         this.captureRendMesh.mainMaterial.mainPass.surfaceWorldScale = this.picAnchorTrans.getWorldScale();
       });
 
@@ -177,12 +176,9 @@ export class PictureBehavior extends BaseScriptComponent {
       this.picAnchorTrans.setWorldPosition(bottomRightPos);
       var worldWidth = bottomRightPos.distance(bottomLeftPos);
       var worldHeight = topRightPos.distance(bottomRightPos);
-      print("worldWidth"+worldWidth);
-      print("worldHeight"+worldHeight);
+
       this.picAnchorTrans.setWorldScale(new vec3(worldWidth, worldHeight, 1));
-      globalThis.textLogger.log("this.picAnchorTrans" + this.picAnchorTrans.getWorldScale());
       this.captureRendMesh.mainPass.surfaceWorldScale = this.picAnchorTrans.getWorldScale();
-      print(this.picAnchorTrans.getWorldScale());
       var rectRight = topRightPos.sub(topLeftPos).normalize();
       var rectUp = topLeftPos.sub(bottomLeftPos).normalize();
       var rectForward = rectRight.cross(rectUp).normalize();

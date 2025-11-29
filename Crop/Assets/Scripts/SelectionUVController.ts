@@ -8,6 +8,18 @@ import NativeLogger from "SpectaclesInteractionKit.lspkg/Utils/NativeLogger";
 import { validate } from "SpectaclesInteractionKit.lspkg/Utils/validate";
 
 const TAG = "[SelectionUVController]";
+const ONE_OVER_255 = 0.00392156862;
+
+/**
+ * Convert RGB values (0-255) to hex string
+ */
+function rgbToHex(r: number, g: number, b: number): string {
+    const toHex = (value: number): string => {
+        const hex = Math.round(value).toString(16).toUpperCase();
+        return hex.length === 1 ? '0' + hex : hex;
+    };
+    return '#' + toHex(r) + toHex(g) + toHex(b);
+}
 
 /**
  * SelectionUVController
@@ -30,6 +42,14 @@ export class SelectionUVController extends BaseScriptComponent {
     @input
     @hint("Cursor plane that follows the selection with normal offset. Will be scaled to match mainObject's aspect ratio.")
     cursorPlane: SceneObject;
+
+    @input
+    @hint("Text component to display the sampled color as HEX code")
+    sampledColorText: Text;
+
+    @input
+    @hint("Object whose material mainColor will be set to the sampled color")
+    sampledColorObject: SceneObject;
 
     @input
     @hint("Offset distance along the plane's normal direction (positive = towards viewer)")
@@ -92,6 +112,7 @@ export class SelectionUVController extends BaseScriptComponent {
 
     // Cursor plane material (for texture updates)
     private cursorPlaneMaterial: any = null;
+    private sampledColorMaterial: any = null;
     private validatedGridSize: number = 9;
 
     // Public events
@@ -130,6 +151,7 @@ export class SelectionUVController extends BaseScriptComponent {
         } else {
             this.log.w("No RenderMeshVisual found on main object");
         }
+
         // Setup components
         this.setupCollider();
         this.setupInteractable();
@@ -144,6 +166,14 @@ export class SelectionUVController extends BaseScriptComponent {
             if (cursorRenderMesh) {
                 this.cursorPlaneMaterial = cursorRenderMesh.mainPass;
                 this.cursorPlaneMaterial.gridScale = this.validatedGridSize;
+            }
+        }
+
+        // Setup sampled color object material
+        if (this.sampledColorObject) {
+            const colorRenderMesh = this.sampledColorObject.getComponent("RenderMeshVisual");
+            if (colorRenderMesh) {
+                this.sampledColorMaterial = colorRenderMesh.mainPass;
             }
         }
 
@@ -503,6 +533,7 @@ export class SelectionUVController extends BaseScriptComponent {
     /**
      * Samples a gridSize x gridSize region from the source texture (mainObject's captureImage)
      * centered at the given UV and applies it to the cursor plane's material.
+     * Also extracts the center pixel color for display.
      * 
      * All texture operations are self-contained - no class-level texture state needed.
      */
@@ -547,6 +578,42 @@ export class SelectionUVController extends BaseScriptComponent {
 
         // Apply to cursor plane material
         this.cursorPlaneMaterial.mainTexture = sampledTexture;
+
+        // Extract center pixel color and update sampled color display
+        this.updateSampledColor(pixelBuffer, gridSize, halfGrid);
+    }
+
+    /**
+     * Extracts the center pixel color from the sampled buffer and updates
+     * the sampled color text and object material.
+     */
+    private updateSampledColor(pixelBuffer: Uint8Array, gridSize: number, halfGrid: number): void {
+        // Calculate center pixel index in the buffer
+        // Center is at (halfGrid, halfGrid) in the grid
+        const centerPixelIndex = (halfGrid * gridSize + halfGrid) * 4;
+
+        // Extract RGBA values (0-255)
+        const r = pixelBuffer[centerPixelIndex];
+        const g = pixelBuffer[centerPixelIndex + 1];
+        const b = pixelBuffer[centerPixelIndex + 2];
+        const a = pixelBuffer[centerPixelIndex + 3];
+
+        // Update text with hex code
+        if (this.sampledColorText) {
+            this.sampledColorText.text = rgbToHex(r, g, b);
+        }
+
+        // Update color object material
+        if (this.sampledColorMaterial) {
+            const sampledColor = new vec4(
+                r * ONE_OVER_255,
+                g * ONE_OVER_255,
+                b * ONE_OVER_255,
+                1.0
+            );
+            this.sampledColorMaterial.mainColor = sampledColor;
+            // this.cursorPlaneMaterial.centerSquareColor = sampledColor;
+        }
     }
 
     // ==================== Public API ====================
