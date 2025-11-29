@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 776
+    size: 778
     values:
       - ""
       - 3DModels
@@ -73,6 +73,8 @@ CollapsedEntities:
       - Materials/SWIS_tile.mat
       - Materials/Shapes/Rounded Corners/Rounded Corner Construction.png
       - Materials/Shapes/Rounded Corners/Rounded Corners.ss_graph
+      - Materials/Shapes/Rounded Rectangle Fill/Rounded Rectangle Fill.ss_graph
+      - Materials/Shapes/Rounded Stroke/Rounded Square Stroke.ss_graph
       - Materials/SphereOutline.mat
       - Materials/Unit Plane.mesh
       - Materials/loadingGif.mat
