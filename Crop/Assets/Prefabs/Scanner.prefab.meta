@@ -49,6 +49,21 @@
     - !<own> b114f90e-ebba-4263-78a1-3429d509ca61
     - !<own> 67cce643-8585-4156-5147-a9e986087bdb
     - !<own> 7cc20b95-e0e6-4517-7b32-c55831ca40f2
+- !<SceneObject/3e088d3b-a81a-4e70-9aaa-ea9d36c5b4bf>
+  PrefabRemaps:
+    []
+  Name: Texture Grid Plane
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d767e32b-a3ab-4ec3-aea0-19e801243b43
 - !<Text/514e1417-7a6b-4994-756e-c5a690e8c359>
   PrefabRemaps:
     []
@@ -180,7 +195,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: false
+  ShowCollider: true
 - !<RenderMeshVisual/67eb30a5-b8a5-4ceb-5e24-4ee189d021e4>
   PrefabRemaps:
     []
@@ -236,7 +251,7 @@
   PrefabRemaps:
     []
   Name: ContainerFrame
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
   ScriptInputsDefault:
     border: true
@@ -426,7 +441,10 @@
   Enabled: true
   ScriptAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
   ScriptInputsDefault:
+    mainObject: true
     initialUV: true
+    cursorPlane: true
+    uvOffset: true
     useFilter: true
     minCutoff: true
     beta: true
@@ -435,8 +453,11 @@
     {}
   ScriptInputs:
     "":
-      targetMesh: !<reference.SceneObject> 352fd40b-f156-4fdc-76e9-d4683baee63b
+      mainObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
+      cursorPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      normalOffset: 0.050000
+      uvOffset: !<Vec2> {x: 0.000000, y: 0.000000}
       useFilter: true
       minCutoff: !<float> 2.000000
       beta: 0.015000
@@ -444,6 +465,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/d767e32b-a3ab-4ec3-aea0-19e801243b43>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 39c41230-4848-4655-99be-2f7445ed42b5
+  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/d935d5a4-f0ad-4d2b-674e-a2e31f52bd09>
   PrefabRemaps:
     []
@@ -493,6 +534,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 352fd40b-f156-4fdc-76e9-d4683baee63b
+    - !<own> 3e088d3b-a81a-4e70-9aaa-ea9d36c5b4bf
   Components:
     []
 - !<SceneObject/e78d4205-e755-478b-61d7-fe26e350d91e>

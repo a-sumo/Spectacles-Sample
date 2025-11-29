@@ -3,7 +3,7 @@ import { Interactor } from "SpectaclesInteractionKit.lspkg/Core/Interactor/Inter
 import { InteractorEvent } from "SpectaclesInteractionKit.lspkg/Core/Interactor/InteractorEvent";
 import { InteractionManager } from "SpectaclesInteractionKit.lspkg/Core/InteractionManager/InteractionManager";
 import Event, { PublicApi, unsubscribe } from "SpectaclesInteractionKit.lspkg/Utils/Event";
-import { OneEuroFilterConfig, OneEuroFilterVec2 } from "SpectaclesInteractionKit.lspkg/Utils/OneEuroFilter";
+import { OneEuroFilterConfig, OneEuroFilterVec2, OneEuroFilterVec3 } from "SpectaclesInteractionKit.lspkg/Utils/OneEuroFilter";
 import NativeLogger from "SpectaclesInteractionKit.lspkg/Utils/NativeLogger";
 import { validate } from "SpectaclesInteractionKit.lspkg/Utils/validate";
 
@@ -20,12 +20,24 @@ const TAG = "[SelectionUVController]";
 @component
 export class SelectionUVController extends BaseScriptComponent {
     @input
-    @hint("Target mesh whose material selectionUV will be updated. If not set, uses this SceneObject.")
-    targetMesh: SceneObject;
+    @hint("Main object with the material whose selectionUV will be updated. If not set, uses this SceneObject.")
+    mainObject: SceneObject;
 
     @input
     @hint("Initial selection UV position")
     initialUV: vec2 = new vec2(0.5, 0.5);
+
+    @input
+    @hint("Cursor plane that follows the selection with normal offset. Will be scaled to match mainObject's aspect ratio.")
+    cursorPlane: SceneObject;
+
+    @input
+    @hint("Offset distance along the plane's normal direction (positive = towards viewer)")
+    normalOffset: number = 0.5;
+
+    @input
+    @hint("Additional offset in UV space (applied before world conversion)")
+    uvOffset: vec2 = new vec2(0, 0);
 
     @input
     @hint("Apply filtering to smooth interaction")
@@ -68,6 +80,12 @@ export class SelectionUVController extends BaseScriptComponent {
 
     // Filtering
     private uvFilter: OneEuroFilterVec2 | null = null;
+    private positionFilter: OneEuroFilterVec3 | null = null;
+
+    // Object transforms
+    private mainObjectTransform: Transform | null = null;
+    private cursorPlaneTransform: Transform | null = null;
+    private cursorPlaneOriginalScale: vec3 = vec3.one();
 
     // Public events
     private onSelectionChangedEvent = new Event<vec2>();
@@ -92,19 +110,27 @@ export class SelectionUVController extends BaseScriptComponent {
     private onStart(): void {
         this.transform = this.sceneObject.getTransform();
 
-        // Setup material reference
-        const target = this.targetMesh ?? this.sceneObject;
-        const renderMesh = target.getComponent("RenderMeshVisual");
+        // Setup main object (the one with the material)
+        const mainObj = this.mainObject ?? this.sceneObject;
+        this.mainObjectTransform = mainObj.getTransform();
+        
+        const renderMesh = mainObj.getComponent("RenderMeshVisual");
         if (renderMesh) {
             this.material = renderMesh.mainPass;
         } else {
-            this.log.w("No RenderMeshVisual found on target mesh");
+            this.log.w("No RenderMeshVisual found on main object");
         }
 
         // Setup components
         this.setupCollider();
         this.setupInteractable();
         this.setupFilter();
+
+        // Setup cursor plane transform
+        if (this.cursorPlane) {
+            this.cursorPlaneTransform = this.cursorPlane.getTransform();
+            this.cursorPlaneOriginalScale = this.cursorPlaneTransform.getLocalScale();
+        }
 
         // Set initial UV
         this.updateSelectionUV(this.initialUV);
@@ -226,14 +252,16 @@ export class SelectionUVController extends BaseScriptComponent {
     }
 
     private setupFilter(): void {
+        const filterConfig: OneEuroFilterConfig = {
+            frequency: 60,
+            minCutoff: this.minCutoff,
+            beta: this.beta,
+            dcutoff: this.dcutoff
+        };
+
         if (this.useFilter) {
-            const filterConfig: OneEuroFilterConfig = {
-                frequency: 60,
-                minCutoff: this.minCutoff,
-                beta: this.beta,
-                dcutoff: this.dcutoff
-            };
             this.uvFilter = new OneEuroFilterVec2(filterConfig);
+            this.positionFilter = new OneEuroFilterVec3(filterConfig);
         }
     }
 
@@ -290,6 +318,9 @@ export class SelectionUVController extends BaseScriptComponent {
         // Reset filter on new drag
         if (this.uvFilter) {
             this.uvFilter.reset();
+        }
+        if (this.positionFilter) {
+            this.positionFilter.reset();
         }
 
         this.isDragging = true;
@@ -394,8 +425,64 @@ export class SelectionUVController extends BaseScriptComponent {
             this.material.selectionUV = this.selectionUV;
         }
 
+        // Update cursor plane position based on UV
+        if (this.cursorPlaneTransform) {
+            this.updateCursorPlanePosition(this.selectionUV);
+        }
+
         // Emit event
         this.onSelectionChangedEvent.invoke(this.selectionUV);
+    }
+
+    /**
+     * Convert UV coordinates to world position on the plane, then apply normal offset.
+     * Compensates cursor plane scale for mainObject's aspect ratio.
+     */
+    private updateCursorPlanePosition(uv: vec2): void {
+        if (!this.cursorPlaneTransform || !this.mainObjectTransform) return;
+
+        // Get the world scale of the mainObject (the texture plane)
+        const mainObjectScale = this.mainObjectTransform.getWorldScale();
+
+        // Apply UV offset before converting to world position
+        const offsetUV = new vec2(
+            uv.x + this.uvOffset.x,
+            uv.y + this.uvOffset.y
+        );
+
+        // Convert UV (0-1) to local position on the plane
+        // UV (0.5, 0.5) = center = local (0, 0)
+        // Use mainObject's world scale to determine actual plane dimensions
+        const localX = (offsetUV.x - 0.5) * mainObjectScale.x;
+        const localY = (offsetUV.y - 0.5) * mainObjectScale.y;
+        const localPos = new vec3(localX, localY, 0);
+
+        // Transform to world position using mainObject's rotation and position
+        const worldRotation = this.mainObjectTransform.getWorldRotation();
+        const worldPosition = this.mainObjectTransform.getWorldPosition();
+        let cursorPosition = worldPosition.add(worldRotation.multiplyVec3(localPos));
+
+        // Add normal offset along mainObject's forward direction
+        const planeNormal = worldRotation.multiplyVec3(vec3.forward());
+        cursorPosition = cursorPosition.add(planeNormal.uniformScale(this.normalOffset));
+
+        // Apply filtering if enabled
+        if (this.useFilter && this.positionFilter) {
+            cursorPosition = this.positionFilter.filter(cursorPosition, getTime());
+        }
+
+        // Set the cursor plane's world position
+        this.cursorPlaneTransform.setWorldPosition(cursorPosition);
+
+        // Compensate cursor plane scale for mainObject's aspect ratio
+        // If mainObject is stretched (e.g., scaleX=2, scaleY=1), apply inverse aspect to keep cursorPlane undistorted
+        // Using original scale as base to avoid cumulative scaling
+        const aspectRatioCompensation = mainObjectScale.y / mainObjectScale.x;
+        this.cursorPlaneTransform.setLocalScale(new vec3(
+            this.cursorPlaneOriginalScale.x * aspectRatioCompensation,
+            this.cursorPlaneOriginalScale.y,
+            this.cursorPlaneOriginalScale.z
+        ));
     }
 
     // ==================== Public API ====================
@@ -407,7 +494,22 @@ export class SelectionUVController extends BaseScriptComponent {
         if (this.uvFilter) {
             this.uvFilter.reset();
         }
+        if (this.positionFilter) {
+            this.positionFilter.reset();
+        }
         this.updateSelectionUV(uv);
+    }
+
+    /**
+     * Programmatically set the cursor plane's world position
+     */
+    public setCursorPlanePosition(worldPosition: vec3): void {
+        if (this.positionFilter) {
+            this.positionFilter.reset();
+        }
+        if (this.cursorPlaneTransform) {
+            this.cursorPlaneTransform.setWorldPosition(worldPosition);
+        }
     }
 
     /**

@@ -51,7 +51,7 @@ dock:
     sizes:
       - 477
       - 266
-      - 315
-      - 412
+      - 341
+      - 386
     type: splitter
     orientation: horizontal

@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 780
+    size: 781
     values:
       - ""
       - 3DModels
@@ -60,7 +60,6 @@ CollapsedEntities:
       - Images/loading.gif
       - Images/thinOutline.png
       - Images/webIcon.png
-      - Materials
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
       - Materials/CaptureVisual.mat
@@ -73,8 +72,10 @@ CollapsedEntities:
       - Materials/SWIS_flat_color.ss_graph
       - Materials/SWIS_frame.mat
       - Materials/SWIS_tile.mat
+      - Materials/Shapes/Rounded Corners
       - Materials/Shapes/Rounded Corners/Rounded Corner Construction.png
       - Materials/Shapes/Rounded Corners/Rounded Corners.ss_graph
+      - Materials/Shapes/Rounded Rectangle Fill
       - Materials/Shapes/Rounded Rectangle Fill/Rounded Rectangle Fill.ss_graph
       - Materials/Shapes/Rounded Stroke/Rounded Square Stroke.ss_graph
       - Materials/SphereOutline.mat

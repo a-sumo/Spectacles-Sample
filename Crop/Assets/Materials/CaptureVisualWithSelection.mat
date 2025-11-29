@@ -491,10 +491,10 @@
       value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     Port_offset_N005:
       typeIdx: 1
-      value: 0.100000
+      value: 0.010000
     Port_offset_N018:
       typeIdx: 1
-      value: 0.200000
+      value: 0.100000
     Port_radius_N005:
       typeIdx: 1
       value: 0.020000

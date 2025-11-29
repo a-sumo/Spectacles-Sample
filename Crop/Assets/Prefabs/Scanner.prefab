@@ -170,7 +170,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: false
+  ShowCollider: true
 - !<RenderMeshVisual/67eb30a5-b8a5-4ceb-a1db-b11e762fde1b>
   PrefabRemaps:
     []
@@ -221,7 +221,7 @@
   PrefabRemaps:
     []
   Name: ContainerFrame
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
   ScriptInputsDefault:
     border: true
@@ -411,7 +411,10 @@
   Enabled: true
   ScriptAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
   ScriptInputsDefault:
+    mainObject: true
     initialUV: true
+    cursorPlane: true
+    uvOffset: true
     useFilter: true
     minCutoff: true
     beta: true
@@ -420,8 +423,11 @@
     {}
   ScriptInputs:
     "":
-      targetMesh: !<reference.SceneObject> 352fd40b-f156-4fdc-8916-2b97c45119c4
+      mainObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
+      cursorPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      normalOffset: 0.050000
+      uvOffset: !<Vec2> {x: 0.000000, y: 0.000000}
       useFilter: true
       minCutoff: !<float> 2.000000
       beta: 0.015000
@@ -429,6 +435,41 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/b3864880-82d0-41ad-a24d-1cd6b5d66d5c>
+  PrefabRemaps:
+    []
+  Name: Texture Grid Plane
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> cf0f0bf0-19d1-4ee1-b9e2-7767adf449da
+- !<RenderMeshVisual/cf0f0bf0-19d1-4ee1-b9e2-7767adf449da>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 39c41230-4848-4655-99be-2f7445ed42b5
+  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/d935d5a4-f0ad-4d2b-98b1-5d1ce0ad42f6>
   PrefabRemaps:
     - 014c8b66-b9b9-4a3f-909f-66fdd92ef154: 014c8b66-b9b9-4a3f-6f60-990226d10eab
@@ -448,6 +489,8 @@
     - a44dd883-5484-4d12-8dfa-09a6a6619e3e: a44dd883-5484-4d12-7205-f659599e61c1
     - a702576c-c96b-4f13-8a9e-660c4de6898f: a702576c-c96b-4f13-7561-99f3b2197670
     - b114f90e-ebba-4263-875e-cbd62af6359e: b114f90e-ebba-4263-78a1-3429d509ca61
+    - b3864880-82d0-41ad-a24d-1cd6b5d66d5c: 3e088d3b-a81a-4e70-9aaa-ea9d36c5b4bf
+    - cf0f0bf0-19d1-4ee1-b9e2-7767adf449da: d767e32b-a3ab-4ec3-aea0-19e801243b43
     - d935d5a4-f0ad-4d2b-98b1-5d1ce0ad42f6: d935d5a4-f0ad-4d2b-674e-a2e31f52bd09
     - dbadeb0e-265f-4e92-995e-1d4d357caa80: dbadeb0e-265f-4e92-66a1-e2b2ca83557f
     - de9e5224-74f6-44f4-8edb-bb71c93029a9: de9e5224-74f6-44f4-7124-448e36cfd656
@@ -500,6 +543,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 352fd40b-f156-4fdc-8916-2b97c45119c4
+    - !<own> b3864880-82d0-41ad-a24d-1cd6b5d66d5c
   Components:
     []
 - !<SceneObject/e78d4205-e755-478b-9e28-01d91caf26e1>
