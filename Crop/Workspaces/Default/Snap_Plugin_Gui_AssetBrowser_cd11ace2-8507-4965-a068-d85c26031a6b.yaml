@@ -53,14 +53,12 @@ CollapsedEntities:
       - EyeDropperMaterials.lspkg/unlitTexture.ss_graph
       - EyeDropperMaterials.lspkg/unlitTextureColor.ss_graph
       - EyeDropperMaterials.lspkg/webIcon.mat
-      - Images
       - Images/PicMask.png
       - Images/PicOutline.png
       - Images/SWIS_frame.jpg
       - Images/loading.gif
       - Images/thinOutline.png
       - Images/webIcon.png
-      - Materials
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
       - Materials/CaptureVisual.mat
@@ -73,6 +71,8 @@ CollapsedEntities:
       - Materials/SWIS_flat_color.ss_graph
       - Materials/SWIS_frame.mat
       - Materials/SWIS_tile.mat
+      - Materials/Shapes/Rounded Corners/Rounded Corner Construction.png
+      - Materials/Shapes/Rounded Corners/Rounded Corners.ss_graph
       - Materials/SphereOutline.mat
       - Materials/Unit Plane.mesh
       - Materials/loadingGif.mat
