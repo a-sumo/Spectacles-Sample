@@ -26,8 +26,12 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    beta: false
+    dcutoff: false
     initialUV: false
+    minCutoff: false
     targetMesh: false
+    useFilter: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,9 +43,17 @@
   DefaultScriptInputs:
     - targetMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
+      useFilter: true
+      minCutoff: !<float> 2.000000
+      beta: 0.015000
+      dcutoff: !<float> 1.000000
   ScriptTypes:
     -
       {}
   InputLines:
     - '// @input SceneObject targetMesh {"hint":"Target mesh whose material selectionUV will be updated. If not set, uses this SceneObject."}'
     - '// @input vec2 initialUV = {0.5,0.5} {"hint":"Initial selection UV position"}'
+    - '// @input bool useFilter = true {"hint":"Apply filtering to smooth interaction"}'
+    - '// @input float minCutoff = 2 {"hint":"Filter min cutoff - lower = smoother but more lag", "showIf":"useFilter", "showIfValue":true}'
+    - '// @input float beta = 0.015 {"hint":"Filter beta - higher = less lag but more jitter", "showIf":"useFilter", "showIfValue":true}'
+    - '// @input float dcutoff = 1 {"hint":"Filter derivative cutoff", "showIf":"useFilter", "showIfValue":true}'

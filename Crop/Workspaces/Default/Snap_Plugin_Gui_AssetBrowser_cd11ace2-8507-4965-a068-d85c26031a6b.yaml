@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 778
+    size: 780
     values:
       - ""
       - 3DModels
@@ -53,12 +53,14 @@ CollapsedEntities:
       - EyeDropperMaterials.lspkg/unlitTexture.ss_graph
       - EyeDropperMaterials.lspkg/unlitTextureColor.ss_graph
       - EyeDropperMaterials.lspkg/webIcon.mat
+      - Images
       - Images/PicMask.png
       - Images/PicOutline.png
       - Images/SWIS_frame.jpg
       - Images/loading.gif
       - Images/thinOutline.png
       - Images/webIcon.png
+      - Materials
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
       - Materials/CaptureVisual.mat
