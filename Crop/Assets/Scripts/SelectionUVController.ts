@@ -130,7 +130,6 @@ export class SelectionUVController extends BaseScriptComponent {
         } else {
             this.log.w("No RenderMeshVisual found on main object");
         }
-
         // Setup components
         this.setupCollider();
         this.setupInteractable();

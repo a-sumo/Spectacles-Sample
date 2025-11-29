@@ -3,23 +3,12 @@ dock:
   main:
     items:
       - items:
-          - items:
-              - persistentName: Snap.Plugin.Gui.SceneHierarchyEditor
-                Uuid: 6778142c-0629-4c2a-afc3-92a65ce29e1a
-              - persistentName: Snap.Plugin.Gui.Graph.Editor
-                Uuid: e9e9f64c-a36d-4594-a616-b6d9c2ebe069
-            type: section
-            current: 1
-          - items:
-              - persistentName: Snap.Plugin.Gui.AssetBrowser
-                Uuid: cd11ace2-8507-4965-a068-d85c26031a6b
-            type: section
-            current: 0
-        sizes:
-          - 368
-          - 346
-        type: splitter
-        orientation: vertical
+          - persistentName: Snap.Plugin.Gui.SceneHierarchyEditor
+            Uuid: 6778142c-0629-4c2a-afc3-92a65ce29e1a
+          - persistentName: Snap.Plugin.Gui.Graph.Editor
+            Uuid: e9e9f64c-a36d-4594-a616-b6d9c2ebe069
+        type: section
+        current: 0
       - items:
           - items:
               - persistentName: Snap.Plugin.Gui.SceneEditor
@@ -49,9 +38,26 @@ dock:
         type: section
         current: 0
     sizes:
-      - 681
-      - 160
-      - 344
-      - 285
+      - 648
+      - 71
+      - 383
+      - 368
     type: splitter
     orientation: horizontal
+  windows:
+    - items:
+        - items:
+            - persistentName: Snap.Plugin.Gui.AssetBrowser
+              Uuid: cd11ace2-8507-4965-a068-d85c26031a6b
+          type: section
+          current: 0
+      sizes:
+        - 274
+      type: splitter
+      orientation: vertical
+      geometry:
+        x: 18
+        y: 552
+        w: 648
+        h: 276
+      screen: Built-in Retina Display
