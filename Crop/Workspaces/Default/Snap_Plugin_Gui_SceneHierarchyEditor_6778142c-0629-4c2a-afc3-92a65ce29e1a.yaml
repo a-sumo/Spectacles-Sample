@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 132
+    size: 135
     values:
       - 00000000-0000-0065-0000-000000000064
       - 0005641c-028d-459a-0000-000000014b4d
@@ -13,6 +13,7 @@ CollapsedEntities:
       - 034c5a17-40c5-43db-8682-0777dfc643e4
       - 05895070-dad6-4a63-83d9-a15594dbf4ea
       - 05fc77c1-bcfd-49c0-95fe-93521e6f2feb
+      - 08d7c7e5-4bc2-43da-980a-18c6ad3b068f
       - 0c94b463-2e9a-44fe-9da5-54e29f4a7901
       - 0cbd4a5a-5d43-4c83-ba98-1228aafec22b
       - 0d770d0b-39c9-49dd-b07f-302c639cabc0
@@ -29,6 +30,7 @@ CollapsedEntities:
       - 1ebba6b5-4e0d-484c-ab8a-26199ae8dd76
       - 1f35bbcf-41b3-4ff1-80d9-91bc3da069cc
       - 224c339b-5033-470b-9197-088f46597772
+      - 2288660f-48e2-4468-9337-53d3b0713813
       - 24b09643-f19b-41e2-9024-1bf80c1f3aaf
       - 25219cf8-64d6-4497-a53b-2488e7bff1f2
       - 25dedd6e-b35a-4dde-b4c5-82396bfa98a3
@@ -54,8 +56,8 @@ CollapsedEntities:
       - 46f46cd0-c48d-4ddb-b3ee-c1f112d710c5
       - 4a9b0152-cf65-483d-aa2d-ee36dc58317a
       - 4f2b04f9-f1d8-4c8b-b7eb-0a3e6b770296
-      - 51689eee-a346-4971-a167-09e93cc80c25
       - 571c05f9-5075-4c72-804c-8fd516574b82
+      - 5795e8a6-3ea7-4cd7-8fa2-7574e2a0282b
       - 58a4ec99-cf0f-4ce4-99dc-4b3cd97dfcea
       - 5937b0ee-8467-49f6-8e26-5f8715c5bc9f
       - 5d5dc618-ccfb-4fd9-a7d8-3e4fce2f9d5c
@@ -63,6 +65,8 @@ CollapsedEntities:
       - 607bbea6-a918-46e1-ac91-ed27dffab0f9
       - 6585b7e7-08fc-42a2-8b20-e75cc85a8d81
       - 685a3b45-fafd-45d9-8d05-e10545ac43f5
+      - 6c2c236b-149f-4834-8f15-51dd0563ba5c
+      - 70cb0abd-8afd-4c4c-98c3-83366d17d041
       - 71b52915-4ccd-4f76-ad34-ecbb948a8bd9
       - 74aa2a93-3b48-4a7e-aa85-4e047e988f90
       - 76d6b3e6-2bda-471a-9434-678d1ce86d92
@@ -89,6 +93,7 @@ CollapsedEntities:
       - 9a7ef4bf-3871-4374-90e0-ac0060502cf8
       - 9f9659e4-92ff-4219-b80f-76373c5b5909
       - 9fd108e8-f45b-4844-877c-d30e72fe3928
+      - a113b286-24a8-4583-b5bb-f7e2002d6d76
       - a49edae0-c250-4ce5-b6af-665465b34949
       - a52b385a-0271-4d86-a736-2bafe9c65263
       - a5909235-a85f-4569-95f6-622bd46d3604
@@ -124,7 +129,6 @@ CollapsedEntities:
       - e4cf6e08-80af-4b1f-a408-fa8c50db7761
       - e4f9f0bd-ae31-43e5-93ee-f52703eb0471
       - e5f48aa0-bb95-4ccf-8c2c-800827012796
-      - e85709f9-efc8-4592-851b-c621d3a3d8fa
       - e8a5d4c9-84d4-49f7-9c02-904f3e94f02e
       - ee97b1b5-fc54-4eb9-8c82-ceb5707085a7
       - f15cbaba-4858-45fe-9bd1-3f769d81c10a
@@ -133,7 +137,6 @@ CollapsedEntities:
       - f99a0488-c0c1-4f3e-aba3-2db67caf3338
       - fbe0af39-5aa3-47e6-84a5-03a4f0da473d
       - fd2ed221-bf39-4d2b-997e-d97a028d293e
-      - fd90a2f8-88e2-450a-b523-6bf58bfb55ee
       - ffa580d3-78da-43f4-b7a5-e2f0b7e8c1b3
   options: 4
 PinnedEntities:

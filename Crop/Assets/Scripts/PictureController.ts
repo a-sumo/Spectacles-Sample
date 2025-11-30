@@ -1,7 +1,6 @@
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
-import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
-import { CursorPlaneController } from "./CursorPlaneController";
+import Event from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
 export class ActiveScannerEvent {
     scanner: SceneObject | null;
@@ -26,10 +25,6 @@ export class PictureController extends BaseScriptComponent {
     @input scannerPrefab: ObjectPrefab;
     
     @input
-    @hint("Cursor plane prefab to instantiate on first scanner interaction")
-    cursorPlanePrefab: ObjectPrefab;
-    
-    @input
     @hint("Path to the interactable object within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')")
     interactablePath: string = "ImageAnchor/CameraCrop";
     
@@ -44,18 +39,11 @@ export class PictureController extends BaseScriptComponent {
     private activeInteractable: SceneObject | null = null;
     private activeScannerId: string | null = null;
     
-    // Cursor plane instance
-    private cursorPlaneInstance: SceneObject | null = null;
-    private cursorPlaneController: CursorPlaneController | null = null;
-    
-    // Public event that other components can subscribe to
     public onActiveScannerChanged = new Event<ActiveScannerEvent>();
     
-    // Singleton instance
     private static instance: PictureController | null = null;
     
     onAwake() {
-        // Set singleton instance
         PictureController.instance = this;
         
         this.rightHand.onPinchUp.add(this.rightPinchUp);
@@ -72,16 +60,13 @@ export class PictureController extends BaseScriptComponent {
             }
         }
         
-        // Update loop to check for hover state
         this.createEvent("UpdateEvent").bind(this.update.bind(this));
     }
     
-    // Singleton getter
     public static getInstance(): PictureController | null {
         return PictureController.instance;
     }
     
-    // Helper function to generate a unique ID
     private generateUniqueId(): string {
         return Math.random().toString(36).substring(2, 15) + 
                Math.random().toString(36).substring(2, 15);
@@ -93,88 +78,38 @@ export class PictureController extends BaseScriptComponent {
         this.activeInteractable = null;
         this.activeScannerId = null;
         
-        // Check all scanner instances for hover/interaction
         for (let i = 0; i < this.scannerInstances.length; i++) {
             let scanner = this.scannerInstances[i];
             
-            // Extract ID from scanner name
             const idMatch = scanner.name.match(/Scanner_(\w+)/);
-            if (!idMatch || !idMatch[1]) {
-                print("PictureController: Could not extract ID from scanner name: " + scanner.name);
-                continue;
-            }
+            if (!idMatch || !idMatch[1]) continue;
             
             const scannerId = idMatch[1];
             const data = this.scannerData.get(scannerId);
-            
-            if (!data) {
-                print("PictureController: No data found for scanner ID: " + scannerId);
-                continue;
-            }
+            if (!data) continue;
             
             let interactableObj = data.interactableObject;
-            
             if (interactableObj) {
                 let interactable = interactableObj.getComponent(Interactable.getTypeName()) as any;
                 
-                if (interactable) {
-                    if (interactable.hoveringInteractor || interactable.triggeringInteractor) {
-                        this.activeScanner = scanner;
-                        this.activeInteractable = interactableObj;
-                        this.activeScannerId = scannerId;
-                        
-                        // Instantiate cursor plane on first interaction
-                        this.ensureCursorPlaneExists();
-                        
-                        break; // Only one can be active at a time
-                    }
+                if (interactable && (interactable.hoveringInteractor || interactable.triggeringInteractor)) {
+                    this.activeScanner = scanner;
+                    this.activeInteractable = interactableObj;
+                    this.activeScannerId = scannerId;
+                    break;
                 }
             }
         }
         
-        // Fire event if active scanner changed
         if (previousActiveScanner !== this.activeScanner) {
             this.onActiveScannerChanged.invoke(
                 new ActiveScannerEvent(this.activeScanner, this.activeInteractable, this.activeScannerId)
             );
-            
-            if (this.activeScanner) {
-                print("Active scanner changed to: " + this.activeScanner.name);
-            } else {
-                print("No active scanner");
-            }
         }
     }
     
-    /**
-     * Instantiate cursor plane if it doesn't exist yet
-     */
-    private ensureCursorPlaneExists(): void {
-        if (this.cursorPlaneInstance || !this.cursorPlanePrefab) return;
-        
-        // Instantiates as child of PictureController object
-        this.cursorPlaneInstance = this.cursorPlanePrefab.instantiate(this.sceneObject);
-        this.cursorPlaneInstance.name = "CursorPlane";
-        
-        // Gets the controller component
-        this.cursorPlaneController = this.cursorPlaneInstance.getComponent(
-            CursorPlaneController.getTypeName()
-        ) as CursorPlaneController;
-        
-        if (this.cursorPlaneController) {
-            print("PictureController: Cursor plane instantiated");
-        } else {
-            print("PictureController: Warning - CursorPlaneController not found on prefab");
-        }
-    }
-    
-    /**
-     * Find the interactable object within a scanner's hierarchy
-     */
     private findInteractableInScanner(scanner: SceneObject): SceneObject | null {
-        if (!this.interactablePath) {
-            return scanner;
-        }
+        if (!this.interactablePath) return scanner;
         
         const pathParts = this.interactablePath.split('/');
         let current = scanner;
@@ -190,7 +125,7 @@ export class PictureController extends BaseScriptComponent {
                 }
             }
             if (!found) {
-                print("PictureController: Could not find path part '" + part + "' in scanner hierarchy");
+                print("PictureController: Could not find path part '" + part + "'");
                 return null;
             }
         }
@@ -198,38 +133,27 @@ export class PictureController extends BaseScriptComponent {
         return current;
     }
     
-    // Public getter for other components to access current active scanner
     public getActiveScanner(): SceneObject | null {
         return this.activeScanner;
     }
     
-    // Public getter for the actual interactable object
     public getActiveInteractable(): SceneObject | null {
         return this.activeInteractable;
     }
     
-    // Public getter for active scanner ID
     public getActiveScannerId(): string | null {
         return this.activeScannerId;
     }
     
-    // Public getter for scanner data by ID
     public getScannerData(scannerId: string): ScannerData | undefined {
         return this.scannerData.get(scannerId);
     }
     
-    // Public getter for cursor plane controller
-    public getCursorPlaneController(): CursorPlaneController | null {
-        return this.cursorPlaneController;
-    }
-    
     editorTest() {
-        print("Creating Editor Scanner...");
         this.createScanner();
     }
     
     private leftPinchDown = () => {
-        print("LEFT Pinch down");
         this.leftDown = true;
         if (this.rightDown && this.isPinchClose()) {
             this.createScanner();
@@ -237,12 +161,10 @@ export class PictureController extends BaseScriptComponent {
     };
     
     private leftPinchUp = () => {
-        print("LEFT Pinch up");
         this.leftDown = false;
     };
     
     private rightPinchDown = () => {
-        print("RIGHT Pinch down");
         this.rightDown = true;
         if (this.leftDown && this.isPinchClose()) {
             this.createScanner();
@@ -250,7 +172,6 @@ export class PictureController extends BaseScriptComponent {
     };
     
     private rightPinchUp = () => {
-        print("RIGHT Pinch up");
         this.rightDown = false;
     };
     
@@ -263,46 +184,32 @@ export class PictureController extends BaseScriptComponent {
     }
     
     createScanner() {
-        // Generate unique ID
         const scannerId = this.generateUniqueId();
-        
-        // Instantiate scanner
         var scanner = this.scannerPrefab.instantiate(this.getSceneObject());
-        
-        // Set name with ID
         scanner.name = `Scanner_${scannerId}`;
         
-        // Find interactable object in hierarchy
         const interactableObj = this.findInteractableInScanner(scanner);
         
-        // Store scanner data
         this.scannerData.set(scannerId, {
             id: scannerId,
             creationTime: getTime(),
             interactableObject: interactableObj
         });
         
-        // Add to instances list
         this.scannerInstances.push(scanner);
         
         print('Scanner created with ID: ' + scannerId + ' (Total: ' + this.scannerInstances.length + ')');
     }
     
-    // Method to remove a scanner by ID
     public removeScanner(scannerId: string): void {
         const data = this.scannerData.get(scannerId);
-        if (!data) {
-            print("PictureController: Cannot remove scanner - ID not found: " + scannerId);
-            return;
-        }
+        if (!data) return;
         
-        // Find and remove from instances array
         this.scannerInstances = this.scannerInstances.filter(scanner => {
             const match = scanner.name.match(/Scanner_(\w+)/);
             return !match || match[1] !== scannerId;
         });
         
-        // Remove from data map
         this.scannerData.delete(scannerId);
         
         print('Scanner removed: ' + scannerId);

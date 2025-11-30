@@ -1,9 +1,15 @@
-- !<Material/f3e476f2-ecde-48f7-a198-62dc5c70b449>
+- !<Material/7a12d8b7-4eb9-4c2f-8078-f221633300d6>
   PackagePath: ""
   PassesInfo:
-    - !<own> e61e1d38-ad95-47d5-82ea-7c4ce13de3c0
-- !<PassInfo/e61e1d38-ad95-47d5-82ea-7c4ce13de3c0>
+    - !<own> 051e65ed-968f-4f9b-9b53-a43574e291b7
+- !<PassInfo/051e65ed-968f-4f9b-9b53-a43574e291b7>
   CachedProperties:
+    - Port_Center_N001:
+        typeIdx: 3
+        value: {x: 0.500000, y: 0.500000}
+    - Port_CoordsIn_N001:
+        typeIdx: 3
+        value: {x: 0.000000, y: 0.000000}
     - Port_Depth_N004:
         typeIdx: 1
         value: 1.000000
@@ -28,12 +34,6 @@
     - Port_GSplatScale_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 0.000000}
-    - Port_Input0_N005:
-        typeIdx: 5
-        value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
-    - Port_Input0_N006:
-        typeIdx: 5
-        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     - Port_PrevWorldPosition_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -43,9 +43,9 @@
     - Port_RayOrigin_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 0.000000}
-    - Port_Value_N001:
-        typeIdx: 5
-        value: {x: 0.157824, y: 0.167010, z: 0.167865, w: 1.000000}
+    - Port_Scale_N001:
+        typeIdx: 3
+        value: {x: 1.000000, y: 1.000000}
     - Port_WorldNormal_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 1.000000, z: 0.000000}
@@ -55,39 +55,12 @@
     - Port_WorldTangent_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 1.000000}
-    - Port_fillColor_N001:
-        typeIdx: 5
-        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    - Port_fillColor_N005:
-        typeIdx: 5
-        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    - Port_offset_N005:
-        typeIdx: 1
-        value: 0.000000
-    - Port_radius_N005:
-        typeIdx: 1
-        value: 0.050000
-    - Port_size_N001:
-        typeIdx: 3
-        value: {x: 1.000000, y: 1.000000}
-    - Port_surfaceUVCoords_N001:
-        typeIdx: 3
-        value: {x: 0.000000, y: 0.000000}
     - Port_surfaceUVCoords_N005:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
-    - Port_surfaceWorldScale_N001:
-        typeIdx: 4
-        value: {x: 1.000000, y: 1.000000, z: 1.000000}
     - Port_surfaceWorldScale_N005:
         typeIdx: 4
         value: {x: 1.000000, y: 1.000000, z: 1.000000}
-    - Port_uvOffset_N005:
-        typeIdx: 3
-        value: {x: 0.500000, y: 0.500000}
-    - alphaTestThreshold:
-        typeIdx: 1
-        value: 0.500000
   DepthWrite: true
   DepthTest: true
   DepthFunction: Always
@@ -102,25 +75,25 @@
     []
   BlendMode: PremultipliedAlpha
   Properties:
-    Port_Input1_N006:
-      typeIdx: 1
-      value: 1.200000
-    Port_radius_N001:
-      typeIdx: 1
-      value: 0.100000
-    Port_strokeColor_N001:
+    Port_fillColor_N005:
       typeIdx: 5
-      value: {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-    Port_strokeWidth_N001:
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+    Port_radius_N005:
       typeIdx: 1
-      value: 0.000000
-    Port_uvOffset_N001:
+      value: 0.200000
+    Port_size_N005:
+      typeIdx: 3
+      value: {x: 1.000000, y: 1.000000}
+    Port_strokeColor_N005:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Port_strokeWidth_N005:
+      typeIdx: 1
+      value: 0.050000
+    Port_uvOffset_N005:
       typeIdx: 3
       value: {x: 0.500000, y: 0.500000}
     PreviewEnabled:
       typeIdx: 0
       value: 0
-    Tweak_N3:
-      typeIdx: 5
-      value: {x: 0.192264, y: 0.191150, z: 0.193378, w: 1.000000}
-  Pass: !<reference> a6301454-94a1-48db-860f-53751930d7b3
+  Pass: !<reference> cba02d28-d840-4df3-8bfc-c970f3275fcb

@@ -7,6 +7,9 @@
     - Port_Amount_N002:
         typeIdx: 1
         value: 1.000000
+    - Port_Amount_N007:
+        typeIdx: 1
+        value: 0.600000
     - Port_Base_N001:
         typeIdx: 5
         value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -103,9 +106,6 @@
     - Port_Red_N002:
         typeIdx: 4
         value: {x: 1.000000, y: 1.000000, z: 1.000000}
-    - Port_Value_N001:
-        typeIdx: 5
-        value: {x: 1.000000, y: 0.011231, z: 0.000000, w: 1.000000}
     - Port_Value_N002:
         typeIdx: 5
         value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -243,7 +243,7 @@
         value: 0.500000
   DepthWrite: true
   DepthTest: true
-  DepthFunction: LessEqual
+  DepthFunction: Always
   TwoSided: false
   ColorMask: {x: true, y: true, z: true, w: true}
   CullMode: Back
@@ -255,9 +255,9 @@
     []
   BlendMode: PremultipliedAlpha
   Properties:
-    Port_Amount_N007:
-      typeIdx: 1
-      value: 0.600000
+    Port_Value_N001:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     Port_radius_N009:
       typeIdx: 1
       value: 0.200000
@@ -266,7 +266,7 @@
       value: {x: 1.000000, y: 1.000000}
     Port_strokeWidth_N009:
       typeIdx: 1
-      value: 0.100000
+      value: 0.150000
     Port_uvOffset_N009:
       typeIdx: 3
       value: {x: 0.500000, y: 0.500000}

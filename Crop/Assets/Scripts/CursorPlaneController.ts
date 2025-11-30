@@ -4,14 +4,21 @@ import { PictureController, ActiveScannerEvent } from "./PictureController";
 
 /**
  * CursorPlaneController
- *
- * Manages cursor plane visuals and position based on hover interactions.
- * Subscribes directly to the active scanner's Interactable hover events.
- * Attached to the cursor plane prefab.
- * Lifecycle (instantiation/destruction) managed by PictureController.
+ * 
+ * Manages a single cursor plane in the scene that tracks hover interactions
+ * on active scanners. The cursor plane is a regular SceneObject (not prefab)
+ * that gets repositioned when users interact with scanner cameraCrops.
  */
 @component
 export class CursorPlaneController extends BaseScriptComponent {
+	@input
+	@hint("The cursor plane SceneObject to move around")
+	cursorPlane: SceneObject;
+
+	@input
+	@hint("The region hover plane SceneObject (positioned at hit with normal offset)")
+	regionHoverPlane: SceneObject;
+
 	@input
 	@hint("Text component to display the sampled color as HEX code")
 	sampledColorText: Text;
@@ -21,20 +28,27 @@ export class CursorPlaneController extends BaseScriptComponent {
 	sampleColorIndicator: SceneObject;
 
 	@input
+	@hint("Object showing the sampled region grid")
 	sampleRegionIndicator: SceneObject;
 
 	@input
-	@hint(
-		"Offset distance along the plane's normal direction (positive = towards viewer)"
-	)
-	normalOffset: number = 0.5;
+	@hint("Offset along the plane's normal direction for cursor (towards viewer)")
+	cursorNormalOffset: number = 0.5;
 
 	@input
-	@hint("Grid size for cursor plane texture (odd number, e.g., 9 = 9x9 grid)")
+	@hint("Offset along the plane's normal direction for region hover plane")
+	regionNormalOffset: number = 0.1;
+
+	@input
+	@hint("UV space offset for cursor (e.g., vec2(0.5, 0) pushes cursor right)")
+	cursorUVOffset: vec2 = new vec2(0, 0);
+
+	@input
+	@hint("Grid size for texture sampling (odd number, e.g., 9 = 9x9 grid)")
 	gridSize: number = 9;
 
 	@input
-	@hint("Path to cameraCrop within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')")
+	@hint("Path to cameraCrop within scanner hierarchy")
 	cameraCropPath: string = "ImageAnchor/CameraCrop";
 
 	// State
@@ -45,34 +59,34 @@ export class CursorPlaneController extends BaseScriptComponent {
 	private activeCameraCropTransform: Transform | null = null;
 	private activeCameraCropMaterial: any = null;
 
-	// Cursor plane references (this script is attached to the cursor plane itself)
+	// Transform references
 	private cursorPlaneTransform: Transform;
-	private cursorPlaneOriginalScale: vec3 = vec3.one();
-	private cursorPlaneMaterial: any = null;
-	private cursorPlaneRenderMesh: RenderMeshVisual | null = null;
-
-	// Sampled color references
+	private regionHoverPlaneTransform: Transform | null = null;
+	
+	// Material references
+	private sampleRegionMaterial: any = null;
 	private sampledColorMaterial: any = null;
 
 	// Validated grid size
 	private validatedGridSize: number = 9;
 
-	// Hover state
-	private isHovering: boolean = false;
-
 	// Event cleanup
 	private unsubscribeInteractable: (() => void)[] = [];
 
-	private aspectRatio: number = 1;
-
 	onAwake() {
-		// This script is attached to the cursor plane itself
-		this.cursorPlaneTransform = this.sceneObject.getTransform();
-		this.cursorPlaneOriginalScale = this.cursorPlaneTransform.getLocalScale();
+		if (!this.cursorPlane) {
+			print("CursorPlaneController: Error - No cursor plane assigned");
+			return;
+		}
 
-		// Get controllers via singleton
+		this.cursorPlaneTransform = this.cursorPlane.getTransform();
+
+		if (this.regionHoverPlane) {
+			this.regionHoverPlaneTransform = this.regionHoverPlane.getTransform();
+		}
+
+		// Get PictureController via singleton
 		this.pictureController = PictureController.getInstance();
-
 		if (!this.pictureController) {
 			print("CursorPlaneController: PictureController singleton not found");
 			return;
@@ -81,19 +95,16 @@ export class CursorPlaneController extends BaseScriptComponent {
 		// Validate grid size
 		this.validatedGridSize = this.computeValidGridSize();
 
-		// Setup cursor plane rendering
-		this.setupCursorPlane();
-
-		// Setup sampled color object
-		this.setupsampleColorIndicator();
+		// Setup materials
+		this.setupMaterials();
 
 		// Subscribe to active scanner changes
 		this.pictureController.onActiveScannerChanged.add(
 			this.onActiveScannerChanged.bind(this)
 		);
 
-		// Initially hide cursor plane
-		this.setCursorPlaneVisible(false);
+		// Hide planes initially (move far away)
+		this.hidePlanes();
 
 		print("CursorPlaneController: Initialized");
 	}
@@ -101,53 +112,46 @@ export class CursorPlaneController extends BaseScriptComponent {
 	private computeValidGridSize(): number {
 		let size = Math.max(1, Math.floor(this.gridSize));
 		if (size % 2 === 0) {
-			size += 1; // Ensure odd number for center pixel
+			size += 1;
 		}
 		return size;
 	}
 
-	private setupCursorPlane() {
-		this.cursorPlaneRenderMesh =
-			this.sampleRegionIndicator.getComponent("RenderMeshVisual");
-		if (this.cursorPlaneRenderMesh) {
-			this.cursorPlaneMaterial = this.cursorPlaneRenderMesh.mainPass;
-			if (this.cursorPlaneMaterial) {
-				this.cursorPlaneMaterial.gridScale = this.validatedGridSize;
+	private setupMaterials() {
+		if (this.sampleRegionIndicator) {
+			const renderMesh = this.sampleRegionIndicator.getComponent("RenderMeshVisual");
+			if (renderMesh) {
+				this.sampleRegionMaterial = renderMesh.mainPass;
+				if (this.sampleRegionMaterial) {
+					this.sampleRegionMaterial.gridScale = this.validatedGridSize;
+				}
+			}
+		}
+
+		if (this.sampleColorIndicator) {
+			const renderMesh = this.sampleColorIndicator.getComponent("RenderMeshVisual");
+			if (renderMesh) {
+				this.sampledColorMaterial = renderMesh.mainPass;
 			}
 		}
 	}
 
-	private setupsampleColorIndicator() {
-		if (!this.sampleColorIndicator) return;
-
-		const colorRenderMesh =
-			this.sampleColorIndicator.getComponent("RenderMeshVisual");
-		if (colorRenderMesh) {
-			this.sampledColorMaterial = colorRenderMesh.mainPass;
-		}
-	}
-
 	private onActiveScannerChanged(event: ActiveScannerEvent) {
-		// Cleanup previous interactable events
 		this.cleanupInteractableEvents();
 
 		this.activeScanner = event.scanner;
 
 		if (this.activeScanner && event.interactableObject) {
-			// Find cameraCrop in scanner hierarchy
 			this.activeCameraCrop = this.findCameraCropInScanner(this.activeScanner);
-			this.setCursorPlaneVisible(true);
+
 			if (this.activeCameraCrop) {
-				print("found active cam prop")
 				this.activeCameraCropTransform = this.activeCameraCrop.getTransform();
 
-				// Get the material from cameraCrop
 				const renderMesh = this.activeCameraCrop.getComponent("RenderMeshVisual");
 				if (renderMesh) {
 					this.activeCameraCropMaterial = renderMesh.mainPass;
 				}
 
-				// Get the Interactable component from the interactable object (cameraCrop)
 				this.activeInteractable = event.interactableObject.getComponent(
 					Interactable.getTypeName()
 				) as Interactable;
@@ -155,31 +159,19 @@ export class CursorPlaneController extends BaseScriptComponent {
 				if (this.activeInteractable) {
 					this.setupHoverEvents();
 					print("CursorPlaneController: Tracking scanner " + event.scannerId);
-				} else {
-					print("CursorPlaneController: No Interactable found on cameraCrop");
 				}
-			} else {
-				print("CursorPlaneController: Could not find cameraCrop in hierarchy");
 			}
 		} else {
-			// No active scanner - hide cursor
-			this.setCursorPlaneVisible(false);
+			this.hidePlanes();
 			this.activeCameraCropTransform = null;
 			this.activeCameraCropMaterial = null;
 			this.activeCameraCrop = null;
 			this.activeInteractable = null;
-
-			print("CursorPlaneController: No active scanner");
 		}
 	}
 
-	/**
-	 * Find the cameraCrop object within a scanner's hierarchy
-	 */
 	private findCameraCropInScanner(scanner: SceneObject): SceneObject | null {
-		if (!this.cameraCropPath) {
-			return scanner;
-		}
+		if (!this.cameraCropPath) return scanner;
 
 		const pathParts = this.cameraCropPath.split("/");
 		let current = scanner;
@@ -195,11 +187,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 				}
 			}
 			if (!found) {
-				print(
-					"CursorPlaneController: Could not find path part '" +
-						part +
-						"' in scanner hierarchy"
-				);
+				print("CursorPlaneController: Could not find '" + part + "' in hierarchy");
 				return null;
 			}
 		}
@@ -210,44 +198,27 @@ export class CursorPlaneController extends BaseScriptComponent {
 	private setupHoverEvents() {
 		if (!this.activeInteractable) return;
 
-		// Hover Enter - Show cursor and update position
 		this.unsubscribeInteractable.push(
 			this.activeInteractable.onHoverEnter((e: InteractorEvent) => {
-				if (!e.interactor || !e.interactor.targetHitInfo) return;
-				if (!this.activeCameraCropTransform) return;
+				if (!e.interactor?.targetHitInfo || !this.activeCameraCropTransform) return;
+				
 				const worldPosition = e.interactor.targetHitInfo.hit?.position ?? vec3.zero();
-
-				this.isHovering = true;
-				this.setCursorPlaneVisible(true);
-
-				// Update cursor position and texture
-				this.updateCursorAtWorldPosition(worldPosition);
-
-				print("CursorPlaneController: Hover started");
+				this.updatePlanesAtWorldPosition(worldPosition);
 			})
 		);
 
-		// Hover Update - Continuously update cursor position
 		this.unsubscribeInteractable.push(
 			this.activeInteractable.onHoverUpdate((e: InteractorEvent) => {
-				// if (!this.isHovering) return;
-				if (!e.interactor || !e.interactor.targetHitInfo) return;
-				if (!this.activeCameraCropTransform) return;
-
+				if (!e.interactor?.targetHitInfo || !this.activeCameraCropTransform) return;
+				
 				const worldPosition = e.interactor.targetHitInfo.hit?.position ?? vec3.zero();
-
-				// Update cursor position and texture
-				this.updateCursorAtWorldPosition(worldPosition);
+				this.updatePlanesAtWorldPosition(worldPosition);
 			})
 		);
 
-		// Hover Exit - Hide cursor
 		this.unsubscribeInteractable.push(
 			this.activeInteractable.onHoverExit(() => {
-				this.isHovering = false;
-				// this.setCursorPlaneVisible(false);
-
-				print("CursorPlaneController: Hover ended");
+				this.hidePlanes();
 			})
 		);
 	}
@@ -257,107 +228,84 @@ export class CursorPlaneController extends BaseScriptComponent {
 		this.unsubscribeInteractable = [];
 	}
 
-	/**
-	 * Update cursor plane position and texture based on world position from hit info
-	 */
-	private updateCursorAtWorldPosition(worldPosition: vec3): void {
+	private updatePlanesAtWorldPosition(worldPosition: vec3): void {
 		if (!this.activeCameraCropTransform) return;
 
-		// Convert world position to UV for texture sampling and material update
 		const uv = this.worldToUV(worldPosition);
-
-		// Update cameraCrop material's selectionUV parameter
-		// if (this.activeCameraCropMaterial) {
-		// 	this.activeCameraCropMaterial.selectionUV = uv;
-		// }
-
-		// Position cursor plane at the hit position (with offset)
-		this.positionCursorPlane(worldPosition);
-
-		// Update cursor plane texture
+		
+		// Update cursor plane (with UV offset)
+		this.positionCursorPlane(worldPosition, uv);
+		
+		// Update region hover plane (directly at hit position with normal offset only)
+		this.positionRegionHoverPlane(worldPosition);
+		
+		// Update texture sampling
 		this.updateCursorPlaneTexture(uv);
 	}
 
-	/**
-	 * Convert world position to UV coordinates on the cameraCrop plane
-	 */
 	private worldToUV(worldPosition: vec3): vec2 {
-		if (!this.activeCameraCropTransform) {
-			return new vec2(0.5, 0.5);
-		}
+		if (!this.activeCameraCropTransform) return new vec2(0.5, 0.5);
 
 		const invertedWorldTransform = this.activeCameraCropTransform.getInvertedWorldTransform();
 		const localPos = invertedWorldTransform.multiplyPoint(worldPosition);
 
-		// Clamp to 0-1 range
-		const uv = new vec2(
+		return new vec2(
 			Math.max(0.0, Math.min(1.0, localPos.x + 0.5)),
 			Math.max(0.0, Math.min(1.0, localPos.y + 0.5))
 		);
-
-		return uv;
 	}
 
-	/**
-	 * Position the cursor plane at the given world position with normal offset
-	 */
-	private positionCursorPlane(worldPosition: vec3): void {
+	private positionCursorPlane(worldPosition: vec3, uv: vec2): void {
 		if (!this.activeCameraCropTransform) return;
 
-		// Get cameraCrop's rotation and scale
 		const worldRotation = this.activeCameraCropTransform.getWorldRotation();
 		const cameraCropScale = this.activeCameraCropTransform.getWorldScale();
 
-		// Add normal offset along cameraCrop's forward direction
+		// Apply UV offset in world space
+		const uvOffsetLocal = new vec3(
+			this.cursorUVOffset.x * cameraCropScale.x,
+			this.cursorUVOffset.y * cameraCropScale.y,
+			0
+		);
+		const uvOffsetWorld = worldRotation.multiplyVec3(uvOffsetLocal);
+
+		// Apply normal offset
 		const planeNormal = worldRotation.multiplyVec3(vec3.forward());
-		const cursorPosition = worldPosition.add(
-			planeNormal.uniformScale(this.normalOffset)
-		);
+		const normalOffsetWorld = planeNormal.uniformScale(this.cursorNormalOffset);
 
-		// Set cursor position
-		this.cursorPlaneTransform.setWorldPosition(cursorPosition);
+		const finalPosition = worldPosition.add(uvOffsetWorld).add(normalOffsetWorld);
 
-		// Match cameraCrop rotation
+		this.cursorPlaneTransform.setWorldPosition(finalPosition);
 		this.cursorPlaneTransform.setWorldRotation(worldRotation);
-
-		// Compensate cursor plane scale for cameraCrop's aspect ratio
-		const aspectRatioCompensation = cameraCropScale.y / cameraCropScale.x;
-		this.cursorPlaneTransform.setLocalScale(
-			new vec3(
-				this.cursorPlaneOriginalScale.x * aspectRatioCompensation,
-				this.cursorPlaneOriginalScale.y,
-				this.cursorPlaneOriginalScale.z
-			)
-		);
 	}
 
-	private setCursorPlaneVisible(isVisible: boolean) {
-		// Enable/disable the cursor plane SceneObject itself
-		this.sceneObject.enabled = isVisible;
+	private positionRegionHoverPlane(worldPosition: vec3): void {
+		if (!this.activeCameraCropTransform || !this.regionHoverPlaneTransform) return;
 
-		// Handle external sampleColorIndicator and text if not children
-		if (
-			this.sampleColorIndicator &&
-			this.sampleColorIndicator.getParent() !== this.sceneObject
-		) {
-			this.sampleColorIndicator.enabled = isVisible;
-		}
+		const worldRotation = this.activeCameraCropTransform.getWorldRotation();
 
-		if (this.sampledColorText) {
-			const textSceneObject = this.sampledColorText.getSceneObject();
-			if (textSceneObject && textSceneObject.getParent() !== this.sceneObject) {
-				textSceneObject.enabled = isVisible;
-			}
+		// Apply only normal offset (no UV offset)
+		const planeNormal = worldRotation.multiplyVec3(vec3.forward());
+		const normalOffsetWorld = planeNormal.uniformScale(this.regionNormalOffset);
+
+		const finalPosition = worldPosition.add(normalOffsetWorld);
+
+		this.regionHoverPlaneTransform.setWorldPosition(finalPosition);
+		this.regionHoverPlaneTransform.setWorldRotation(worldRotation);
+	}
+
+	private hidePlanes(): void {
+		const hidePosition = new vec3(0, 0, 1000);
+		this.cursorPlaneTransform.setWorldPosition(hidePosition);
+		
+		if (this.regionHoverPlaneTransform) {
+			this.regionHoverPlaneTransform.setWorldPosition(hidePosition);
 		}
 	}
 
-	/**
-	 * Samples a gridSize x gridSize region from the source texture centered at UV
-	 */
 	private updateCursorPlaneTexture(uv: vec2): void {
-		if (!this.cursorPlaneMaterial || !this.activeCameraCropMaterial) return;
+		if (!this.sampleRegionMaterial || !this.activeCameraCropMaterial) return;
 
-		// Get source texture from cameraCrop's material
 		const sourceTexture: Texture = this.activeCameraCropMaterial.captureImage;
 		if (!sourceTexture) return;
 
@@ -368,37 +316,18 @@ export class CursorPlaneController extends BaseScriptComponent {
 		const gridSize = this.validatedGridSize;
 		const halfGrid = Math.floor(gridSize / 2);
 
-		// Convert UV to pixel coordinates
 		const centerPixelX = Math.round(uv.x * (width - 1));
 		const centerPixelY = Math.round(uv.y * (height - 1));
 
-		// Clamp to ensure we don't sample outside texture bounds
-		const startPixelX = Math.max(
-			0,
-			Math.min(width - gridSize, centerPixelX - halfGrid)
-		);
-		const startPixelY = Math.max(
-			0,
-			Math.min(height - gridSize, centerPixelY - halfGrid)
-		);
+		const startPixelX = Math.max(0, Math.min(width - gridSize, centerPixelX - halfGrid));
+		const startPixelY = Math.max(0, Math.min(height - gridSize, centerPixelY - halfGrid));
 
-		// Create procedural texture provider for pixel access
-		const proceduralTexture =
-			ProceduralTextureProvider.createFromTexture(sourceTexture);
-		const sourceProvider =
-			proceduralTexture.control as ProceduralTextureProvider;
+		const proceduralTexture = ProceduralTextureProvider.createFromTexture(sourceTexture);
+		const sourceProvider = proceduralTexture.control as ProceduralTextureProvider;
 
-		// Sample pixels from source texture
 		const pixelBuffer = new Uint8Array(gridSize * gridSize * 4);
-		sourceProvider.getPixels(
-			startPixelX,
-			startPixelY,
-			gridSize,
-			gridSize,
-			pixelBuffer
-		);
+		sourceProvider.getPixels(startPixelX, startPixelY, gridSize, gridSize, pixelBuffer);
 
-		// Create output texture and apply sampled pixels
 		const sampledTexture = ProceduralTextureProvider.createWithFormat(
 			gridSize,
 			gridSize,
@@ -407,70 +336,38 @@ export class CursorPlaneController extends BaseScriptComponent {
 		const outputProvider = sampledTexture.control as ProceduralTextureProvider;
 		outputProvider.setPixels(0, 0, gridSize, gridSize, pixelBuffer);
 
-		// Apply to cursor plane material
-		this.cursorPlaneMaterial.mainTexture = sampledTexture;
+		this.sampleRegionMaterial.mainTexture = sampledTexture;
 
-		// Extract center pixel color and update sampled color display
 		this.updateSampledColor(pixelBuffer, gridSize, halfGrid);
 	}
 
-	/**
-	 * Extracts the center pixel color and updates display
-	 */
-	private updateSampledColor(
-		pixelBuffer: Uint8Array,
-		gridSize: number,
-		halfGrid: number
-	): void {
+	private updateSampledColor(pixelBuffer: Uint8Array, gridSize: number, halfGrid: number): void {
 		const ONE_OVER_255 = 0.00392156862;
-
-		// Calculate center pixel index in the buffer
 		const centerPixelIndex = (halfGrid * gridSize + halfGrid) * 4;
 
-		// Extract RGBA values (0-255)
 		const r = pixelBuffer[centerPixelIndex];
 		const g = pixelBuffer[centerPixelIndex + 1];
 		const b = pixelBuffer[centerPixelIndex + 2];
-		const a = pixelBuffer[centerPixelIndex + 3];
 
-		// Update text with hex code
 		if (this.sampledColorText) {
 			this.sampledColorText.text = this.rgbToHex(r, g, b);
 		}
 
-		// Update color object material
 		if (this.sampledColorMaterial) {
-			const sampledColor = new vec4(
+			this.sampledColorMaterial.mainColor = new vec4(
 				r * ONE_OVER_255,
 				g * ONE_OVER_255,
 				b * ONE_OVER_255,
 				1.0
 			);
-			this.sampledColorMaterial.mainColor = sampledColor;
 		}
 	}
 
-	/**
-	 * Convert RGB values (0-255) to hex string
-	 */
 	private rgbToHex(r: number, g: number, b: number): string {
 		const toHex = (value: number): string => {
 			const hex = Math.round(value).toString(16).toUpperCase();
 			return hex.length === 1 ? "0" + hex : hex;
 		};
 		return "#" + toHex(r) + toHex(g) + toHex(b);
-	}
-
-	// Public API
-	public setNormalOffset(offset: number): void {
-		this.normalOffset = offset;
-	}
-
-	public setGridSize(size: number): void {
-		this.gridSize = size;
-		this.validatedGridSize = this.computeValidGridSize();
-		if (this.cursorPlaneMaterial) {
-			this.cursorPlaneMaterial.gridScale = this.validatedGridSize;
-		}
 	}
 }

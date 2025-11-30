@@ -1,16 +1,23 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 966
+    size: 974
     values:
       - ""
-      - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
       - 3DModels/SWIS_Frame.mesh
       - 3DModels/SWIS_tile_solid.mesh
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - 3DModels/scene.gltf
+      - 3DModels/scene.gltf/.hidden
+      - 3DModels/scene.gltf/.hidden/Scene_-_Root
+      - 3DModels/scene.gltf/Materials
+      - 3DModels/scene.gltf/Materials/Scene_-_Root
+      - 3DModels/scene.gltf/Meshes
+      - 3DModels/scene.gltf/Meshes/Pipette__0
+      - 3DModels/scene.gltf/scene
       - Destruction Helper Module.lspkg
       - Destruction Helper Module.lspkg/Destruction Helper Module.js
       - Destruction Helper Module.lspkg/package.native
@@ -80,6 +87,8 @@ CollapsedEntities:
       - Materials/LensExp_hover_frame.ss_graph
       - Materials/PinchButtonDarkRadial.mat
       - Materials/PinchDarkRadial.ss_graph
+      - Materials/Rectangle Border.mat
+      - Materials/Rectangle Border.ss_graph
       - Materials/SWIS_flat_color.ss_graph
       - Materials/SWIS_frame.mat
       - Materials/SWIS_tile.mat
@@ -106,7 +115,6 @@ CollapsedEntities:
       - Plane.prefab
       - Prefabs
       - Prefabs/Button.prefab
-      - Prefabs/Cursor Plane.prefab
       - Prefabs/Scanner.prefab
       - Prefabs/SceneHierarchy.prefab
       - Refraction Material
