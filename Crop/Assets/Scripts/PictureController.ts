@@ -152,11 +152,11 @@ export class PictureController extends BaseScriptComponent {
     private ensureCursorPlaneExists(): void {
         if (this.cursorPlaneInstance || !this.cursorPlanePrefab) return;
         
-        // Instantiate cursor plane as child of this object
+        // Instantiates as child of PictureController object
         this.cursorPlaneInstance = this.cursorPlanePrefab.instantiate(this.sceneObject);
         this.cursorPlaneInstance.name = "CursorPlane";
         
-        // Get the controller component
+        // Gets the controller component
         this.cursorPlaneController = this.cursorPlaneInstance.getComponent(
             CursorPlaneController.getTypeName()
         ) as CursorPlaneController;

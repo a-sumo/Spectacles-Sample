@@ -25,11 +25,11 @@ export class InteractableUVMapper extends BaseScriptComponent {
     private onUVChangedEvent = new Event<vec2>();
     public readonly onUVChanged: PublicApi<vec2> = this.onUVChangedEvent.publicApi();
 
-    private onDragStartEvent = new Event<vec2>();
-    public readonly onDragStart: PublicApi<vec2> = this.onDragStartEvent.publicApi();
+    private onHoverStartEvent = new Event<vec2>();
+    public readonly onHoverStart: PublicApi<vec2> = this.onHoverStartEvent.publicApi();
 
-    private onDragEndEvent = new Event<vec2>();
-    public readonly onDragEnd: PublicApi<vec2> = this.onDragEndEvent.publicApi();
+    private onHoverEndEvent = new Event<void>();
+    public readonly onHoverEnd: PublicApi<void> = this.onHoverEndEvent.publicApi();
 
     // State
     private controller: PictureController | null = null;
@@ -40,7 +40,7 @@ export class InteractableUVMapper extends BaseScriptComponent {
     private activeInteractableComponent: Interactable | null = null;
     private activeScannerId: string | null = null;
     private currentUV: vec2 = new vec2(0.5, 0.5);
-    private isDragging: boolean = false;
+    private isHovering: boolean = false;
 
     // Event cleanup
     private unsubscribeInteractable: (() => void)[] = [];
@@ -128,42 +128,43 @@ export class InteractableUVMapper extends BaseScriptComponent {
     private setupInteractableEvents() {
         if (!this.activeInteractableComponent) return;
 
-        // Trigger Start
+        // Hover Enter - Start tracking UV
         this.unsubscribeInteractable.push(
-            this.activeInteractableComponent.onInteractorTriggerStart.add((e: InteractorEvent) => {
+            this.activeInteractableComponent.onHoverEnter((e: InteractorEvent) => {
                 if (!this.activeCameraCropTransform) return;
                 
                 if (e.interactor && e.interactor.planecastPoint) {
                     const uv = this.worldToUV(e.interactor.planecastPoint);
                     this.currentUV = uv;
-                    this.isDragging = true;
-                    this.onDragStartEvent.invoke(uv);
+                    this.isHovering = true;
+                    this.onHoverStartEvent.invoke(uv);
                     this.onUVChangedEvent.invoke(uv);
-                    print("Drag started at UV: " + uv.toString());
+                    print("InteractableUVMapper: Hover started at UV: " + uv.toString());
                 }
             })
         );
 
-        // Trigger Update
+        // Hover Update - Continuously update UV while hovering
         this.unsubscribeInteractable.push(
-            this.activeInteractableComponent.onTriggerUpdate.add((e: InteractorEvent) => {
-                if (!this.activeCameraCropTransform) return;
+            this.activeInteractableComponent.onHoverUpdate((e: InteractorEvent) => {
+                if (!this.activeCameraCropTransform || !this.isHovering) return;
                 
-                if (this.isDragging && e.interactor && e.interactor.planecastPoint) {
+                if (e.interactor && e.interactor.planecastPoint) {
                     const uv = this.worldToUV(e.interactor.planecastPoint);
                     this.currentUV = uv;
+                    print("uv"+uv)
                     this.onUVChangedEvent.invoke(uv);
                 }
             })
         );
 
-        // Trigger End
+        // Hover Exit - Stop tracking
         this.unsubscribeInteractable.push(
-            this.activeInteractableComponent.onInteractorTriggerEnd.add((e: InteractorEvent) => {
-                if (this.isDragging) {
-                    this.isDragging = false;
-                    this.onDragEndEvent.invoke(this.currentUV);
-                    print("Drag ended at UV: " + this.currentUV.toString());
+            this.activeInteractableComponent.onHoverExit(() => {
+                if (this.isHovering) {
+                    this.isHovering = false;
+                    this.onHoverEndEvent.invoke();
+                    print("InteractableUVMapper: Hover ended at UV: " + this.currentUV.toString());
                 }
             })
         );
@@ -202,8 +203,8 @@ export class InteractableUVMapper extends BaseScriptComponent {
         return this.currentUV;
     }
 
-    public isCurrentlyDragging(): boolean {
-        return this.isDragging;
+    public isCurrentlyHovering(): boolean {
+        return this.isHovering;
     }
 
     public getActiveScanner(): SceneObject | null {

@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 965
+    size: 966
     values:
       - ""
       - 3DModels
@@ -65,7 +65,6 @@ CollapsedEntities:
       - Images/thinOutline.png
       - Images/webIcon.png
       - MaterialParams.png
-      - Materials
       - Materials/Background Material.mat
       - Materials/Background Material.ss_graph
       - Materials/Base.png
@@ -97,7 +96,6 @@ CollapsedEntities:
       - Materials/SphereOutline.mat
       - Materials/TextureSampleGrid.mat
       - Materials/TextureSampleGrid.ss_graph
-      - Materials/Unit Plane.mesh
       - Materials/loadingGif.mat
       - Materials/loadingGif.ss_graph
       - Materials/unlitColor.ss_graph
@@ -106,9 +104,11 @@ CollapsedEntities:
       - Materials/webIcon.mat
       - Normal.png
       - Plane.prefab
+      - Prefabs
       - Prefabs/Button.prefab
       - Prefabs/Cursor Plane.prefab
       - Prefabs/Scanner.prefab
+      - Prefabs/SceneHierarchy.prefab
       - Refraction Material
       - Refraction Material/.hidden
       - Refraction Material/.hidden/Refraction.ss_graph
@@ -192,6 +192,7 @@ CollapsedEntities:
       - Rendering/Echopark.hdr/Specular
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
+      - ScalingBehavior.ts
       - Scene.scene
       - Scripts
       - Scripts/APIKeyHint.ts

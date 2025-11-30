@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/c614abb1-8f42-4892-8780-6879251618a3>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> b946ea26-0580-4948-889b-0f93eebfe797
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> b946ea26-0580-4948-889b-0f93eebfe797
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> aa21a144-4d9b-475d-94c6-74d2eb4d380a
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/aa21a144-4d9b-475d-94c6-74d2eb4d380a>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: b7b913ac-00f4-4e27-9f5c-e5a023d21c8d
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    continuousUpdate: false
+    scaleMode: false
+    targetObject: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      continuousUpdate: true
+      scaleMode: uniform
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject targetObject {"hint":"Target object whose world scale to track (typically parent)"}'
+    - '// @input bool continuousUpdate = true {"hint":"Update every frame? Disable if target scale is static for better performance"}'
+    - "// @input string scaleMode = \"uniform\" {\"hint\":\"Which scale component to use: 'x', 'y', 'z', 'uniform' (average), or 'max'\"}"
