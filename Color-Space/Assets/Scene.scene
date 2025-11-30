@@ -5,9 +5,15 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> 5aa0f98b-e799-448c-a2dc-cae5d04fa2a4
     - !<own> ff5a156f-c1df-4b36-aad1-b9659ab21c05
+    - !<own> 50c70247-640e-4a9c-8cd9-78820ee66b0e
+    - !<own> 7ce20335-efb8-4c4a-87da-e642cf0a797c
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
-      []
+      - |
+        id: 1
+        name: Layer 1
+        color: 0
+
     HasOrtho: true
   RenderOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   RenderPreviewOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
@@ -4738,6 +4744,22 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/50c70247-640e-4a9c-8cd9-78820ee66b0e>
+  PrefabRemaps:
+    []
+  Name: Gamut
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -20.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b4fe2235-99f4-4ad2-af07-31c30b8729f8
+    - !<own> fa54cb9b-4b7a-4b8f-8ece-7329a69046aa
 - !<SceneObject/5120ccec-d0e4-4421-bbfa-b98af177660d>
   PrefabRemaps:
     []
@@ -6419,6 +6441,19 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<VFXComponent/730cbf79-e45c-43e8-b36c-999617b0881f>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> c47b6196-5bcf-4104-95e8-38eb898eeff3
 - !<SceneObject/73b7e3d8-b7f3-4c24-9f65-4ecfc6871b0d>
   PrefabRemaps:
     []
@@ -6923,6 +6958,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/7ce20335-efb8-4c4a-87da-e642cf0a797c>
+  PrefabRemaps:
+    []
+  Name: Test Particle Encoding
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 1.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 730cbf79-e45c-43e8-b36c-999617b0881f
 - !<ScriptComponent/7d0976c2-71d8-4ed2-b12f-28e5c455c7b0>
   PrefabRemaps:
     []
@@ -10163,6 +10213,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/b4fe2235-99f4-4ad2-af07-31c30b8729f8>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> fe026662-056e-497a-9118-f650bb847e71
+  Mesh: !<reference> e542623c-1432-4bfa-881d-a28905bd9e57
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<ScriptComponent/b5839b35-a15d-4b7d-a4de-626cff2bf6e1>
   PrefabRemaps:
     []
@@ -13962,6 +14032,23 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/fa54cb9b-4b7a-4b8f-8ece-7329a69046aa>
+  PrefabRemaps:
+    []
+  Name: GamutController
+  Enabled: true
+  ScriptAsset: !<reference> 96ae1aff-ee9c-4485-b6dd-e8c606b4c6c5
+  ScriptInputsDefault:
+    scale: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> fe026662-056e-497a-9118-f650bb847e71
+      scale: !<float> 50.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/fbb5bc88-c807-415b-92ae-011a37767600>
   PrefabRemaps:
     []
