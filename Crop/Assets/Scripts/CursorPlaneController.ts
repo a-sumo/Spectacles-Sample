@@ -4,7 +4,7 @@ import { PictureController, ActiveScannerEvent } from "./PictureController";
 
 /**
  * CursorPlaneController
- * 
+ *
  * Manages a single cursor plane in the scene that tracks hover interactions
  * on active scanners. The cursor plane is a regular SceneObject (not prefab)
  * that gets repositioned when users interact with scanner cameraCrops.
@@ -32,18 +32,6 @@ export class CursorPlaneController extends BaseScriptComponent {
 	sampleRegionIndicator: SceneObject;
 
 	@input
-	@hint("Offset along the plane's normal direction for cursor (towards viewer)")
-	cursorNormalOffset: number = 0.5;
-
-	@input
-	@hint("Offset along the plane's normal direction for region hover plane")
-	regionNormalOffset: number = 0.1;
-
-	@input
-	@hint("UV space offset for cursor (e.g., vec2(0.5, 0) pushes cursor right)")
-	cursorUVOffset: vec2 = new vec2(0, 0);
-
-	@input
 	@hint("Grid size for texture sampling (odd number, e.g., 9 = 9x9 grid)")
 	gridSize: number = 9;
 
@@ -62,7 +50,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 	// Transform references
 	private cursorPlaneTransform: Transform;
 	private regionHoverPlaneTransform: Transform | null = null;
-	
+
 	// Material references
 	private sampleRegionMaterial: any = null;
 	private sampledColorMaterial: any = null;
@@ -201,7 +189,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		this.unsubscribeInteractable.push(
 			this.activeInteractable.onHoverEnter((e: InteractorEvent) => {
 				if (!e.interactor?.targetHitInfo || !this.activeCameraCropTransform) return;
-				
+
 				const worldPosition = e.interactor.targetHitInfo.hit?.position ?? vec3.zero();
 				this.updatePlanesAtWorldPosition(worldPosition);
 			})
@@ -210,7 +198,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		this.unsubscribeInteractable.push(
 			this.activeInteractable.onHoverUpdate((e: InteractorEvent) => {
 				if (!e.interactor?.targetHitInfo || !this.activeCameraCropTransform) return;
-				
+
 				const worldPosition = e.interactor.targetHitInfo.hit?.position ?? vec3.zero();
 				this.updatePlanesAtWorldPosition(worldPosition);
 			})
@@ -232,14 +220,9 @@ export class CursorPlaneController extends BaseScriptComponent {
 		if (!this.activeCameraCropTransform) return;
 
 		const uv = this.worldToUV(worldPosition);
-		
-		// Update cursor plane (with UV offset)
-		this.positionCursorPlane(worldPosition, uv);
-		
-		// Update region hover plane (directly at hit position with normal offset only)
-		this.positionRegionHoverPlane(worldPosition);
-		
-		// Update texture sampling
+
+		// Position planes directly at the hit position
+		this.positionPlanes(worldPosition);
 		this.updateCursorPlaneTexture(uv);
 	}
 
@@ -255,49 +238,26 @@ export class CursorPlaneController extends BaseScriptComponent {
 		);
 	}
 
-	private positionCursorPlane(worldPosition: vec3, uv: vec2): void {
+	private positionPlanes(worldPosition: vec3): void {
 		if (!this.activeCameraCropTransform) return;
 
 		const worldRotation = this.activeCameraCropTransform.getWorldRotation();
-		const cameraCropScale = this.activeCameraCropTransform.getWorldScale();
 
-		// Apply UV offset in world space
-		const uvOffsetLocal = new vec3(
-			this.cursorUVOffset.x * cameraCropScale.x,
-			this.cursorUVOffset.y * cameraCropScale.y,
-			0
-		);
-		const uvOffsetWorld = worldRotation.multiplyVec3(uvOffsetLocal);
-
-		// Apply normal offset
-		const planeNormal = worldRotation.multiplyVec3(vec3.forward());
-		const normalOffsetWorld = planeNormal.uniformScale(this.cursorNormalOffset);
-
-		const finalPosition = worldPosition.add(uvOffsetWorld).add(normalOffsetWorld);
-
-		this.cursorPlaneTransform.setWorldPosition(finalPosition);
+		// Position cursor plane directly at hit position
+		this.cursorPlaneTransform.setWorldPosition(worldPosition);
 		this.cursorPlaneTransform.setWorldRotation(worldRotation);
-	}
 
-	private positionRegionHoverPlane(worldPosition: vec3): void {
-		if (!this.activeCameraCropTransform || !this.regionHoverPlaneTransform) return;
-
-		const worldRotation = this.activeCameraCropTransform.getWorldRotation();
-
-		// Apply only normal offset (no UV offset)
-		const planeNormal = worldRotation.multiplyVec3(vec3.forward());
-		const normalOffsetWorld = planeNormal.uniformScale(this.regionNormalOffset);
-
-		const finalPosition = worldPosition.add(normalOffsetWorld);
-
-		this.regionHoverPlaneTransform.setWorldPosition(finalPosition);
-		this.regionHoverPlaneTransform.setWorldRotation(worldRotation);
+		// Position region hover plane at same position
+		if (this.regionHoverPlaneTransform) {
+			this.regionHoverPlaneTransform.setWorldPosition(worldPosition);
+			this.regionHoverPlaneTransform.setWorldRotation(worldRotation);
+		}
 	}
 
 	private hidePlanes(): void {
-		const hidePosition = new vec3(0,1000,0);
+		const hidePosition = new vec3(0, 1000, 0);
 		this.cursorPlaneTransform.setWorldPosition(hidePosition);
-		
+
 		if (this.regionHoverPlaneTransform) {
 			this.regionHoverPlaneTransform.setWorldPosition(hidePosition);
 		}
@@ -341,7 +301,11 @@ export class CursorPlaneController extends BaseScriptComponent {
 		this.updateSampledColor(pixelBuffer, gridSize, halfGrid);
 	}
 
-	private updateSampledColor(pixelBuffer: Uint8Array, gridSize: number, halfGrid: number): void {
+	private updateSampledColor(
+		pixelBuffer: Uint8Array,
+		gridSize: number,
+		halfGrid: number
+	): void {
 		const ONE_OVER_255 = 0.00392156862;
 		const centerPixelIndex = (halfGrid * gridSize + halfGrid) * 4;
 

@@ -1,8 +1,9 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 973
+    size: 972
     values:
+      - ""
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
       - 3DModels/SWIS_Frame.mesh
@@ -24,8 +25,6 @@ CollapsedEntities:
       - EyeDropperMaterials.lspkg
       - EyeDropperMaterials.lspkg/CamFeedCrop.mat
       - EyeDropperMaterials.lspkg/CamFeedMat.mat
-      - EyeDropperMaterials.lspkg/CaptureVisual.mat
-      - EyeDropperMaterials.lspkg/CaptureVisual.ss_graph
       - EyeDropperMaterials.lspkg/GrayTrans.mat
       - EyeDropperMaterials.lspkg/Green.mat
       - EyeDropperMaterials.lspkg/Images
@@ -72,17 +71,14 @@ CollapsedEntities:
       - Images/thinOutline.png
       - Images/webIcon.png
       - MaterialParams.png
-      - Materials
       - Materials/Background Material.mat
       - Materials/Background Material.ss_graph
       - Materials/Base.png
       - Materials/Black.mat
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
-      - Materials/CaptureVisual.mat
-      - Materials/CaptureVisual.ss_graph
-      - Materials/CaptureVisualWithSelection.mat
-      - Materials/CaptureVisualWithSelection.ss_graph
+      - Materials/Corners.mat
+      - Materials/Corners.ss_graph
       - Materials/GrayTrans.mat
       - Materials/Green.mat
       - Materials/LensExp_hover_frame.ss_graph
@@ -104,6 +100,8 @@ CollapsedEntities:
       - Materials/Shapes/Rounded Stroke
       - Materials/Shapes/Rounded Stroke/Rounded Square Stroke.ss_graph
       - Materials/SphereOutline.mat
+      - Materials/TestScaling.mat
+      - Materials/TestScaling.ss_graph
       - Materials/TextureSampleGrid.mat
       - Materials/TextureSampleGrid.ss_graph
       - Materials/loadingGif.mat
@@ -114,7 +112,6 @@ CollapsedEntities:
       - Materials/webIcon.mat
       - Normal.png
       - Plane.prefab
-      - Prefabs
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
       - Prefabs/SceneHierarchy.prefab
@@ -640,6 +637,8 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/VersionNumber.ts
       - SpectaclesInteractionKit.lspkg/package.native
       - SpectaclesInteractionKit.lspkg/tsconfig.json
+      - SpectaclesInteractionKitExamples.lspkg
+      - SpectaclesInteractionKitExamples.lspkg/Examples
       - SpectaclesInteractionKitExamples.lspkg/Examples/RocketWorkshop
       - SpectaclesInteractionKitExamples.lspkg/Examples/RocketWorkshop/Materials
       - SpectaclesInteractionKitExamples.lspkg/Examples/RocketWorkshop/Materials/Icons

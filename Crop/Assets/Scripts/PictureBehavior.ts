@@ -28,7 +28,6 @@ export class PictureBehavior extends BaseScriptComponent {
   private rotMat = new mat3();
 
   private updateEvent = null;
-  private surfaceWorldScale = null;
 
   onAwake() {
     this.captureRendMesh.mainMaterial = this.captureRendMesh.mainMaterial.clone();
@@ -42,7 +41,7 @@ export class PictureBehavior extends BaseScriptComponent {
     this.rightHand.onPinchDown.add(this.rightPinchDown);
     this.leftHand.onPinchUp.add(this.leftPinchUp);
     this.leftHand.onPinchDown.add(this.leftPinchDown);
-    this.surfaceWorldScale = this.sceneObject.getParent().getTransform().getWorldScale();
+
     if (this.isEditor) {
       //place this transform in front of camera for testing
       var trans = this.getSceneObject().getTransform();

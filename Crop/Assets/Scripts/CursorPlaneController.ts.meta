@@ -27,12 +27,9 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     cameraCropPath: false
-    cursorNormalOffset: false
     cursorPlane: false
-    cursorUVOffset: false
     gridSize: false
     regionHoverPlane: false
-    regionNormalOffset: false
     sampleColorIndicator: false
     sampleRegionIndicator: false
     sampledColorText: false
@@ -50,9 +47,6 @@
       sampledColorText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       sampleColorIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       sampleRegionIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      cursorNormalOffset: 0.500000
-      regionNormalOffset: 0.100000
-      cursorUVOffset: !<Vec2> {x: 0.000000, y: 0.000000}
       gridSize: !<float> 9.000000
       cameraCropPath: ImageAnchor/CameraCrop
   ScriptTypes:
@@ -64,8 +58,5 @@
     - '// @input Component.Text sampledColorText {"hint":"Text component to display the sampled color as HEX code"}'
     - '// @input SceneObject sampleColorIndicator {"hint":"Object whose material mainColor will be set to the sampled color"}'
     - '// @input SceneObject sampleRegionIndicator {"hint":"Object showing the sampled region grid"}'
-    - "// @input float cursorNormalOffset = 0.5 {\"hint\":\"Offset along the plane's normal direction for cursor (towards viewer)\"}"
-    - "// @input float regionNormalOffset = 0.1 {\"hint\":\"Offset along the plane's normal direction for region hover plane\"}"
-    - '// @input vec2 cursorUVOffset = {0,0} {"hint":"UV space offset for cursor (e.g., vec2(0.5, 0) pushes cursor right)"}'
     - '// @input float gridSize = 9 {"hint":"Grid size for texture sampling (odd number, e.g., 9 = 9x9 grid)"}'
     - '// @input string cameraCropPath = "ImageAnchor/CameraCrop" {"hint":"Path to cameraCrop within scanner hierarchy"}'

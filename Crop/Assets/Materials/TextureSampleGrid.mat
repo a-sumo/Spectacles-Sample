@@ -369,7 +369,7 @@
         value: {x: 0.935576, y: 0.983169, z: 0.990051, w: 1.000000}
   DepthWrite: true
   DepthTest: true
-  DepthFunction: Always
+  DepthFunction: LessEqual
   TwoSided: false
   ColorMask: {x: true, y: true, z: true, w: true}
   CullMode: Back
