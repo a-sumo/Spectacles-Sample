@@ -49,6 +49,9 @@
     - Port_FinalColor3_N004:
         typeIdx: 5
         value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    - Port_FinalColor_N004:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     - Port_GSplatPointSize_N004:
         typeIdx: 1
         value: 0.000000
@@ -173,6 +176,9 @@
     - Port_aspectRatioInvariant_N008:
         typeIdx: 1
         value: 1.000000
+    - Port_borderColor_N029:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     - Port_borderDebugColor_N029:
         typeIdx: 5
         value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
@@ -200,6 +206,9 @@
     - Port_countY_N029:
         typeIdx: 1
         value: 2.000000
+    - Port_debugColor_N029:
+        typeIdx: 5
+        value: {x: 1.000000, y: 0.000000, z: 0.000000, w: 0.000000}
     - Port_debugMode_N018:
         typeIdx: 1
         value: 0.000000
@@ -213,9 +222,6 @@
         typeIdx: 1
         value: 0.000000
     - Port_feather_N010:
-        typeIdx: 1
-        value: 0.000000
-    - Port_feather_N029:
         typeIdx: 1
         value: 0.000000
     - Port_fillColor_N002:
@@ -236,15 +242,6 @@
     - Port_gridColor_N010:
         typeIdx: 5
         value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    - Port_gridColor_N029:
-        typeIdx: 5
-        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    - Port_gridCountX_N029:
-        typeIdx: 1
-        value: 3.000000
-    - Port_gridCountY_N029:
-        typeIdx: 1
-        value: 3.000000
     - Port_gridScale_N029:
         typeIdx: 1
         value: 4.000000
@@ -308,9 +305,6 @@
     - Port_softness_N010:
         typeIdx: 1
         value: 0.000000
-    - Port_softness_N029:
-        typeIdx: 1
-        value: 0.000000
     - Port_strokeColor_N002:
         typeIdx: 5
         value: {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
@@ -353,9 +347,6 @@
     - Port_strokeWidth_N028:
         typeIdx: 1
         value: 0.000000
-    - Port_strokeWidth_N029:
-        typeIdx: 1
-        value: 0.025000
     - Port_stroke_N002:
         typeIdx: 1
         value: 0.300000
@@ -419,6 +410,9 @@
     - Port_useAspectRatio_N008:
         typeIdx: 1
         value: 0.000000
+    - Port_useInsetStroke_N029:
+        typeIdx: 1
+        value: 1.000000
     - Port_useWorldScale_N008:
         typeIdx: 1
         value: 1.000000
@@ -446,9 +440,6 @@
     - Port_uvOffset_N028:
         typeIdx: 3
         value: {x: 0.000000, y: 0.000000}
-    - Port_uvOffset_N029:
-        typeIdx: 3
-        value: {x: 0.500000, y: 0.500000}
     - scaleTransform:
         typeIdx: 0
         value: 1
@@ -466,9 +457,27 @@
     - Tweak_N3
   BlendMode: Disabled
   Properties:
-    Port_FinalColor_N004:
+    Port_feather_N029:
+      typeIdx: 1
+      value: 0.000000
+    Port_gridColor_N029:
       typeIdx: 5
       value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Port_gridCountX_N029:
+      typeIdx: 1
+      value: 7.000000
+    Port_gridCountY_N029:
+      typeIdx: 1
+      value: 7.000000
+    Port_softness_N029:
+      typeIdx: 1
+      value: 0.000000
+    Port_strokeWidth_N029:
+      typeIdx: 1
+      value: 0.020000
+    Port_uvOffset_N029:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
     PreviewEnabled:
       typeIdx: 0
       value: 0

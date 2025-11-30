@@ -713,7 +713,7 @@
   PrefabRemaps:
     []
   Name: Anchor
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -942,26 +942,6 @@
     - !<own> 795797b3-f9fa-4b89-9dc6-d9c1e1aaee08
   Components:
     []
-- !<ScriptComponent/349ab723-5901-4c4a-88a8-727bbc7f1517>
-  PrefabRemaps:
-    []
-  Name: ScalingBehavior
-  Enabled: true
-  ScriptAsset: !<reference> b946ea26-0580-4948-889b-0f93eebfe797
-  ScriptInputsDefault:
-    targetObject: true
-    continuousUpdate: true
-    scaleMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      continuousUpdate: true
-      scaleMode: uniform
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/35aff3cf-cabb-4a55-b92a-3d23917f827d>
   PrefabRemaps:
     []
@@ -1119,15 +1099,14 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.100000}
+    Position: {x: 0.450000, y: -0.100000, z: 0.010000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 0.300000, y: 0.300000, z: 0.300000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 51689eee-a346-4971-a167-09e93cc80c25
   Components:
     - !<own> f1533211-858c-4283-b617-d19afedfd722
-    - !<own> 89d1fc67-25bd-4b22-b4ac-e2b702052e79
 - !<SceneObject/46f46cd0-c48d-4ddb-b3ee-c1f112d710c5>
   PrefabRemaps:
     []
@@ -1307,7 +1286,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.020000}
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -1615,15 +1594,14 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -0.500000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 0.800000, y: 0.800000, z: 0.800000}
     HasSegmentScaleCompensation: false
   Children:
     []
   Components:
     - !<own> c55d5797-1265-4b1a-98a1-54576b245766
-    - !<own> cf841787-b296-407a-ae2b-85272021919a
 - !<ScriptComponent/698f5e89-f8f4-4e32-8008-0ad83d59f853>
   PrefabRemaps:
     []
@@ -1941,20 +1919,20 @@
     deactivatedFixedPivot: false
   Pivot: {x: 0.000000, y: 0.000000}
   Transform:
-    position: {x: 0.000000, y: 0.000000, z: 0.020000}
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
     rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     hasSegmentScaleCompensation: false
   RawMode: true
   ForceBasic: false
   Anchor:
-    left: -0.020000
-    bottom: -0.900000
-    right: 1.010000
-    top: 2.000000
+    left: -1.000000
+    bottom: -1.000000
+    right: 1.000000
+    top: 1.000000
   Offset:
     left: 0.000000
-    bottom: 0.000000
+    bottom: 2.000000
     right: 0.000000
     top: 0.000000
 - !<SceneObject/887b9b4a-4e16-4c38-a301-5c42cc5a3e8f>
@@ -1972,26 +1950,6 @@
     - !<own> 85fa571a-0fe3-4a04-ac79-a6f0fd181cdd
   Components:
     []
-- !<ScriptComponent/89d1fc67-25bd-4b22-b4ac-e2b702052e79>
-  PrefabRemaps:
-    []
-  Name: ScalingBehavior
-  Enabled: true
-  ScriptAsset: !<reference> b946ea26-0580-4948-889b-0f93eebfe797
-  ScriptInputsDefault:
-    targetObject: true
-    continuousUpdate: true
-    scaleMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      continuousUpdate: true
-      scaleMode: uniform
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/8d00331e-d238-43da-853d-0654dd5020f8>
   PrefabRemaps:
     []
@@ -2142,32 +2100,28 @@
 - !<SceneObject/9a733165-66e7-4a4f-a5d4-d7c05cc4efeb>
   PrefabRemaps:
     - 0fdb8372-fb7b-4e9a-8a80-f4505cb2b19a: 0bb6901b-0e36-463c-6785-da1a98619e9e
-    - 349ab723-5901-4c4a-88a8-727bbc7f1517: ce83eec4-9f45-4525-87a2-43d6232094ce
     - 43cac720-c456-48b3-bc96-44a12b08d652: 132b585e-3830-470e-4c5a-3f9800214a6c
     - 51689eee-a346-4971-a167-09e93cc80c25: 3b139b19-b301-420f-77c1-740a0d2faa0a
     - 68b60ded-ccf2-4c88-964b-3f4c70bb3c43: 805085ac-986d-40c3-bc7d-0cfeda307f78
     - 8852c397-8526-4c6d-b692-bb2d1d8aa22f: c9a63167-152c-44ae-613b-36660638e55a
-    - 89d1fc67-25bd-4b22-b4ac-e2b702052e79: fb064928-b209-4d53-9853-eeeb4684e324
     - 9a733165-66e7-4a4f-a5d4-d7c05cc4efeb: 06067239-f40c-46d9-504f-f1115b36deb3
     - c55d5797-1265-4b1a-98a1-54576b245766: 3547379a-17b5-4264-99e2-164fea422ed7
     - cc477e96-a813-42ed-8637-42c3ae376a1f: f63e6e48-6d76-40e7-40fb-ee0c01b9d909
-    - cf841787-b296-407a-ae2b-85272021919a: d8ad4365-5796-4793-9e3b-04bcc82823fc
     - e85709f9-efc8-4592-851b-c621d3a3d8fa: c3962185-6d11-4bdf-6dca-9096fc46abc4
     - f1533211-858c-4283-b617-d19afedfd722: 44aba768-97a5-452a-6d5b-45d72e3c5553
     - f4cf739d-a312-44dc-b2d9-25185e46634d: 53f32183-193b-46bf-454c-19d8f246e4e4
   Name: Cursor Plane
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 10.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> e85709f9-efc8-4592-851b-c621d3a3d8fa
     - !<own> 43cac720-c456-48b3-bc96-44a12b08d652
     - !<own> 68b60ded-ccf2-4c88-964b-3f4c70bb3c43
-    - !<own> 51689eee-a346-4971-a167-09e93cc80c25
   Components:
     - !<own> f4cf739d-a312-44dc-b2d9-25185e46634d
 - !<SceneObject/9a7ef4bf-3871-4374-90e0-ac0060502cf8>
@@ -2989,7 +2943,7 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 10
+  FontSize: 18
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -7.500000
@@ -3017,7 +2971,7 @@
       TileCount: 5.000000
       TileZone: Rect
       TextureStretch: FitWidth
-    Size: 0.250000
+    Size: 0.170000
   Dropshadow: !<DropshadowSettings>
     Enabled: false
     Fill: !<TextFill>
@@ -3069,26 +3023,6 @@
     - !<own> 3796f29d-c156-4ed0-a6d1-e21bb4f52492
   Components:
     []
-- !<ScriptComponent/cf841787-b296-407a-ae2b-85272021919a>
-  PrefabRemaps:
-    []
-  Name: ScalingBehavior
-  Enabled: true
-  ScriptAsset: !<reference> b946ea26-0580-4948-889b-0f93eebfe797
-  ScriptInputsDefault:
-    targetObject: true
-    continuousUpdate: true
-    scaleMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      continuousUpdate: true
-      scaleMode: uniform
-  ScriptTypes:
-    "":
-      {}
 - !<RenderMeshVisual/cfb83d2d-f457-435a-aaaa-f39398f20515>
   PrefabRemaps:
     []
@@ -3331,7 +3265,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: -0.400000}
+    Position: {x: 0.000000, y: 0.000000, z: -0.010000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 2.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -3339,7 +3273,6 @@
     []
   Components:
     - !<own> 0fdb8372-fb7b-4e9a-8a80-f4505cb2b19a
-    - !<own> 349ab723-5901-4c4a-88a8-727bbc7f1517
 - !<SceneObject/e8a5d4c9-84d4-49f7-9c02-904f3e94f02e>
   PrefabRemaps:
     []
