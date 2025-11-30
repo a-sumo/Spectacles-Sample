@@ -1,9 +1,9 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 974
+    size: 973
     values:
-      - ""
+      - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
       - 3DModels/SWIS_Frame.mesh
       - 3DModels/SWIS_tile_solid.mesh
@@ -72,6 +72,7 @@ CollapsedEntities:
       - Images/thinOutline.png
       - Images/webIcon.png
       - MaterialParams.png
+      - Materials
       - Materials/Background Material.mat
       - Materials/Background Material.ss_graph
       - Materials/Base.png
@@ -639,8 +640,6 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/VersionNumber.ts
       - SpectaclesInteractionKit.lspkg/package.native
       - SpectaclesInteractionKit.lspkg/tsconfig.json
-      - SpectaclesInteractionKitExamples.lspkg
-      - SpectaclesInteractionKitExamples.lspkg/Examples
       - SpectaclesInteractionKitExamples.lspkg/Examples/RocketWorkshop
       - SpectaclesInteractionKitExamples.lspkg/Examples/RocketWorkshop/Materials
       - SpectaclesInteractionKitExamples.lspkg/Examples/RocketWorkshop/Materials/Icons

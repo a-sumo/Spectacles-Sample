@@ -295,7 +295,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 	}
 
 	private hidePlanes(): void {
-		const hidePosition = new vec3(0, 0, 1000);
+		const hidePosition = new vec3(0,1000,0);
 		this.cursorPlaneTransform.setWorldPosition(hidePosition);
 		
 		if (this.regionHoverPlaneTransform) {
