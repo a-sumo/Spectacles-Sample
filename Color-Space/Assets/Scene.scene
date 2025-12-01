@@ -9,6 +9,7 @@
     - !<own> 7ce20335-efb8-4c4a-87da-e642cf0a797c
     - !<own> ee8cfb7c-7b08-4fbc-b139-5e9c16c1aca1
     - !<own> 78bcc0bc-eb45-4cb3-b641-9cbb87e6e98b
+    - !<own> bcc94ad9-4aa9-4b6f-b67a-6d68a19017f4
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -462,6 +463,24 @@
     - !<own> c89d7e48-75a6-414e-a253-874f80bfe792
   Components:
     []
+- !<ColliderComponent/057f9d36-34b4-4a88-8d62-31d277623e98>
+  PrefabRemaps:
+    []
+  Name: Physics Collider
+  Enabled: true
+  Shape: !<Sphere>
+    FitVisual: true
+    Radius: 6.000000
+  Matter: !<reference> 00000000-0000-0000-0000-000000000000
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: false
+  ShowCollider: false
 - !<ScriptComponent/0580e309-8813-4dd3-9116-3367a4ea486d>
   PrefabRemaps:
     []
@@ -7518,7 +7537,7 @@
   PrefabRemaps:
     []
   Name: Lab Space
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -60.000000}
@@ -9097,6 +9116,64 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/9493ef6d-2bf2-427d-868f-ba6b7509b24f>
+  PrefabRemaps:
+    []
+  Name: InteractableManipulation
+  Enabled: true
+  ScriptAsset: !<reference> 664b556b-1946-4c2c-866a-e675b4e86006
+  ScriptInputsDefault:
+    manipulateRootSceneObject: true
+    minimumScaleFactor: true
+    maximumScaleFactor: true
+    enableTranslation: true
+    enableRotation: true
+    enableScale: true
+    enableStretchZ: true
+    showStretchZProperties: true
+    zStretchFactorMin: true
+    zStretchFactorMax: true
+    useFilter: true
+    showFilterProperties: true
+    minCutoff: true
+    beta: true
+    dcutoff: true
+    showTranslationProperties: true
+    _enableXTranslation: true
+    _enableYTranslation: true
+    _enableZTranslation: true
+    showRotationProperties: true
+    _rotationAxis: true
+    isSynced: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      manipulateRootSceneObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      minimumScaleFactor: 0.250000
+      maximumScaleFactor: !<float> 20.000000
+      enableTranslation: true
+      enableRotation: true
+      enableScale: true
+      enableStretchZ: true
+      showStretchZProperties: false
+      zStretchFactorMin: !<float> 1.000000
+      zStretchFactorMax: !<float> 12.000000
+      useFilter: true
+      showFilterProperties: false
+      minCutoff: !<float> 2.000000
+      beta: 0.015000
+      dcutoff: !<float> 1.000000
+      showTranslationProperties: false
+      _enableXTranslation: true
+      _enableYTranslation: true
+      _enableZTranslation: true
+      showRotationProperties: false
+      _rotationAxis: All
+      isSynced: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/94b214d5-f5a2-4679-b00a-eb9094345346>
   PrefabRemaps:
     []
@@ -10394,7 +10471,7 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 10.000000, z: -60.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: -33.792446, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -11698,6 +11775,24 @@
     []
   Components:
     - !<own> 1014851d-b256-4e79-b13f-0d0fad0c9c6c
+- !<SceneObject/bcc94ad9-4aa9-4b6f-b67a-6d68a19017f4>
+  PrefabRemaps:
+    []
+  Name: RGB Space
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: -9.628325, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e77fe7a7-809c-4f71-a995-529d321d4ff3
+    - !<own> fb235ec2-2953-47ea-aedd-6d5a2610031f
+    - !<own> 057f9d36-34b4-4a88-8d62-31d277623e98
+    - !<own> 9493ef6d-2bf2-427d-868f-ba6b7509b24f
 - !<SceneObject/bcd67182-5e4b-43a1-ad33-e69883be4508>
   PrefabRemaps:
     []
@@ -14526,6 +14621,19 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<VFXComponent/e77fe7a7-809c-4f71-a995-529d321d4ff3>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 6fa10864-b7c2-4b0a-b362-20a57d3399b5
 - !<SceneObject/e7aaf00d-b438-4e6f-9a6c-56d8bfbd4710>
   PrefabRemaps:
     []
@@ -15743,6 +15851,44 @@
     - !<own> 103a6fd4-c08d-4556-9177-d925c1cffda2
   Components:
     []
+- !<ScriptComponent/fb235ec2-2953-47ea-aedd-6d5a2610031f>
+  PrefabRemaps:
+    []
+  Name: Interactable
+  Enabled: true
+  ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
+  ScriptInputsDefault:
+    targetingMode: true
+    targetingVisual: true
+    ignoreInteractionPlane: true
+    keepHoverOnTrigger: true
+    enableInstantDrag: true
+    isScrollable: true
+    allowMultipleInteractors: true
+    enablePokeDirectionality: true
+    acceptableXDirections: true
+    acceptableYDirections: true
+    acceptableZDirections: true
+    useFilteredPinch: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      targetingMode: !<float> 3.000000
+      targetingVisual: !<float> 1.000000
+      ignoreInteractionPlane: false
+      keepHoverOnTrigger: false
+      enableInstantDrag: false
+      isScrollable: false
+      allowMultipleInteractors: true
+      enablePokeDirectionality: false
+      acceptableXDirections: !<float> 0.000000
+      acceptableYDirections: !<float> 0.000000
+      acceptableZDirections: !<float> 1.000000
+      useFilteredPinch: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/fbb5bc88-c807-415b-92ae-011a37767600>
   PrefabRemaps:
     []
