@@ -1,30 +1,30 @@
-- !<AssetImportMetadata/cc00632b-816c-487d-ab1d-1dd559dfd1b4>
+- !<AssetImportMetadata/46af7de6-1299-4682-8b12-8870d5a483f1>
   ImportedAssetIds:
-    VFXGraph: !<reference> c47b6196-5bcf-4104-95e8-38eb898eeff3
+    VFXGraph: !<reference> 546cfbb3-9f5e-462e-8ea8-05a54a821852
   ImporterName: VFXAssetImporter
-  PrimaryAsset: !<reference> c47b6196-5bcf-4104-95e8-38eb898eeff3
+  PrimaryAsset: !<reference> 546cfbb3-9f5e-462e-8ea8-05a54a821852
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     AssetLibraryId: 3fsoJqLDdFxVLJuNFpjRER
   AssetDataMap:
-    VFXGraph: !<own> 2f127f4b-8131-4e45-b6bf-10e648b28e39
+    VFXGraph: !<own> 7191ad34-965e-45f8-a7fc-3728361e31b7
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<VFXAssetData/2f127f4b-8131-4e45-b6bf-10e648b28e39>
-  Mesh: !<reference> 00000000-0000-0000-0000-000000000000
+- !<VFXAssetData/7191ad34-965e-45f8-a7fc-3728361e31b7>
+  Mesh: !<reference> 2e5e428e-9a20-4c3f-ad4a-4451f07df611
   SystemPassProperties:
-    39: !<VFXSystemPassProperties/b51785ad-ce32-4ea9-bab7-7d7f793d3d57>
+    39: !<VFXSystemPassProperties/432966a0-549c-4b4f-b4f1-5827115bdf75>
       FeedbackProperties:
         {}
       SimulateProperties:
         xMap:
           typeIdx: 9
           value:
-            id: 2b07281e-6c43-4ada-9cf9-a321a3dc88f6
+            id: d5438d68-205a-40bd-8912-1a84d109e7fb
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat
@@ -36,7 +36,7 @@
         yMap:
           typeIdx: 9
           value:
-            id: 2610fd84-a936-459b-92b1-83b4aaa756eb
+            id: 44644dcd-8d04-4330-b43b-afdb8f580e2b
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat
@@ -48,7 +48,7 @@
         zMap:
           typeIdx: 9
           value:
-            id: 509b1d91-1a63-4b90-8dff-cf8f6c57b44b
+            id: 4a1b0a67-68c3-4439-9cdd-c8710c0c9c8f
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat
@@ -60,7 +60,7 @@
         colorMap:
           typeIdx: 9
           value:
-            id: df4ab2e4-0f1a-4b16-beff-463769903f86
+            id: 6f32012f-4005-44d7-9306-0457ce8b21c2
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat

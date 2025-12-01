@@ -13,9 +13,9 @@ metaInfo:
     []
   tags:
     []
-  lensName: Specs Starter
+  lensName: Color Space
   lensDescriptors:
-    []
+    - EXPERIMENTAL_API
   lensApplicability:
     - Front
     - Back
