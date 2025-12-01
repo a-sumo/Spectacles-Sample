@@ -24,11 +24,11 @@
         xMap:
           typeIdx: 9
           value:
-            id: d5438d68-205a-40bd-8912-1a84d109e7fb
+            id: 0d49e15d-09ef-4eb1-9d01-7a824bfc46b7
             sampler:
               filteringMode: Nearest
-              wrapModeU: Repeat
-              wrapModeV: Repeat
+              wrapModeU: ClampToEdge
+              wrapModeV: ClampToEdge
               wrapModeW: Repeat
               borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
               mipmaps: false
@@ -36,11 +36,11 @@
         yMap:
           typeIdx: 9
           value:
-            id: 44644dcd-8d04-4330-b43b-afdb8f580e2b
+            id: 9d90313d-1de4-487d-95f1-71e75ddad137
             sampler:
               filteringMode: Nearest
-              wrapModeU: Repeat
-              wrapModeV: Repeat
+              wrapModeU: ClampToEdge
+              wrapModeV: ClampToEdge
               wrapModeW: Repeat
               borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
               mipmaps: false
@@ -48,11 +48,11 @@
         zMap:
           typeIdx: 9
           value:
-            id: 4a1b0a67-68c3-4439-9cdd-c8710c0c9c8f
+            id: a01655f3-cd19-470e-b8ce-03bde4671797
             sampler:
               filteringMode: Nearest
-              wrapModeU: Repeat
-              wrapModeV: Repeat
+              wrapModeU: ClampToEdge
+              wrapModeV: ClampToEdge
               wrapModeW: Repeat
               borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
               mipmaps: false
@@ -60,13 +60,13 @@
         colorMap:
           typeIdx: 9
           value:
-            id: 6f32012f-4005-44d7-9306-0457ce8b21c2
+            id: aa818b21-b32c-478c-8ee7-4e6fc20fbb54
             sampler:
               filteringMode: Nearest
-              wrapModeU: Repeat
-              wrapModeV: Repeat
+              wrapModeU: ClampToEdge
+              wrapModeV: ClampToEdge
               wrapModeW: Repeat
-              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+              borderColor: {x: 1.000000, y: 0.111833, z: 0.000000, w: 1.000000}
               mipmaps: false
             type: Texture2D
       RenderProperties:
