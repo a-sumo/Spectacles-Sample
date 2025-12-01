@@ -24,7 +24,7 @@
         xMap:
           typeIdx: 9
           value:
-            id: 2b07281e-6c43-4ada-9cf9-a321a3dc88f6
+            id: 01a9096c-068e-4767-9c41-dc87e493c757
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat
@@ -36,7 +36,7 @@
         yMap:
           typeIdx: 9
           value:
-            id: 2610fd84-a936-459b-92b1-83b4aaa756eb
+            id: a45355bb-ade6-46f8-8462-f071a2e43c58
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat
@@ -48,7 +48,7 @@
         zMap:
           typeIdx: 9
           value:
-            id: 509b1d91-1a63-4b90-8dff-cf8f6c57b44b
+            id: a3baa17e-ede0-4b03-abd6-075e3367c927
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat
@@ -60,7 +60,7 @@
         colorMap:
           typeIdx: 9
           value:
-            id: df4ab2e4-0f1a-4b16-beff-463769903f86
+            id: f45cfc6e-64e1-4c8c-9a95-60e31189e4ad
             sampler:
               filteringMode: Nearest
               wrapModeU: Repeat

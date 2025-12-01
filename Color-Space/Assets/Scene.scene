@@ -7442,7 +7442,7 @@
   PrefabRemaps:
     []
   Name: Lab Space
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -60.000000}
@@ -7658,7 +7658,7 @@
   PrefabRemaps:
     []
   Name: Test Particle Encoding
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -2.000000}
