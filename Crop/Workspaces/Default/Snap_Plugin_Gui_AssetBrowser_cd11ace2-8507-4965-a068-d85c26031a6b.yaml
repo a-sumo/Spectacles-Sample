@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 972
+    size: 1008
     values:
       - ""
       - 3DModels
@@ -25,6 +25,8 @@ CollapsedEntities:
       - EyeDropperMaterials.lspkg
       - EyeDropperMaterials.lspkg/CamFeedCrop.mat
       - EyeDropperMaterials.lspkg/CamFeedMat.mat
+      - EyeDropperMaterials.lspkg/CaptureVisual.mat
+      - EyeDropperMaterials.lspkg/CaptureVisual.ss_graph
       - EyeDropperMaterials.lspkg/GrayTrans.mat
       - EyeDropperMaterials.lspkg/Green.mat
       - EyeDropperMaterials.lspkg/Images
@@ -70,18 +72,49 @@ CollapsedEntities:
       - Images/loading.gif
       - Images/thinOutline.png
       - Images/webIcon.png
+      - LSTween.lspkg
+      - LSTween.lspkg/Examples
+      - LSTween.lspkg/Examples/Assets
+      - LSTween.lspkg/Examples/Assets/Box.mesh
+      - LSTween.lspkg/Examples/Assets/Simple Diffuse.mat
+      - LSTween.lspkg/Examples/Assets/Simple Diffuse.ss_graph
+      - LSTween.lspkg/Examples/Assets/Sphere.mesh
+      - LSTween.lspkg/Examples/Example__ADD_TO_SCENE.prefab
+      - LSTween.lspkg/Examples/Scripts
+      - LSTween.lspkg/Examples/Scripts/Example_ChainTween.ts
+      - LSTween.lspkg/Examples/Scripts/Example_RawTween.ts
+      - LSTween.lspkg/Examples/Scripts/Example_YoyoTween.ts
+      - LSTween.lspkg/LSTween.ts
+      - LSTween.lspkg/RotationInterpolationType.ts
+      - LSTween.lspkg/TweenJS
+      - LSTween.lspkg/TweenJS/Easing.ts
+      - LSTween.lspkg/TweenJS/Group.ts
+      - LSTween.lspkg/TweenJS/Index.ts
+      - LSTween.lspkg/TweenJS/Interpolation.ts
+      - LSTween.lspkg/TweenJS/Now.ts
+      - LSTween.lspkg/TweenJS/Sequence.ts
+      - LSTween.lspkg/TweenJS/Tween.ts
+      - LSTween.lspkg/TweenJS/Version.ts
+      - LSTween.lspkg/TweenJS/mainGroup.ts
+      - LSTween.lspkg/package.native
       - MaterialParams.png
+      - Materials
       - Materials/Background Material.mat
       - Materials/Background Material.ss_graph
       - Materials/Base.png
       - Materials/Black.mat
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
+      - Materials/CaptureVisual.mat
+      - Materials/CaptureVisual.ss_graph
+      - Materials/CaptureVisualOpacityMask.mat
+      - Materials/CaptureVisualOpacityMask.ss_graph
       - Materials/Corners.mat
       - Materials/Corners.ss_graph
       - Materials/GrayTrans.mat
       - Materials/Green.mat
       - Materials/LensExp_hover_frame.ss_graph
+      - Materials/Palette Color.mat
       - Materials/PinchButtonDarkRadial.mat
       - Materials/PinchDarkRadial.ss_graph
       - Materials/Rectangle Border.mat
@@ -113,7 +146,9 @@ CollapsedEntities:
       - Normal.png
       - Plane.prefab
       - Prefabs/Button.prefab
-      - Prefabs/Scanner.prefab
+      - Prefabs/Color Slot.prefab
+      - Prefabs/Colored Square.prefab
+      - Prefabs/Palette.prefab
       - Prefabs/SceneHierarchy.prefab
       - Refraction Material
       - Refraction Material/.hidden
@@ -209,6 +244,7 @@ CollapsedEntities:
       - Scripts/CropRegion.ts
       - Scripts/CursorPlaneController.ts
       - Scripts/InteractableUVMapper.ts
+      - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
       - Scripts/SelectionUVController.ts

@@ -29,6 +29,7 @@
     cameraCropPath: false
     cursorPlane: false
     gridSize: false
+    paletteController: false
     regionHoverPlane: false
     sampleColorIndicator: false
     sampleRegionIndicator: false
@@ -49,6 +50,7 @@
       sampleRegionIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       gridSize: !<float> 9.000000
       cameraCropPath: ImageAnchor/CameraCrop
+      paletteController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -60,3 +62,4 @@
     - '// @input SceneObject sampleRegionIndicator {"hint":"Object showing the sampled region grid"}'
     - '// @input float gridSize = 9 {"hint":"Grid size for texture sampling (odd number, e.g., 9 = 9x9 grid)"}'
     - '// @input string cameraCropPath = "ImageAnchor/CameraCrop" {"hint":"Path to cameraCrop within scanner hierarchy"}'
+    - '// @input AssignableType paletteController {"hint":"PaletteController to set colors on when sampling"}'

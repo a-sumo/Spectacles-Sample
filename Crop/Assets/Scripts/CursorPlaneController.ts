@@ -1,6 +1,25 @@
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
 import { InteractorEvent } from "SpectaclesInteractionKit.lspkg/Core/Interactor/InteractorEvent";
 import { PictureController, ActiveScannerEvent } from "./PictureController";
+import { PaletteController } from "./PaletteController";
+import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
+
+/**
+ * Event data for when a color is sampled via touch/trigger
+ */
+export class ColorSampledEvent {
+	color: vec4;
+	hex: string;
+	scannerId: string | null;
+	uv: vec2;
+	
+	constructor(color: vec4, hex: string, scannerId: string | null, uv: vec2) {
+		this.color = color;
+		this.hex = hex;
+		this.scannerId = scannerId;
+		this.uv = uv;
+	}
+}
 
 /**
  * CursorPlaneController
@@ -39,6 +58,10 @@ export class CursorPlaneController extends BaseScriptComponent {
 	@hint("Path to cameraCrop within scanner hierarchy")
 	cameraCropPath: string = "ImageAnchor/CameraCrop";
 
+	@input
+	@hint("PaletteController to set colors on when sampling")
+	paletteController: PaletteController;
+
 	// State
 	private pictureController: PictureController | null = null;
 	private activeScanner: SceneObject | null = null;
@@ -60,6 +83,22 @@ export class CursorPlaneController extends BaseScriptComponent {
 
 	// Event cleanup
 	private unsubscribeInteractable: (() => void)[] = [];
+	private unsubscribeScannerChanged: (() => void) | null = null;
+
+	// Reusable textures to avoid per-frame allocations
+	private sampledTexture: Texture | null = null;
+	private sampledTextureProvider: ProceduralTextureProvider | null = null;
+	private pixelBuffer: Uint8Array | null = null;
+
+	// Current sampled color state (updated on hover)
+	private currentSampledColor: vec4 = new vec4(0, 0, 0, 1);
+	private currentSampledHex: string = "#000000";
+	private currentSampledUV: vec2 = new vec2(0.5, 0.5);
+	private activeScannerId: string | null = null;
+
+	// Public event for color sampling
+	private onColorSampledEvent: Event<ColorSampledEvent> = new Event<ColorSampledEvent>();
+	public readonly onColorSampled: PublicApi<ColorSampledEvent> = this.onColorSampledEvent.publicApi();
 
 	onAwake() {
 		if (!this.cursorPlane) {
@@ -83,18 +122,48 @@ export class CursorPlaneController extends BaseScriptComponent {
 		// Validate grid size
 		this.validatedGridSize = this.computeValidGridSize();
 
+		// Pre-allocate reusable resources
+		this.initializeReusableResources();
+
 		// Setup materials
 		this.setupMaterials();
 
-		// Subscribe to active scanner changes
-		this.pictureController.onActiveScannerChanged.add(
-			this.onActiveScannerChanged.bind(this)
-		);
+		// Subscribe to active scanner changes (store unsubscribe function)
+		const callback = this.onActiveScannerChanged.bind(this);
+		this.pictureController.onActiveScannerChanged.add(callback);
+		this.unsubscribeScannerChanged = () => {
+			this.pictureController?.onActiveScannerChanged.remove(callback);
+		};
+
+		// Subscribe to color sampled events to update palette
+		if (this.paletteController) {
+			this.onColorSampled.add((event: ColorSampledEvent) => {
+				this.paletteController.setActiveItemColor(event.color);
+			});
+		}
 
 		// Hide planes initially (move far away)
 		this.hidePlanes();
 
+		// Register destroy event for cleanup
+		this.createEvent("OnDestroyEvent").bind(this.onDestroy.bind(this));
+
 		print("CursorPlaneController: Initialized");
+	}
+
+	private initializeReusableResources(): void {
+		const gridSize = this.validatedGridSize;
+		
+		// Pre-allocate pixel buffer
+		this.pixelBuffer = new Uint8Array(gridSize * gridSize * 4);
+		
+		// Pre-allocate output texture
+		this.sampledTexture = ProceduralTextureProvider.createWithFormat(
+			gridSize,
+			gridSize,
+			TextureFormat.RGBA8Unorm
+		);
+		this.sampledTextureProvider = this.sampledTexture.control as ProceduralTextureProvider;
 	}
 
 	private computeValidGridSize(): number {
@@ -112,6 +181,10 @@ export class CursorPlaneController extends BaseScriptComponent {
 				this.sampleRegionMaterial = renderMesh.mainPass;
 				if (this.sampleRegionMaterial) {
 					this.sampleRegionMaterial.gridScale = this.validatedGridSize;
+					// Assign the pre-allocated texture
+					if (this.sampledTexture) {
+						this.sampleRegionMaterial.mainTexture = this.sampledTexture;
+					}
 				}
 			}
 		}
@@ -128,6 +201,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		this.cleanupInteractableEvents();
 
 		this.activeScanner = event.scanner;
+		this.activeScannerId = event.scannerId;
 
 		if (this.activeScanner && event.interactableObject) {
 			this.activeCameraCrop = this.findCameraCropInScanner(this.activeScanner);
@@ -155,6 +229,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 			this.activeCameraCropMaterial = null;
 			this.activeCameraCrop = null;
 			this.activeInteractable = null;
+			this.activeScannerId = null;
 		}
 	}
 
@@ -209,6 +284,19 @@ export class CursorPlaneController extends BaseScriptComponent {
 				this.hidePlanes();
 			})
 		);
+
+		// Trigger/touch events - emit the sampled color
+		this.unsubscribeInteractable.push(
+			this.activeInteractable.onTriggerStart((e: InteractorEvent) => {
+				this.emitColorSampledEvent();
+			})
+		);
+
+		this.unsubscribeInteractable.push(
+			this.activeInteractable.onTriggerEnd((e: InteractorEvent) => {
+				// Optional: could emit on end as well if needed
+			})
+		);
 	}
 
 	private cleanupInteractableEvents() {
@@ -220,6 +308,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		if (!this.activeCameraCropTransform) return;
 
 		const uv = this.worldToUV(worldPosition);
+		this.currentSampledUV = uv;
 
 		// Position planes directly at the hit position
 		this.positionPlanes(worldPosition);
@@ -264,7 +353,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 	}
 
 	private updateCursorPlaneTexture(uv: vec2): void {
-		if (!this.sampleRegionMaterial || !this.activeCameraCropMaterial) return;
+		if (!this.sampledTextureProvider || !this.pixelBuffer || !this.activeCameraCropMaterial) return;
 
 		const sourceTexture: Texture = this.activeCameraCropMaterial.captureImage;
 		if (!sourceTexture) return;
@@ -282,23 +371,31 @@ export class CursorPlaneController extends BaseScriptComponent {
 		const startPixelX = Math.max(0, Math.min(width - gridSize, centerPixelX - halfGrid));
 		const startPixelY = Math.max(0, Math.min(height - gridSize, centerPixelY - halfGrid));
 
-		const proceduralTexture = ProceduralTextureProvider.createFromTexture(sourceTexture);
-		const sourceProvider = proceduralTexture.control as ProceduralTextureProvider;
+		// Use the source texture's control directly if available, otherwise create temporary
+		let sourceProvider: ProceduralTextureProvider;
+		let tempTexture: Texture | null = null;
+		
+		if (sourceTexture.control && typeof (sourceTexture.control as any).getPixels === 'function') {
+			sourceProvider = sourceTexture.control as ProceduralTextureProvider;
+		} else {
+			// Create temporary procedural texture from source (unavoidable for non-procedural sources)
+			tempTexture = ProceduralTextureProvider.createFromTexture(sourceTexture);
+			sourceProvider = tempTexture.control as ProceduralTextureProvider;
+		}
 
-		const pixelBuffer = new Uint8Array(gridSize * gridSize * 4);
-		sourceProvider.getPixels(startPixelX, startPixelY, gridSize, gridSize, pixelBuffer);
+		// Read pixels into pre-allocated buffer
+		sourceProvider.getPixels(startPixelX, startPixelY, gridSize, gridSize, this.pixelBuffer);
 
-		const sampledTexture = ProceduralTextureProvider.createWithFormat(
-			gridSize,
-			gridSize,
-			TextureFormat.RGBA8Unorm
-		);
-		const outputProvider = sampledTexture.control as ProceduralTextureProvider;
-		outputProvider.setPixels(0, 0, gridSize, gridSize, pixelBuffer);
+		// Write to pre-allocated output texture
+		this.sampledTextureProvider.setPixels(0, 0, gridSize, gridSize, this.pixelBuffer);
 
-		this.sampleRegionMaterial.mainTexture = sampledTexture;
+		// Clean up temporary texture if created
+		if (tempTexture) {
+			// Note: Lens Studio may not have explicit texture destroy, but nulling helps GC
+			tempTexture = null;
+		}
 
-		this.updateSampledColor(pixelBuffer, gridSize, halfGrid);
+		this.updateSampledColor(this.pixelBuffer, gridSize, halfGrid);
 	}
 
 	private updateSampledColor(
@@ -313,18 +410,47 @@ export class CursorPlaneController extends BaseScriptComponent {
 		const g = pixelBuffer[centerPixelIndex + 1];
 		const b = pixelBuffer[centerPixelIndex + 2];
 
+		// Store current sampled color
+		this.currentSampledColor = new vec4(
+			r * ONE_OVER_255,
+			g * ONE_OVER_255,
+			b * ONE_OVER_255,
+			1.0
+		);
+		this.currentSampledHex = this.rgbToHex(r, g, b);
+
 		if (this.sampledColorText) {
-			this.sampledColorText.text = this.rgbToHex(r, g, b);
+			this.sampledColorText.text = this.currentSampledHex;
 		}
 
 		if (this.sampledColorMaterial) {
-			this.sampledColorMaterial.mainColor = new vec4(
-				r * ONE_OVER_255,
-				g * ONE_OVER_255,
-				b * ONE_OVER_255,
-				1.0
-			);
+			this.sampledColorMaterial.mainColor = this.currentSampledColor;
 		}
+	}
+
+	private emitColorSampledEvent(): void {
+		const event = new ColorSampledEvent(
+			this.currentSampledColor,
+			this.currentSampledHex,
+			this.activeScannerId,
+			this.currentSampledUV
+		);
+		this.onColorSampledEvent.invoke(event);
+		print(`CursorPlaneController: Color sampled ${this.currentSampledHex} from scanner ${this.activeScannerId}`);
+	}
+
+	/**
+	 * Get the currently sampled color (updated on hover)
+	 */
+	public getCurrentSampledColor(): vec4 {
+		return this.currentSampledColor;
+	}
+
+	/**
+	 * Get the currently sampled color as hex string
+	 */
+	public getCurrentSampledHex(): string {
+		return this.currentSampledHex;
 	}
 
 	private rgbToHex(r: number, g: number, b: number): string {
@@ -333,5 +459,31 @@ export class CursorPlaneController extends BaseScriptComponent {
 			return hex.length === 1 ? "0" + hex : hex;
 		};
 		return "#" + toHex(r) + toHex(g) + toHex(b);
+	}
+
+	private onDestroy(): void {
+		// Cleanup interactable event subscriptions
+		this.cleanupInteractableEvents();
+
+		// Cleanup PictureController subscription
+		if (this.unsubscribeScannerChanged) {
+			this.unsubscribeScannerChanged();
+			this.unsubscribeScannerChanged = null;
+		}
+
+		// Clear references
+		this.pictureController = null;
+		this.activeScanner = null;
+		this.activeInteractable = null;
+		this.activeCameraCrop = null;
+		this.activeCameraCropTransform = null;
+		this.activeCameraCropMaterial = null;
+		this.sampleRegionMaterial = null;
+		this.sampledColorMaterial = null;
+		this.sampledTexture = null;
+		this.sampledTextureProvider = null;
+		this.pixelBuffer = null;
+
+		print("CursorPlaneController: Destroyed and cleaned up");
 	}
 }
