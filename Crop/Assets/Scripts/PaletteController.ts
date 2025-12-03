@@ -43,6 +43,10 @@ export class PaletteController extends BaseScriptComponent {
     @input
     @hint("Padding between items")
     padding: vec2 = new vec2(5, 5);
+
+    @input
+    @hint("Offset of the item grid")
+    offset: vec2 = new vec2(0, 0);
     
     @input
     @hint("Index of the default selected item (-1 for none)")
@@ -232,7 +236,7 @@ export class PaletteController extends BaseScriptComponent {
             
             const item = this.itemList[i];
             const transform = item.sceneObject.getTransform();
-            transform.setLocalPosition(new vec3(x, y, z));
+            transform.setLocalPosition(new vec3(x + this.offset.x, y + this.offset.y, z));
         }
         
         print(`PaletteController: Laid out ${itemCount} items in ${rows}x${cols} grid (cell: ${cellWidth.toFixed(1)}x${cellHeight.toFixed(1)})`);

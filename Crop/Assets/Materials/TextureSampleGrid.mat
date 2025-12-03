@@ -440,7 +440,7 @@
       value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     gridScale:
       typeIdx: 1
-      value: 7.000000
+      value: 13.000000
     mainTexture:
       typeIdx: 9
       value:

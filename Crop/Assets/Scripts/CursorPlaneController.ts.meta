@@ -28,7 +28,11 @@
   ScriptInputsHidden:
     cameraCropPath: false
     cursorPlane: false
-    gridSize: false
+    defaultGridSize: false
+    gridSizeSlider: false
+    gridSizeText: false
+    maxGridSize: false
+    minGridSize: false
     paletteController: false
     regionHoverPlane: false
     sampleColorIndicator: false
@@ -48,9 +52,13 @@
       sampledColorText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       sampleColorIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       sampleRegionIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      gridSize: !<float> 9.000000
+      defaultGridSize: !<float> 9.000000
       cameraCropPath: ImageAnchor/CameraCrop
       paletteController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      gridSizeSlider: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      gridSizeText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      minGridSize: !<float> 3.000000
+      maxGridSize: !<float> 21.000000
   ScriptTypes:
     -
       {}
@@ -60,6 +68,10 @@
     - '// @input Component.Text sampledColorText {"hint":"Text component to display the sampled color as HEX code"}'
     - '// @input SceneObject sampleColorIndicator {"hint":"Object whose material mainColor will be set to the sampled color"}'
     - '// @input SceneObject sampleRegionIndicator {"hint":"Object showing the sampled region grid"}'
-    - '// @input float gridSize = 9 {"hint":"Grid size for texture sampling (odd number, e.g., 9 = 9x9 grid)"}'
+    - '// @input float defaultGridSize = 9 {"hint":"Default grid size for texture sampling (odd number, e.g., 9 = 9x9 grid). Overridden by slider if assigned."}'
     - '// @input string cameraCropPath = "ImageAnchor/CameraCrop" {"hint":"Path to cameraCrop within scanner hierarchy"}'
     - '// @input AssignableType paletteController {"hint":"PaletteController to set colors on when sampling"}'
+    - '// @input SceneObject gridSizeSlider {"hint":"Slider to control grid size (optional). If assigned, this overrides defaultGridSize."}'
+    - '// @input Component.Text gridSizeText {"hint":"Text to display current grid size (optional)"}'
+    - '// @input float minGridSize = 3 {"hint":"Minimum grid size"}'
+    - '// @input float maxGridSize = 21 {"hint":"Maximum grid size"}'

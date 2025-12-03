@@ -2,6 +2,7 @@ import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interact
 import { InteractorEvent } from "SpectaclesInteractionKit.lspkg/Core/Interactor/InteractorEvent";
 import { PictureController, ActiveScannerEvent } from "./PictureController";
 import { PaletteController } from "./PaletteController";
+import { Slider } from "SpectaclesUIKit.lspkg/Scripts/Components/Slider/Slider";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
 /**
@@ -51,8 +52,8 @@ export class CursorPlaneController extends BaseScriptComponent {
 	sampleRegionIndicator: SceneObject;
 
 	@input
-	@hint("Grid size for texture sampling (odd number, e.g., 9 = 9x9 grid)")
-	gridSize: number = 9;
+	@hint("Default grid size for texture sampling (odd number, e.g., 9 = 9x9 grid). Overridden by slider if assigned.")
+	defaultGridSize: number = 9;
 
 	@input
 	@hint("Path to cameraCrop within scanner hierarchy")
@@ -61,6 +62,22 @@ export class CursorPlaneController extends BaseScriptComponent {
 	@input
 	@hint("PaletteController to set colors on when sampling")
 	paletteController: PaletteController;
+
+	@input
+	@hint("Slider to control grid size (optional). If assigned, this overrides defaultGridSize.")
+	gridSizeSlider: SceneObject;
+
+	@input
+	@hint("Text to display current grid size (optional)")
+	gridSizeText: Text;
+
+	@input
+	@hint("Minimum grid size")
+	minGridSize: number = 3;
+
+	@input
+	@hint("Maximum grid size")
+	maxGridSize: number = 21;
 
 	// State
 	private pictureController: PictureController | null = null;
@@ -99,6 +116,9 @@ export class CursorPlaneController extends BaseScriptComponent {
 	// Public event for color sampling
 	private onColorSampledEvent: Event<ColorSampledEvent> = new Event<ColorSampledEvent>();
 	public readonly onColorSampled: PublicApi<ColorSampledEvent> = this.onColorSampledEvent.publicApi();
+
+	// Slider reference
+	private sliderComponent: Slider | null = null;
 
 	onAwake() {
 		if (!this.cursorPlane) {
@@ -142,6 +162,11 @@ export class CursorPlaneController extends BaseScriptComponent {
 			});
 		}
 
+		// Setup grid size slider (deferred to OnStartEvent to ensure Slider is initialized)
+		this.createEvent("OnStartEvent").bind(() => {
+			this.setupGridSizeSlider();
+		});
+
 		// Hide planes initially (move far away)
 		this.hidePlanes();
 
@@ -167,11 +192,123 @@ export class CursorPlaneController extends BaseScriptComponent {
 	}
 
 	private computeValidGridSize(): number {
-		let size = Math.max(1, Math.floor(this.gridSize));
+		let size = Math.max(this.minGridSize, Math.min(this.maxGridSize, Math.floor(this.defaultGridSize)));
 		if (size % 2 === 0) {
 			size += 1;
 		}
 		return size;
+	}
+
+	private setupGridSizeSlider(): void {
+		if (!this.gridSizeSlider) {
+			// No slider - just update text with current value
+			this.updateGridSizeText();
+			return;
+		}
+
+		// Find Slider component
+		this.sliderComponent = this.gridSizeSlider.getComponent("Component.ScriptComponent") as Slider;
+		if (!this.sliderComponent) {
+			// Try to find in children
+			for (let i = 0; i < this.gridSizeSlider.getChildrenCount(); i++) {
+				const child = this.gridSizeSlider.getChild(i);
+				this.sliderComponent = child.getComponent("Component.ScriptComponent") as Slider;
+				if (this.sliderComponent && typeof (this.sliderComponent as any).currentValue !== 'undefined') {
+					break;
+				}
+			}
+		}
+
+		if (!this.sliderComponent) {
+			print("CursorPlaneController: No Slider component found on gridSizeSlider");
+			this.updateGridSizeText();
+			return;
+		}
+
+		// Use slider's current value as the source of truth
+		// This allows the slider's default value (set in Inspector) to override defaultGridSize
+		const sliderValue = this.sliderComponent.currentValue;
+		const gridSizeFromSlider = this.sliderValueToGridSize(sliderValue);
+		
+		// Update our grid size to match slider (if different)
+		if (gridSizeFromSlider !== this.validatedGridSize) {
+			this.setGridSize(gridSizeFromSlider);
+		}
+
+		// Update text display
+		this.updateGridSizeText();
+
+		// Subscribe to slider value changes
+		this.sliderComponent.onValueChange.add((value: number) => {
+			const newGridSize = this.sliderValueToGridSize(value);
+			this.setGridSize(newGridSize);
+		});
+
+		print(`CursorPlaneController: Grid size slider initialized (${this.minGridSize}-${this.maxGridSize}), current: ${this.validatedGridSize}`);
+	}
+
+	private gridSizeToSliderValue(gridSize: number): number {
+		// Map grid size to 0-1 range
+		return (gridSize - this.minGridSize) / (this.maxGridSize - this.minGridSize);
+	}
+
+	private sliderValueToGridSize(sliderValue: number): number {
+		// Map 0-1 to grid size range, ensuring odd number
+		const rawSize = this.minGridSize + sliderValue * (this.maxGridSize - this.minGridSize);
+		let size = Math.round(rawSize);
+		if (size % 2 === 0) {
+			size += 1; // Ensure odd
+		}
+		return Math.max(this.minGridSize, Math.min(this.maxGridSize, size));
+	}
+
+	private updateGridSizeText(): void {
+		if (this.gridSizeText) {
+			this.gridSizeText.text = `${this.validatedGridSize}x${this.validatedGridSize}`;
+		}
+	}
+
+	/**
+	 * Set the grid size for texture sampling
+	 */
+	public setGridSize(newSize: number): void {
+		// Validate and ensure odd
+		let size = Math.max(this.minGridSize, Math.min(this.maxGridSize, Math.floor(newSize)));
+		if (size % 2 === 0) {
+			size += 1;
+		}
+
+		if (size === this.validatedGridSize) return;
+
+		this.validatedGridSize = size;
+
+		// Reallocate resources for new size
+		this.pixelBuffer = new Uint8Array(size * size * 4);
+		
+		this.sampledTexture = ProceduralTextureProvider.createWithFormat(
+			size,
+			size,
+			TextureFormat.RGBA8Unorm
+		);
+		this.sampledTextureProvider = this.sampledTexture.control as ProceduralTextureProvider;
+
+		// Update material
+		if (this.sampleRegionMaterial) {
+			this.sampleRegionMaterial.gridScale = size;
+			this.sampleRegionMaterial.mainTexture = this.sampledTexture;
+		}
+
+		// Update text display
+		this.updateGridSizeText();
+
+		print(`CursorPlaneController: Grid size changed to ${size}x${size}`);
+	}
+
+	/**
+	 * Get the current grid size
+	 */
+	public getGridSize(): number {
+		return this.validatedGridSize;
 	}
 
 	private setupMaterials() {
