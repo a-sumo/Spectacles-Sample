@@ -21,9 +21,6 @@
       FeedbackProperties:
         {}
       SimulateProperties:
-        scale:
-          typeIdx: 1
-          value: 1.000000
         texSize:
           typeIdx: 1
           value: 128.000000

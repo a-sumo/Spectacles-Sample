@@ -6,12 +6,12 @@ CollapsedEntities:
       - 00000000-0000-0065-0000-000000000064
       - 09e1cdaa-09ec-475f-9e7d-d882305446d4
       - 35ad36df-f760-46f3-bf55-f45a46b45fa1
-      - 5bd8d999-be33-4bca-9f01-6c1d3976bc57
-      - 9aa2e1b1-c39a-4691-834b-b7629cec56e1
+      - 9029c03a-1fac-4eb7-b78e-b42b961db8b8
       - ad959e50-3067-4f36-bf02-b51ebec5da21
       - b586a2d3-476c-4f34-8ead-ce537d16b6d8
       - bc319a5e-e7c2-4e13-8a7c-c8b96916f25b
       - bdd5726a-01e5-4183-8c06-f5b80b011f33
+      - c15ec57f-36c6-42e6-922b-cda88d8eb406
   options: 4
 PinnedEntities:
   type: uuids

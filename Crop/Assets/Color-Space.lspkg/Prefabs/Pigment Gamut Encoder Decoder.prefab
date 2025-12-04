@@ -50,8 +50,8 @@
   Name: Physics Collider
   Enabled: true
   Shape: !<Box>
-    FitVisual: true
-    Size: {x: 15.000000, y: 15.000000, z: 15.000000}
+    FitVisual: false
+    Size: {x: 1.000000, y: 1.000000, z: 1.000000}
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -61,7 +61,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: false
+  ShowCollider: true
 - !<SceneObject/49edaf77-3786-4ff9-9873-08d54aa2a6ac>
   PrefabRemaps:
     []
