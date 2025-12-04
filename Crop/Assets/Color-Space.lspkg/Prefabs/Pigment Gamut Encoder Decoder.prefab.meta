@@ -26,7 +26,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  VFXAsset: !<reference> 01b4da44-332e-43bc-a11b-dc6aa6309a89
+  VFXAsset: !<reference> 55b723d0-1de9-483e-834d-0d177543fbc5
 - !<ScriptComponent/29eddb77-12c9-41a5-4e1e-a6b871838413>
   PrefabRemaps:
     []
@@ -60,7 +60,7 @@
 - !<SceneObject/49edaf77-3786-4ff9-678c-f72ab55d5953>
   PrefabRemaps:
     []
-  Name: LAB Decoder
+  Name: Pigment Gamut Decoder
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>

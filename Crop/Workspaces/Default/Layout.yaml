@@ -39,8 +39,8 @@ dock:
             type: section
             current: 0
         sizes:
-          - 208
-          - 459
+          - 323
+          - 344
           - 98
         type: splitter
         orientation: vertical
