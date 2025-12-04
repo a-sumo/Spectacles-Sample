@@ -264,7 +264,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 
 	private updateGridSizeText(): void {
 		if (this.gridSizeText) {
-			this.gridSizeText.text = `${this.validatedGridSize}x${this.validatedGridSize}`;
+			this.gridSizeText.text = `Grid Size: ${this.validatedGridSize}`;
 		}
 	}
 
