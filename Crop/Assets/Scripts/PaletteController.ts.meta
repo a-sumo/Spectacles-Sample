@@ -26,6 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    colorGamutObject: false
     coloredSquarePath: false
     columns: false
     defaultSelectedIndex: false
@@ -35,6 +36,7 @@
     layoutByRow: false
     offset: false
     padding: false
+    pigmentEncoderPath: false
     rows: false
     slotTextPath: false
   ScriptTypesHidden:
@@ -48,6 +50,8 @@
   DefaultScriptInputs:
     - itemPrefabs: !<reference.ObjectPrefab[]>
         []
+      colorGamutObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      pigmentEncoderPath: PigmentGamutEncoder
       itemIds: ""
       coloredSquarePath: Colored Square
       slotTextPath: Text
@@ -63,6 +67,8 @@
       {}
   InputLines:
     - '// @input Asset.ObjectPrefab[] itemPrefabs = {} {"hint":"List of prefabs to instantiate as palette items"}'
+    - '// @input SceneObject colorGamutObject {"hint":"Color Gamut SceneObject (already in scene)"}'
+    - '// @input string pigmentEncoderPath = "PigmentGamutEncoder" {"hint":"Path to PigmentGamutEncoder child within colorGamutObject"}'
     - '// @input string itemIds {"hint":"Optional IDs for each prefab (comma-separated). If empty, indices will be used."}'
     - "// @input string coloredSquarePath = \"Colored Square\" {\"hint\":\"Path to the colored square within item hierarchy (e.g., 'Colored Square')\"}"
     - "// @input string slotTextPath = \"Text\" {\"hint\":\"Path to the slot's text within item hierarchy\"}"

@@ -21,21 +21,7 @@
       FeedbackProperties:
         {}
       SimulateProperties:
-        posMap:
-          typeIdx: 9
-          value:
-            id: 00000000-0000-0000-0000-000000000000
-            sampler:
-              filteringMode: Trilinear
-              wrapModeU: Repeat
-              wrapModeV: Repeat
-              wrapModeW: Repeat
-              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
-              mipmaps: false
-            type: Texture2D
-        texSize:
-          typeIdx: 1
-          value: 64.000000
+        {}
       RenderProperties:
         {}
       FeedbackDefines:

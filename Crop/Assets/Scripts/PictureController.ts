@@ -63,7 +63,7 @@ export class PictureController extends BaseScriptComponent {
 			// this.createEvent("TouchStartEvent").bind(this.editorTest.bind(this));
 		} else {
 			var obj = this.getSceneObject();
-			if (obj.getChildrenCount() > 0) {
+			if (obj && obj.getChildrenCount() > 0) {
 				obj.getChild(0).destroy();
 			}
 		}
@@ -82,25 +82,110 @@ export class PictureController extends BaseScriptComponent {
 		);
 	}
 
+	/**
+	 * Check if a SceneObject is valid (not null and not destroyed)
+	 */
+	private isValidSceneObject(obj: SceneObject | null): boolean {
+		if (!obj) return false;
+		try {
+			// Accessing a property on a destroyed object will throw
+			const _ = obj.name;
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Extract scanner ID from scanner name
+	 */
+	private extractScannerId(scanner: SceneObject): string | null {
+		if (!this.isValidSceneObject(scanner)) return null;
+		
+		try {
+			const name = scanner.name;
+			if (!name) return null;
+			
+			const idMatch = name.match(/Scanner_(\w+)/);
+			if (!idMatch || !idMatch[1]) return null;
+			
+			return idMatch[1];
+		} catch (e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Clean up destroyed scanners from the instances array
+	 */
+	private cleanupDestroyedScanners(): void {
+		const validScanners: SceneObject[] = [];
+		const invalidIds: string[] = [];
+
+		for (const scanner of this.scannerInstances) {
+			if (this.isValidSceneObject(scanner)) {
+				validScanners.push(scanner);
+			} else {
+				// Try to find and remove associated data
+				// Since we can't get the ID from a destroyed object, we'll need to check data validity separately
+			}
+		}
+
+		// Also clean up scannerData entries that reference destroyed interactables
+		for (const [scannerId, data] of this.scannerData.entries()) {
+			// Check if this scanner still exists in our valid list
+			const scannerExists = validScanners.some((s) => {
+				const id = this.extractScannerId(s);
+				return id === scannerId;
+			});
+
+			if (!scannerExists) {
+				invalidIds.push(scannerId);
+			}
+		}
+
+		// Remove invalid data entries
+		for (const id of invalidIds) {
+			this.scannerData.delete(id);
+		}
+
+		this.scannerInstances = validScanners;
+	}
+
 	update() {
+		// Periodically clean up destroyed scanners
+		this.cleanupDestroyedScanners();
+
 		let previousActiveScanner = this.activeScanner;
 		this.activeScanner = null;
 		this.activeInteractable = null;
 		this.activeScannerId = null;
 
 		for (let i = 0; i < this.scannerInstances.length; i++) {
-			let scanner = this.scannerInstances[i];
+			const scanner = this.scannerInstances[i];
 
-			const idMatch = scanner.name.match(/Scanner_(\w+)/);
-			if (!idMatch || !idMatch[1]) continue;
+			// Validate scanner
+			if (!this.isValidSceneObject(scanner)) {
+				continue;
+			}
 
-			const scannerId = idMatch[1];
+			const scannerId = this.extractScannerId(scanner);
+			if (!scannerId) continue;
+
 			const data = this.scannerData.get(scannerId);
 			if (!data) continue;
 
-			let interactableObj = data.interactableObject;
-			if (interactableObj) {
-				let interactable = interactableObj.getComponent(
+			const interactableObj = data.interactableObject;
+			
+			// Validate interactable object
+			if (!this.isValidSceneObject(interactableObj)) {
+				// Update data to reflect destroyed interactable
+				data.interactableObject = null;
+				continue;
+			}
+
+			try {
+				const interactable = interactableObj.getComponent(
 					Interactable.getTypeName()
 				) as any;
 
@@ -113,10 +198,18 @@ export class PictureController extends BaseScriptComponent {
 					this.activeScannerId = scannerId;
 					break;
 				}
+			} catch (e) {
+				// Component access failed, skip this scanner
+				continue;
 			}
 		}
 
-		if (previousActiveScanner !== this.activeScanner) {
+		// Only fire event if active scanner actually changed
+		const activeChanged = previousActiveScanner !== this.activeScanner;
+		const previousWasValid = this.isValidSceneObject(previousActiveScanner);
+		const currentIsValid = this.isValidSceneObject(this.activeScanner);
+
+		if (activeChanged || (previousWasValid !== currentIsValid)) {
 			this.onActiveScannerChanged.invoke(
 				new ActiveScannerEvent(
 					this.activeScanner,
@@ -128,21 +221,29 @@ export class PictureController extends BaseScriptComponent {
 	}
 
 	private findInteractableInScanner(scanner: SceneObject): SceneObject | null {
+		if (!this.isValidSceneObject(scanner)) return null;
 		if (!this.interactablePath) return scanner;
 
 		const pathParts = this.interactablePath.split("/");
-		let current = scanner;
+		let current: SceneObject | null = scanner;
 
-		for (let part of pathParts) {
+		for (const part of pathParts) {
+			if (!current || !this.isValidSceneObject(current)) {
+				return null;
+			}
+
 			let found = false;
-			for (let i = 0; i < current.getChildrenCount(); i++) {
-				let child = current.getChild(i);
-				if (child.name === part) {
+			const childCount = current.getChildrenCount();
+			
+			for (let i = 0; i < childCount; i++) {
+				const child = current.getChild(i);
+				if (child && child.name === part) {
 					current = child;
 					found = true;
 					break;
 				}
 			}
+			
 			if (!found) {
 				print("PictureController: Could not find path part '" + part + "'");
 				return null;
@@ -153,11 +254,11 @@ export class PictureController extends BaseScriptComponent {
 	}
 
 	public getActiveScanner(): SceneObject | null {
-		return this.activeScanner;
+		return this.isValidSceneObject(this.activeScanner) ? this.activeScanner : null;
 	}
 
 	public getActiveInteractable(): SceneObject | null {
-		return this.activeInteractable;
+		return this.isValidSceneObject(this.activeInteractable) ? this.activeInteractable : null;
 	}
 
 	public getActiveScannerId(): string | null {
@@ -166,6 +267,16 @@ export class PictureController extends BaseScriptComponent {
 
 	public getScannerData(scannerId: string): ScannerData | undefined {
 		return this.scannerData.get(scannerId);
+	}
+
+	public getScannerCount(): number {
+		this.cleanupDestroyedScanners();
+		return this.scannerInstances.length;
+	}
+
+	public getAllScannerIds(): string[] {
+		this.cleanupDestroyedScanners();
+		return Array.from(this.scannerData.keys());
 	}
 
 	editorTest() {
@@ -194,17 +305,39 @@ export class PictureController extends BaseScriptComponent {
 		this.rightDown = false;
 	};
 
-	isPinchClose() {
-		return (
-			this.leftHand.thumbTip.position.distance(
-				this.rightHand.thumbTip.position
-			) < 10
-		);
+	isPinchClose(): boolean {
+		try {
+			const leftThumb = this.leftHand?.thumbTip?.position;
+			const rightThumb = this.rightHand?.thumbTip?.position;
+			
+			if (!leftThumb || !rightThumb) return false;
+			
+			return leftThumb.distance(rightThumb) < 10;
+		} catch (e) {
+			return false;
+		}
 	}
 
-	createScanner() {
+	createScanner(): SceneObject | null {
+		if (!this.scannerPrefab) {
+			print("PictureController: No scanner prefab assigned");
+			return null;
+		}
+
+		const parent = this.getSceneObject();
+		if (!this.isValidSceneObject(parent)) {
+			print("PictureController: Invalid parent object");
+			return null;
+		}
+
 		const scannerId = this.generateUniqueId();
-		var scanner = this.scannerPrefab.instantiate(this.getSceneObject());
+		const scanner = this.scannerPrefab.instantiate(parent);
+		
+		if (!scanner) {
+			print("PictureController: Failed to instantiate scanner");
+			return null;
+		}
+
 		scanner.name = `Scanner_${scannerId}`;
 
 		const interactableObj = this.findInteractableInScanner(scanner);
@@ -224,26 +357,61 @@ export class PictureController extends BaseScriptComponent {
 				this.scannerInstances.length +
 				")"
 		);
+
+		return scanner;
 	}
 
-	public removeScanner(scannerId: string): void {
-		const data = this.scannerData.get(scannerId);
-		if (!data) return;
+	public removeScanner(scannerId: string): boolean {
+		if (!scannerId) return false;
 
+		const data = this.scannerData.get(scannerId);
+		if (!data) {
+			print("PictureController: Scanner not found: " + scannerId);
+			return false;
+		}
+
+		// Find and destroy the scanner object
+		for (const scanner of this.scannerInstances) {
+			const id = this.extractScannerId(scanner);
+			if (id === scannerId && this.isValidSceneObject(scanner)) {
+				try {
+					scanner.destroy();
+				} catch (e) {
+					print("PictureController: Error destroying scanner: " + e);
+				}
+				break;
+			}
+		}
+
+		// Remove from arrays
 		this.scannerInstances = this.scannerInstances.filter((scanner) => {
-			const match = scanner.name.match(/Scanner_(\w+)/);
-			return !match || match[1] !== scannerId;
+			const id = this.extractScannerId(scanner);
+			return id !== scannerId;
 		});
 
 		this.scannerData.delete(scannerId);
 
-		print("Scanner removed: " + scannerId);
+		// Clear active scanner if it was removed
+		if (this.activeScannerId === scannerId) {
+			this.activeScanner = null;
+			this.activeInteractable = null;
+			this.activeScannerId = null;
+			
+			this.onActiveScannerChanged.invoke(
+				new ActiveScannerEvent(null, null, null)
+			);
+		}
+
+		print("Scanner removed: " + scannerId + " (Remaining: " + this.scannerInstances.length + ")");
+		return true;
 	}
 
 	public arrangeScannersInGrid(
 		centerPosition: vec3 = new vec3(0, 0, 0),
 		spacing: number = 10
 	): void {
+		this.cleanupDestroyedScanners();
+
 		const nodeCount = this.scannerInstances.length;
 		if (nodeCount === 0) return;
 
@@ -256,20 +424,25 @@ export class PictureController extends BaseScriptComponent {
 		const startY = centerPosition.z - ((rows - 1) * spacing) / 2;
 
 		for (let i = 0; i < nodeCount; i++) {
+			const scanner = this.scannerInstances[i];
+			
+			if (!this.isValidSceneObject(scanner)) continue;
+
 			const row = Math.floor(i / cols);
 			const col = i % cols;
 
 			const x = startX + col * spacing;
 			const y = startY + row * spacing;
-			const z = centerPosition.x;
+			const z = centerPosition.y;
 
-			const scanner = this.scannerInstances[i];
-			const transform = scanner.getTransform();
-			transform.setWorldPosition(new vec3(x, y, z));
-            const TWEEN_DURATION = 100;
-            const cancelFunction = makeTween((t) => {
-                }, TWEEN_DURATION)    
-
+			try {
+				const transform = scanner.getTransform();
+				if (transform) {
+					transform.setWorldPosition(new vec3(x, y, z));
+				}
+			} catch (e) {
+				print("PictureController: Error positioning scanner: " + e);
+			}
 		}
 
 		print(
@@ -287,6 +460,7 @@ export function makeTween(
 	const lateUpdateEvent = updateDispatcher.createLateUpdateEvent("Tween");
 	const startTime = getTime();
 	let hasRemovedEvent = false;
+	
 	lateUpdateEvent.bind(() => {
 		if (getTime() > startTime + duration) {
 			hasRemovedEvent = true;

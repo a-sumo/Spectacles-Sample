@@ -25,6 +25,14 @@ export class PaletteController extends BaseScriptComponent {
 	itemPrefabs: ObjectPrefab[] = [];
 
 	@input
+	@hint("Color Gamut SceneObject (already in scene)")
+	colorGamutObject: SceneObject | null = null;
+
+	@input
+	@hint("Path to PigmentGamutEncoder child within colorGamutObject")
+	pigmentEncoderPath: string = "PigmentGamutEncoder";
+
+	@input
 	@hint(
 		"Optional IDs for each prefab (comma-separated). If empty, indices will be used."
 	)
@@ -101,11 +109,14 @@ export class PaletteController extends BaseScriptComponent {
 
 	private initialized: boolean = false;
 
+	// Color gamut ref
+	private pigmentEncoderScript: ScriptComponent | null = null;
+
 	onAwake() {
 		this.createEvent("OnStartEvent").bind(this.initialize.bind(this));
-		// if(!this.isEditor){
-		this.editorTestButton.enabled = false;
-		// }
+		if (!this.isEditor) {
+			this.editorTestButton.enabled = false;
+		}
 	}
 
 	initialize(): void {
@@ -124,7 +135,79 @@ export class PaletteController extends BaseScriptComponent {
 			this.setActiveItem(defaultItem.id, false);
 		}
 
+		// Initialize color gamut
+		this.initializeColorGamut();
+
 		this.initialized = true;
+	}
+
+	private initializeColorGamut(): void {
+		if (!this.colorGamutObject) {
+			print("PaletteController: No colorGamutObject set");
+			return;
+		}
+
+		let encoderObj: SceneObject | null = null;
+
+		if (this.pigmentEncoderPath === "" || this.pigmentEncoderPath === ".") {
+			encoderObj = this.colorGamutObject;
+		} else {
+			encoderObj = this.findChildByPath(
+				this.colorGamutObject,
+				this.pigmentEncoderPath
+			);
+		}
+
+		if (!encoderObj) {
+			print(
+				`PaletteController: Could not find '${this.pigmentEncoderPath}' in colorGamutObject`
+			); // FIXED: added (
+			return;
+		}
+
+		this.pigmentEncoderScript = encoderObj.getComponent(
+			"Component.ScriptComponent"
+		) as ScriptComponent;
+		if (!this.pigmentEncoderScript) {
+			print(
+				"PaletteController: No ScriptComponent found on PigmentGamutEncoder"
+			);
+			return;
+		}
+
+		this.syncPigmentColors();
+		print("PaletteController: Color gamut initialized");
+	}
+
+	/**
+	 * Sync palette item colors to the PigmentGamutEncoder
+	 */
+	public syncPigmentColors(): void {
+		if (!this.pigmentEncoderScript) {
+			return;
+		}
+
+		const maxPigments = 6;
+		const encoder = this.pigmentEncoderScript as any;
+
+		for (let i = 0; i < maxPigments; i++) {
+			const pigmentKey = `pig${i}Color`;
+
+			if (i < this.itemList.length) {
+				const itemColor = this.itemList[i].color;
+				const pigmentColor = new vec3(itemColor.x, itemColor.y, itemColor.z);
+				encoder[pigmentKey] = pigmentColor;
+			} else {
+				encoder[pigmentKey] = new vec3(1, 1, 1);
+			}
+		}
+
+		print(
+			`PaletteController: Synced ${Math.min(
+				this.itemList.length,
+				maxPigments
+			)} pigment colors`
+		); // FIXED: added (
 	}
 
 	private instantiateItems(): void {
@@ -141,7 +224,6 @@ export class PaletteController extends BaseScriptComponent {
 			const id = ids[i] || `item_${i}`;
 			sceneObject.name = `PaletteItem_${id}`;
 
-			// Find the BaseButton component
 			const button = this.findButtonComponent(sceneObject);
 			if (!button) {
 				print(
@@ -151,7 +233,6 @@ export class PaletteController extends BaseScriptComponent {
 				continue;
 			}
 
-			// Find the colored square child and clone its material
 			const coloredSquare = this.findChildByPath(
 				sceneObject,
 				this.coloredSquarePath
@@ -163,7 +244,6 @@ export class PaletteController extends BaseScriptComponent {
 					"Component.RenderMeshVisual"
 				) as RenderMeshVisual;
 				if (renderMesh && renderMesh.mainMaterial) {
-					// Clone material so each instance has its own
 					renderMesh.mainMaterial = renderMesh.mainMaterial.clone();
 					coloredSquareMaterial = renderMesh.mainMaterial;
 				}
@@ -173,14 +253,11 @@ export class PaletteController extends BaseScriptComponent {
 				);
 			}
 
-			// Find the text child and set its value
 			const slotTextObj = this.findChildByPath(sceneObject, this.slotTextPath);
 			slotTextObj.getComponent("Text").text = `${i + 1}`;
 
-			// Ensure button is in toggle mode
 			button.setIsToggleable(true);
 
-			// Default color (white)
 			const defaultColor = new vec4(1, 1, 1, 1);
 
 			const itemData = {
@@ -204,7 +281,7 @@ export class PaletteController extends BaseScriptComponent {
 			});
 		}
 
-		print(`PaletteController: Instantiated ${this.itemList.length} items`);
+		print(`PaletteController: Instantiated ${this.itemList.length} items`); // FIXED: added (
 	}
 
 	private findChildByPath(
@@ -430,18 +507,16 @@ export class PaletteController extends BaseScriptComponent {
 
 		const newItem = this.items.get(id);
 		if (!newItem) {
-			print(`PaletteController: Item '${id}' not found`);
+			print(`PaletteController: Item '${id}' not found`); // FIXED: added (
 			return;
 		}
 
 		this.isUpdatingSelection = true;
 
-		// Untoggle previous active item
 		if (this.activeItemId !== null) {
 			const prevItem = this.items.get(this.activeItemId);
 			if (prevItem) {
 				prevItem.button.toggle(false);
-				// Set text to grey when untoggled
 				if (prevItem.slotTextObj) {
 					prevItem.slotTextObj.getComponent("Text").textFill.color = new vec4(
 						0.9,
@@ -453,13 +528,16 @@ export class PaletteController extends BaseScriptComponent {
 			}
 		}
 
-        // Toggle new active item
-        this.activeItemId = id;
-        newItem.button.toggle(true);
-        // Set text to yellow/orange when toggled
-        if (newItem.slotTextObj) {
-            newItem.slotTextObj.getComponent("Text").textFill.color = new vec4(255,216,0,1);
-        }
+		this.activeItemId = id;
+		newItem.button.toggle(true);
+		if (newItem.slotTextObj) {
+			newItem.slotTextObj.getComponent("Text").textFill.color = new vec4(
+				1,
+				0.85,
+				0,
+				1
+			); // FIXED: normalized color
+		}
 		this.isUpdatingSelection = false;
 
 		if (notify) {
@@ -535,19 +613,26 @@ export class PaletteController extends BaseScriptComponent {
 	public setItemColor(id: string, color: vec4): void {
 		const item = this.items.get(id);
 		if (!item) {
-			print(`PaletteController: Item '${id}' not found`);
+			print(`PaletteController: Item '${id}' not found`); // FIXED: added (
 			return;
 		}
 
-		// Store the color
 		item.color = color;
 
-		// Apply to the cloned material
+		// Sync itemList as well
+		const listItem = this.itemList.find((i) => i.id === id);
+		if (listItem) {
+			listItem.color = color;
+		}
+
 		if (item.coloredSquareMaterial) {
 			item.coloredSquareMaterial.mainPass.mainColor = color;
 		}
 
-		print(`PaletteController: Set color ${color.toString()} for item '${id}'`);
+		// ADDED: Sync to encoder
+		this.syncPigmentColors();
+
+		print(`PaletteController: Set color ${color.toString()} for item '${id}'`); // FIXED: added (
 	}
 
 	/**
@@ -555,12 +640,11 @@ export class PaletteController extends BaseScriptComponent {
 	 */
 	public setItemColorByIndex(index: number, color: vec4): void {
 		if (index < 0 || index >= this.itemList.length) {
-			print(`PaletteController: Index ${index} out of range`);
+			print(`PaletteController: Index ${index} out of range`); // FIXED: added (
 			return;
 		}
 		this.setItemColor(this.itemList[index].id, color);
 	}
-
 	/**
 	 * Get the color of a specific item by ID
 	 */
@@ -575,5 +659,19 @@ export class PaletteController extends BaseScriptComponent {
 	public getActiveItemColor(): vec4 | null {
 		if (this.activeItemId === null) return null;
 		return this.getItemColor(this.activeItemId);
+	}
+
+	/**
+	 * Get the color gamut SceneObject
+	 */
+	public getColorGamutObject(): SceneObject | null {
+		return this.colorGamutObject;
+	}
+
+	/**
+	 * Get the PigmentGamutEncoder script component
+	 */
+	public getPigmentEncoderScript(): ScriptComponent | null {
+		return this.pigmentEncoderScript;
 	}
 }

@@ -73,6 +73,8 @@
   ScriptAsset: !<reference> 764db4d3-664c-49fa-bc76-d3d4f39dd0e5
   ScriptInputsDefault:
     itemPrefabs: true
+    colorGamutObject: true
+    pigmentEncoderPath: true
     itemIds: true
     coloredSquarePath: true
     slotTextPath: true
@@ -89,6 +91,8 @@
     "":
       itemPrefabs: !<reference.ObjectPrefab[]>
         []
+      colorGamutObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      pigmentEncoderPath: PigmentGamutEncoder
       itemIds: ""
       coloredSquarePath: Colored Square
       slotTextPath: Text
