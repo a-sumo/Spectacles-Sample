@@ -1,0 +1,271 @@
+// PigmentGamutEncoder.ts
+// Encodes the gamut of mixable colors from pigments to LAB space
+
+@component
+export class PigmentGamutEncoder extends BaseScriptComponent {
+    
+    @input
+    @hint("Material with PigmentGamutEncoder shader")
+    encoderMaterial: Material;
+    
+    @input
+    @hint("VFX component to receive textures")
+    vfxComponent: VFXComponent;
+    
+    @input
+    @hint("Output texture size (64 = 4096 pixels)")
+    texSize: number = 64;
+    
+    @input
+    @hint("Mix steps between pigments")
+    mixSteps: number = 20;
+    
+    @input
+    @hint("Scale for VFX positions")
+    scale: number = 100;
+    
+    // Pigment inputs
+    @input
+    @widget(new ColorWidget())
+    pig0Color: vec3 = new vec3(1, 1, 1);
+    
+    @input
+    @widget(new ColorWidget())
+    pig1Color: vec3 = new vec3(0.08, 0.08, 0.08);
+    
+    @input
+    @widget(new ColorWidget())
+    pig2Color: vec3 = new vec3(1, 0.92, 0);
+    
+    @input
+    @widget(new ColorWidget())
+    pig3Color: vec3 = new vec3(0.89, 0, 0.13);
+    
+    @input
+    @widget(new ColorWidget())
+    pig4Color: vec3 = new vec3(0.1, 0.1, 0.7);
+    
+    @input
+    @widget(new ColorWidget())
+    pig5Color: vec3 = new vec3(0, 0.47, 0.44);
+    
+    private static readonly NUM_PIGMENTS = 6;
+    
+    private posRenderTarget: Texture;
+    private colorRenderTarget: Texture;
+    private pigmentTexture: Texture;
+    
+    onAwake(): void {
+        if (!this.encoderMaterial) {
+            print("ERROR: encoderMaterial not set");
+            return;
+        }
+        
+        // Create pigment texture
+        this.pigmentTexture = ProceduralTextureProvider.createWithFormat(
+            PigmentGamutEncoder.NUM_PIGMENTS,
+            1,
+            TextureFormat.RGBA8Unorm
+        );
+        this.updatePigmentTexture();
+        
+        // Create render targets
+        const res = new vec2(this.texSize, this.texSize);
+        this.posRenderTarget = this.createRenderTarget(res);
+        this.colorRenderTarget = this.createRenderTarget(res);
+        
+        // Clone and configure material
+        const material = this.encoderMaterial.clone();
+        material.mainPass.pigmentTex = this.pigmentTexture;
+        material.mainPass.numPigments = PigmentGamutEncoder.NUM_PIGMENTS;
+        material.mainPass.texWidth = PigmentGamutEncoder.NUM_PIGMENTS;
+        material.mainPass.texSize = this.texSize;
+        material.mainPass.mixSteps = this.mixSteps;
+        
+        // Create camera and post effect
+        const layer = LayerSet.makeUnique();
+        const cameraObj = this.createCameraMRT(layer);
+        this.createPostEffect(cameraObj, material, layer);
+        
+        // Assign to VFX
+        this.assignToVFX();
+        
+        // Log info
+        this.logGamutInfo();
+        
+        // Update pigments every frame
+        this.createEvent("UpdateEvent").bind(() => this.updatePigmentTexture());
+        
+        // Debug after a few frames
+        let frameCount = 0;
+        this.createEvent("UpdateEvent").bind(() => {
+            frameCount++;
+            if (frameCount === 5) {
+                this.debugReadRenderTargets();
+            }
+        });
+    }
+    
+    private updatePigmentTexture(): void {
+        const pixels = new Uint8Array(PigmentGamutEncoder.NUM_PIGMENTS * 4);
+        
+        const pigments = [
+            this.pig0Color,
+            this.pig1Color,
+            this.pig2Color,
+            this.pig3Color,
+            this.pig4Color,
+            this.pig5Color,
+        ];
+        
+        for (let i = 0; i < PigmentGamutEncoder.NUM_PIGMENTS; i++) {
+            const idx = i * 4;
+            pixels[idx + 0] = Math.round(pigments[i].x * 255);
+            pixels[idx + 1] = Math.round(pigments[i].y * 255);
+            pixels[idx + 2] = Math.round(pigments[i].z * 255);
+            pixels[idx + 3] = 255; // Full alpha
+        }
+        
+        (this.pigmentTexture.control as ProceduralTextureProvider).setPixels(
+            0, 0, PigmentGamutEncoder.NUM_PIGMENTS, 1, pixels
+        );
+    }
+    
+    private createRenderTarget(resolution: vec2): Texture {
+        const rt = global.scene.createRenderTargetTexture();
+        (rt.control as any).useScreenResolution = false;
+        (rt.control as any).resolution = resolution;
+        (rt.control as any).clearColorEnabled = true;
+        return rt;
+    }
+    
+    private createCameraMRT(layer: LayerSet): SceneObject {
+        const obj = global.scene.createSceneObject("PigmentGamutCamera");
+        const cam = obj.createComponent("Component.Camera") as Camera;
+        
+        cam.enabled = true;
+        cam.type = Camera.Type.Orthographic;
+        cam.size = 2.0;
+        cam.aspect = 1.0;
+        cam.near = 0.5;
+        cam.far = 100.0;
+        cam.renderLayer = layer;
+        cam.renderOrder = -100;
+        cam.enableClearColor = true;
+        cam.devicePropertyUsage = Camera.DeviceProperty.None;
+        cam.renderTarget = this.posRenderTarget;
+        
+        // Setup MRT with 2 render targets
+        const colorRenderTargets = cam.colorRenderTargets;
+        
+        // Target 0: LAB position
+        while (colorRenderTargets.length < 1) {
+            colorRenderTargets.push(Camera.createColorRenderTarget());
+        }
+        colorRenderTargets[0].targetTexture = this.posRenderTarget;
+        colorRenderTargets[0].clearColor = new vec4(0, 0, 0, 0);
+        
+        // Target 1: RGB color
+        while (colorRenderTargets.length < 2) {
+            colorRenderTargets.push(Camera.createColorRenderTarget());
+        }
+        colorRenderTargets[1].targetTexture = this.colorRenderTarget;
+        colorRenderTargets[1].clearColor = new vec4(0, 0, 0, 0);
+        
+        cam.colorRenderTargets = colorRenderTargets;
+        
+        print("Camera created with 2 MRT targets");
+        return obj;
+    }
+    
+    private createPostEffect(cameraObj: SceneObject, material: Material, layer: LayerSet): void {
+        const obj = global.scene.createSceneObject("PigmentGamutQuad");
+        obj.setParent(cameraObj);
+        obj.layer = layer;
+        
+        const pe = obj.createComponent("Component.PostEffectVisual") as PostEffectVisual;
+        pe.mainMaterial = material;
+        
+        print("PostEffectVisual created");
+    }
+    
+    private assignToVFX(): void {
+        if (this.vfxComponent && this.vfxComponent.asset) {
+            const props = this.vfxComponent.asset.properties;
+            
+            (props as any)["posMap"] = this.posRenderTarget;
+            (props as any)["colorMap"] = this.colorRenderTarget;
+            (props as any)["texSize"] = this.texSize;
+            (props as any)["scale"] = this.scale;
+            
+            print(`Assigned to VFX: ${this.vfxComponent.getSceneObject().name}`);
+        } else {
+            print("WARNING: VFX component or asset is null");
+        }
+    }
+    
+    private logGamutInfo(): void {
+        const n = PigmentGamutEncoder.NUM_PIGMENTS;
+        const steps = this.mixSteps;
+        
+        const purePigments = n;
+        const twoWayMixes = (n * (n - 1) / 2) * (steps - 1);
+        
+        let threeWaySteps = 0;
+        for (let s1 = 1; s1 < steps - 1; s1++) {
+            for (let s2 = 1; s2 < steps - s1; s2++) {
+                threeWaySteps++;
+            }
+        }
+        const threeWayMixes = (n * (n - 1) * (n - 2) / 6) * threeWaySteps;
+        
+        const total = purePigments + twoWayMixes + threeWayMixes;
+        
+        print("=== Pigment Gamut Info ===");
+        print(`Pigments: ${n}`);
+        print(`Mix steps: ${steps}`);
+        print(`Pure colors: ${purePigments}`);
+        print(`2-way mixes: ${twoWayMixes}`);
+        print(`3-way mixes: ${threeWayMixes}`);
+        print(`Total gamut size: ${total}`);
+        print(`Texture capacity: ${this.texSize * this.texSize}`);
+        print(`VFX spawn count needed: ${this.texSize * this.texSize * 2}`);
+    }
+    
+    private debugReadRenderTargets(): void {
+        this.debugTexture(this.posRenderTarget, "POS (LAB)");
+        this.debugTexture(this.colorRenderTarget, "COLOR (RGB)");
+    }
+    
+    private debugTexture(texture: Texture, name: string): void {
+        if (!texture) {
+            print(`DEBUG: No ${name} texture`);
+            return;
+        }
+        
+        try {
+            const tempTexture = ProceduralTextureProvider.createFromTexture(texture);
+            const provider = tempTexture.control as ProceduralTextureProvider;
+            
+            const size = this.texSize;
+            const pixelBuffer = new Uint8Array(size * size * 4);
+            provider.getPixels(0, 0, size, size, pixelBuffer);
+            
+            print(`=== ${name} DEBUG ===`);
+            
+            const printPixel = (idx: number, label: string) => {
+                const i = idx * 4;
+                print(`${label} [${idx}]: R=${pixelBuffer[i]}, G=${pixelBuffer[i+1]}, B=${pixelBuffer[i+2]}, A=${pixelBuffer[i+3]}`);
+            };
+            
+            // First few are pure pigments
+            printPixel(0, "Pig0");
+            printPixel(1, "Pig1");
+            printPixel(5, "Pig5");
+            printPixel(6, "Mix0"); // First 2-way mix
+            
+        } catch (e) {
+            print(`DEBUG ERROR ${name}: ` + e);
+        }
+    }
+}

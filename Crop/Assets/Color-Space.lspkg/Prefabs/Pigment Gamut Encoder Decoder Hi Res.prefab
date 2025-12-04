@@ -1,0 +1,101 @@
+- !<ObjectPrefab/6626108a-a264-404f-b362-76508eed458f>
+  PackagePath: ""
+  objects:
+    - !<own> 960c57cd-b836-4eda-9b53-542dd3392655
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/48e14bcf-dbc4-4dca-98c0-c7b1f08d81d8>
+  PrefabRemaps:
+    []
+  Name: Pigment Gamut Decoder Hi Res
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 67d38f4d-d4bf-4e88-bb93-94c2804206f7
+- !<VFXComponent/67d38f4d-d4bf-4e88-bb93-94c2804206f7>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 01b4da44-332e-43bc-a11b-dc6aa6309a89
+- !<SceneObject/960c57cd-b836-4eda-9b53-542dd3392655>
+  PrefabRemaps:
+    - 48e14bcf-dbc4-4dca-98c0-c7b1f08d81d8: 48e14bcf-dbc4-4dca-673f-384e0f727e27
+    - 67d38f4d-d4bf-4e88-bb93-94c2804206f7: 67d38f4d-d4bf-4e88-446c-6b3d7fbdf908
+    - 960c57cd-b836-4eda-9b53-542dd3392655: 960c57cd-b836-4eda-64ac-abd22cc6d9aa
+    - c58c75e1-5c63-4e01-a9c1-f0e9d99b5d80: c58c75e1-5c63-4e01-563e-0f162664a27f
+    - ef6eb983-ae07-4eac-a9b6-e93ad8044934: ef6eb983-ae07-4eac-5649-16c527fbb6cb
+  Name: Pigment Gamut Encoder Decoder Hi Res
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> c58c75e1-5c63-4e01-a9c1-f0e9d99b5d80
+    - !<own> 48e14bcf-dbc4-4dca-98c0-c7b1f08d81d8
+  Components:
+    []
+- !<SceneObject/c58c75e1-5c63-4e01-a9c1-f0e9d99b5d80>
+  PrefabRemaps:
+    []
+  Name: PigmentGamutEncoderHiRes
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> ef6eb983-ae07-4eac-a9b6-e93ad8044934
+- !<ScriptComponent/ef6eb983-ae07-4eac-a9b6-e93ad8044934>
+  PrefabRemaps:
+    []
+  Name: PigmentGamutEncoderHiRes
+  Enabled: true
+  ScriptAsset: !<reference> 01562774-795c-49a2-93ab-149ba2f43a8a
+  ScriptInputsDefault:
+    texSize: true
+    scale: true
+    pig1Color: true
+    pig2Color: true
+    pig3Color: true
+    pig4Color: true
+    pig5Color: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      encoderMaterial: !<reference.Material> 38452664-f818-4047-8a59-63af73b4895f
+      vfxComponent: !<reference.VFXComponent> 67d38f4d-d4bf-4e88-bb93-94c2804206f7
+      texSize: !<float> 128.000000
+      mixSteps: !<float> 64.000000
+      scale: !<float> 100.000000
+      pig0Color: !<Vec3> {x: 0.248386, y: 1.000000, z: 0.282689}
+      pig1Color: !<Vec3> {x: 0.080000, y: 0.080000, z: 0.080000}
+      pig2Color: !<Vec3> {x: 1.000000, y: 0.920000, z: 0.000000}
+      pig3Color: !<Vec3> {x: 0.890000, y: 0.000000, z: 0.130000}
+      pig4Color: !<Vec3> {x: 0.100000, y: 0.100000, z: 0.700000}
+      pig5Color: !<Vec3> {x: 0.000000, y: 0.470000, z: 0.440000}
+  ScriptTypes:
+    "":
+      {}

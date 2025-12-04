@@ -1,0 +1,110 @@
+- !<AssetImportMetadata/a00d845e-e3e7-8bb1-866a-751d6397f482>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> 6b193ba3-6ef9-4ba6-b2b7-1f40408938c2
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> 6b193ba3-6ef9-4ba6-b2b7-1f40408938c2
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> def115ab-4b42-4943-a0d2-68fe9447a245
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<VFXComponent/1125213e-109b-4a98-6147-96eb0a41d471>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 01b4da44-332e-43bc-a11b-dc6aa6309a89
+- !<ScriptComponent/29eddb77-12c9-41a5-4e1e-a6b871838413>
+  PrefabRemaps:
+    []
+  Name: PigmentGamutEncoder
+  Enabled: true
+  ScriptAsset: !<reference> 48ceee92-eb88-445f-8ae2-fa7b9ee1c680
+  ScriptInputsDefault:
+    pig0Color: true
+    pig1Color: true
+    pig3Color: true
+    pig4Color: true
+    pig5Color: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      encoderMaterial: !<reference.Material> 4d05b8e4-db8a-423c-8e6d-2b5ccc4e70dc
+      vfxComponent: !<reference.VFXComponent> 1125213e-109b-4a98-6147-96eb0a41d471
+      texSize: !<float> 124.000000
+      mixSteps: !<float> 40.000000
+      scale: !<float> 10.000000
+      pig0Color: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
+      pig1Color: !<Vec3> {x: 0.080000, y: 0.080000, z: 0.080000}
+      pig2Color: !<Vec3> {x: 0.235981, y: 0.979706, z: 0.987900}
+      pig3Color: !<Vec3> {x: 0.890000, y: 0.000000, z: 0.130000}
+      pig4Color: !<Vec3> {x: 0.100000, y: 0.100000, z: 0.700000}
+      pig5Color: !<Vec3> {x: 0.000000, y: 0.470000, z: 0.440000}
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/49edaf77-3786-4ff9-678c-f72ab55d5953>
+  PrefabRemaps:
+    []
+  Name: LAB Decoder
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1125213e-109b-4a98-6147-96eb0a41d471
+- !<SceneObject/4bccd757-2bed-4f8e-4d56-e202916c0fbc>
+  PrefabRemaps:
+    []
+  Name: PigmentGamutEncoder
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 29eddb77-12c9-41a5-4e1e-a6b871838413
+- !<SceneObject/b390f785-31b3-4215-7597-d60a3106c6f4>
+  PrefabRemaps:
+    []
+  Name: Basic Pigment Gamut Encoder Decoder
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 49edaf77-3786-4ff9-678c-f72ab55d5953
+    - !<own> 4bccd757-2bed-4f8e-4d56-e202916c0fbc
+  Components:
+    []
+- !<ObjectPrefabAssetData/def115ab-4b42-4943-a0d2-68fe9447a245>
+  Prototype: !<ObjectOwner/2c3fa531-2f21-44a2-9c11-4f6016752c61>
+    PackagePath: ""
+    objects:
+      - !<own> b390f785-31b3-4215-7597-d60a3106c6f4

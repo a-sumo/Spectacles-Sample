@@ -456,9 +456,9 @@ export class PaletteController extends BaseScriptComponent {
         // Toggle new active item
         this.activeItemId = id;
         newItem.button.toggle(true);
-        // Set text to snap yellow when toggled
+        // Set text to yellow/orange when toggled
         if (newItem.slotTextObj) {
-            newItem.slotTextObj.getComponent("Text").textFill.color = new vec4(255,252,0,1);
+            newItem.slotTextObj.getComponent("Text").textFill.color = new vec4(255,216,0,1);
         }
 		this.isUpdatingSelection = false;
 
