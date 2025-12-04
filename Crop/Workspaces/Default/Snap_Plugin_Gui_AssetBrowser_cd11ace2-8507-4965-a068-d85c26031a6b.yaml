@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 1008
+    size: 1007
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -32,7 +32,6 @@ CollapsedEntities:
       - Color-Space.lspkg/Images/test_encoding/pos_x.png
       - Color-Space.lspkg/Images/test_encoding/pos_y.png
       - Color-Space.lspkg/Images/test_encoding/pos_z.png
-      - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Color Mix Test.mat
       - Color-Space.lspkg/Materials/Color Mix Test.ss_graph
       - Color-Space.lspkg/Materials/LabEncoder.mat
