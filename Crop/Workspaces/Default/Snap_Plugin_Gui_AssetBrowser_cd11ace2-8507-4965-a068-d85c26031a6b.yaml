@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 1060
+    size: 1050
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -18,7 +18,6 @@ CollapsedEntities:
       - 3DModels/scene.gltf/Meshes
       - 3DModels/scene.gltf/Meshes/Pipette__0
       - 3DModels/scene.gltf/scene
-      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Images/lab_color(1).png
       - Color-Space.lspkg/Images/lab_x(1).png
@@ -147,7 +146,6 @@ CollapsedEntities:
       - LSTween.lspkg/TweenJS/Version.ts
       - LSTween.lspkg/TweenJS/mainGroup.ts
       - LSTween.lspkg/package.native
-      - MaterialParams.png
       - Materials
       - Materials/Background Material.mat
       - Materials/Background Material.ss_graph
@@ -193,7 +191,6 @@ CollapsedEntities:
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
-      - Normal.png
       - Plane.prefab
       - Prefabs
       - Prefabs/Button.prefab
@@ -284,7 +281,6 @@ CollapsedEntities:
       - Rendering/Echopark.hdr/Specular
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
-      - ScalingBehavior.ts
       - Scene.scene
       - Scripts
       - Scripts/APIKeyHint.ts
@@ -1051,16 +1047,10 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Textures/test-image.jpg
       - SpectaclesUIKit.lspkg/package.native
       - SpectaclesUIKit.lspkg/package_dependencies.json
-      - Text Logger Module.lspkg
-      - Text Logger Module.lspkg/Text Logger Module.js
-      - Text Logger Module.lspkg/package.native
-      - Text Logger V2.lspkg
       - Text Logger V2.lspkg/Scripts
       - Text Logger V2.lspkg/Scripts/TextLogger.js
       - Text Logger V2.lspkg/Scripts/TextLoggerExample.js
       - Text Logger V2.lspkg/Scripts/TextLoggerModule.js
       - Text Logger V2.lspkg/TextLogger__PLACE_IN_SCENE.prefab
       - Text Logger V2.lspkg/package.native
-      - Uber PBR.mat
-      - uber_pbr.ss_graph
   options: 4
