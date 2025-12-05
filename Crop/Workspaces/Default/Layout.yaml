@@ -54,8 +54,8 @@ dock:
         current: 0
     sizes:
       - 340
-      - 468
-      - 325
-      - 361
+      - 473
+      - 351
+      - 330
     type: splitter
     orientation: horizontal

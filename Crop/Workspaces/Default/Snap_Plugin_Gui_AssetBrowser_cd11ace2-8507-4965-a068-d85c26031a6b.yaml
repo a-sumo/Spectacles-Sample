@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 786
+    size: 785
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -173,6 +173,7 @@ CollapsedEntities:
       - Scripts/UI
       - Scripts/UI/SwitchToggleGroupExtended.ts
       - Scripts/Utils
+      - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
       - SpectaclesInteractionKit.lspkg/Assets/Audio/HoverAudioTrack.wav
@@ -765,15 +766,13 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
-      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Prefabs
       - SpectaclesUIKit.lspkg/Scripts/Components/Button
-      - SpectaclesUIKit.lspkg/Scripts/Components/Frame
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules
       - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
-      - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow
       - SpectaclesUIKit.lspkg/Scripts/Components/Slider
       - SpectaclesUIKit.lspkg/Scripts/Components/Switch
       - SpectaclesUIKit.lspkg/Scripts/Components/TextInputField
