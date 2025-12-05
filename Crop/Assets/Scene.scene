@@ -10,7 +10,7 @@
     - !<own> 09e1cdaa-09ec-475f-9e7d-d882305446d4
     - !<own> bdd5726a-01e5-4183-8c06-f5b80b011f33
     - !<own> ff26c496-3618-443c-a8a0-99ba0f44e049
-    - !<own> 29ea81df-28ee-4678-8ad3-c1410afbf7ed
+    - !<own> 7070560f-1971-457f-86de-893d6a73f94b
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -841,6 +841,19 @@
     - !<own> 2d7a63b3-9535-478c-aa0d-af7e1ac4bcc7
   Components:
     []
+- !<VFXComponent/2560ef30-0958-471a-9bde-7caa7a88078c>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> c8c6ef35-14bc-4f2e-93ba-51452a807276
 - !<SceneObject/25dedd6e-b35a-4dde-b4c5-82396bfa98a3>
   PrefabRemaps:
     []
@@ -904,7 +917,7 @@
 - !<SceneObject/29ea81df-28ee-4678-8ad3-c1410afbf7ed>
   PrefabRemaps:
     []
-  Name: Gamut Projector
+  Name: Gamut Projector Encoder
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -916,7 +929,6 @@
     []
   Components:
     - !<own> e6022c88-92cb-488f-b6e6-8f5208967fe0
-    - !<own> cd354c58-a7db-460c-b0bb-57c1c7480850
 - !<SceneObject/2ac8b5ef-f10b-4d21-9171-7755ab6fb1f3>
   PrefabRemaps:
     []
@@ -1166,7 +1178,6 @@
   ScriptInputsDefault:
     texSize: true
     rgbRes: true
-    scale: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1175,7 +1186,7 @@
       vfxComponent: !<reference.VFXComponent> f6007657-3051-4ca3-9d81-8bc154ac65ee
       texSize: !<float> 64.000000
       rgbRes: !<float> 16.000000
-      scale: !<float> 100.000000
+      scale: !<float> 1.000000
   ScriptTypes:
     "":
       {}
@@ -1385,6 +1396,24 @@
     - !<own> bbed82a5-e2cb-4ae3-a49f-2d390d886361
   Components:
     []
+- !<ColliderComponent/4bea6381-2d62-4c27-a053-9d6a937e22c6>
+  PrefabRemaps:
+    []
+  Name: Physics Collider
+  Enabled: true
+  Shape: !<Box>
+    FitVisual: false
+    Size: {x: 1.000000, y: 1.000000, z: 1.000000}
+  Matter: !<reference> 00000000-0000-0000-0000-000000000000
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: false
+  ShowCollider: true
 - !<SceneObject/4f2b04f9-f1d8-4c8b-b7eb-0a3e6b770296>
   PrefabRemaps:
     []
@@ -1871,6 +1900,97 @@
     []
   Components:
     - !<own> 7d827b68-62df-48fd-8d1c-fb1b206216ab
+- !<SceneObject/6e25e929-0022-406c-84fc-32411ef1a3d6>
+  PrefabRemaps:
+    []
+  Name: Gamut Projector Decoder
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2560ef30-0958-471a-9bde-7caa7a88078c
+- !<ScriptComponent/6f893714-4be2-4ac1-b1ed-478939077852>
+  PrefabRemaps:
+    []
+  Name: InteractableManipulation
+  Enabled: true
+  ScriptAsset: !<reference> 664b556b-1946-4c2c-866a-e675b4e86006
+  ScriptInputsDefault:
+    manipulateRootSceneObject: true
+    minimumScaleFactor: true
+    maximumScaleFactor: true
+    enableTranslation: true
+    enableRotation: true
+    enableScale: true
+    enableStretchZ: true
+    showStretchZProperties: true
+    zStretchFactorMin: true
+    zStretchFactorMax: true
+    useFilter: true
+    showFilterProperties: true
+    minCutoff: true
+    beta: true
+    dcutoff: true
+    showTranslationProperties: true
+    _enableXTranslation: true
+    _enableYTranslation: true
+    _enableZTranslation: true
+    showRotationProperties: true
+    _rotationAxis: true
+    isSynced: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      manipulateRootSceneObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      minimumScaleFactor: 0.250000
+      maximumScaleFactor: !<float> 20.000000
+      enableTranslation: true
+      enableRotation: true
+      enableScale: true
+      enableStretchZ: true
+      showStretchZProperties: false
+      zStretchFactorMin: !<float> 1.000000
+      zStretchFactorMax: !<float> 12.000000
+      useFilter: true
+      showFilterProperties: false
+      minCutoff: !<float> 2.000000
+      beta: 0.015000
+      dcutoff: !<float> 1.000000
+      showTranslationProperties: false
+      _enableXTranslation: true
+      _enableYTranslation: true
+      _enableZTranslation: true
+      showRotationProperties: false
+      _rotationAxis: All
+      isSynced: false
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/7070560f-1971-457f-86de-893d6a73f94b>
+  PrefabRemaps:
+    []
+  Name: Gamut Projector Encoder Decoder
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 5.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 29ea81df-28ee-4678-8ad3-c1410afbf7ed
+    - !<own> 6e25e929-0022-406c-84fc-32411ef1a3d6
+  Components:
+    - !<own> eee4335d-7f95-4aa5-8c16-c210c9c5bb5d
+    - !<own> 4bea6381-2d62-4c27-a053-9d6a937e22c6
+    - !<own> 6f893714-4be2-4ac1-b1ed-478939077852
 - !<SceneObject/70cb0abd-8afd-4c4c-98c3-83366d17d041>
   PrefabRemaps:
     []
@@ -3640,26 +3760,6 @@
     []
   Components:
     - !<own> 7a878e16-7e28-490b-844e-a6c28260c933
-- !<RenderMeshVisual/cd354c58-a7db-460c-b0bb-57c1c7480850>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> 42decfe2-1dc6-4f65-8c66-2ffe83e2b25e
-  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<SceneObject/d4e4bf56-fa5e-4e5f-a300-f3d93779c106>
   PrefabRemaps:
     []
@@ -3877,7 +3977,6 @@
   ScriptAsset: !<reference> 7100dc9a-700e-49d8-8a1b-d3040a8fb5a5
   ScriptInputsDefault:
     gamutTexSize: true
-    gamutValidCount: true
     inputTexWidth: true
     inputTexHeight: true
     input0: true
@@ -3891,9 +3990,10 @@
   ScriptInputs:
     "":
       projectionMaterial: !<reference.Material> 42decfe2-1dc6-4f65-8c66-2ffe83e2b25e
-      gamutEncoder: !<reference.ScriptComponent> 7a878e16-7e28-490b-844e-a6c28260c933
+      gamutEncoder: !<reference.ScriptComponent> 3c424957-eb93-4da8-822d-e383c7f6094d
+      vfxComponent: !<reference.VFXComponent> 2560ef30-0958-471a-9bde-7caa7a88078c
       gamutTexSize: !<float> 64.000000
-      gamutValidCount: !<float> 2000.000000
+      gamutValidCount: !<float> 4096.000000
       inputTexWidth: !<float> 8.000000
       inputTexHeight: !<float> 8.000000
       input0: !<Vec3> {x: 1.000000, y: 0.500000, z: 0.000000}
@@ -4075,6 +4175,44 @@
     CapitalizationOverride: None
   DepthTest: true
   TwoSided: false
+- !<ScriptComponent/eee4335d-7f95-4aa5-8c16-c210c9c5bb5d>
+  PrefabRemaps:
+    []
+  Name: Interactable
+  Enabled: true
+  ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
+  ScriptInputsDefault:
+    targetingMode: true
+    targetingVisual: true
+    ignoreInteractionPlane: true
+    keepHoverOnTrigger: true
+    enableInstantDrag: true
+    isScrollable: true
+    allowMultipleInteractors: true
+    enablePokeDirectionality: true
+    acceptableXDirections: true
+    acceptableYDirections: true
+    acceptableZDirections: true
+    useFilteredPinch: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      targetingMode: !<float> 3.000000
+      targetingVisual: !<float> 1.000000
+      ignoreInteractionPlane: false
+      keepHoverOnTrigger: false
+      enableInstantDrag: false
+      isScrollable: false
+      allowMultipleInteractors: true
+      enablePokeDirectionality: false
+      acceptableXDirections: !<float> 0.000000
+      acceptableYDirections: !<float> 0.000000
+      acceptableZDirections: !<float> 1.000000
+      useFilteredPinch: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/f15cbaba-4858-45fe-9bd1-3f769d81c10a>
   PrefabRemaps:
     []

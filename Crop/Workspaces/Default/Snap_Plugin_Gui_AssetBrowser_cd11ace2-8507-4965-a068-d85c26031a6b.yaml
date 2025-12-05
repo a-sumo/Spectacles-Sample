@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 736
+    size: 738
     values:
       - ""
       - 3DModels
@@ -20,7 +20,9 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
       - Color-Space.lspkg/Scripts/GamutProjector.ts
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
+      - Color-Space.lspkg/Scripts/LABGamutEncoder.ts
       - Color-Space.lspkg/Scripts/PigmentGamutEncoder.ts
+      - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/package.native
       - Images
       - Images/PicMask.png

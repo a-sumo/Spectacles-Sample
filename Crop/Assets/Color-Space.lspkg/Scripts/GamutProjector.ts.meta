@@ -38,6 +38,7 @@
     inputTexHeight: false
     inputTexWidth: false
     projectionMaterial: false
+    vfxComponent: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -49,6 +50,7 @@
   DefaultScriptInputs:
     - projectionMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
       gamutEncoder: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
       gamutTexSize: !<float> 64.000000
       gamutValidCount: !<float> 2000.000000
       inputTexWidth: !<float> 8.000000
@@ -65,6 +67,7 @@
   InputLines:
     - '// @input Asset.Material projectionMaterial {"hint":"Material with GamutProjection shader"}'
     - '// @input Component.ScriptComponent gamutEncoder {"hint":"Reference to PigmentGamutEncoder script component"}'
+    - '// @input Component.VFXComponent vfxComponent {"hint":"VFX component to receive projected textures"}'
     - '// @input float gamutTexSize = 64 {"hint":"Size of gamut texture from encoder (e.g., 64 means 64x64 = 4096 pixels)"}'
     - '// @input float gamutValidCount = 2000 {"hint":"Actual number of valid colors in gamut (from encoder log)"}'
     - '// @input float inputTexWidth = 8 {"hint":"Width of input texture (number of colors to project per row)"}'
