@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 772
+    size: 775
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -17,7 +17,6 @@ CollapsedEntities:
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
       - Color-Space.lspkg/Prefabs
-      - Color-Space.lspkg/Scripts
       - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
       - Color-Space.lspkg/Scripts/GamutProjector.ts
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
@@ -29,8 +28,8 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/RGBCubeEncoder.ts
       - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
+      - Color-Space.lspkg/VFX/RGB Decoder.vfxgraph
       - Color-Space.lspkg/package.native
-      - ExampleInterface.prefab
       - Images
       - Images/PicMask.png
       - Images/PicOutline.png
@@ -40,7 +39,6 @@ CollapsedEntities:
       - Images/webIcon.png
       - LSTween.lspkg
       - LSTween.lspkg/package.native
-      - MaterialParams.png
       - Materials
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
@@ -61,12 +59,11 @@ CollapsedEntities:
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
-      - Normal.png
-      - PBR.mat
-      - Prefabs
+      - Prefabs/Basic Sphere.prefab
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
       - Prefabs/SceneHierarchy.prefab
+      - Prefabs/Test SceneObject VFXParticle Sync.prefab
       - Refraction Material
       - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
@@ -145,18 +142,22 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
+      - Scripts
       - Scripts/APIKeyHint.ts
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
       - Scripts/ChatGPT.ts
       - Scripts/CropRegion.ts
+      - Scripts/GridTestOrchestrator.ts
       - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
       - Scripts/PresetTester.ts
       - Scripts/PresetToggleController.ts
+      - Scripts/SimpleGridPositionSync.ts
       - Scripts/SwitchToggleGroupExtended.ts
       - Scripts/Templates
+      - Scripts/Utils
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
@@ -754,6 +755,7 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes
@@ -771,8 +773,9 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Scripts/Themes
       - SpectaclesUIKit.lspkg/Scripts/Utility
       - SpectaclesUIKit.lspkg/Scripts/Visuals
+      - SpectaclesUIKit.lspkg/Textures
       - SpectaclesUIKit.lspkg/package.native
       - Text Logger V2.lspkg
       - Text Logger V2.lspkg/package.native
-      - pbr.ss_graph
+      - VFX/SimpleGridPosition.vfxgraph
   options: 4

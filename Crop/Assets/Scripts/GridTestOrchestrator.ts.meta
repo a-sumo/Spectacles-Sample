@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/21b5e18c-6490-44a6-9abe-fb9c689d07ac>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> d96ee435-2ad8-414a-98e8-ba31234cc4a5
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> d96ee435-2ad8-414a-98e8-ba31234cc4a5
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 95306d40-af20-42b7-9973-a80ebf9bb60d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/95306d40-af20-42b7-9973-a80ebf9bb60d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 3b1b10f2-4c8d-42d8-a040-f5b5dfd68fe2
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoToggleEnabled: false
+    autoToggleInterval: false
+    debugMode: false
+    gridSync: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - gridSync: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      autoToggleInterval: !<float> 3.000000
+      autoToggleEnabled: true
+      debugMode: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.ScriptComponent gridSync {"hint":"Reference to SimpleGridPositionSync script"}'
+    - '// @input float autoToggleInterval = 3 {"hint":"Auto-toggle interval (seconds, 0 = disabled)"}'
+    - '// @input bool autoToggleEnabled = true {"hint":"Start with auto-toggle enabled"}'
+    - '// @input bool debugMode = true {"hint":"Log state changes"}'
