@@ -1,7 +1,5 @@
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { CropRegion } from "./CropRegion";
-import { ChatGPT } from "./ChatGPT";
-import { CaptionBehavior } from "./CaptionBehavior";
 
 const BOX_MIN_SIZE = 8; //min size in cm for image capture
 
@@ -10,17 +8,13 @@ export class PictureBehavior extends BaseScriptComponent {
   @input circleObjs: SceneObject[];
   @input editorCamObj: SceneObject;
   @input picAnchorObj: SceneObject;
-  @input loadingObj: SceneObject;
   @input captureRendMesh: RenderMeshVisual;
   @input screenCropTexture: Texture;
   @input cropRegion: CropRegion;
-  @input chatGPT: ChatGPT;
-  @input caption: CaptionBehavior;
 
   private isEditor = global.deviceInfoSystem.isEditor();
 
   private camTrans: Transform;
-  private loadingTrans: Transform;
 
   private circleTrans: Transform[];
 
@@ -36,10 +30,7 @@ export class PictureBehavior extends BaseScriptComponent {
   private updateEvent = null;
 
   onAwake() {
-    this.loadingObj.enabled = false;
-    this.loadingTrans = this.loadingObj.getTransform();
-    this.captureRendMesh.mainMaterial =
-      this.captureRendMesh.mainMaterial.clone();
+    this.captureRendMesh.mainMaterial = this.captureRendMesh.mainMaterial.clone();
 
     this.camTrans = this.editorCamObj.getTransform();
 
@@ -63,18 +54,11 @@ export class PictureBehavior extends BaseScriptComponent {
       //wait for small delay and capture image
       var delayedEvent = this.createEvent("DelayedCallbackEvent");
       delayedEvent.bind(() => {
-        this.loadingObj.enabled = true;
         this.cropRegion.enabled = false;
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
-        this.chatGPT.makeImageRequest(
-          this.captureRendMesh.mainPass.captureImage,
-          (response) => {
-            this.loadingObj.enabled = false;
-            this.loadCaption(response);
-          }
-        );
       });
+
       delayedEvent.reset(0.1);
     } else {
       //send offscreen
@@ -112,17 +96,6 @@ export class PictureBehavior extends BaseScriptComponent {
     }
   };
 
-  private loadCaption(text: string) {
-    //position caption 5cm above top of box formed by circles
-    var topCenterPos = this.circleTrans[0]
-      .getWorldPosition()
-      .add(this.circleTrans[1].getWorldPosition())
-      .uniformScale(0.5);
-    var captionPos = topCenterPos.add(this.picAnchorTrans.up.uniformScale(1)); //1.5
-    var captionRot = this.picAnchorTrans.getWorldRotation();
-    this.caption.openCaption(text, captionPos, captionRot);
-  }
-
   private processImage() {
     if (this.updateEvent != null) {
       //remove all events
@@ -139,16 +112,7 @@ export class PictureBehavior extends BaseScriptComponent {
         return;
       }
       //remove update loop and process image
-      this.loadingObj.enabled = true;
       this.cropRegion.enabled = false;
-
-      this.chatGPT.makeImageRequest(
-        this.captureRendMesh.mainPass.captureImage,
-        (response) => {
-          this.loadingObj.enabled = false;
-          this.loadCaption(response);
-        }
-      );
     }
   }
 
@@ -178,6 +142,7 @@ export class PictureBehavior extends BaseScriptComponent {
       if (this.screenCropTexture.getColorspace() == 3) {
         this.captureRendMesh.mainPass.captureImage =
           ProceduralTextureProvider.createFromTexture(this.screenCropTexture);
+        
       }
 
       //set top left and bottom right to both pinch positions
@@ -203,6 +168,7 @@ export class PictureBehavior extends BaseScriptComponent {
       this.picAnchorTrans.setWorldPosition(bottomRightPos);
       var worldWidth = bottomRightPos.distance(bottomLeftPos);
       var worldHeight = topRightPos.distance(bottomRightPos);
+
       this.picAnchorTrans.setWorldScale(new vec3(worldWidth, worldHeight, 1));
       var rectRight = topRightPos.sub(topLeftPos).normalize();
       var rectUp = topLeftPos.sub(bottomLeftPos).normalize();
@@ -212,12 +178,6 @@ export class PictureBehavior extends BaseScriptComponent {
       this.rotMat.column2 = rectForward;
       var rectRotation = quat.fromRotationMat(this.rotMat);
       this.picAnchorTrans.setWorldRotation(rectRotation);
-
-      //set loader position to center of rectangle
-      this.loadingTrans.setWorldPosition(
-        centerPos.add(rectForward.uniformScale(0.2))
-      );
-      this.loadingTrans.setWorldRotation(rectRotation);
     }
   }
 }

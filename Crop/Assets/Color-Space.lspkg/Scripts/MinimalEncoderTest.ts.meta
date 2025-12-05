@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/63c040eb-f47b-7856-7a74-8a4fa9f61d1b>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> efc0901d-4180-4175-a318-b21522b5062c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> efc0901d-4180-4175-a318-b21522b5062c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2e283fe7-6c93-4260-8880-ce3c5064561d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2e283fe7-6c93-4260-8880-ce3c5064561d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 886a9b09-16c6-4c07-9b4f-cf462d07c2a2
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    encoderMaterial: false
+    scale: false
+    texSize: false
+    vfxComponent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - encoderMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+      texSize: !<float> 8.000000
+      scale: !<float> 100.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material encoderMaterial {"hint":"Material with encoder Code Node"}'
+    - '// @input Component.VFXComponent vfxComponent {"hint":"VFX component to test decoding"}'
+    - '// @input float texSize = 8 {"hint":"Texture size (8 = 64 particles for easy debugging)"}'
+    - '// @input float scale = 100 {"hint":"Scale for VFX positions"}'

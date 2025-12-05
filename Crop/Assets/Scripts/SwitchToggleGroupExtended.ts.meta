@@ -1,0 +1,76 @@
+- !<AssetImportMetadata/4ae8e7f9-542a-4346-812c-949f0a244245>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9b4878bb-7749-4db9-8307-9b6688df894c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9b4878bb-7749-4db9-8307-9b6688df894c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 7b30adfe-8026-4a28-9301-74a4250cd92f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/7b30adfe-8026-4a28-9301-74a4250cd92f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: e60e2ff7-684b-423f-b68e-e9edb1a5cd20
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    _allowAllTogglesOff: false
+    _labels: false
+    _switches: false
+    addCallbacks: false
+    defaultSelectedIndex: false
+    labelTexts: false
+    onToggleSelectedCallbacks: false
+    selectedLabelColor: false
+    unselectedLabelColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - _allowAllTogglesOff: false
+      addCallbacks: false
+      onToggleSelectedCallbacks:
+        []
+      _switches: !<MappingBased.AssignableType[]>
+        []
+      _labels: !<reference.Text[]>
+        []
+      labelTexts: ""
+      selectedLabelColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.000000, w: 1.000000}
+      unselectedLabelColor: !<Vec4> {x: 0.700000, y: 0.700000, z: 0.700000, w: 1.000000}
+      defaultSelectedIndex: !<float> 0.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input bool _allowAllTogglesOff {"hint":"Is it allowed that no toggle is switched on?"}'
+    - "// @input bool addCallbacks {\"hint\":\"Enable this to add functions from another script to this component's callbacks\"}"
+    - /*
+    - "@typedef Callback"
+    - "@property {Component.ScriptComponent} scriptComponent"
+    - "@property {string} functionName"
+    - "*/"
+    - '// @input Callback[] onToggleSelectedCallbacks = {} {"label":"On Toggle Selected Callbacks", "showIf":"addCallbacks"}'
+    - '// @input AssignableType[] _switches = {} {"hint":"Switch components in the group"}'
+    - '// @input Component.Text[] _labels = {} {"hint":"Text components for each switch (same order as switches)"}'
+    - '// @input string labelTexts {"hint":"Default label texts (comma-separated)"}'
+    - "// @input vec4 selectedLabelColor = {1,0.85,0,1} {\"hint\":\"Color for selected toggle's label\"}"
+    - "// @input vec4 unselectedLabelColor = {0.7,0.7,0.7,1} {\"hint\":\"Color for unselected toggle's label\"}"
+    - '// @input float defaultSelectedIndex {"hint":"Default selected index (-1 for none)"}'

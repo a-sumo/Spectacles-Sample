@@ -26,6 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    interactablePath: false
     scannerPrefab: false
   ScriptTypesHidden:
     {}
@@ -37,8 +38,10 @@
     []
   DefaultScriptInputs:
     - scannerPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      interactablePath: ImageAnchor/CameraCrop
   ScriptTypes:
     -
       {}
   InputLines:
     - // @input Asset.ObjectPrefab scannerPrefab
+    - "// @input string interactablePath = \"ImageAnchor/CameraCrop\" {\"hint\":\"Path to the interactable object within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')\"}"

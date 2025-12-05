@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 722
+    size: 772
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,6 +10,27 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - Color-Space.lspkg
+      - Color-Space.lspkg/Images
+      - Color-Space.lspkg/Materials
+      - Color-Space.lspkg/Materials/Gamut Projection.mat
+      - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
+      - Color-Space.lspkg/Materials/empty.ss_graph
+      - Color-Space.lspkg/Prefabs
+      - Color-Space.lspkg/Scripts
+      - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
+      - Color-Space.lspkg/Scripts/GamutProjector.ts
+      - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
+      - Color-Space.lspkg/Scripts/LABGamutEncoder.ts
+      - Color-Space.lspkg/Scripts/MinimalEncoderTest.ts
+      - Color-Space.lspkg/Scripts/PigmentGamutEncoder.ts
+      - Color-Space.lspkg/Scripts/PigmentGamutEncoderHiRes.ts
+      - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
+      - Color-Space.lspkg/Scripts/RGBCubeEncoder.ts
+      - Color-Space.lspkg/VFX
+      - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
+      - Color-Space.lspkg/package.native
+      - ExampleInterface.prefab
       - Images
       - Images/PicMask.png
       - Images/PicOutline.png
@@ -17,6 +38,9 @@ CollapsedEntities:
       - Images/loading.gif
       - Images/thinOutline.png
       - Images/webIcon.png
+      - LSTween.lspkg
+      - LSTween.lspkg/package.native
+      - MaterialParams.png
       - Materials
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
@@ -31,24 +55,25 @@ CollapsedEntities:
       - Materials/SWIS_frame.mat
       - Materials/SWIS_tile.mat
       - Materials/SphereOutline.mat
-      - Materials/Unit Plane.mesh
       - Materials/loadingGif.mat
       - Materials/loadingGif.ss_graph
       - Materials/unlitColor.ss_graph
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
+      - Normal.png
+      - PBR.mat
       - Prefabs
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
       - Prefabs/SceneHierarchy.prefab
+      - Refraction Material
       - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
       - RemoteServiceGateway.lspkg/Helpers/AudioProcessor.ts
       - RemoteServiceGateway.lspkg/Helpers/DynamicAudioOutput.ts
       - RemoteServiceGateway.lspkg/Helpers/MicrophoneRecorder.ts
       - RemoteServiceGateway.lspkg/Helpers/VideoController.ts
-      - RemoteServiceGateway.lspkg/HostedExternal
       - RemoteServiceGateway.lspkg/HostedExternal/Examples
       - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiCalls.ts
       - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiLive.ts
@@ -120,14 +145,18 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
-      - Scripts
       - Scripts/APIKeyHint.ts
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
       - Scripts/ChatGPT.ts
       - Scripts/CropRegion.ts
+      - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
+      - Scripts/PresetTester.ts
+      - Scripts/PresetToggleController.ts
+      - Scripts/SwitchToggleGroupExtended.ts
+      - Scripts/Templates
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
@@ -725,4 +754,25 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg/Audio
+      - SpectaclesUIKit.lspkg/Materials
+      - SpectaclesUIKit.lspkg/Meshes
+      - SpectaclesUIKit.lspkg/Prefabs
+      - SpectaclesUIKit.lspkg/Scripts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame
+      - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
+      - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow
+      - SpectaclesUIKit.lspkg/Scripts/Components/Slider
+      - SpectaclesUIKit.lspkg/Scripts/Components/Switch
+      - SpectaclesUIKit.lspkg/Scripts/Example
+      - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D
+      - SpectaclesUIKit.lspkg/Scripts/Example/Sphere
+      - SpectaclesUIKit.lspkg/Scripts/Themes
+      - SpectaclesUIKit.lspkg/Scripts/Utility
+      - SpectaclesUIKit.lspkg/Scripts/Visuals
+      - SpectaclesUIKit.lspkg/package.native
+      - Text Logger V2.lspkg
+      - Text Logger V2.lspkg/package.native
+      - pbr.ss_graph
   options: 4

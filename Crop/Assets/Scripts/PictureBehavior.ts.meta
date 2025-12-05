@@ -26,13 +26,10 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    caption: false
     captureRendMesh: false
-    chatGPT: false
     circleObjs: false
     cropRegion: false
     editorCamObj: false
-    loadingObj: false
     picAnchorObj: false
     screenCropTexture: false
   ScriptTypesHidden:
@@ -48,12 +45,9 @@
         []
       editorCamObj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       picAnchorObj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      loadingObj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       screenCropTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       cropRegion: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
-      chatGPT: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
-      caption: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -61,9 +55,6 @@
     - "// @input SceneObject[] circleObjs"
     - // @input SceneObject editorCamObj
     - // @input SceneObject picAnchorObj
-    - // @input SceneObject loadingObj
     - // @input Component.RenderMeshVisual captureRendMesh
     - // @input Asset.Texture screenCropTexture
     - // @input AssignableType cropRegion
-    - // @input AssignableType_1 chatGPT
-    - // @input AssignableType_2 caption

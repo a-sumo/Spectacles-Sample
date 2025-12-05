@@ -1,8 +1,8 @@
 studioVersion:
   major: 5
   minor: 15
-  patch: 0
-  build: 25100805
+  patch: 1
+  build: 25102815
   type: Public
 coreVersion: 330
 clientVersion: 13.60
@@ -13,7 +13,7 @@ metaInfo:
     []
   tags:
     []
-  lensName: CropExample
+  lensName: Eyedropper
   lensDescriptors:
     - EXPERIMENTAL_API
   lensApplicability:

@@ -39,7 +39,6 @@ export class DebugCamera extends BaseScriptComponent {
     transform.setLocalPosition(new vec3(-1.5, 2, -10))
     transform.setLocalScale(new vec3(2, 3, 1))
 
-    this.camera.enableClearColor = true
     this.camera.clearColor = new vec4(0, 0, 0.5, 1)
     this.camera.type = Camera.Type.Perspective
     this.camera.far = 1000
