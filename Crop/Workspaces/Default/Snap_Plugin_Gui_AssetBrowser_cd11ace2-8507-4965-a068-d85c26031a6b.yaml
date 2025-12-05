@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 738
+    size: 743
     values:
       - ""
       - 3DModels
@@ -22,6 +22,7 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
       - Color-Space.lspkg/Scripts/LABGamutEncoder.ts
       - Color-Space.lspkg/Scripts/PigmentGamutEncoder.ts
+      - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/package.native
       - Images
@@ -32,6 +33,7 @@ CollapsedEntities:
       - Images/thinOutline.png
       - Images/webIcon.png
       - LSTween.lspkg/package.native
+      - MaterialParams.png
       - Materials
       - Materials/CamFeedCrop.mat
       - Materials/CamFeedMat.mat
@@ -52,6 +54,8 @@ CollapsedEntities:
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
+      - Normal.png
+      - PBR.mat
       - Prefabs
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
@@ -741,4 +745,5 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/package.native
       - Text Logger V2.lspkg
       - Text Logger V2.lspkg/package.native
+      - pbr.ss_graph
   options: 4
