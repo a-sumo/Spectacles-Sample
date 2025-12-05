@@ -6,6 +6,8 @@ dock:
           - items:
               - persistentName: Snap.Plugin.Gui.SceneHierarchyEditor
                 Uuid: 6778142c-0629-4c2a-afc3-92a65ce29e1a
+              - persistentName: Snap.Plugin.Gui.SpectaclesMonitorPanel
+                Uuid: fc1cd9d1-f051-40bf-a7cf-64bfef24be80
             type: section
             current: 0
           - items:
@@ -53,9 +55,9 @@ dock:
         type: section
         current: 0
     sizes:
-      - 340
-      - 473
-      - 351
-      - 330
+      - 551
+      - 262
+      - 305
+      - 376
     type: splitter
     orientation: horizontal

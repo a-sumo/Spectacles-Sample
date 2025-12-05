@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 785
+    size: 786
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -770,6 +770,7 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Prefabs
+      - SpectaclesUIKit.lspkg/Scripts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules
       - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
