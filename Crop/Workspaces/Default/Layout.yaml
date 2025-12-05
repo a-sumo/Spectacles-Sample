@@ -14,44 +14,46 @@ dock:
             type: section
             current: 0
         sizes:
-          - 412
-          - 356
+          - 386
+          - 382
         type: splitter
         orientation: vertical
       - items:
           - items:
               - persistentName: Snap.Plugin.Gui.SceneEditor
-                Uuid: f4f9a757-c041-4dbb-b0c3-b6c96e27752a
-              - persistentName: Snap.Plugin.Gui.Graph.Editor
-                Uuid: f507c94f-2df1-4e1e-860d-530de3f2b143
-              - persistentName: Snap.Plugin.Gui.Graph.Editor
-                Uuid: efcdef0e-91ad-451b-97e5-cae66e545b39
-            type: section
-            current: 1
-          - items:
-              - persistentName: Snap.Plugin.Gui.InspectorPanel
-                Uuid: 780d9164-e681-4de1-b586-5213ed5523b9
-            type: section
-            current: 0
-          - items:
+                Uuid: a14d85d7-9a15-42a6-913e-3f24dea267c2
               - persistentName: Snap.Plugin.Gui.LoggerPanel
                 Uuid: 81de965d-0c94-4d28-82cf-901740003a1f
             type: section
+            current: 1
+          - items:
+              - persistentName: Snap.Plugin.Gui.Graph.Editor
+                Uuid: 5138379a-b1e0-4375-9c61-2df16a862d0b
+            type: section
             current: 0
         sizes:
-          - 549
-          - 98
-          - 118
+          - 267
+          - 501
         type: splitter
         orientation: vertical
       - items:
+          - persistentName: Snap.Plugin.Gui.InspectorPanel
+            Uuid: 780d9164-e681-4de1-b586-5213ed5523b9
+          - persistentName: Snap.Plugin.Gui.ScriptEditor
+            Uuid: 4facf1f1-7189-490a-8361-508febe51b05
+        type: section
+        current: 0
+      - items:
           - persistentName: Snap.Plugin.Gui.PreviewPanel
             Uuid: 52fc2a95-41a3-427b-a138-1e00eb1c405e
+          - persistentName: Snap.Plugin.AssistantAI.Panel
+            Uuid: df91b2cf-37e1-401c-83fc-3d9f83343e71
         type: section
         current: 0
     sizes:
-      - 436
-      - 514
-      - 401
+      - 295
+      - 509
+      - 364
+      - 180
     type: splitter
     orientation: horizontal

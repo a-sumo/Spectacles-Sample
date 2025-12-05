@@ -268,4 +268,36 @@ export class PigmentGamutEncoder extends BaseScriptComponent {
             print(`DEBUG ERROR ${name}: ` + e);
         }
     }
+    // ============ PUBLIC GETTERS ============
+    
+    getPosRenderTarget(): Texture {
+        return this.posRenderTarget;
+    }
+    
+    getColorRenderTarget(): Texture {
+        return this.colorRenderTarget;
+    }
+    
+    getTexSize(): number {
+        return this.texSize;
+    }
+    
+    getGamutValidCount(): number {
+        // Calculate actual valid count
+        const n = PigmentGamutEncoder.NUM_PIGMENTS;
+        const steps = this.mixSteps;
+        
+        const purePigments = n;
+        const twoWayMixes = (n * (n - 1) / 2) * (steps - 1);
+        
+        let threeWaySteps = 0;
+        for (let s1 = 1; s1 < steps - 1; s1++) {
+            for (let s2 = 1; s2 < steps - s1; s2++) {
+                threeWaySteps++;
+            }
+        }
+        const threeWayMixes = (n * (n - 1) * (n - 2) / 6) * threeWaySteps;
+        
+        return purePigments + twoWayMixes + threeWayMixes;
+    }
 }

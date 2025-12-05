@@ -1,14 +1,14 @@
-- !<AssetImportMetadata/39c114a1-f77f-41ce-83cf-01f3a2c81dc0>
+- !<AssetImportMetadata/a0fd4bfc-fb27-4267-b358-492364e5f2f8>
   ImportedAssetIds:
-    ObjectPrefab: !<reference> fcd042f5-27dd-44da-85c0-3551cf0d5eb4
+    ObjectPrefab: !<reference> c475918d-699f-44b3-bb86-b68c3360300d
   ImporterName: ObjectPrefabImporter
-  PrimaryAsset: !<reference> fcd042f5-27dd-44da-85c0-3551cf0d5eb4
+  PrimaryAsset: !<reference> c475918d-699f-44b3-bb86-b68c3360300d
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    ObjectPrefab: !<own> eb0a555c-f566-4730-b3ff-e3546a658b40
+    ObjectPrefab: !<own> f65159c3-08e6-48a9-8c91-f915e4581049
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
@@ -247,11 +247,6 @@
   ScriptTypes:
     "":
       {}
-- !<ObjectPrefabAssetData/eb0a555c-f566-4730-b3ff-e3546a658b40>
-  Prototype: !<ObjectOwner/7474c63f-cd13-454f-88c2-ff4f6ca5aef5>
-    PackagePath: ""
-    objects:
-      - !<own> f28f3705-2018-4119-5351-d0a6f9a1683a
 - !<SceneObject/f28f3705-2018-4119-5351-d0a6f9a1683a>
   PrefabRemaps:
     []
@@ -291,3 +286,8 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ObjectPrefabAssetData/f65159c3-08e6-48a9-8c91-f915e4581049>
+  Prototype: !<ObjectOwner/43acc001-b1d6-47a9-9ad9-7a309742f2c5>
+    PackagePath: ""
+    objects:
+      - !<own> f28f3705-2018-4119-5351-d0a6f9a1683a

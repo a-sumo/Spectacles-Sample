@@ -38,7 +38,7 @@
     []
   DefaultScriptInputs:
     - scannerPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
-      interactablePath: imageAnchor/cameraCrop
+      interactablePath: ImageAnchor/CameraCrop
   ScriptTypes:
     -
       {}
