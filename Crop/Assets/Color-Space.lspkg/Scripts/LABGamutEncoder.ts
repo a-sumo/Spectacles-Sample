@@ -61,7 +61,7 @@ export class LABGamutEncoder extends BaseScriptComponent {
 		this.createEvent("UpdateEvent").bind(() => {
 			frameCount++;
 			if (frameCount === 5) {
-				this.debugReadRenderTargets();
+				// this.debugReadRenderTargets();
 			}
 		});
 	}
@@ -86,7 +86,6 @@ export class LABGamutEncoder extends BaseScriptComponent {
 		cam.far = 100.0;
 		cam.renderLayer = layer;
 		cam.renderOrder = -100;
-		cam.enableClearColor = true;
 		cam.devicePropertyUsage = Camera.DeviceProperty.None;
 		cam.renderTarget = this.posRenderTarget;
 

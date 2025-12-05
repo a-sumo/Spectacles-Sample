@@ -1,9 +1,8 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 743
+    size: 759
     values:
-      - ""
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
       - 3DModels/SWIS_Frame.mesh
@@ -17,14 +16,17 @@ CollapsedEntities:
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
       - Color-Space.lspkg/Prefabs
+      - Color-Space.lspkg/Scripts
       - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
       - Color-Space.lspkg/Scripts/GamutProjector.ts
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
       - Color-Space.lspkg/Scripts/LABGamutEncoder.ts
       - Color-Space.lspkg/Scripts/PigmentGamutEncoder.ts
       - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
+      - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/package.native
+      - ExampleInterface.prefab
       - Images
       - Images/PicMask.png
       - Images/PicOutline.png
@@ -32,6 +34,7 @@ CollapsedEntities:
       - Images/loading.gif
       - Images/thinOutline.png
       - Images/webIcon.png
+      - LSTween.lspkg
       - LSTween.lspkg/package.native
       - MaterialParams.png
       - Materials
@@ -61,6 +64,7 @@ CollapsedEntities:
       - Prefabs/Scanner.prefab
       - Prefabs/SceneHierarchy.prefab
       - Refraction Material
+      - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
       - RemoteServiceGateway.lspkg/Helpers/AudioProcessor.ts
       - RemoteServiceGateway.lspkg/Helpers/DynamicAudioOutput.ts
@@ -143,6 +147,7 @@ CollapsedEntities:
       - Scripts/CaptionBehavior.ts
       - Scripts/ChatGPT.ts
       - Scripts/CropRegion.ts
+      - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
       - SpectaclesInteractionKit.lspkg
@@ -742,6 +747,17 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg/Audio
+      - SpectaclesUIKit.lspkg/Materials
+      - SpectaclesUIKit.lspkg/Meshes
+      - SpectaclesUIKit.lspkg/Scripts
+      - SpectaclesUIKit.lspkg/Scripts/Components
+      - SpectaclesUIKit.lspkg/Scripts/Example
+      - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D
+      - SpectaclesUIKit.lspkg/Scripts/Example/Sphere
+      - SpectaclesUIKit.lspkg/Scripts/Themes
+      - SpectaclesUIKit.lspkg/Scripts/Utility
+      - SpectaclesUIKit.lspkg/Scripts/Visuals
       - SpectaclesUIKit.lspkg/package.native
       - Text Logger V2.lspkg
       - Text Logger V2.lspkg/package.native

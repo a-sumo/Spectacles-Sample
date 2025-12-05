@@ -18,6 +18,63 @@ export class PaletteSelectionEvent {
 	}
 }
 
+/**
+ * Classic oil painting pigment presets
+ * These represent the traditional limited palette used by master painters
+ */
+const OIL_PIGMENT_PRESETS = {
+	// Classic Limited Palette (Zorn palette + additions)
+	classic: [
+		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
+		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
+		{ name: "Cadmium Yellow", color: new vec4(1.0, 0.85, 0.0, 1.0) },
+		{ name: "Cadmium Red", color: new vec4(0.89, 0.09, 0.05, 1.0) },
+		{ name: "Ultramarine Blue", color: new vec4(0.15, 0.15, 0.7, 1.0) },
+		{ name: "Viridian Green", color: new vec4(0.0, 0.5, 0.45, 1.0) },
+	],
+
+	// Zorn Palette (Anders Zorn's famous limited palette)
+	zorn: [
+		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
+		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
+		{ name: "Yellow Ochre", color: new vec4(0.8, 0.65, 0.25, 1.0) },
+		{ name: "Cadmium Red", color: new vec4(0.89, 0.09, 0.05, 1.0) },
+		{ name: "Burnt Sienna", color: new vec4(0.54, 0.27, 0.12, 1.0) },
+		{ name: "Raw Umber", color: new vec4(0.44, 0.32, 0.18, 1.0) },
+	],
+
+	// Primary Palette (split primaries)
+	primary: [
+		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
+		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
+		{ name: "Cadmium Yellow Light", color: new vec4(1.0, 0.92, 0.0, 1.0) },
+		{ name: "Cadmium Red Medium", color: new vec4(0.89, 0.09, 0.05, 1.0) },
+		{ name: "Ultramarine Blue", color: new vec4(0.15, 0.15, 0.7, 1.0) },
+		{ name: "Phthalo Blue", color: new vec4(0.0, 0.25, 0.55, 1.0) },
+	],
+
+	// Impressionist Palette
+	impressionist: [
+		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
+		{ name: "Cadmium Yellow", color: new vec4(1.0, 0.85, 0.0, 1.0) },
+		{ name: "Cadmium Orange", color: new vec4(0.93, 0.53, 0.18, 1.0) },
+		{ name: "Cadmium Red", color: new vec4(0.89, 0.09, 0.05, 1.0) },
+		{ name: "Ultramarine Blue", color: new vec4(0.15, 0.15, 0.7, 1.0) },
+		{ name: "Viridian Green", color: new vec4(0.0, 0.5, 0.45, 1.0) },
+	],
+
+	// Earth Tones (landscape palette)
+	earth: [
+		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
+		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
+		{ name: "Yellow Ochre", color: new vec4(0.8, 0.65, 0.25, 1.0) },
+		{ name: "Burnt Sienna", color: new vec4(0.54, 0.27, 0.12, 1.0) },
+		{ name: "Raw Umber", color: new vec4(0.44, 0.32, 0.18, 1.0) },
+		{ name: "Sap Green", color: new vec4(0.31, 0.4, 0.18, 1.0) },
+	],
+};
+
+type PigmentPresetName = keyof typeof OIL_PIGMENT_PRESETS;
 @component
 export class PaletteController extends BaseScriptComponent {
 	@input
@@ -99,6 +156,7 @@ export class PaletteController extends BaseScriptComponent {
 		coloredSquareMaterial: Material | null;
 		color: vec4;
 	}[] = [];
+
 	private activeItemId: string | null = null;
 	private isUpdatingSelection: boolean = false;
 
@@ -112,6 +170,8 @@ export class PaletteController extends BaseScriptComponent {
 	// Color gamut ref
 	private pigmentEncoderScript: ScriptComponent | null = null;
 
+	private defaultColors: vec4[] = [];
+	private currentPreset: PigmentPresetName | "custom" | "default" = "default";
 	onAwake() {
 		this.createEvent("OnStartEvent").bind(this.initialize.bind(this));
 		if (!this.isEditor) {
@@ -123,6 +183,7 @@ export class PaletteController extends BaseScriptComponent {
 		if (this.initialized) return;
 
 		this.instantiateItems();
+		this.storeDefaultColors();
 		this.layoutItems();
 		this.setupButtonListeners();
 
@@ -207,7 +268,17 @@ export class PaletteController extends BaseScriptComponent {
 				this.itemList.length,
 				maxPigments
 			)} pigment colors`
-		); // FIXED: added (
+		);
+	}
+
+	/**
+	 * Store the current colors as default (called during initialization)
+	 */
+	private storeDefaultColors(): void {
+		this.defaultColors = [];
+		for (const item of this.itemList) {
+			this.defaultColors.push(item.color.uniformScale(1)); // Clone
+		}
 	}
 
 	private instantiateItems(): void {
@@ -659,6 +730,191 @@ export class PaletteController extends BaseScriptComponent {
 	public getActiveItemColor(): vec4 | null {
 		if (this.activeItemId === null) return null;
 		return this.getItemColor(this.activeItemId);
+	}
+	public printCallbackInput(input: any): void {
+		print("input" + input)
+	}
+	/**
+	 * Set all slot colors to a classic oil pigment preset
+	 * @param presetName Name of the preset: 'classic', 'zorn', 'primary', 'impressionist', 'earth'
+	 */
+	public setOilPigmentPreset(presetName: PigmentPresetName = "classic"): void {
+		const preset = OIL_PIGMENT_PRESETS[presetName];
+
+		if (!preset) {
+			print(
+				`PaletteController: Unknown preset '${presetName}'. Available: ${Object.keys(
+					OIL_PIGMENT_PRESETS
+				).join(", ")}`
+			);
+			return;
+		}
+
+		const count = Math.min(this.itemList.length, preset.length);
+
+		for (let i = 0; i < count; i++) {
+			const pigment = preset[i];
+			const item = this.itemList[i];
+
+			// Update color
+			item.color = pigment.color;
+
+			// Update material if available
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = pigment.color;
+			}
+
+			// Update slot text to pigment name (optional)
+			if (item.slotTextObj) {
+				const textComponent = item.slotTextObj.getComponent("Text") as Text;
+				if (textComponent) {
+					// Keep number for now, or use: textComponent.text = pigment.name;
+					textComponent.text = `${i + 1}`;
+				}
+			}
+		}
+
+		this.currentPreset = presetName;
+
+		// Sync to encoder
+		this.syncPigmentColors();
+
+		print(
+			`PaletteController: Applied '${presetName}' preset (${count} pigments)`
+		);
+		this.logCurrentPalette();
+	}
+
+	/**
+	 * Reset all slot colors to their original default values
+	 */
+	public resetToDefaultColors(): void {
+		const count = Math.min(this.itemList.length, this.defaultColors.length);
+
+		for (let i = 0; i < count; i++) {
+			const item = this.itemList[i];
+			const defaultColor = this.defaultColors[i] || new vec4(1, 1, 1, 1);
+
+			item.color = defaultColor;
+
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = defaultColor;
+			}
+
+			if (item.slotTextObj) {
+				const textComponent = item.slotTextObj.getComponent("Text") as Text;
+				if (textComponent) {
+					textComponent.text = `${i + 1}`;
+				}
+			}
+		}
+
+		this.currentPreset = "default";
+
+		// Sync to encoder
+		this.syncPigmentColors();
+
+		print(`PaletteController: Reset to default colors`);
+	}
+
+	/**
+	 * Clear all slot colors to white
+	 */
+	public clearSlotColors(): void {
+		const whiteColor = new vec4(1, 1, 1, 1);
+
+		for (let i = 0; i < this.itemList.length; i++) {
+			const item = this.itemList[i];
+
+			item.color = whiteColor;
+
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = whiteColor;
+			}
+		}
+
+		this.currentPreset = "custom";
+
+		// Sync to encoder
+		this.syncPigmentColors();
+
+		print(`PaletteController: Cleared all slot colors to white`);
+	}
+
+	/**
+	 * Get the current preset name
+	 */
+	public getCurrentPreset(): string {
+		return this.currentPreset;
+	}
+
+	/**
+	 * Get available preset names
+	 */
+	public getAvailablePresets(): string[] {
+		return Object.keys(OIL_PIGMENT_PRESETS);
+	}
+
+	/**
+	 * Get pigment info for a preset
+	 */
+	public getPresetInfo(
+		presetName: PigmentPresetName
+	): { name: string; color: vec4 }[] | null {
+		const preset = OIL_PIGMENT_PRESETS[presetName];
+		if (!preset) return null;
+
+		// Return a copy to prevent modification
+		return preset.map((p) => ({
+			name: p.name,
+			color: new vec4(p.color.x, p.color.y, p.color.z, p.color.w),
+		}));
+	}
+
+	/**
+	 * Log current palette colors to console
+	 */
+	public logCurrentPalette(): void {
+		print("=== Current Palette ===");
+		for (let i = 0; i < this.itemList.length; i++) {
+			const item = this.itemList[i];
+			const c = item.color;
+			print(
+				`  [${i}] RGB(${c.x.toFixed(2)}, ${c.y.toFixed(2)}, ${c.z.toFixed(2)})`
+			);
+		}
+	}
+
+	/**
+	 * Set colors from an array of vec4
+	 */
+	public setColorsFromArray(colors: vec4[]): void {
+		const count = Math.min(this.itemList.length, colors.length);
+
+		for (let i = 0; i < count; i++) {
+			const item = this.itemList[i];
+			const color = colors[i];
+
+			item.color = color;
+
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = color;
+			}
+		}
+
+		this.currentPreset = "custom";
+		this.syncPigmentColors();
+
+		print(`PaletteController: Set ${count} custom colors`);
+	}
+
+	/**
+	 * Get all current colors as an array
+	 */
+	public getAllColors(): vec4[] {
+		return this.itemList.map(
+			(item) => new vec4(item.color.x, item.color.y, item.color.z, item.color.w)
+		);
 	}
 
 	/**

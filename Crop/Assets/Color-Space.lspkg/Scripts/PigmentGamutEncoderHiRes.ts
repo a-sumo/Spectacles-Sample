@@ -155,7 +155,6 @@ export class PigmentGamutEncoderHiRes extends BaseScriptComponent {
         cam.far = 100.0;
         cam.renderLayer = layer;
         cam.renderOrder = -100;
-        cam.enableClearColor = true;
         cam.devicePropertyUsage = Camera.DeviceProperty.None;
         cam.renderTarget = this.rtLabLA;
         

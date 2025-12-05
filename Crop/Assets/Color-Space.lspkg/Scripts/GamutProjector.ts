@@ -176,17 +176,17 @@ export class GamutProjector extends BaseScriptComponent {
 		material.mainPass.gamutValidCount = this.gamutValidCount;
 
 		// DEBUG: Verify material properties were set
-		print("=== MATERIAL DEBUG ===");
-		print(`  gamutPosTex assigned: ${material.mainPass.gamutPosTex !== null}`);
-		print(
-			`  gamutColorTex assigned: ${material.mainPass.gamutColorTex !== null}`
-		);
-		print(`  inputPosTex assigned: ${material.mainPass.inputPosTex !== null}`);
-		print(`  gamutTexSize: ${material.mainPass.gamutTexSize}`);
-		print(`  gamutValidCount: ${material.mainPass.gamutValidCount}`);
+		// print("=== MATERIAL DEBUG ===");
+		// print(`  gamutPosTex assigned: ${material.mainPass.gamutPosTex !== null}`);
+		// print(
+		// 	`  gamutColorTex assigned: ${material.mainPass.gamutColorTex !== null}`
+		// );
+		// print(`  inputPosTex assigned: ${material.mainPass.inputPosTex !== null}`);
+		// print(`  gamutTexSize: ${material.mainPass.gamutTexSize}`);
+		// print(`  gamutValidCount: ${material.mainPass.gamutValidCount}`);
 
-		// DEBUG: Try reading a value from gamut texture to verify it's accessible
-		print("=== GAMUT TEXTURE VERIFICATION ===");
+		// // DEBUG: Try reading a value from gamut texture to verify it's accessible
+		// print("=== GAMUT TEXTURE VERIFICATION ===");
 		try {
 			const tempGamut = ProceduralTextureProvider.createFromTexture(
 				this.gamutPosTexture
@@ -237,7 +237,7 @@ export class GamutProjector extends BaseScriptComponent {
 			debugFrameCount++;
 			if (debugFrameCount === 15) {
 				// Wait a bit longer for projection to complete
-				this.debugProjectionResults();
+				// this.debugProjectionResults();
 			}
 		});
 	}
@@ -324,7 +324,6 @@ export class GamutProjector extends BaseScriptComponent {
 		const rt = global.scene.createRenderTargetTexture();
 		(rt.control as any).useScreenResolution = false;
 		(rt.control as any).resolution = resolution;
-		(rt.control as any).clearColorEnabled = true;
 		return rt;
 	}
 
