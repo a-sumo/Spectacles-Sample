@@ -26,7 +26,15 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    autoRun: false
+    extractColors: false
+    gamutProjector: false
+    imageRegenerator: false
+    originalMesh: false
+    paletteExtractor: false
+    previewMesh: false
+    testImage: false
+    testMode: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +44,25 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - paletteExtractor: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      gamutProjector: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      imageRegenerator: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      testImage: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      extractColors: !<float> 12.000000
+      previewMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      originalMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      testMode: !<float> 0.000000
+      autoRun: false
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @input Component.ScriptComponent paletteExtractor {"hint":"PaletteExtractor script"}'
+    - '// @input Component.ScriptComponent gamutProjector {"hint":"GamutProjector script"}'
+    - '// @input Component.ScriptComponent imageRegenerator {"hint":"ImageRegenerator script"}'
+    - '// @input Asset.Texture testImage {"hint":"Test image for extraction"}'
+    - '// @input float extractColors = 12 {"hint":"Number of colors to extract"}'
+    - '// @input SceneObject previewMesh {"hint":"SceneObject with RenderMeshVisual to display output"}'
+    - '// @input SceneObject originalMesh {"hint":"Also show original on a second mesh"}'
+    - '// @input float testMode {"hint":"Which test to run: 0=none, 1=extraction, 2=projection, 3=regeneration, 4=full"}'
+    - '// @input bool autoRun {"hint":"Auto-run test on start"}'

@@ -10,11 +10,12 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
-      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Gamut Projection.mat
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
+      - Color-Space.lspkg/Materials/Palette Remap.mat
+      - Color-Space.lspkg/Materials/Palette Remap.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
       - Color-Space.lspkg/Prefabs
       - Color-Space.lspkg/Scripts
@@ -27,10 +28,10 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/PigmentGamutEncoderHiRes.ts
       - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
       - Color-Space.lspkg/Scripts/RGBCubeEncoder.ts
-      - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/VFX/RGB Decoder.vfxgraph
       - Color-Space.lspkg/package.native
+      - Images
       - Images/990px-1897_Schischkin_Im_Park_anagoria.jpg
       - Images/PicMask.png
       - Images/PicOutline.png
@@ -47,12 +48,15 @@ CollapsedEntities:
       - Materials/CaptureVisual.ss_graph
       - Materials/GrayTrans.mat
       - Materials/Green.mat
+      - Materials/Image Input.mat
+      - Materials/Image Output.mat
       - Materials/LensExp_hover_frame.ss_graph
       - Materials/PinchButtonDarkRadial.mat
       - Materials/PinchDarkRadial.ss_graph
       - Materials/SWIS_flat_color.ss_graph
       - Materials/SWIS_frame.mat
       - Materials/SWIS_tile.mat
+      - Materials/Shapes
       - Materials/SphereOutline.mat
       - Materials/loadingGif.mat
       - Materials/loadingGif.ss_graph
@@ -145,6 +149,7 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
+      - Scripts
       - Scripts/APIKeyHint.ts
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
@@ -154,6 +159,7 @@ CollapsedEntities:
       - Scripts/Image Processing/Image Pipeline.ts
       - Scripts/Image Processing/Image Regenerator.ts
       - Scripts/Image Processing/PaletteExtractor.ts
+      - Scripts/Image Processing/PipelineTester.ts
       - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
@@ -167,7 +173,6 @@ CollapsedEntities:
       - Scripts/UI
       - Scripts/UI/SwitchToggleGroupExtended.ts
       - Scripts/Utils
-      - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
       - SpectaclesInteractionKit.lspkg/Assets/Audio/HoverAudioTrack.wav
@@ -326,7 +331,6 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Textures/SIKContainerExampleImage.jpg
       - SpectaclesInteractionKit.lspkg/Assets/Textures/SIKLogo.png
       - SpectaclesInteractionKit.lspkg/Assets/Textures/ScrollBarRectangle.png
-      - SpectaclesInteractionKit.lspkg/Components
       - SpectaclesInteractionKit.lspkg/Components/Helpers
       - SpectaclesInteractionKit.lspkg/Components/Helpers/ButtonFeedback.ts
       - SpectaclesInteractionKit.lspkg/Components/Helpers/CapsuleMeshCustomizer.ts
@@ -382,10 +386,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorLineVisual/InteractorLineVisual.ts
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorRayVisual
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorRayVisual/InteractorRayVisual.ts
-      - SpectaclesInteractionKit.lspkg/Components/UI
-      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/ContainerFrame.ts
-      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/FrameMaterial.mat
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/FrameMaterial.ss_graph
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/Ghost Material.mat
@@ -787,6 +788,5 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/package.native
       - Text Logger V2.lspkg
       - Text Logger V2.lspkg/package.native
-      - VFX
       - VFX/SimpleGridPosition.vfxgraph
   options: 4

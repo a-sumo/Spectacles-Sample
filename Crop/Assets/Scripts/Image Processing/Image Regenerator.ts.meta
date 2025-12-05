@@ -27,11 +27,9 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     debugMode: false
-    ditherMethod: false
     ditherStrength: false
+    enableDither: false
     inputTexture: false
-    outputHeight: false
-    outputWidth: false
     remapMaterial: false
   ScriptTypesHidden:
     {}
@@ -44,19 +42,15 @@
   DefaultScriptInputs:
     - remapMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
       inputTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      outputWidth: !<float> 0.000000
-      outputHeight: !<float> 0.000000
-      ditherMethod: !<float> 1.000000
+      enableDither: true
       ditherStrength: 0.850000
       debugMode: true
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @input Asset.Material remapMaterial {"hint":"Material with palette mapping shader"}'
+    - '// @input Asset.Material remapMaterial {"hint":"Material with PaletteRemap shader"}'
     - '// @input Asset.Texture inputTexture {"hint":"Input image texture"}'
-    - '// @input float outputWidth {"hint":"Output resolution width (0 = match input)"}'
-    - '// @input float outputHeight {"hint":"Output resolution height (0 = match input)"}'
-    - '// @input float ditherMethod = 1 {"hint":"Dithering method: 0=none, 1=floyd-steinberg, 2=atkinson"}'
-    - '// @input float ditherStrength = 0.85 {"hint":"Dithering strength (0-1)"}'
+    - '// @input bool enableDither = true {"hint":"Enable ordered dithering"}'
+    - '// @input float ditherStrength = 0.15 {"hint":"Dithering strength 0-1"}'
     - // @input bool debugMode = true
