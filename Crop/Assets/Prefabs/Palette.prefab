@@ -83,6 +83,8 @@
     defaultSelectedIndex: true
     layoutByRow: true
     editorTestButton: true
+    presetToggleGroupObject: true
+    defaultPresetIndex: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -101,6 +103,8 @@
       defaultSelectedIndex: !<float> 0.000000
       layoutByRow: true
       editorTestButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      presetToggleGroupObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      defaultPresetIndex: !<float> 0.000000
   ScriptTypes:
     "":
       {}

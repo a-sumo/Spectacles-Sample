@@ -2264,6 +2264,7 @@
     rows: true
     defaultSelectedIndex: true
     layoutByRow: true
+    defaultPresetIndex: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2287,6 +2288,8 @@
       defaultSelectedIndex: !<float> 0.000000
       layoutByRow: true
       editorTestButton: !<reference.SceneObject> a4198149-99db-4d78-869a-8a225f65eb90
+      presetToggleGroupObject: !<reference.SceneObject> b1ded8e6-06a3-45af-9e8f-81fc337b6396
+      defaultPresetIndex: !<float> 0.000000
   ScriptTypes:
     "":
       {}
