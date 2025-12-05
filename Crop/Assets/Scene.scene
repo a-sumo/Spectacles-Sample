@@ -1094,7 +1094,6 @@
   Enabled: true
   ScriptAsset: !<reference> 585fe530-c944-4f18-8ef9-ea90dc744e78
   ScriptInputsDefault:
-    _size: true
     _inactive: true
     snapToTriggerPosition: true
     hasTrackVisual: true
@@ -1107,7 +1106,7 @@
   ScriptInputs:
     "":
       _renderOrder: -1
-      _size: !<Vec3> {x: 12.000000, y: 3.000000, z: 1.000000}
+      _size: !<Vec3> {x: 10.000000, y: 3.000000, z: 1.000000}
       _inactive: false
       _playAudio: true
       _defaultValue: 0.200000
@@ -1863,7 +1862,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 9.500000, z: -0.100000}
+    Position: {x: -10.000000, y: 2.000000, z: -0.100000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -3344,7 +3343,6 @@
     showFollowButton: true
     useFOVFollow: true
     isFollowing: true
-    showCloseButton: true
     _enableInteractionPlane: true
     _targetingVisual: true
     isSynced: true
@@ -3375,7 +3373,7 @@
       showFollowButton: false
       useFOVFollow: false
       isFollowing: false
-      showCloseButton: true
+      showCloseButton: false
       _enableInteractionPlane: false
       _targetingVisual: !<float> 1.000000
       isSynced: false
@@ -3404,8 +3402,8 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 7.000000, z: 0.020000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -10.000000, y: -5.000000, z: 0.020000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 90.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -3552,7 +3550,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -1.000000, y: 0.000000, z: 0.010002}
+    Position: {x: 20.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -3891,6 +3889,7 @@
     - !<own> abb3e895-7592-4fb8-8419-b3a925a650c5
     - !<own> 61026ad9-de22-4899-9e2d-ba2f1a53079f
     - !<own> 35ad36df-f760-46f3-bf55-f45a46b45fa1
+    - !<own> b1ded8e6-06a3-45af-9e8f-81fc337b6396
   Components:
     - !<own> 734aea69-f183-4638-868d-fb871edfd11a
     - !<own> 67a26cfa-2422-444c-b770-4cf98c7748a4
@@ -4014,7 +4013,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> b1ded8e6-06a3-45af-9e8f-81fc337b6396
+    []
   Components:
     - !<own> c9c1e644-6402-40a8-a2e3-d1cfd8e3e04f
 - !<Text/c7e0a5ed-333d-4f03-8134-7b2a1425a28e>
