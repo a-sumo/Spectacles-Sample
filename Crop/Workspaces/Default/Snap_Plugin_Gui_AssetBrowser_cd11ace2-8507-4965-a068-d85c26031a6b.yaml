@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 775
+    size: 779
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,13 +10,13 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
-      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Gamut Projection.mat
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
       - Color-Space.lspkg/Prefabs
+      - Color-Space.lspkg/Scripts
       - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
       - Color-Space.lspkg/Scripts/GamutProjector.ts
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
@@ -59,6 +59,7 @@ CollapsedEntities:
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
+      - Prefabs/Basic Sphere 2.prefab
       - Prefabs/Basic Sphere.prefab
       - Prefabs/Button.prefab
       - Prefabs/Scanner.prefab
@@ -157,6 +158,8 @@ CollapsedEntities:
       - Scripts/SimpleGridPositionSync.ts
       - Scripts/SwitchToggleGroupExtended.ts
       - Scripts/Templates
+      - Scripts/TexturePositionOrchestrator.ts
+      - Scripts/TexturePositionSync.ts
       - Scripts/Utils
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
@@ -777,5 +780,6 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/package.native
       - Text Logger V2.lspkg
       - Text Logger V2.lspkg/package.native
+      - VFX
       - VFX/SimpleGridPosition.vfxgraph
   options: 4

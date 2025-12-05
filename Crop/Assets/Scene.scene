@@ -10,7 +10,7 @@
     - !<own> 09e1cdaa-09ec-475f-9e7d-d882305446d4
     - !<own> bdd5726a-01e5-4183-8c06-f5b80b011f33
     - !<own> ff26c496-3618-443c-a8a0-99ba0f44e049
-    - !<own> 44ac6d01-bb6d-4631-b464-168a77ed59e3
+    - !<own> 7f006e39-6408-49f5-9149-059bc4fd9329
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -391,7 +391,7 @@
   PrefabRemaps:
     []
   Name: Cursor Plane Controller
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -404,21 +404,6 @@
   Components:
     - !<own> 90ac6bb7-0a4c-4278-a87e-5cd70ddec9fd
     - !<own> a99f3d3b-7abe-4bf4-9d1f-7d4d1b31fb28
-- !<SceneObject/0a3eb18d-105c-47e6-b858-51e201070b9c>
-  PrefabRemaps:
-    []
-  Name: GridTestOrchestrator
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> f69810d4-c70a-4a67-96f0-9e871e7b38b1
 - !<SceneObject/0c94b463-2e9a-44fe-9da5-54e29f4a7901>
   PrefabRemaps:
     []
@@ -1138,19 +1123,6 @@
   ScriptTypes:
     "":
       {}
-- !<VFXComponent/335ed094-0fa6-4c65-a7b6-81114240dc91>
-  PrefabRemaps:
-    []
-  Name: VFX Component
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  VFXAsset: !<reference> 8f67465c-4222-4bbe-bc49-5906a9660e16
 - !<SceneObject/35ad36df-f760-46f3-bf55-f45a46b45fa1>
   PrefabRemaps:
     []
@@ -1376,7 +1348,7 @@
   PrefabRemaps:
     []
   Name: PictureController
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -10.000000}
@@ -1473,29 +1445,6 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 71b52915-4ccd-4f76-ad34-ecbb948a8bd9
-  Components:
-    []
-- !<SceneObject/44ac6d01-bb6d-4631-b464-168a77ed59e3>
-  PrefabRemaps:
-    - 0a3eb18d-105c-47e6-b858-51e201070b9c: 2eb5b66c-2535-41a6-5012-ea5ead7dd182
-    - 335ed094-0fa6-4c65-a7b6-81114240dc91: 889ae4c5-1309-4829-6e4f-fbdb39017a19
-    - 44ac6d01-bb6d-4631-b464-168a77ed59e3: 28f421bb-bf39-4b77-7f8e-0d276617de1e
-    - 601259fa-4ebb-4adb-9ae2-2fc4bc3a8b5a: 0a614910-65d0-404d-7fa2-ad20d5bc3e28
-    - 66f0670e-23dd-4635-9c9a-c7664df5a54d: d17ebc54-f42d-4083-51ba-28feaf85a750
-    - b150341f-9aaa-4acc-ac3d-5090f75bc19f: 4aabe579-3885-4305-5e19-08ff921a0bde
-    - f69810d4-c70a-4a67-96f0-9e871e7b38b1: 81b46ac3-b5be-4268-5cd7-8f85f4f7d8bc
-  Name: Test SceneObject VFXParticle Sync
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> b150341f-9aaa-4acc-ac3d-5090f75bc19f
-    - !<own> 601259fa-4ebb-4adb-9ae2-2fc4bc3a8b5a
-    - !<own> 0a3eb18d-105c-47e6-b858-51e201070b9c
   Components:
     []
 - !<SceneObject/46f46cd0-c48d-4ddb-b3ee-c1f112d710c5>
@@ -1733,6 +1682,49 @@
     []
   Components:
     - !<own> e57827a6-0069-4b2d-9a0d-f92abbaf3ccc
+- !<ScriptComponent/5877bde5-e67d-43ae-844f-992f70203d59>
+  PrefabRemaps:
+    []
+  Name: TexturePositionSync
+  Enabled: true
+  ScriptAsset: !<reference> 362b2fc8-4120-4617-b39b-6cc8be0d6459
+  ScriptInputsDefault:
+    texWidth: true
+    texHeight: true
+    pos: true
+    scale: true
+    rot: true
+    circleCenter: true
+    circleRadius: true
+    circleRotationOffset: true
+    circlePlane: true
+    tweenDuration: true
+    staggerDelay: true
+    continuousUpdate: true
+    debugMode: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      objectPrefab: !<reference.ObjectPrefab> c31d8c8f-261e-495e-a4d0-b4ae7f17b90f
+      gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
+      vfxComponent: !<reference.VFXComponent> 2560ef30-0958-471a-9bde-7caa7a88078c
+      texWidth: !<float> 8.000000
+      texHeight: !<float> 8.000000
+      pos: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      scale: !<Vec3> {x: 100.000000, y: 100.000000, z: 100.000000}
+      rot: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      circleCenter: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      circleRadius: !<float> 50.000000
+      circleRotationOffset: !<float> 0.000000
+      circlePlane: !<float> 0.000000
+      tweenDuration: !<float> 500.000000
+      staggerDelay: !<float> 30.000000
+      continuousUpdate: true
+      debugMode: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/58a4ec99-cf0f-4ce4-99dc-4b3cd97dfcea>
   PrefabRemaps:
     []
@@ -1890,21 +1882,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/601259fa-4ebb-4adb-9ae2-2fc4bc3a8b5a>
-  PrefabRemaps:
-    []
-  Name: SimpleGridPosition
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 90.138802, y: 0.098165, z: -35.270317}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 335ed094-0fa6-4c65-a7b6-81114240dc91
 - !<SceneObject/607bbea6-a918-46e1-ac91-ed27dffab0f9>
   PrefabRemaps:
     []
@@ -2051,47 +2028,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<ScriptComponent/66f0670e-23dd-4635-9c9a-c7664df5a54d>
-  PrefabRemaps:
-    []
-  Name: SimpleGridPositionSync
-  Enabled: true
-  ScriptAsset: !<reference> 67247a6a-bcdd-4e3a-8d37-65b11245e6e5
-  ScriptInputsDefault:
-    gridWidth: true
-    gridHeight: true
-    pos: true
-    rot: true
-    circleCenter: true
-    circleRotationOffset: true
-    circlePlane: true
-    atParticlePositions: true
-    tweenDuration: true
-    staggerDelay: true
-    debugMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      objectPrefab: !<reference.ObjectPrefab> fff6efad-106f-4485-b6ec-300a4b1a2e4d
-      gridWidth: !<float> 4.000000
-      gridHeight: !<float> 4.000000
-      pos: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
-      scale: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
-      rot: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
-      vfxComponent: !<reference.VFXComponent> 335ed094-0fa6-4c65-a7b6-81114240dc91
-      circleCenter: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
-      circleRadius: !<float> 1.000000
-      circleRotationOffset: !<float> 0.000000
-      circlePlane: !<float> 0.000000
-      atParticlePositions: false
-      tweenDuration: !<float> 500.000000
-      staggerDelay: !<float> 50.000000
-      continuousUpdate: true
-      debugMode: true
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/67a26cfa-2422-444c-b770-4cf98c7748a4>
   PrefabRemaps:
     []
@@ -2537,6 +2473,21 @@
     - !<own> 81dff09b-2333-4e30-9bb1-7772d9f5bd1f
   Components:
     []
+- !<SceneObject/7f006e39-6408-49f5-9149-059bc4fd9329>
+  PrefabRemaps:
+    []
+  Name: TexturePositionSync
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5877bde5-e67d-43ae-844f-992f70203d59
 - !<ScriptComponent/802f3afc-d764-4507-9dc7-ce95d04e2efe>
   PrefabRemaps:
     []
@@ -3649,21 +3600,6 @@
     - !<own> 31c16ed2-fac0-4022-b4fc-4d3ae4d9bd69
   Components:
     []
-- !<SceneObject/b150341f-9aaa-4acc-ac3d-5090f75bc19f>
-  PrefabRemaps:
-    []
-  Name: SimpleGridPositionSync
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 66f0670e-23dd-4635-9c9a-c7664df5a54d
 - !<SceneObject/b1ded8e6-06a3-45af-9e8f-81fc337b6396>
   PrefabRemaps:
     []
@@ -3998,7 +3934,7 @@
   PrefabRemaps:
     []
   Name: Palette Controller
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -20.000000, z: 0.000000}
@@ -4018,7 +3954,7 @@
   PrefabRemaps:
     []
   Name: Box
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -5067,27 +5003,6 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   VFXAsset: !<reference> ac1165ef-78fe-45db-a29d-6911af631d07
-- !<ScriptComponent/f69810d4-c70a-4a67-96f0-9e871e7b38b1>
-  PrefabRemaps:
-    []
-  Name: GridTestOrchestrator
-  Enabled: true
-  ScriptAsset: !<reference> d96ee435-2ad8-414a-98e8-ba31234cc4a5
-  ScriptInputsDefault:
-    autoToggleInterval: true
-    autoToggleEnabled: true
-    debugMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      gridSync: !<reference.ScriptComponent> 66f0670e-23dd-4635-9c9a-c7664df5a54d
-      autoToggleInterval: !<float> 3.000000
-      autoToggleEnabled: true
-      debugMode: true
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/f6dc8380-a2f0-43d3-9524-25f4551d3c6f>
   PrefabRemaps:
     []
@@ -5182,7 +5097,7 @@
   PrefabRemaps:
     []
   Name: Color Gamut Frame
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}

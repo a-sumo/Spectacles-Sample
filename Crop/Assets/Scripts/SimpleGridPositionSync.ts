@@ -32,7 +32,7 @@ export class SimpleGridPositionSync extends BaseScriptComponent {
     
     @input
     @hint("Shader scale multiplier (matches 'scale' in shader)")
-    scale: vec3 = new vec3(100, 100, 100);
+    scale: vec3 = new vec3(1, 1, 1);
     
     @input
     @hint("Shader rotation in degrees (matches 'rot' in shader)")
@@ -50,7 +50,7 @@ export class SimpleGridPositionSync extends BaseScriptComponent {
     
     @input
     @hint("Radius of the circle")
-    circleRadius: number = 50;
+    circleRadius: number = 1;
     
     @input
     @hint("Rotation offset for circle (degrees)")
