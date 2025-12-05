@@ -74,6 +74,8 @@ const OIL_PIGMENT_PRESETS = {
 	],
 };
 
+
+
 type PigmentPresetName = keyof typeof OIL_PIGMENT_PRESETS;
 @component
 export class PaletteController extends BaseScriptComponent {
@@ -731,8 +733,8 @@ export class PaletteController extends BaseScriptComponent {
 		if (this.activeItemId === null) return null;
 		return this.getItemColor(this.activeItemId);
 	}
-	public printCallbackInput(input: any): void {
-		print("input" + input)
+	public printCallbackInput(isToggled: boolean): void {
+		print("TOGGLED"+isToggled)
 	}
 	/**
 	 * Set all slot colors to a classic oil pigment preset

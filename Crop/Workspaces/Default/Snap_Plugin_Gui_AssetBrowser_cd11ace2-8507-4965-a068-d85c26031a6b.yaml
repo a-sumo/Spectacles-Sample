@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 759
+    size: 765
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,6 +10,7 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Gamut Projection.mat
@@ -21,8 +22,11 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/GamutProjector.ts
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
       - Color-Space.lspkg/Scripts/LABGamutEncoder.ts
+      - Color-Space.lspkg/Scripts/MinimalEncoderTest.ts
       - Color-Space.lspkg/Scripts/PigmentGamutEncoder.ts
+      - Color-Space.lspkg/Scripts/PigmentGamutEncoderHiRes.ts
       - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
+      - Color-Space.lspkg/Scripts/RGBCubeEncoder.ts
       - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/package.native
@@ -141,7 +145,6 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
-      - Scripts
       - Scripts/APIKeyHint.ts
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
@@ -150,6 +153,8 @@ CollapsedEntities:
       - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
+      - Scripts/SwitchToggleGroupExtended.ts
+      - Scripts/Templates
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
@@ -747,6 +752,7 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes

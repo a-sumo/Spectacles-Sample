@@ -580,7 +580,7 @@
       addCallbacks: true
       onToggleSelectedCallbacks:
         - scriptComponent: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
-          functionName: printCallbackInput
+          functionName: ""
       _switches: !<MappingBased.AssignableType[]>
         - !<reference> 5a63eb9b-1866-41db-b297-6ae2f70bd893
         - !<reference> b0484c38-55be-4c24-9363-5e5a88b392e0
@@ -1769,7 +1769,6 @@
     hasTrackVisual: true
     customKnobSize: true
     _knobSize: true
-    addCallbacks: true
     onFinishedCallbacks: true
   ScriptTypesDefault:
     {}
@@ -1783,10 +1782,10 @@
       hasTrackVisual: true
       customKnobSize: false
       _knobSize: !<Vec2> {x: 3.000000, y: 3.000000}
-      addCallbacks: false
+      addCallbacks: true
       onValueChangeCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-          functionName: ""
+        - scriptComponent: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
+          functionName: printCallbackInput
       onFinishedCallbacks:
         []
       _defaultValue: 1
