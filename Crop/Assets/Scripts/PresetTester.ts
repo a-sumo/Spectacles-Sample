@@ -1,6 +1,6 @@
 // Simple test script for pigment presets with 3 toggles
 
-import { SwitchToggleGroupExtended, ToggleSelectionEvent } from "./SwitchToggleGroupExtended"
+import { SwitchToggleGroupExtended, ToggleSelectionEvent } from "./UI/SwitchToggleGroupExtended"
 import { PaletteController } from "./PaletteController"
 
 type PresetName = "classic" | "zorn" | "impressionist"

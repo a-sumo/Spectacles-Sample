@@ -1,4 +1,4 @@
-import { SwitchToggleGroupExtended, ToggleSelectionEvent } from "./SwitchToggleGroupExtended"
+import { SwitchToggleGroupExtended, ToggleSelectionEvent } from "./UI/SwitchToggleGroupExtended"
 import { type PigmentPresetName, PaletteController } from "./PaletteController";
 
 @component

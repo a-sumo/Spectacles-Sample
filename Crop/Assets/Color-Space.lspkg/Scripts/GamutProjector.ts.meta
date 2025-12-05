@@ -68,10 +68,10 @@
     - '// @input Asset.Material projectionMaterial {"hint":"Material with GamutProjection shader"}'
     - '// @input Component.ScriptComponent gamutEncoder {"hint":"Reference to PigmentGamutEncoder script component"}'
     - '// @input Component.VFXComponent vfxComponent {"hint":"VFX component to receive projected textures"}'
-    - '// @input float gamutTexSize = 64 {"hint":"Size of gamut texture from encoder (e.g., 64 means 64x64 = 4096 pixels)"}'
-    - '// @input float gamutValidCount = 2000 {"hint":"Actual number of valid colors in gamut (from encoder log)"}'
-    - '// @input float inputTexWidth = 8 {"hint":"Width of input texture (number of colors to project per row)"}'
-    - '// @input float inputTexHeight = 8 {"hint":"Height of input texture (number of rows)"}'
+    - // @input float gamutTexSize = 64
+    - // @input float gamutValidCount = 2000
+    - // @input float inputTexWidth = 8
+    - // @input float inputTexHeight = 8
     - '// @input vec3 input0 = {1,0.5,0} {"widget":"color"}'
     - '// @input vec3 input1 = {0,1,0.5} {"widget":"color"}'
     - '// @input vec3 input2 = {0.5,0,1} {"widget":"color"}'

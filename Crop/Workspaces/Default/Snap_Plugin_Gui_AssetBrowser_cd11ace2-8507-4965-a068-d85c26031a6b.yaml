@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 778
+    size: 786
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,7 +10,9 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - Color-Space.lspkg
       - Color-Space.lspkg/Images
+      - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Gamut Projection.mat
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
@@ -29,7 +31,7 @@ CollapsedEntities:
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/VFX/RGB Decoder.vfxgraph
       - Color-Space.lspkg/package.native
-      - Images
+      - Images/990px-1897_Schischkin_Im_Park_anagoria.jpg
       - Images/PicMask.png
       - Images/PicOutline.png
       - Images/SWIS_frame.jpg
@@ -143,23 +145,27 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
-      - Scripts
       - Scripts/APIKeyHint.ts
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
       - Scripts/ChatGPT.ts
       - Scripts/CropRegion.ts
       - Scripts/GridTestOrchestrator.ts
+      - Scripts/Image Processing/Image Pipeline.ts
+      - Scripts/Image Processing/Image Regenerator.ts
+      - Scripts/Image Processing/PaletteExtractor.ts
       - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
       - Scripts/PresetTester.ts
       - Scripts/PresetToggleController.ts
       - Scripts/SimpleGridPositionSync.ts
-      - Scripts/SwitchToggleGroupExtended.ts
       - Scripts/Templates
-      - Scripts/TexturePositionOrchestrator.ts
+      - Scripts/Testing
+      - Scripts/Testing/TexturePositionOrchestrator.ts
       - Scripts/TexturePositionSync.ts
+      - Scripts/UI
+      - Scripts/UI/SwitchToggleGroupExtended.ts
       - Scripts/Utils
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
@@ -758,17 +764,19 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Prefabs
-      - SpectaclesUIKit.lspkg/Scripts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame
       - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
       - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow
       - SpectaclesUIKit.lspkg/Scripts/Components/Slider
       - SpectaclesUIKit.lspkg/Scripts/Components/Switch
       - SpectaclesUIKit.lspkg/Scripts/Components/TextInputField
+      - SpectaclesUIKit.lspkg/Scripts/Components/Toggle
       - SpectaclesUIKit.lspkg/Scripts/Example
       - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D
       - SpectaclesUIKit.lspkg/Scripts/Example/Sphere
