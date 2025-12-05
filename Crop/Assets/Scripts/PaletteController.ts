@@ -18,12 +18,23 @@ export class PaletteSelectionEvent {
 	}
 }
 
-/**
- * Classic oil painting pigment presets
- * These represent the traditional limited palette used by master painters
- */
+export class PresetChangedEvent {
+	presetName: PigmentPresetName | null;
+	presetIndex: number;
+	colors: vec4[];
+
+	constructor(
+		presetName: PigmentPresetName | null,
+		presetIndex: number,
+		colors: vec4[]
+	) {
+		this.presetName = presetName;
+		this.presetIndex = presetIndex;
+		this.colors = colors;
+	}
+}
+
 const OIL_PIGMENT_PRESETS = {
-	// Classic Limited Palette (Zorn palette + additions)
 	classic: [
 		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
 		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
@@ -32,8 +43,6 @@ const OIL_PIGMENT_PRESETS = {
 		{ name: "Ultramarine Blue", color: new vec4(0.15, 0.15, 0.7, 1.0) },
 		{ name: "Viridian Green", color: new vec4(0.0, 0.5, 0.45, 1.0) },
 	],
-
-	// Zorn Palette (Anders Zorn's famous limited palette)
 	zorn: [
 		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
 		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
@@ -42,8 +51,6 @@ const OIL_PIGMENT_PRESETS = {
 		{ name: "Burnt Sienna", color: new vec4(0.54, 0.27, 0.12, 1.0) },
 		{ name: "Raw Umber", color: new vec4(0.44, 0.32, 0.18, 1.0) },
 	],
-
-	// Primary Palette (split primaries)
 	primary: [
 		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
 		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
@@ -52,8 +59,6 @@ const OIL_PIGMENT_PRESETS = {
 		{ name: "Ultramarine Blue", color: new vec4(0.15, 0.15, 0.7, 1.0) },
 		{ name: "Phthalo Blue", color: new vec4(0.0, 0.25, 0.55, 1.0) },
 	],
-
-	// Impressionist Palette
 	impressionist: [
 		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
 		{ name: "Cadmium Yellow", color: new vec4(1.0, 0.85, 0.0, 1.0) },
@@ -62,8 +67,6 @@ const OIL_PIGMENT_PRESETS = {
 		{ name: "Ultramarine Blue", color: new vec4(0.15, 0.15, 0.7, 1.0) },
 		{ name: "Viridian Green", color: new vec4(0.0, 0.5, 0.45, 1.0) },
 	],
-
-	// Earth Tones (landscape palette)
 	earth: [
 		{ name: "Titanium White", color: new vec4(0.98, 0.98, 0.96, 1.0) },
 		{ name: "Ivory Black", color: new vec4(0.08, 0.08, 0.08, 1.0) },
@@ -74,9 +77,46 @@ const OIL_PIGMENT_PRESETS = {
 	],
 };
 
+export type PigmentPresetName = keyof typeof OIL_PIGMENT_PRESETS;
 
+const PRESET_ORDER: PigmentPresetName[] = [
+	"classic",
+	"zorn",
+	"primary",
+	"impressionist",
+	"earth",
+];
 
-type PigmentPresetName = keyof typeof OIL_PIGMENT_PRESETS;
+// Clear/empty color (black with zero alpha)
+const CLEAR_COLOR = new vec4(0, 0, 0, 0);
+
+interface PaletteItemData {
+	sceneObject: SceneObject;
+	button: BaseButton;
+	index: number;
+	slotTextObj: SceneObject | null;
+	coloredSquare: SceneObject | null;
+	coloredSquareMaterial: Material | null;
+	color: vec4;
+}
+
+interface PaletteItemListEntry {
+	id: string;
+	sceneObject: SceneObject;
+	button: BaseButton;
+	slotTextObj: SceneObject | null;
+	coloredSquare: SceneObject | null;
+	coloredSquareMaterial: Material | null;
+	color: vec4;
+}
+
+interface BoundingBox {
+	min: vec3;
+	max: vec3;
+	size: vec3;
+	center: vec3;
+}
+
 @component
 export class PaletteController extends BaseScriptComponent {
 	@input
@@ -92,15 +132,11 @@ export class PaletteController extends BaseScriptComponent {
 	pigmentEncoderPath: string = "PigmentGamutEncoder";
 
 	@input
-	@hint(
-		"Optional IDs for each prefab (comma-separated). If empty, indices will be used."
-	)
+	@hint("Optional IDs for each prefab (comma-separated)")
 	itemIds: string = "";
 
 	@input
-	@hint(
-		"Path to the colored square within item hierarchy (e.g., 'Colored Square')"
-	)
+	@hint("Path to the colored square within item hierarchy")
 	coloredSquarePath: string = "Colored Square";
 
 	@input
@@ -133,50 +169,42 @@ export class PaletteController extends BaseScriptComponent {
 
 	@input
 	@hint("In editor scanner creation button")
-	editorTestButton: SceneObject = null;
+	editorTestButton: SceneObject | null = null;
+
+	@input
+	@hint("Optional: SceneObject containing the preset toggle group script")
+	presetToggleGroupObject: SceneObject | null = null;
+
+	@input
+	@hint("Default preset if toggle group not found")
+	defaultPresetIndex: number = 0;
 
 	private isEditor = global.deviceInfoSystem.isEditor();
-
-	private items: Map<
-		string,
-		{
-			sceneObject: SceneObject;
-			button: BaseButton;
-			index: number;
-			slotTextObj: SceneObject | null;
-			coloredSquare: SceneObject | null;
-			coloredSquareMaterial: Material | null;
-			color: vec4;
-		}
-	> = new Map();
-	private itemList: {
-		id: string;
-		sceneObject: SceneObject;
-		button: BaseButton;
-		slotTextObj: SceneObject | null;
-		coloredSquare: SceneObject | null;
-		coloredSquareMaterial: Material | null;
-		color: vec4;
-	}[] = [];
-
+	private items: Map<string, PaletteItemData> = new Map();
+	private itemList: PaletteItemListEntry[] = [];
 	private activeItemId: string | null = null;
 	private isUpdatingSelection: boolean = false;
+	private initialized: boolean = false;
+	private pigmentEncoderScript: ScriptComponent | null = null;
+
+	// Preset state - null means uninitialized or cleared
+	private currentPreset: PigmentPresetName | null = null;
+	private currentPresetIndex: number = -1;
+	private presetToggleGroup: ScriptComponent | null = null;
 
 	private onSelectionChangedEvent: Event<PaletteSelectionEvent> =
 		new Event<PaletteSelectionEvent>();
 	public readonly onSelectionChanged: PublicApi<PaletteSelectionEvent> =
 		this.onSelectionChangedEvent.publicApi();
 
-	private initialized: boolean = false;
+	private onPresetChangedEvent: Event<PresetChangedEvent> =
+		new Event<PresetChangedEvent>();
+	public readonly onPresetChanged: PublicApi<PresetChangedEvent> =
+		this.onPresetChangedEvent.publicApi();
 
-	// Color gamut ref
-	private pigmentEncoderScript: ScriptComponent | null = null;
-
-	private defaultColors: vec4[] = [];
-	private currentPreset: PigmentPresetName | "custom" | "default" = "default";
-	onAwake() {
+	onAwake(): void {
 		this.createEvent("OnStartEvent").bind(this.initialize.bind(this));
-		if (!this.isEditor) {
+		if (this.editorTestButton && !this.isEditor) {
 			this.editorTestButton.enabled = false;
 		}
 	}
@@ -185,11 +213,9 @@ export class PaletteController extends BaseScriptComponent {
 		if (this.initialized) return;
 
 		this.instantiateItems();
-		this.storeDefaultColors();
 		this.layoutItems();
 		this.setupButtonListeners();
 
-		// Set default selection
 		if (
 			this.defaultSelectedIndex >= 0 &&
 			this.defaultSelectedIndex < this.itemList.length
@@ -198,10 +224,261 @@ export class PaletteController extends BaseScriptComponent {
 			this.setActiveItem(defaultItem.id, false);
 		}
 
-		// Initialize color gamut
 		this.initializeColorGamut();
+		this.initializePreset();
 
 		this.initialized = true;
+		print("PaletteController: Initialization complete");
+	}
+
+	private initializePreset(): void {
+		if (this.presetToggleGroupObject) {
+			this.connectToToggleGroup();
+		}
+
+		let initialPresetIndex = this.defaultPresetIndex;
+
+		if (this.presetToggleGroup) {
+			const toggleGroupAny = this.presetToggleGroup as any;
+			const selectedIndex =
+				typeof toggleGroupAny.getSelectedIndex === "function"
+					? toggleGroupAny.getSelectedIndex()
+					: -1;
+
+			if (selectedIndex >= 0 && selectedIndex < PRESET_ORDER.length) {
+				initialPresetIndex = selectedIndex;
+				print(
+					`PaletteController: Using toggle group selection (index ${selectedIndex})`
+				);
+			}
+		} else {
+			print(
+				`PaletteController: No toggle group found, using default preset index ${this.defaultPresetIndex}`
+			);
+		}
+
+		// Force apply on initialization (currentPreset is null, so no early return)
+		this.applyPresetByIndex(initialPresetIndex, false);
+	}
+
+	private connectToToggleGroup(): void {
+		if (!this.presetToggleGroupObject) return;
+
+		const scripts = this.presetToggleGroupObject.getComponents(
+			"Component.ScriptComponent"
+		);
+
+		for (const script of scripts) {
+			const scriptAny = script as any;
+
+			if (
+				typeof scriptAny.getSelectedIndex === "function" &&
+				scriptAny.onSelectionChanged &&
+				typeof scriptAny.onSelectionChanged.add === "function"
+			) {
+				this.presetToggleGroup = script;
+
+				scriptAny.onSelectionChanged.add((event: any) => {
+					this.onToggleGroupSelectionChanged(event);
+				});
+
+				print("PaletteController: Connected to preset toggle group");
+				return;
+			}
+
+			if (
+				scriptAny.onToggleSelected &&
+				typeof scriptAny.onToggleSelected.add === "function"
+			) {
+				this.presetToggleGroup = script;
+
+				scriptAny.onToggleSelected.add((event: any) => {
+					const index = this.findToggleIndex(event.toggleable);
+					if (index >= 0) {
+						this.applyPresetByIndex(index, true);
+					}
+				});
+
+				print("PaletteController: Connected to BaseToggleGroup");
+				return;
+			}
+		}
+
+		print("PaletteController: Could not find compatible toggle group script");
+	}
+
+	private findToggleIndex(toggleable: any): number {
+		if (!this.presetToggleGroup) return -1;
+
+		const toggleGroupAny = this.presetToggleGroup as any;
+		const toggleables = toggleGroupAny.toggleables;
+		if (!toggleables) return -1;
+
+		for (let i = 0; i < toggleables.length; i++) {
+			if (toggleables[i] === toggleable) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private onToggleGroupSelectionChanged(event: any): void {
+		const index = event.index ?? event.presetIndex ?? -1;
+
+		if (index >= 0 && index < PRESET_ORDER.length) {
+			print(`PaletteController: Toggle group changed to index ${index}`);
+			this.applyPresetByIndex(index, true);
+		}
+	}
+
+	public applyPresetByIndex(index: number, notify: boolean = true): void {
+		if (index < 0 || index >= PRESET_ORDER.length) {
+			print(`PaletteController: Invalid preset index ${index}`);
+			return;
+		}
+
+		const presetName = PRESET_ORDER[index];
+		this.applyPreset(presetName, index, notify);
+	}
+
+	public setOilPigmentPreset(
+		presetName: PigmentPresetName = "classic",
+		notify: boolean = true
+	): void {
+		const index = PRESET_ORDER.indexOf(presetName);
+		if (index < 0) {
+			print(`PaletteController: Unknown preset '${presetName}'`);
+			return;
+		}
+
+		this.applyPreset(presetName, index, notify);
+	}
+
+	private applyPreset(
+		presetName: PigmentPresetName,
+		presetIndex: number,
+		notify: boolean
+	): void {
+		const preset = OIL_PIGMENT_PRESETS[presetName];
+		if (!preset) return;
+
+		// Only skip if already applied (null means never applied)
+		if (
+			this.currentPreset !== null &&
+			this.currentPreset === presetName &&
+			this.currentPresetIndex === presetIndex
+		) {
+			return;
+		}
+
+		this.currentPreset = presetName;
+		this.currentPresetIndex = presetIndex;
+
+		const count = Math.min(this.itemList.length, preset.length);
+		const colors: vec4[] = [];
+
+		for (let i = 0; i < count; i++) {
+			const pigment = preset[i];
+			const item = this.itemList[i];
+
+			item.color = pigment.color;
+			colors.push(pigment.color);
+
+			const itemData = this.items.get(item.id);
+			if (itemData) {
+				itemData.color = pigment.color;
+			}
+
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = pigment.color;
+			}
+
+			if (item.slotTextObj) {
+				const textComponent = item.slotTextObj.getComponent("Text") as Text;
+				if (textComponent) {
+					textComponent.text = `${i + 1}`;
+				}
+			}
+		}
+
+		this.syncPigmentColors();
+
+		print(
+			`PaletteController: Applied '${presetName}' preset (index ${presetIndex})`
+		);
+
+		if (notify) {
+			this.onPresetChangedEvent.invoke(
+				new PresetChangedEvent(presetName, presetIndex, colors)
+			);
+		}
+	}
+
+	/**
+	 * Clear all slot colors to black with zero alpha
+	 * This effectively empties the palette
+	 */
+	public clearSlotColors(notify: boolean = true): void {
+		const colors: vec4[] = [];
+
+		for (let i = 0; i < this.itemList.length; i++) {
+			const item = this.itemList[i];
+			const clearColor = new vec4(0, 0, 0, 0);
+
+			item.color = clearColor;
+			colors.push(clearColor);
+
+			const itemData = this.items.get(item.id);
+			if (itemData) {
+				itemData.color = clearColor;
+			}
+
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = clearColor;
+			}
+		}
+
+		// Reset preset state
+		this.currentPreset = null;
+		this.currentPresetIndex = -1;
+
+		this.syncPigmentColors();
+
+		print("PaletteController: Cleared all slot colors");
+
+		if (notify) {
+			this.onPresetChangedEvent.invoke(
+				new PresetChangedEvent(null, -1, colors)
+			);
+		}
+	}
+
+	/**
+	 * Check if the palette is cleared (all slots empty)
+	 */
+	public isCleared(): boolean {
+		return this.currentPreset === null && this.currentPresetIndex === -1;
+	}
+
+	/**
+	 * Check if a specific slot is empty (zero alpha)
+	 */
+	public isSlotEmpty(index: number): boolean {
+		if (index < 0 || index >= this.itemList.length) return true;
+		return this.itemList[index].color.w === 0;
+	}
+
+	/**
+	 * Get number of non-empty slots
+	 */
+	public getActiveSlotCount(): number {
+		let count = 0;
+		for (const item of this.itemList) {
+			if (item.color.w > 0) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	private initializeColorGamut(): void {
@@ -224,13 +501,14 @@ export class PaletteController extends BaseScriptComponent {
 		if (!encoderObj) {
 			print(
 				`PaletteController: Could not find '${this.pigmentEncoderPath}' in colorGamutObject`
-			); // FIXED: added (
+			);
 			return;
 		}
 
 		this.pigmentEncoderScript = encoderObj.getComponent(
 			"Component.ScriptComponent"
 		) as ScriptComponent;
+
 		if (!this.pigmentEncoderScript) {
 			print(
 				"PaletteController: No ScriptComponent found on PigmentGamutEncoder"
@@ -238,13 +516,9 @@ export class PaletteController extends BaseScriptComponent {
 			return;
 		}
 
-		this.syncPigmentColors();
 		print("PaletteController: Color gamut initialized");
 	}
 
-	/**
-	 * Sync palette item colors to the PigmentGamutEncoder
-	 */
 	public syncPigmentColors(): void {
 		if (!this.pigmentEncoderScript) {
 			return;
@@ -258,29 +532,19 @@ export class PaletteController extends BaseScriptComponent {
 
 			if (i < this.itemList.length) {
 				const itemColor = this.itemList[i].color;
+				// Use RGB from color, alpha determines if it's "active"
 				const pigmentColor = new vec3(itemColor.x, itemColor.y, itemColor.z);
 				encoder[pigmentKey] = pigmentColor;
 			} else {
-				encoder[pigmentKey] = new vec3(1, 1, 1);
+				// Default to black for unused slots
+				encoder[pigmentKey] = new vec3(0, 0, 0);
 			}
 		}
 
+		const activeCount = this.getActiveSlotCount();
 		print(
-			`PaletteController: Synced ${Math.min(
-				this.itemList.length,
-				maxPigments
-			)} pigment colors`
+			`PaletteController: Synced ${activeCount} active pigment colors to encoder`
 		);
-	}
-
-	/**
-	 * Store the current colors as default (called during initialization)
-	 */
-	private storeDefaultColors(): void {
-		this.defaultColors = [];
-		for (const item of this.itemList) {
-			this.defaultColors.push(item.color.uniformScale(1)); // Clone
-		}
 	}
 
 	private instantiateItems(): void {
@@ -320,28 +584,31 @@ export class PaletteController extends BaseScriptComponent {
 					renderMesh.mainMaterial = renderMesh.mainMaterial.clone();
 					coloredSquareMaterial = renderMesh.mainMaterial;
 				}
-			} else {
-				print(
-					`PaletteController: No colored square found at path '${this.coloredSquarePath}' for prefab ${i}`
-				);
 			}
 
 			const slotTextObj = this.findChildByPath(sceneObject, this.slotTextPath);
-			slotTextObj.getComponent("Text").text = `${i + 1}`;
+			if (slotTextObj) {
+				const textComp = slotTextObj.getComponent("Text") as Text;
+				if (textComp) {
+					textComp.text = `${i + 1}`;
+				}
+			}
 
 			button.setIsToggleable(true);
 
-			const defaultColor = new vec4(1, 1, 1, 1);
+			// Initialize with clear color - preset will be applied after
+			const initialColor = new vec4(0, 0, 0, 0);
 
-			const itemData = {
+			const itemData: PaletteItemData = {
 				sceneObject,
 				button,
 				index: this.itemList.length,
 				slotTextObj,
 				coloredSquare,
 				coloredSquareMaterial,
-				color: defaultColor,
+				color: initialColor,
 			};
+
 			this.items.set(id, itemData);
 			this.itemList.push({
 				id,
@@ -350,11 +617,11 @@ export class PaletteController extends BaseScriptComponent {
 				slotTextObj,
 				coloredSquare,
 				coloredSquareMaterial,
-				color: defaultColor,
+				color: initialColor,
 			});
 		}
 
-		print(`PaletteController: Instantiated ${this.itemList.length} items`); // FIXED: added (
+		print(`PaletteController: Instantiated ${this.itemList.length} items`);
 	}
 
 	private findChildByPath(
@@ -366,10 +633,10 @@ export class PaletteController extends BaseScriptComponent {
 		const pathParts = path.split("/");
 		let current = sceneObject;
 
-		for (let part of pathParts) {
+		for (const part of pathParts) {
 			let found = false;
 			for (let i = 0; i < current.getChildrenCount(); i++) {
-				let child = current.getChild(i);
+				const child = current.getChild(i);
 				if (child.name === part) {
 					current = child;
 					found = true;
@@ -385,15 +652,14 @@ export class PaletteController extends BaseScriptComponent {
 	}
 
 	private findButtonComponent(sceneObject: SceneObject): BaseButton | null {
-		// Try to get BaseButton on the object itself
-		let button = sceneObject.getComponent(
+		const button = sceneObject.getComponent(
 			"Component.ScriptComponent"
 		) as BaseButton;
+
 		if (button && typeof (button as any).setIsToggleable === "function") {
-			return button as BaseButton;
+			return button;
 		}
 
-		// Search children recursively
 		for (let i = 0; i < sceneObject.getChildrenCount(); i++) {
 			const child = sceneObject.getChild(i);
 			const childButton = this.findButtonComponent(child);
@@ -406,13 +672,11 @@ export class PaletteController extends BaseScriptComponent {
 	private layoutItems(): void {
 		if (this.itemList.length === 0) return;
 
-		// Calculate grid dimensions
 		const itemCount = this.itemList.length;
 		let cols = this.columns;
 		let rows = this.rows;
 
 		if (cols <= 0 && rows <= 0) {
-			// Auto-calculate: prefer square-ish grid
 			cols = Math.ceil(Math.sqrt(itemCount));
 			rows = Math.ceil(itemCount / cols);
 		} else if (cols <= 0) {
@@ -421,7 +685,6 @@ export class PaletteController extends BaseScriptComponent {
 			rows = Math.ceil(itemCount / cols);
 		}
 
-		// Get bounding boxes of all items to find max cell size
 		const boundingBoxes = this.itemList.map((item) =>
 			this.calculateBoundingBox(item.sceneObject)
 		);
@@ -433,24 +696,21 @@ export class PaletteController extends BaseScriptComponent {
 			maxHeight = Math.max(maxHeight, bbox.size.y);
 		}
 
-		// If no valid bounding boxes, use default size
 		if (maxWidth === 0) maxWidth = 10;
 		if (maxHeight === 0) maxHeight = 10;
 
 		const cellWidth = maxWidth + this.padding.x;
 		const cellHeight = maxHeight + this.padding.y;
 
-		// Calculate total grid size
 		const totalWidth = cols * cellWidth;
 		const totalHeight = rows * cellHeight;
 
-		// Calculate starting position (centered)
 		const startX = -totalWidth / 2 + cellWidth / 2;
 		const startY = totalHeight / 2 - cellHeight / 2;
 
-		// Position each item
 		for (let i = 0; i < this.itemList.length; i++) {
-			let col: number, row: number;
+			let col: number;
+			let row: number;
 
 			if (this.layoutByRow) {
 				col = i % cols;
@@ -462,48 +722,36 @@ export class PaletteController extends BaseScriptComponent {
 
 			const x = startX + col * cellWidth;
 			const y = startY - row * cellHeight;
-			const z = 0;
 
 			const item = this.itemList[i];
 			const transform = item.sceneObject.getTransform();
 			transform.setLocalPosition(
-				new vec3(x + this.offset.x, y + this.offset.y, z)
+				new vec3(x + this.offset.x, y + this.offset.y, 0)
 			);
 		}
 
 		print(
-			`PaletteController: Laid out ${itemCount} items in ${rows}x${cols} grid (cell: ${cellWidth.toFixed(
-				1
-			)}x${cellHeight.toFixed(1)})`
+			`PaletteController: Laid out ${itemCount} items in ${rows}x${cols} grid`
 		);
 	}
 
-	private calculateBoundingBox(sceneObject: SceneObject): {
-		min: vec3;
-		max: vec3;
-		size: vec3;
-		center: vec3;
-	} {
-		const defaultBox = {
+	private calculateBoundingBox(sceneObject: SceneObject): BoundingBox {
+		const defaultBox: BoundingBox = {
 			min: vec3.zero(),
 			max: vec3.zero(),
 			size: vec3.zero(),
 			center: vec3.zero(),
 		};
 
-		// Try to get RenderMeshVisual for bounding box
 		const meshVisuals = this.findMeshVisuals(sceneObject);
+		if (meshVisuals.length === 0) return defaultBox;
 
-		if (meshVisuals.length === 0) {
-			return defaultBox;
-		}
-
-		let minX = Infinity,
-			minY = Infinity,
-			minZ = Infinity;
-		let maxX = -Infinity,
-			maxY = -Infinity,
-			maxZ = -Infinity;
+		let minX = Infinity;
+		let minY = Infinity;
+		let minZ = Infinity;
+		let maxX = -Infinity;
+		let maxY = -Infinity;
+		let maxZ = -Infinity;
 
 		for (const meshVisual of meshVisuals) {
 			const aabbMin = meshVisual.localAabbMin();
@@ -533,9 +781,7 @@ export class PaletteController extends BaseScriptComponent {
 		const meshVisual = sceneObject.getComponent(
 			"Component.RenderMeshVisual"
 		) as RenderMeshVisual;
-		if (meshVisual) {
-			results.push(meshVisual);
-		}
+		if (meshVisual) results.push(meshVisual);
 
 		for (let i = 0; i < sceneObject.getChildrenCount(); i++) {
 			const childResults = this.findMeshVisuals(sceneObject.getChild(i));
@@ -549,25 +795,20 @@ export class PaletteController extends BaseScriptComponent {
 		for (const item of this.itemList) {
 			const itemId = item.id;
 
-			// Listen to value changes
 			item.button.onValueChange.add((value: number) => {
-				// Prevent re-entrant calls during programmatic updates
 				if (this.isUpdatingSelection) return;
 
 				if (value === 1) {
-					// Button was toggled ON by user interaction
 					this.setActiveItem(itemId, true);
 				} else if (this.activeItemId === itemId) {
-					// Active button was toggled OFF by user - re-toggle it ON (radio behavior)
-					// Radio buttons require one item to always be selected
 					this.isUpdatingSelection = true;
 					item.button.toggle(true);
-					item.slotTextObj.getComponent("Text").textFill.color = new vec4(
-						1,
-						1,
-						1,
-						1
-					);
+					if (item.slotTextObj) {
+						const textComp = item.slotTextObj.getComponent("Text") as Text;
+						if (textComp) {
+							textComp.textFill.color = new vec4(1, 1, 1, 1);
+						}
+					}
 					this.isUpdatingSelection = false;
 				}
 			});
@@ -580,7 +821,7 @@ export class PaletteController extends BaseScriptComponent {
 
 		const newItem = this.items.get(id);
 		if (!newItem) {
-			print(`PaletteController: Item '${id}' not found`); // FIXED: added (
+			print(`PaletteController: Item '${id}' not found`);
 			return;
 		}
 
@@ -591,12 +832,10 @@ export class PaletteController extends BaseScriptComponent {
 			if (prevItem) {
 				prevItem.button.toggle(false);
 				if (prevItem.slotTextObj) {
-					prevItem.slotTextObj.getComponent("Text").textFill.color = new vec4(
-						0.9,
-						0.9,
-						0.9,
-						1
-					);
+					const textComp = prevItem.slotTextObj.getComponent("Text") as Text;
+					if (textComp) {
+						textComp.textFill.color = new vec4(0.9, 0.9, 0.9, 1);
+					}
 				}
 			}
 		}
@@ -604,12 +843,10 @@ export class PaletteController extends BaseScriptComponent {
 		this.activeItemId = id;
 		newItem.button.toggle(true);
 		if (newItem.slotTextObj) {
-			newItem.slotTextObj.getComponent("Text").textFill.color = new vec4(
-				1,
-				0.85,
-				0,
-				1
-			); // FIXED: normalized color
+			const textComp = newItem.slotTextObj.getComponent("Text") as Text;
+			if (textComp) {
+				textComp.textFill.color = new vec4(1, 0.85, 0, 1);
+			}
 		}
 		this.isUpdatingSelection = false;
 
@@ -618,16 +855,10 @@ export class PaletteController extends BaseScriptComponent {
 				new PaletteSelectionEvent(id, newItem.index, newItem.sceneObject)
 			);
 		}
-
-		print(`PaletteController: Selected item '${id}'`);
 	}
 
 	public setActiveItemByIndex(index: number, notify: boolean = true): void {
-		if (index < 0 || index >= this.itemList.length) {
-			print(`PaletteController: Index ${index} out of range`);
-			return;
-		}
-
+		if (index < 0 || index >= this.itemList.length) return;
 		this.setActiveItem(this.itemList[index].id, notify);
 	}
 
@@ -669,30 +900,17 @@ export class PaletteController extends BaseScriptComponent {
 		this.layoutItems();
 	}
 
-	/**
-	 * Set the color of the active item's colored square
-	 */
 	public setActiveItemColor(color: vec4): void {
-		if (this.activeItemId === null) {
-			print("PaletteController: No active item to set color");
-			return;
-		}
+		if (this.activeItemId === null) return;
 		this.setItemColor(this.activeItemId, color);
 	}
 
-	/**
-	 * Set the color of a specific item's colored square by ID
-	 */
 	public setItemColor(id: string, color: vec4): void {
 		const item = this.items.get(id);
-		if (!item) {
-			print(`PaletteController: Item '${id}' not found`); // FIXED: added (
-			return;
-		}
+		if (!item) return;
 
 		item.color = color;
 
-		// Sync itemList as well
 		const listItem = this.itemList.find((i) => i.id === id);
 		if (listItem) {
 			listItem.color = color;
@@ -702,233 +920,97 @@ export class PaletteController extends BaseScriptComponent {
 			item.coloredSquareMaterial.mainPass.mainColor = color;
 		}
 
-		// ADDED: Sync to encoder
-		this.syncPigmentColors();
+		// Mark as custom preset
+		this.currentPreset = null;
+		this.currentPresetIndex = -1;
 
-		print(`PaletteController: Set color ${color.toString()} for item '${id}'`); // FIXED: added (
+		this.syncPigmentColors();
 	}
 
-	/**
-	 * Set the color of a specific item's colored square by index
-	 */
 	public setItemColorByIndex(index: number, color: vec4): void {
-		if (index < 0 || index >= this.itemList.length) {
-			print(`PaletteController: Index ${index} out of range`); // FIXED: added (
-			return;
-		}
+		if (index < 0 || index >= this.itemList.length) return;
 		this.setItemColor(this.itemList[index].id, color);
 	}
-	/**
-	 * Get the color of a specific item by ID
-	 */
+
 	public getItemColor(id: string): vec4 | null {
 		const item = this.items.get(id);
 		return item ? item.color : null;
 	}
 
-	/**
-	 * Get the color of the active item
-	 */
 	public getActiveItemColor(): vec4 | null {
 		if (this.activeItemId === null) return null;
 		return this.getItemColor(this.activeItemId);
 	}
-	public printCallbackInput(isToggled: boolean): void {
-		print("TOGGLED"+isToggled)
-	}
-	/**
-	 * Set all slot colors to a classic oil pigment preset
-	 * @param presetName Name of the preset: 'classic', 'zorn', 'primary', 'impressionist', 'earth'
-	 */
-	public setOilPigmentPreset(presetName: PigmentPresetName = "classic"): void {
-		const preset = OIL_PIGMENT_PRESETS[presetName];
 
-		if (!preset) {
-			print(
-				`PaletteController: Unknown preset '${presetName}'. Available: ${Object.keys(
-					OIL_PIGMENT_PRESETS
-				).join(", ")}`
-			);
-			return;
-		}
-
-		const count = Math.min(this.itemList.length, preset.length);
-
-		for (let i = 0; i < count; i++) {
-			const pigment = preset[i];
-			const item = this.itemList[i];
-
-			// Update color
-			item.color = pigment.color;
-
-			// Update material if available
-			if (item.coloredSquareMaterial) {
-				item.coloredSquareMaterial.mainPass.mainColor = pigment.color;
-			}
-
-			// Update slot text to pigment name (optional)
-			if (item.slotTextObj) {
-				const textComponent = item.slotTextObj.getComponent("Text") as Text;
-				if (textComponent) {
-					// Keep number for now, or use: textComponent.text = pigment.name;
-					textComponent.text = `${i + 1}`;
-				}
-			}
-		}
-
-		this.currentPreset = presetName;
-
-		// Sync to encoder
-		this.syncPigmentColors();
-
-		print(
-			`PaletteController: Applied '${presetName}' preset (${count} pigments)`
-		);
-		this.logCurrentPalette();
-	}
-
-	/**
-	 * Reset all slot colors to their original default values
-	 */
-	public resetToDefaultColors(): void {
-		const count = Math.min(this.itemList.length, this.defaultColors.length);
-
-		for (let i = 0; i < count; i++) {
-			const item = this.itemList[i];
-			const defaultColor = this.defaultColors[i] || new vec4(1, 1, 1, 1);
-
-			item.color = defaultColor;
-
-			if (item.coloredSquareMaterial) {
-				item.coloredSquareMaterial.mainPass.mainColor = defaultColor;
-			}
-
-			if (item.slotTextObj) {
-				const textComponent = item.slotTextObj.getComponent("Text") as Text;
-				if (textComponent) {
-					textComponent.text = `${i + 1}`;
-				}
-			}
-		}
-
-		this.currentPreset = "default";
-
-		// Sync to encoder
-		this.syncPigmentColors();
-
-		print(`PaletteController: Reset to default colors`);
-	}
-
-	/**
-	 * Clear all slot colors to white
-	 */
-	public clearSlotColors(): void {
-		const whiteColor = new vec4(1, 1, 1, 1);
-
-		for (let i = 0; i < this.itemList.length; i++) {
-			const item = this.itemList[i];
-
-			item.color = whiteColor;
-
-			if (item.coloredSquareMaterial) {
-				item.coloredSquareMaterial.mainPass.mainColor = whiteColor;
-			}
-		}
-
-		this.currentPreset = "custom";
-
-		// Sync to encoder
-		this.syncPigmentColors();
-
-		print(`PaletteController: Cleared all slot colors to white`);
-	}
-
-	/**
-	 * Get the current preset name
-	 */
-	public getCurrentPreset(): string {
+	public getCurrentPreset(): PigmentPresetName | null {
 		return this.currentPreset;
 	}
 
-	/**
-	 * Get available preset names
-	 */
-	public getAvailablePresets(): string[] {
-		return Object.keys(OIL_PIGMENT_PRESETS);
+	public getCurrentPresetIndex(): number {
+		return this.currentPresetIndex;
 	}
 
-	/**
-	 * Get pigment info for a preset
-	 */
+	public getAvailablePresets(): PigmentPresetName[] {
+		return [...PRESET_ORDER];
+	}
+
 	public getPresetInfo(
 		presetName: PigmentPresetName
 	): { name: string; color: vec4 }[] | null {
 		const preset = OIL_PIGMENT_PRESETS[presetName];
 		if (!preset) return null;
 
-		// Return a copy to prevent modification
 		return preset.map((p) => ({
 			name: p.name,
 			color: new vec4(p.color.x, p.color.y, p.color.z, p.color.w),
 		}));
 	}
 
-	/**
-	 * Log current palette colors to console
-	 */
+	public getAllColors(): vec4[] {
+		return this.itemList.map(
+			(item) =>
+				new vec4(item.color.x, item.color.y, item.color.z, item.color.w)
+		);
+	}
+
+	public setColorsFromArray(colors: vec4[]): void {
+		const count = Math.min(this.itemList.length, colors.length);
+		for (let i = 0; i < count; i++) {
+			const item = this.itemList[i];
+			item.color = colors[i];
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = colors[i];
+			}
+		}
+
+		// Mark as custom
+		this.currentPreset = null;
+		this.currentPresetIndex = -1;
+
+		this.syncPigmentColors();
+	}
+
 	public logCurrentPalette(): void {
-		print("=== Current Palette ===");
+		const presetStr =
+			this.currentPreset !== null
+				? `${this.currentPreset} (index ${this.currentPresetIndex})`
+				: "custom/cleared";
+
+		print(`=== Current Palette: ${presetStr} ===`);
 		for (let i = 0; i < this.itemList.length; i++) {
 			const item = this.itemList[i];
 			const c = item.color;
+			const status = c.w > 0 ? "active" : "empty";
 			print(
-				`  [${i}] RGB(${c.x.toFixed(2)}, ${c.y.toFixed(2)}, ${c.z.toFixed(2)})`
+				`  [${i}] RGBA(${c.x.toFixed(2)}, ${c.y.toFixed(2)}, ${c.z.toFixed(2)}, ${c.w.toFixed(2)}) - ${status}`
 			);
 		}
 	}
 
-	/**
-	 * Set colors from an array of vec4
-	 */
-	public setColorsFromArray(colors: vec4[]): void {
-		const count = Math.min(this.itemList.length, colors.length);
-
-		for (let i = 0; i < count; i++) {
-			const item = this.itemList[i];
-			const color = colors[i];
-
-			item.color = color;
-
-			if (item.coloredSquareMaterial) {
-				item.coloredSquareMaterial.mainPass.mainColor = color;
-			}
-		}
-
-		this.currentPreset = "custom";
-		this.syncPigmentColors();
-
-		print(`PaletteController: Set ${count} custom colors`);
-	}
-
-	/**
-	 * Get all current colors as an array
-	 */
-	public getAllColors(): vec4[] {
-		return this.itemList.map(
-			(item) => new vec4(item.color.x, item.color.y, item.color.z, item.color.w)
-		);
-	}
-
-	/**
-	 * Get the color gamut SceneObject
-	 */
 	public getColorGamutObject(): SceneObject | null {
 		return this.colorGamutObject;
 	}
 
-	/**
-	 * Get the PigmentGamutEncoder script component
-	 */
 	public getPigmentEncoderScript(): ScriptComponent | null {
 		return this.pigmentEncoderScript;
 	}

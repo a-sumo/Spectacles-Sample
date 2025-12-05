@@ -29,6 +29,7 @@
     colorGamutObject: false
     coloredSquarePath: false
     columns: false
+    defaultPresetIndex: false
     defaultSelectedIndex: false
     editorTestButton: false
     itemIds: false
@@ -37,6 +38,7 @@
     offset: false
     padding: false
     pigmentEncoderPath: false
+    presetToggleGroupObject: false
     rows: false
     slotTextPath: false
   ScriptTypesHidden:
@@ -62,6 +64,8 @@
       defaultSelectedIndex: !<float> 0.000000
       layoutByRow: true
       editorTestButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      presetToggleGroupObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      defaultPresetIndex: !<float> 0.000000
   ScriptTypes:
     -
       {}
@@ -69,8 +73,8 @@
     - '// @input Asset.ObjectPrefab[] itemPrefabs = {} {"hint":"List of prefabs to instantiate as palette items"}'
     - '// @input SceneObject colorGamutObject {"hint":"Color Gamut SceneObject (already in scene)"}'
     - '// @input string pigmentEncoderPath = "PigmentGamutEncoder" {"hint":"Path to PigmentGamutEncoder child within colorGamutObject"}'
-    - '// @input string itemIds {"hint":"Optional IDs for each prefab (comma-separated). If empty, indices will be used."}'
-    - "// @input string coloredSquarePath = \"Colored Square\" {\"hint\":\"Path to the colored square within item hierarchy (e.g., 'Colored Square')\"}"
+    - '// @input string itemIds {"hint":"Optional IDs for each prefab (comma-separated)"}'
+    - '// @input string coloredSquarePath = "Colored Square" {"hint":"Path to the colored square within item hierarchy"}'
     - "// @input string slotTextPath = \"Text\" {\"hint\":\"Path to the slot's text within item hierarchy\"}"
     - '// @input float columns {"hint":"Number of columns in the grid (0 = auto-calculate)"}'
     - '// @input float rows {"hint":"Number of rows in the grid (0 = auto-calculate)"}'
@@ -79,3 +83,5 @@
     - '// @input float defaultSelectedIndex {"hint":"Index of the default selected item (-1 for none)"}'
     - '// @input bool layoutByRow = true {"hint":"Layout direction: true = row-first, false = column-first"}'
     - '// @input SceneObject editorTestButton {"hint":"In editor scanner creation button"}'
+    - '// @input SceneObject presetToggleGroupObject {"hint":"Optional: SceneObject containing the preset toggle group script"}'
+    - '// @input float defaultPresetIndex {"hint":"Default preset if toggle group not found"}'

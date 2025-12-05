@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 765
+    size: 772
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -153,6 +153,8 @@ CollapsedEntities:
       - Scripts/PaletteController.ts
       - Scripts/PictureBehavior.ts
       - Scripts/PictureController.ts
+      - Scripts/PresetTester.ts
+      - Scripts/PresetToggleController.ts
       - Scripts/SwitchToggleGroupExtended.ts
       - Scripts/Templates
       - SpectaclesInteractionKit.lspkg
@@ -752,12 +754,17 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
-      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes
+      - SpectaclesUIKit.lspkg/Prefabs
       - SpectaclesUIKit.lspkg/Scripts
-      - SpectaclesUIKit.lspkg/Scripts/Components
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame
+      - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
+      - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow
+      - SpectaclesUIKit.lspkg/Scripts/Components/Slider
+      - SpectaclesUIKit.lspkg/Scripts/Components/Switch
       - SpectaclesUIKit.lspkg/Scripts/Example
       - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D
       - SpectaclesUIKit.lspkg/Scripts/Example/Sphere
