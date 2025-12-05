@@ -77,12 +77,12 @@
     - // @input float texWidth = 8
     - // @input float texHeight = 8
     - "// @input vec3 pos = {0,0,0}"
-    - "// @input vec3 scale = {100,100,100}"
+    - "// @input vec3 scale = {1,1,1}"
     - "// @input vec3 rot = {0,0,0}"
-    - "// @input vec3 circleCenter = {0,0,0}"
-    - // @input float circleRadius = 50
+    - "// @input vec3 circleCenter = {0,3,0}"
+    - // @input float circleRadius = 5
     - // @input float circleRotationOffset
-    - '// @input float circlePlane {"hint":"0=XZ, 1=XY, 2=YZ"}'
+    - '// @input float circlePlane = 1 {"hint":"0=XZ, 1=XY, 2=YZ"}'
     - // @input float tweenDuration = 500
     - // @input float staggerDelay = 30
     - // @input bool continuousUpdate = true

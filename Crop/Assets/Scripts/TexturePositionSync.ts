@@ -40,7 +40,7 @@ export class TexturePositionSync extends BaseScriptComponent {
     rot: vec3 = new vec3(0, 0, 0);
     
     @input
-    circleCenter: vec3 = new vec3(0, 0, 0);
+    circleCenter: vec3 = new vec3(0, 3, 0);
     
     @input
     circleRadius: number = 5;
@@ -50,7 +50,7 @@ export class TexturePositionSync extends BaseScriptComponent {
     
     @input
     @hint("0=XZ, 1=XY, 2=YZ")
-    circlePlane: number = 0;
+    circlePlane: number = 1;
     
     @input
     tweenDuration: number = 500;

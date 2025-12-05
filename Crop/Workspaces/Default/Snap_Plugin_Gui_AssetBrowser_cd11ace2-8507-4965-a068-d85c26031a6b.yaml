@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 779
+    size: 778
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -11,7 +11,6 @@ CollapsedEntities:
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
       - Color-Space.lspkg/Images
-      - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Gamut Projection.mat
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
@@ -59,6 +58,7 @@ CollapsedEntities:
       - Materials/unlitTexture.ss_graph
       - Materials/unlitTextureColor.ss_graph
       - Materials/webIcon.mat
+      - Prefabs
       - Prefabs/Basic Sphere 2.prefab
       - Prefabs/Basic Sphere.prefab
       - Prefabs/Button.prefab
@@ -758,18 +758,17 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
-      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Prefabs
       - SpectaclesUIKit.lspkg/Scripts
-      - SpectaclesUIKit.lspkg/Scripts/Components/Button
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame
       - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
       - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow
       - SpectaclesUIKit.lspkg/Scripts/Components/Slider
       - SpectaclesUIKit.lspkg/Scripts/Components/Switch
+      - SpectaclesUIKit.lspkg/Scripts/Components/TextInputField
       - SpectaclesUIKit.lspkg/Scripts/Example
       - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D
       - SpectaclesUIKit.lspkg/Scripts/Example/Sphere
