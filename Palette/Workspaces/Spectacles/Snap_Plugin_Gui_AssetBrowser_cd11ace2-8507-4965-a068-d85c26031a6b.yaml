@@ -154,7 +154,7 @@ CollapsedEntities:
       - Image-Processing.lspkg/Scripts/Core/ServiceLocator.ts
       - Image-Processing.lspkg/Scripts/CropAreaSelector.ts
       - Image-Processing.lspkg/Scripts/CropRegion.ts
-      - Image-Processing.lspkg/Scripts/CursorPlaneController.ts
+      - Image-Processing.lspkg/Scripts/ColorSamplerController.ts
       - Image-Processing.lspkg/Scripts/GridTestOrchestrator.ts
       - Image-Processing.lspkg/Scripts/Image Processing
       - Image-Processing.lspkg/Scripts/Image Processing/Image Pipeline.ts

@@ -821,17 +821,28 @@ export class PaletteController extends BaseScriptComponent {
 		const maxPigments = 6;
 		const encoder = this.pigmentEncoderScript as any;
 
-		for (let i = 0; i < maxPigments; i++) {
-			const pigmentKey = `pig${i}Color`;
+		// Build array of vec3 colors for the encoder
+		const pigmentColors: vec3[] = [];
 
+		for (let i = 0; i < maxPigments; i++) {
 			if (i < this.itemList.length) {
 				const itemColor = this.itemList[i].color;
 				// Use RGB from color, alpha determines if it's "active"
-				const pigmentColor = new vec3(itemColor.x, itemColor.y, itemColor.z);
-				encoder[pigmentKey] = pigmentColor;
+				pigmentColors.push(new vec3(itemColor.x, itemColor.y, itemColor.z));
 			} else {
 				// Default to black for unused slots
-				encoder[pigmentKey] = new vec3(0, 0, 0);
+				pigmentColors.push(new vec3(0, 0, 0));
+			}
+		}
+
+		// Use the encoder's setPigmentColors API to properly update currentPigments
+		if (typeof encoder.setPigmentColors === 'function') {
+			encoder.setPigmentColors(pigmentColors);
+		} else {
+			// Fallback: set individual properties (won't update currentPigments array)
+			for (let i = 0; i < maxPigments; i++) {
+				const pigmentKey = `pig${i}Color`;
+				encoder[pigmentKey] = pigmentColors[i];
 			}
 		}
 
@@ -1290,10 +1301,16 @@ export class PaletteController extends BaseScriptComponent {
 
 		const count = Math.min(this.itemList.length, colors.length);
 		for (let i = 0; i < count; i++) {
-			const item = this.itemList[i];
-			item.color = colors[i];
-			if (item.coloredSquareMaterial) {
-				item.coloredSquareMaterial.mainPass.mainColor = colors[i];
+			const listItem = this.itemList[i];
+			listItem.color = colors[i];
+			if (listItem.coloredSquareMaterial) {
+				listItem.coloredSquareMaterial.mainPass.mainColor = colors[i];
+			}
+
+			// Also update the items Map
+			const itemData = this.items.get(listItem.id);
+			if (itemData) {
+				itemData.color = colors[i];
 			}
 		}
 

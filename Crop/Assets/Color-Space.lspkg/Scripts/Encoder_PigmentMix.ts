@@ -115,14 +115,15 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
         // Assign to VFX
         this.assignToVFX();
 
-        // Listen for palette changes
-        this.setupPaletteListener();
-
         // Update pigments every frame (reads from currentPigments)
         this.createEvent("UpdateEvent").bind(() => this.updatePigmentTexture());
 
-        this.initialized = true;
-        print("Encoder_PigmentMix: Ready");
+        // Defer palette listener setup to OnStartEvent (after PaletteController initializes)
+        this.createEvent("OnStartEvent").bind(() => {
+            this.setupPaletteListener();
+            this.initialized = true;
+            print("Encoder_PigmentMix: Ready (palette listener connected)");
+        });
     }
 
     private setupPaletteListener(): void {
@@ -142,6 +143,28 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
                 }
             });
             print("Encoder_PigmentMix: Listening for preset changes");
+        }
+
+        // Listen for manual color changes (when user samples colors, edits individual slots)
+        if (controller.onColorsManuallyChanged) {
+            controller.onColorsManuallyChanged.add((colors: any) => {
+                if (colors && colors.length > 0) {
+                    this.onPaletteColorsChanged(colors);
+                    print(`Encoder_PigmentMix: Manual color change, updated ${colors.length} colors`);
+                }
+            });
+            print("Encoder_PigmentMix: Listening for manual color changes");
+        }
+
+        // Listen for palette restored (undo, deselect preset)
+        if (controller.onPaletteRestored) {
+            controller.onPaletteRestored.add((colors: any) => {
+                if (colors && colors.length > 0) {
+                    this.onPaletteColorsChanged(colors);
+                    print(`Encoder_PigmentMix: Palette restored with ${colors.length} colors`);
+                }
+            });
+            print("Encoder_PigmentMix: Listening for palette restore");
         }
 
         // Get initial colors if available

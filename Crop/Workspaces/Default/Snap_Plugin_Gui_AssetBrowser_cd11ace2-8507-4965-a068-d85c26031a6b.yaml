@@ -1,9 +1,9 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 1037
+    size: 1043
     values:
-      - ""
+      - Base.png
       - Camera Object.prefab
       - Color-Space.lspkg
       - Color-Space.lspkg/Images
@@ -20,7 +20,6 @@ CollapsedEntities:
       - Color-Space.lspkg/Images/test_encoding/pos_x.png
       - Color-Space.lspkg/Images/test_encoding/pos_y.png
       - Color-Space.lspkg/Images/test_encoding/pos_z.png
-      - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Color Mix Test.mat
       - Color-Space.lspkg/Materials/Color Mix Test.ss_graph
       - Color-Space.lspkg/Materials/Gamut Projection.mat
@@ -71,6 +70,7 @@ CollapsedEntities:
       - Color-Space.lspkg/VFX/TestDecoder.vfxgraph
       - Color-Space.lspkg/package.native
       - DEPENDENCY_ANALYSIS.md
+      - Image-Processing
       - Image-Processing/3DModels
       - Image-Processing/3DModels/ButtonSphereMesh.mesh
       - Image-Processing/3DModels/SWIS_Frame.mesh
@@ -134,29 +134,30 @@ CollapsedEntities:
       - Image-Processing/Materials/unlitTexture.ss_graph
       - Image-Processing/Materials/unlitTextureColor.ss_graph
       - Image-Processing/Materials/webIcon.mat
-      - Image-Processing/Prefabs
       - Image-Processing/Prefabs/Basic Sphere 2.prefab
       - Image-Processing/Prefabs/Basic Sphere.prefab
       - Image-Processing/Prefabs/Button.prefab
       - Image-Processing/Prefabs/Color Slot.prefab
       - Image-Processing/Prefabs/Colored Square.prefab
       - Image-Processing/Prefabs/Palette.prefab
-      - Image-Processing/Prefabs/Scanner.prefab
       - Image-Processing/Prefabs/SceneHierarchy.prefab
       - Image-Processing/Prefabs/Test SceneObject VFXParticle Sync.prefab
+      - Image-Processing/Scripts
       - Image-Processing/Scripts/APIKeyHint.ts
       - Image-Processing/Scripts/CameraService.ts
       - Image-Processing/Scripts/CaptionBehavior.ts
       - Image-Processing/Scripts/ChatGPT.ts
+      - Image-Processing/Scripts/ColorSamplerController.ts
       - Image-Processing/Scripts/Core
       - Image-Processing/Scripts/Core/ARCHITECTURE_GUIDE.md
       - Image-Processing/Scripts/Core/ComponentOrchestrator.ts
       - Image-Processing/Scripts/Core/ServiceLocator.ts
       - Image-Processing/Scripts/CropAreaSelector.ts
       - Image-Processing/Scripts/CropRegion.ts
-      - Image-Processing/Scripts/CursorPlaneController.ts
       - Image-Processing/Scripts/GridTestOrchestrator.ts
+      - Image-Processing/Scripts/Image Processing
       - Image-Processing/Scripts/Image Processing/Image Pipeline.ts
+      - Image-Processing/Scripts/Image Processing/Image Regenerator.ts
       - Image-Processing/Scripts/Image Processing/PaletteExtractor.ts
       - Image-Processing/Scripts/Image Processing/PaletteProjector.ts
       - Image-Processing/Scripts/Image Processing/PipelineTester.ts
@@ -174,11 +175,15 @@ CollapsedEntities:
       - Image-Processing/Scripts/Testing/TexturePositionOrchestrator.ts
       - Image-Processing/Scripts/TexturePositionSync.ts
       - Image-Processing/Scripts/UI
+      - Image-Processing/Scripts/UI/FrameMoveToggle.ts
       - Image-Processing/Scripts/UI/SwitchToggleGroupExtended.ts
+      - Image-Processing/Scripts/UI/TransformFollower.ts
       - Image-Processing/Scripts/Utils
       - Image-Processing/Scripts/Utils/color.ts
       - Image-Processing/VFX
       - Image-Processing/VFX/SimpleGridPosition.vfxgraph
+      - ImageMaterial 2.mat
+      - ImageMaterial.mat
       - LSTween.lspkg
       - LSTween.lspkg/Examples
       - LSTween.lspkg/Examples/Assets
@@ -204,6 +209,7 @@ CollapsedEntities:
       - LSTween.lspkg/TweenJS/Version.ts
       - LSTween.lspkg/TweenJS/mainGroup.ts
       - LSTween.lspkg/package.native
+      - Normal.png
       - Prefabs
       - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
@@ -282,6 +288,8 @@ CollapsedEntities:
       - Rendering/Echopark.hdr/Specular
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
+      - RoundedRectangle.mat
+      - RoundedRectangle.ss_graph
       - Scene.scene
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
@@ -920,7 +928,6 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Materials/RoundedRectangleStrokeShader.ss_graph
       - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMask.mat
       - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMaskShader.ss_graph
-      - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Meshes/CapsuleSphere.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultButton.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultCapsule.mesh
@@ -929,7 +936,6 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchKnob.mesh
       - SpectaclesUIKit.lspkg/Meshes/StretchableCircle.mesh
       - SpectaclesUIKit.lspkg/Meshes/Unit Plane.mesh
-      - SpectaclesUIKit.lspkg/Prefabs
       - SpectaclesUIKit.lspkg/Prefabs/DropShadow.prefab
       - SpectaclesUIKit.lspkg/Prefabs/ExampleInterface.prefab
       - SpectaclesUIKit.lspkg/Prefabs/FrameButton.prefab
@@ -937,10 +943,7 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Prefabs/LabelledButton.prefab
       - SpectaclesUIKit.lspkg/Prefabs/LabelledToggle.prefab
       - SpectaclesUIKit.lspkg/README.md
-      - SpectaclesUIKit.lspkg/Scripts
       - SpectaclesUIKit.lspkg/Scripts/BackPlate.ts
-      - SpectaclesUIKit.lspkg/Scripts/Components
-      - SpectaclesUIKit.lspkg/Scripts/Components/Button
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/BaseButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/CapsuleButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/RectangleButton.ts
@@ -1040,4 +1043,7 @@ CollapsedEntities:
       - Text Logger V2.lspkg/Scripts/TextLoggerModule.js
       - Text Logger V2.lspkg/TextLogger__PLACE_IN_SCENE.prefab
       - Text Logger V2.lspkg/package.native
+      - Uber PBR.mat
+      - simple_pbr.ss_graph
+      - uber_pbr.ss_graph
   options: 4

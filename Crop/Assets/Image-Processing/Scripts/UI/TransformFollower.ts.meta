@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/07bba186-0af4-4ef4-a589-bb8c3bd32b75>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> eddffbb9-cacb-4204-87c5-d418c18e5b41
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> eddffbb9-cacb-4204-87c5-d418c18e5b41
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 3abc0809-3da7-44a9-a375-b44375373fba
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/3abc0809-3da7-44a9-a375-b44375373fba>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 928f1b08-ff9c-45e0-a760-e3579218da7a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    controller: false
+    controllerOffset: false
+    followRotation: false
+    followScale: false
+    follower: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - controller: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      follower: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      controllerOffset: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      followRotation: false
+      followScale: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject controller {"hint":"The controller object (A) - when this moves, the follower moves too"}'
+    - '// @input SceneObject follower {"hint":"The follower object (B) - maintains offset from controller"}'
+    - "// @input vec3 controllerOffset = {0,0,0} {\"hint\":\"Initial offset of controller from follower (in follower's local space)\"}"
+    - '// @input bool followRotation {"hint":"Also follow rotation changes"}'
+    - '// @input bool followScale {"hint":"Also follow scale changes"}'

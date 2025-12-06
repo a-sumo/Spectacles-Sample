@@ -98,15 +98,25 @@ export class PipelineTester extends BaseScriptComponent {
 		// Cache preview materials
 		this.setupPreviewMeshes();
 
-		// Listen for preset changes
+		// Listen for palette changes (preset or manual)
 		if (this.paletteController && this.reprojectOnPresetChange) {
 			const controller = this.paletteController as any;
 			if (controller.onPresetChanged) {
 				controller.onPresetChanged.add((event: any) => {
-					this.onPresetChanged(event);
+					this.onPaletteChanged("preset", event.presetName);
 				});
-				print("PipelineTester: Listening for preset changes");
 			}
+			if (controller.onColorsManuallyChanged) {
+				controller.onColorsManuallyChanged.add((colors: any) => {
+					this.onPaletteChanged("manual", null);
+				});
+			}
+			if (controller.onPaletteRestored) {
+				controller.onPaletteRestored.add((colors: any) => {
+					this.onPaletteChanged("restored", null);
+				});
+			}
+			print("PipelineTester: Listening for palette changes (preset, manual, restored)");
 		}
 
 		this.isInitialized = true;
@@ -120,13 +130,14 @@ export class PipelineTester extends BaseScriptComponent {
 		}
 	}
 
-	private onPresetChanged(event: any): void {
+	private onPaletteChanged(changeType: string, presetName: string | null): void {
 		if (this.extractedPalette.length === 0) {
-			print("PipelineTester: Preset changed but no palette extracted yet");
+			print(`PipelineTester: Palette changed (${changeType}) but no palette extracted yet`);
 			return;
 		}
 
-		print(`PipelineTester: Preset changed to '${event.presetName}', re-projecting...`);
+		const label = presetName ? `preset '${presetName}'` : changeType;
+		print(`PipelineTester: Palette changed (${label}), re-projecting...`);
 
 		// Re-project the existing palette with new gamut
 		this.projector.invalidateResults?.();

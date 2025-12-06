@@ -23,6 +23,10 @@ export class Projector_Gamut extends BaseScriptComponent {
     @hint("Maximum colors to support (determines texture size)")
     maxColors: number = 64;
 
+    @input
+    @hint("PaletteController to listen for color changes (optional, for auto-reproject)")
+    paletteController: ScriptComponent;
+
     // ============ PRIVATE STATE ============
 
     private inputTexture: Texture;
@@ -54,9 +58,57 @@ export class Projector_Gamut extends BaseScriptComponent {
         this.texHeight = Math.ceil(this.maxColors / this.texWidth);
 
         // Try to initialize early on start
-        this.createEvent("OnStartEvent").bind(() => this.tryInit());
+        this.createEvent("OnStartEvent").bind(() => {
+            this.tryInit();
+            this.setupPaletteListener();
+        });
         // Continue trying on update if not ready yet
         this.createEvent("UpdateEvent").bind(() => this.onUpdate());
+    }
+
+    private setupPaletteListener(): void {
+        if (!this.paletteController) {
+            print("Projector_Gamut: No PaletteController assigned, won't auto-reproject on palette changes");
+            return;
+        }
+
+        const controller = this.paletteController as any;
+
+        // Listen for preset changes
+        if (controller.onPresetChanged) {
+            controller.onPresetChanged.add((event: any) => {
+                print(`Projector_Gamut: Palette preset changed, invalidating results`);
+                this.invalidateResults();
+                // Re-project if we have input colors
+                if (this.inputColors.length > 0) {
+                    this.reproject();
+                }
+            });
+        }
+
+        // Listen for manual color changes
+        if (controller.onColorsManuallyChanged) {
+            controller.onColorsManuallyChanged.add((colors: any) => {
+                print(`Projector_Gamut: Palette colors manually changed, invalidating results`);
+                this.invalidateResults();
+                if (this.inputColors.length > 0) {
+                    this.reproject();
+                }
+            });
+        }
+
+        // Listen for palette restored
+        if (controller.onPaletteRestored) {
+            controller.onPaletteRestored.add((colors: any) => {
+                print(`Projector_Gamut: Palette restored, invalidating results`);
+                this.invalidateResults();
+                if (this.inputColors.length > 0) {
+                    this.reproject();
+                }
+            });
+        }
+
+        print("Projector_Gamut: Listening for palette changes");
     }
 
     private onUpdate(): void {

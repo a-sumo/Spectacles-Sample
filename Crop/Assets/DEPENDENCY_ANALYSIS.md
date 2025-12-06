@@ -58,7 +58,7 @@ Scene
          │ onActiveScannerChanged                   │ onPresetChanged
          ▼                                          │ syncPigmentColors()
 ┌─────────────────────┐                             ▼
-│CursorPlaneController│    setActiveItemColor() ┌─────────────────────┐
+│ColorSamplerController│    setActiveItemColor() ┌─────────────────────┐
 └────────┬────────────┘◄────────────────────────│  Encoder_PigmentMix │
          │ onColorSampled                       └──────────┬──────────┘
          ▼                                                 │ posRenderTarget
@@ -125,7 +125,7 @@ Tap Preset Toggle ──► SwitchToggleGroupExtended
                                                       Restore saved colors
 
 
-Pinch on Scanner ──► CursorPlaneController
+Pinch on Scanner ──► ColorSamplerController
                               │
                               ├─► Sample color at UV
                               │
@@ -141,7 +141,7 @@ Two-Hand Pinch ──► PictureController
                         │
                         ├─► createScanner()
                         │
-                        └─► onActiveScannerChanged ──► CursorPlaneController
+                        └─► onActiveScannerChanged ──► ColorSamplerController
                                                               │
                                                               ▼
                                                        Track new scanner
@@ -311,7 +311,7 @@ class GamutVFXAdapter {
 ┌─────────────────────────────────────────────────────────────────────┐
 │                          UI LAYER                                    │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PaletteController     CursorPlaneController    PictureController   │
+│  PaletteController     ColorSamplerController    PictureController   │
 │  SwitchToggleGroup     TexturePositionSync                          │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -339,7 +339,7 @@ class GamutVFXAdapter {
 | ImageRegenerator | `Image-Processing/Scripts/Image Processing/` | Palette-based image remap |
 | ImagePipeline | `Image-Processing/Scripts/Image Processing/` | Pipeline orchestration |
 | PipelineTester | `Image-Processing/Scripts/Image Processing/` | Testing harness |
-| CursorPlaneController | `Image-Processing/Scripts/` | Color sampling from images |
+| ColorSamplerController | `Image-Processing/Scripts/` | Color sampling from images |
 | PictureController | `Image-Processing/Scripts/` | Scanner instance management |
 | SwitchToggleGroupExtended | `Image-Processing/Scripts/UI/` | Preset toggle UI |
 | TexturePositionSync | `Image-Processing/Scripts/` | 3D object positioning from textures |

@@ -48,16 +48,26 @@ export class ImagePipeline extends BaseScriptComponent {
         this.projector = this.gamutProjector as any;
         this.regenerator = this.imageRegenerator as any;
 
-        // Listen for preset changes from PaletteController
+        // Listen for palette changes (preset or manual) from PaletteController
         if (this.paletteController && this.autoReprojectOnPresetChange) {
             const controller = this.paletteController as any;
             if (controller.onPresetChanged) {
                 controller.onPresetChanged.add((event: any) => {
-                    this.onPresetChanged(event);
+                    this.onPaletteChanged("preset", event.presetName);
                 });
-                if (this.debugMode) {
-                    print("ImagePipeline: Listening for preset changes");
-                }
+            }
+            if (controller.onColorsManuallyChanged) {
+                controller.onColorsManuallyChanged.add((colors: any) => {
+                    this.onPaletteChanged("manual", null);
+                });
+            }
+            if (controller.onPaletteRestored) {
+                controller.onPaletteRestored.add((colors: any) => {
+                    this.onPaletteChanged("restored", null);
+                });
+            }
+            if (this.debugMode) {
+                print("ImagePipeline: Listening for palette changes (preset, manual, restored)");
             }
         }
 
@@ -66,9 +76,10 @@ export class ImagePipeline extends BaseScriptComponent {
         }
     }
 
-    private onPresetChanged(event: any): void {
+    private onPaletteChanged(changeType: string, presetName: string | null): void {
         if (this.debugMode) {
-            print(`ImagePipeline: Preset changed to '${event.presetName}', re-projecting...`);
+            const label = presetName ? `preset '${presetName}'` : changeType;
+            print(`ImagePipeline: Palette changed (${label}), re-projecting...`);
         }
 
         // Re-project with the same extracted palette but new gamut

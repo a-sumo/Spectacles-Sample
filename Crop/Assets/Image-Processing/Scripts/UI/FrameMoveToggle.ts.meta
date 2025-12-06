@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/f9e843d5-2d70-444f-9fe8-ab2af0939539>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> f2958895-3424-4cbb-bc0f-a1133ea1f596
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> f2958895-3424-4cbb-bc0f-a1133ea1f596
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> dbe709ce-0ba4-4a38-878b-7d25b19dffda
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/dbe709ce-0ba4-4a38-878b-7d25b19dffda>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 193d8a94-91ec-4d29-a915-05436a7a57b8
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    frame: false
+    frameSceneObject: false
+    hideWhenDisabled: false
+    startEnabled: false
+    toggleButton: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - frame: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      frameSceneObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      toggleButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      startEnabled: false
+      hideWhenDisabled: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType frame {"hint":"The Frame to toggle"}'
+    - '// @input SceneObject frameSceneObject {"hint":"The SceneObject containing the Frame script (for direct component access)"}'
+    - '// @input SceneObject toggleButton {"hint":"Button that toggles movement (optional - can also call toggle() from code)"}'
+    - '// @input bool startEnabled {"hint":"Start with movement enabled"}'
+    - '// @input bool hideWhenDisabled = true {"hint":"Hide frame visual when movement is disabled"}'

@@ -23,14 +23,14 @@ export class ColorSampledEvent {
 }
 
 /**
- * CursorPlaneController
+ * ColorSamplerController
  *
  * Manages a single cursor plane in the scene that tracks hover interactions
  * on active scanners. The cursor plane is a regular SceneObject (not prefab)
  * that gets repositioned when users interact with scanner cameraCrops.
  */
 @component
-export class CursorPlaneController extends BaseScriptComponent {
+export class ColorSamplerController extends BaseScriptComponent {
 	@input
 	@hint("The cursor plane SceneObject to move around")
 	cursorPlane: SceneObject;
@@ -122,7 +122,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 
 	onAwake() {
 		if (!this.cursorPlane) {
-			print("CursorPlaneController: Error - No cursor plane assigned");
+			print("ColorSamplerController: Error - No cursor plane assigned");
 			return;
 		}
 
@@ -135,7 +135,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		// Get PictureController via singleton
 		this.pictureController = PictureController.getInstance();
 		if (!this.pictureController) {
-			print("CursorPlaneController: PictureController singleton not found");
+			print("ColorSamplerController: PictureController singleton not found");
 			return;
 		}
 
@@ -173,7 +173,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		// Register destroy event for cleanup
 		this.createEvent("OnDestroyEvent").bind(this.onDestroy.bind(this));
 
-		print("CursorPlaneController: Initialized");
+		print("ColorSamplerController: Initialized");
 	}
 
 	private initializeReusableResources(): void {
@@ -220,7 +220,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		}
 
 		if (!this.sliderComponent) {
-			print("CursorPlaneController: No Slider component found on gridSizeSlider");
+			print("ColorSamplerController: No Slider component found on gridSizeSlider");
 			this.updateGridSizeText();
 			return;
 		}
@@ -244,7 +244,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 			this.setGridSize(newGridSize);
 		});
 
-		print(`CursorPlaneController: Grid size slider initialized (${this.minGridSize}-${this.maxGridSize}), current: ${this.validatedGridSize}`);
+		print(`ColorSamplerController: Grid size slider initialized (${this.minGridSize}-${this.maxGridSize}), current: ${this.validatedGridSize}`);
 	}
 
 	private gridSizeToSliderValue(gridSize: number): number {
@@ -301,7 +301,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 		// Update text display
 		this.updateGridSizeText();
 
-		print(`CursorPlaneController: Grid size changed to ${size}x${size}`);
+		print(`ColorSamplerController: Grid size changed to ${size}x${size}`);
 	}
 
 	/**
@@ -357,7 +357,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 
 				if (this.activeInteractable) {
 					this.setupHoverEvents();
-					print("CursorPlaneController: Tracking scanner " + event.scannerId);
+					print("ColorSamplerController: Tracking scanner " + event.scannerId);
 				}
 			}
 		} else {
@@ -387,7 +387,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 				}
 			}
 			if (!found) {
-				print("CursorPlaneController: Could not find '" + part + "' in hierarchy");
+				print("ColorSamplerController: Could not find '" + part + "' in hierarchy");
 				return null;
 			}
 		}
@@ -573,7 +573,7 @@ export class CursorPlaneController extends BaseScriptComponent {
 			this.currentSampledUV
 		);
 		this.onColorSampledEvent.invoke(event);
-		print(`CursorPlaneController: Color sampled ${this.currentSampledHex} from scanner ${this.activeScannerId}`);
+		print(`ColorSamplerController: Color sampled ${this.currentSampledHex} from scanner ${this.activeScannerId}`);
 	}
 
 	/**
@@ -621,6 +621,6 @@ export class CursorPlaneController extends BaseScriptComponent {
 		this.sampledTextureProvider = null;
 		this.pixelBuffer = null;
 
-		print("CursorPlaneController: Destroyed and cleaned up");
+		print("ColorSamplerController: Destroyed and cleaned up");
 	}
 }
