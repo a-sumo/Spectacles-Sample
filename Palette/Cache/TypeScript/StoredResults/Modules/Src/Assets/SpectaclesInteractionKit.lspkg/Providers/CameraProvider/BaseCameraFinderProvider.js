@@ -19,6 +19,7 @@ class BaseCameraFinderProvider extends BaseWorldCameraProvider_1.default {
         if (object.enabled &&
             cameraComponent !== null &&
             cameraComponent.type === Camera.Type.Perspective &&
+            cameraComponent.renderTarget !== null &&
             cameraComponent.renderTarget.isSame(targetRenderTarget)) {
             return cameraComponent;
         }

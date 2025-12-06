@@ -1,0 +1,77 @@
+- !<AssetImportMetadata/9e968109-6738-1084-b942-28f1ea5b74cf>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 15e732b8-d19e-4c6e-8751-985fa6435e04
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 15e732b8-d19e-4c6e-8751-985fa6435e04
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> fff67c23-7b9c-4b8e-b1e1-1b5ab8d13d93
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/fff67c23-7b9c-4b8e-b1e1-1b5ab8d13d93>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 91564067-06b0-4c76-bc97-6686a8b24d5c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    gamutEncoder: false
+    gamutTexSize: false
+    gamutValidCount: false
+    input0: false
+    input1: false
+    input2: false
+    input3: false
+    input4: false
+    input5: false
+    inputTexHeight: false
+    inputTexWidth: false
+    projectionMaterial: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - projectionMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      gamutEncoder: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      gamutTexSize: !<float> 64.000000
+      gamutValidCount: !<float> 2000.000000
+      inputTexWidth: !<float> 8.000000
+      inputTexHeight: !<float> 8.000000
+      input0: !<Vec3> {x: 1.000000, y: 0.500000, z: 0.000000}
+      input1: !<Vec3> {x: 0.000000, y: 1.000000, z: 0.500000}
+      input2: !<Vec3> {x: 0.500000, y: 0.000000, z: 1.000000}
+      input3: !<Vec3> {x: 1.000000, y: 1.000000, z: 0.000000}
+      input4: !<Vec3> {x: 0.000000, y: 0.500000, z: 0.300000}
+      input5: !<Vec3> {x: 0.800000, y: 0.200000, z: 0.200000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material projectionMaterial {"hint":"Material with GamutProjection shader"}'
+    - '// @input Component.ScriptComponent gamutEncoder {"hint":"Reference to PigmentGamutEncoder script component"}'
+    - '// @input float gamutTexSize = 64 {"hint":"Size of gamut texture from encoder (e.g., 64 means 64x64 = 4096 pixels)"}'
+    - '// @input float gamutValidCount = 2000 {"hint":"Actual number of valid colors in gamut (from encoder log)"}'
+    - '// @input float inputTexWidth = 8 {"hint":"Width of input texture (number of colors to project per row)"}'
+    - '// @input float inputTexHeight = 8 {"hint":"Height of input texture (number of rows)"}'
+    - '// @input vec3 input0 = {1,0.5,0} {"widget":"color"}'
+    - '// @input vec3 input1 = {0,1,0.5} {"widget":"color"}'
+    - '// @input vec3 input2 = {0.5,0,1} {"widget":"color"}'
+    - '// @input vec3 input3 = {1,1,0} {"widget":"color"}'
+    - '// @input vec3 input4 = {0,0.5,0.3} {"widget":"color"}'
+    - '// @input vec3 input5 = {0.8,0.2,0.2} {"widget":"color"}'

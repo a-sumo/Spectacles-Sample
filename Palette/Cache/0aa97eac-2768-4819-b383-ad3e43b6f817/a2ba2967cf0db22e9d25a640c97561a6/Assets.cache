@@ -1004,7 +1004,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -1020,7 +1020,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -2103,7 +2103,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -2119,7 +2119,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -2337,7 +2337,7 @@
   ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
   ScriptInputsDefault:
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -2353,7 +2353,7 @@
     "":
       targetingMode: !<float> 7.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -2436,7 +2436,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -2452,7 +2452,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -2599,7 +2599,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -2615,7 +2615,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -3346,7 +3346,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -3362,7 +3362,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -3416,7 +3416,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -3432,7 +3432,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -4677,7 +4677,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -4693,7 +4693,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -4786,7 +4786,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -4802,7 +4802,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -5363,7 +5363,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -5379,7 +5379,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -6374,7 +6374,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -6390,7 +6390,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -6737,7 +6737,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -6753,7 +6753,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -7382,7 +7382,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -7398,7 +7398,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -8143,7 +8143,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -8159,7 +8159,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -8652,7 +8652,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -8668,7 +8668,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -8935,7 +8935,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -8951,7 +8951,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -9157,7 +9157,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -9173,7 +9173,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -9418,7 +9418,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -9434,7 +9434,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -9589,7 +9589,7 @@
   ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
   ScriptInputsDefault:
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -9605,7 +9605,7 @@
     "":
       targetingMode: !<float> 7.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -10321,7 +10321,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -10337,7 +10337,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -10448,7 +10448,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -10464,7 +10464,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -11190,7 +11190,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -11206,7 +11206,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -12048,7 +12048,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -12064,7 +12064,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -12258,7 +12258,7 @@
   BlendShapesEnabled: true
   BlendNormals: false
   BlendShapes:
-    Size: 0.660000
+    Size: 0.000000
 - !<Image/7cf6cf18-a195-4f9a-65be-c8dece7797f1>
   PrefabRemaps:
     []
@@ -13032,7 +13032,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -13048,7 +13048,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -13967,7 +13967,7 @@
   ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
   ScriptInputsDefault:
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -13983,7 +13983,7 @@
     "":
       targetingMode: !<float> 7.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -14373,7 +14373,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -14389,7 +14389,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -14766,7 +14766,7 @@
   ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
   ScriptInputsDefault:
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -14782,7 +14782,7 @@
     "":
       targetingMode: !<float> 7.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -15238,7 +15238,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -15254,7 +15254,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -16607,7 +16607,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -16623,7 +16623,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -17263,7 +17263,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -17279,7 +17279,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -18813,7 +18813,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -18829,7 +18829,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -20299,7 +20299,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -20315,7 +20315,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -21342,7 +21342,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -21358,7 +21358,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -21658,7 +21658,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -21674,7 +21674,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -21924,7 +21924,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -21940,7 +21940,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -22030,7 +22030,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -22046,7 +22046,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -22306,7 +22306,7 @@
   ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
   ScriptInputsDefault:
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -22322,7 +22322,7 @@
     "":
       targetingMode: !<float> 7.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -22483,7 +22483,7 @@
   ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
   ScriptInputsDefault:
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -22499,7 +22499,7 @@
     "":
       targetingMode: !<float> 7.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -23557,7 +23557,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -23573,7 +23573,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -23632,7 +23632,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -23648,7 +23648,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -24349,7 +24349,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -24365,7 +24365,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
@@ -24403,7 +24403,7 @@
   ScriptInputsDefault:
     targetingMode: true
     targetingVisual: true
-    forceTargetingVisual: true
+    ignoreInteractionPlane: true
     keepHoverOnTrigger: true
     enableInstantDrag: true
     isScrollable: true
@@ -24419,7 +24419,7 @@
     "":
       targetingMode: !<float> 3.000000
       targetingVisual: !<float> 1.000000
-      forceTargetingVisual: false
+      ignoreInteractionPlane: false
       keepHoverOnTrigger: false
       enableInstantDrag: false
       isScrollable: false
