@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 927
+    size: 930
     values:
       - Camera Object.prefab
       - Color-Space.lspkg/Images
@@ -56,7 +56,6 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/Test_GamutProjector.ts
       - Color-Space.lspkg/Scripts/Test_MinimalEncoder.ts
       - Color-Space.lspkg/Scripts/Util_SpectralMix.ts
-      - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Decode From Texture File.vfxgraph
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/VFX/LAB Decoder.vfxgraph
@@ -69,7 +68,11 @@ CollapsedEntities:
       - Image-Processing/3DModels
       - Image-Processing/Images
       - Image-Processing/Materials
+      - Image-Processing/Prefabs
       - Image-Processing/Scripts
+      - Image-Processing/Scripts/Image Processing/Image Pipeline.ts
+      - Image-Processing/Scripts/Image Processing/PipelineTester.ts
+      - Image-Processing/VFX
       - LSTween.lspkg
       - LSTween.lspkg/Examples
       - LSTween.lspkg/Examples/Assets

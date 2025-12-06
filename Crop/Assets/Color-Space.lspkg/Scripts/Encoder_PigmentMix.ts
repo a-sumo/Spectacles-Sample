@@ -1,5 +1,6 @@
 // Encoder_PigmentMix.ts
 // Encodes the achievable gamut from mixing physical pigments (Kubelka-Munk)
+// Gets pigment colors from PaletteController
 
 @component
 export class Encoder_PigmentMix extends BaseScriptComponent {
@@ -13,6 +14,10 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
     vfxComponent: VFXComponent;
 
     @input
+    @hint("PaletteController to get pigment colors from")
+    paletteController: ScriptComponent;
+
+    @input
     @hint("Output texture size (64 = 4096 pixels)")
     texSize: number = 64;
 
@@ -24,28 +29,34 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
     @hint("Scale for VFX positions")
     scale: number = 100;
 
-    // Pigment inputs
+    // Fallback pigment colors (used if no PaletteController assigned)
     @input
+    @hint("Fallback: White pigment")
     @widget(new ColorWidget())
     pig0Color: vec3 = new vec3(1, 1, 1);
 
     @input
+    @hint("Fallback: Black pigment")
     @widget(new ColorWidget())
     pig1Color: vec3 = new vec3(0.08, 0.08, 0.08);
 
     @input
+    @hint("Fallback: Yellow pigment")
     @widget(new ColorWidget())
     pig2Color: vec3 = new vec3(1, 0.92, 0);
 
     @input
+    @hint("Fallback: Red pigment")
     @widget(new ColorWidget())
     pig3Color: vec3 = new vec3(0.89, 0, 0.13);
 
     @input
+    @hint("Fallback: Blue pigment")
     @widget(new ColorWidget())
     pig4Color: vec3 = new vec3(0.1, 0.1, 0.7);
 
     @input
+    @hint("Fallback: Green pigment")
     @widget(new ColorWidget())
     pig5Color: vec3 = new vec3(0, 0.47, 0.44);
 
@@ -56,11 +67,24 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
     private pigmentTexture: Texture;
     private initialized: boolean = false;
 
+    // Current pigment colors (from PaletteController or fallback)
+    private currentPigments: vec3[] = [];
+
     onAwake(): void {
         if (!this.encoderMaterial) {
             print("Encoder_PigmentMix: ERROR - encoderMaterial not set");
             return;
         }
+
+        // Initialize with fallback colors
+        this.currentPigments = [
+            this.pig0Color,
+            this.pig1Color,
+            this.pig2Color,
+            this.pig3Color,
+            this.pig4Color,
+            this.pig5Color,
+        ];
 
         // Create pigment texture
         this.pigmentTexture = ProceduralTextureProvider.createWithFormat(
@@ -91,30 +115,66 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
         // Assign to VFX
         this.assignToVFX();
 
-        // Update pigments every frame
+        // Listen for palette changes
+        this.setupPaletteListener();
+
+        // Update pigments every frame (reads from currentPigments)
         this.createEvent("UpdateEvent").bind(() => this.updatePigmentTexture());
 
         this.initialized = true;
         print("Encoder_PigmentMix: Ready");
     }
 
+    private setupPaletteListener(): void {
+        if (!this.paletteController) {
+            print("Encoder_PigmentMix: No PaletteController assigned, using fallback colors");
+            return;
+        }
+
+        const controller = this.paletteController as any;
+
+        // Listen for preset changes (includes colors array)
+        if (controller.onPresetChanged) {
+            controller.onPresetChanged.add((event: any) => {
+                if (event.colors) {
+                    this.onPaletteColorsChanged(event.colors);
+                    print(`Encoder_PigmentMix: Preset '${event.presetName}' applied with ${event.colors.length} colors`);
+                }
+            });
+            print("Encoder_PigmentMix: Listening for preset changes");
+        }
+
+        // Get initial colors if available
+        if (typeof controller.getAllColors === 'function') {
+            const colors = controller.getAllColors();
+            if (colors && colors.length > 0) {
+                this.onPaletteColorsChanged(colors);
+                print(`Encoder_PigmentMix: Got ${colors.length} initial colors from PaletteController`);
+            }
+        }
+    }
+
+    private onPaletteColorsChanged(colors: vec4[]): void {
+        if (!colors || colors.length === 0) return;
+
+        // Update current pigments from palette colors (convert vec4 to vec3)
+        for (let i = 0; i < Math.min(colors.length, Encoder_PigmentMix.NUM_PIGMENTS); i++) {
+            const c = colors[i];
+            this.currentPigments[i] = new vec3(c.r, c.g, c.b);
+        }
+
+        // Pigment texture will be updated in next frame's updatePigmentTexture()
+    }
+
     private updatePigmentTexture(): void {
         const pixels = new Uint8Array(Encoder_PigmentMix.NUM_PIGMENTS * 4);
 
-        const pigments = [
-            this.pig0Color,
-            this.pig1Color,
-            this.pig2Color,
-            this.pig3Color,
-            this.pig4Color,
-            this.pig5Color,
-        ];
-
         for (let i = 0; i < Encoder_PigmentMix.NUM_PIGMENTS; i++) {
+            const pigment = this.currentPigments[i] || new vec3(0.5, 0.5, 0.5);
             const idx = i * 4;
-            pixels[idx + 0] = Math.round(pigments[i].x * 255);
-            pixels[idx + 1] = Math.round(pigments[i].y * 255);
-            pixels[idx + 2] = Math.round(pigments[i].z * 255);
+            pixels[idx + 0] = Math.round(pigment.x * 255);
+            pixels[idx + 1] = Math.round(pigment.y * 255);
+            pixels[idx + 2] = Math.round(pigment.z * 255);
             pixels[idx + 3] = 255;
         }
 
@@ -127,7 +187,6 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
         const rt = global.scene.createRenderTargetTexture();
         (rt.control as any).useScreenResolution = false;
         (rt.control as any).resolution = resolution;
-        (rt.control as any).clearColorEnabled = true;
         return rt;
     }
 
@@ -193,6 +252,22 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
 
     getTexSize(): number {
         return this.texSize;
+    }
+
+    /**
+     * Set pigment colors directly (alternative to PaletteController)
+     */
+    setPigmentColors(colors: vec3[]): void {
+        for (let i = 0; i < Math.min(colors.length, Encoder_PigmentMix.NUM_PIGMENTS); i++) {
+            this.currentPigments[i] = colors[i];
+        }
+    }
+
+    /**
+     * Get current pigment colors
+     */
+    getPigmentColors(): vec3[] {
+        return [...this.currentPigments];
     }
 
     getGamutValidCount(): number {

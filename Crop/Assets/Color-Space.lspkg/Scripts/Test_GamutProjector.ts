@@ -266,7 +266,6 @@ export class Test_GamutProjector extends BaseScriptComponent {
         const rt = global.scene.createRenderTargetTexture();
         (rt.control as any).useScreenResolution = false;
         (rt.control as any).resolution = resolution;
-        (rt.control as any).clearColorEnabled = true;
         return rt;
     }
     

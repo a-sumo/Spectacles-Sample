@@ -3,45 +3,76 @@
 
 @component
 export class ImagePipeline extends BaseScriptComponent {
-    
+
     @input
     paletteExtractor: ScriptComponent;
-    
+
     @input
     gamutProjector: ScriptComponent;
-    
+
     @input
     imageRegenerator: ScriptComponent;
-    
+
     @input
     inputTexture: Texture;
-    
+
     @input
     @hint("Number of colors to extract")
     paletteSize: number = 24;
-    
+
+    @input
+    @hint("PaletteController to listen for preset changes")
+    paletteController: ScriptComponent;
+
+    @input
+    @hint("Auto re-project when pigment preset changes")
+    autoReprojectOnPresetChange: boolean = true;
+
     @input
     debugMode: boolean = true;
-    
+
     private extractor: any;
     private projector: any;
     private regenerator: any;
     private pipelineState: "idle" | "extracting" | "projecting" | "regenerating" | "complete" = "idle";
     private frameCounter: number = 0;
-    
+    private lastExtractedPalette: vec3[] = [];
+
     onAwake(): void {
         this.createEvent("OnStartEvent").bind(() => this.initialize());
         this.createEvent("UpdateEvent").bind(() => this.onUpdate());
     }
-    
+
     private initialize(): void {
         this.extractor = this.paletteExtractor as any;
         this.projector = this.gamutProjector as any;
         this.regenerator = this.imageRegenerator as any;
-        
+
+        // Listen for preset changes from PaletteController
+        if (this.paletteController && this.autoReprojectOnPresetChange) {
+            const controller = this.paletteController as any;
+            if (controller.onPresetChanged) {
+                controller.onPresetChanged.add((event: any) => {
+                    this.onPresetChanged(event);
+                });
+                if (this.debugMode) {
+                    print("ImagePipeline: Listening for preset changes");
+                }
+            }
+        }
+
         if (this.debugMode) {
             print("ImagePipeline: Initialized");
         }
+    }
+
+    private onPresetChanged(event: any): void {
+        if (this.debugMode) {
+            print(`ImagePipeline: Preset changed to '${event.presetName}', re-projecting...`);
+        }
+
+        // Re-project with the same extracted palette but new gamut
+        this.reprojectCurrentPalette();
     }
     
     private onUpdate(): void {
@@ -61,34 +92,65 @@ export class ImagePipeline extends BaseScriptComponent {
             print("ImagePipeline: Components not ready");
             return;
         }
-        
+
         this.pipelineState = "extracting";
-        
+
         if (this.debugMode) {
             print("ImagePipeline: Starting extraction...");
         }
-        
+
         // Step 1: Extract palette
         if (this.inputTexture) {
             this.extractor.setInputTexture(this.inputTexture);
         }
         this.extractor.paletteSize = this.paletteSize;
-        
+
         const { original } = this.extractor.extractAndProject();
-        
+
         if (original.length === 0) {
             print("ImagePipeline: Extraction failed");
             this.pipelineState = "idle";
             return;
         }
-        
+
+        // Store for re-projection on preset change
+        this.lastExtractedPalette = original;
+
         // Step 2: Send to projector (async - GPU)
         this.projector.setInputColors(original);
         this.pipelineState = "projecting";
         this.frameCounter = 0;
-        
+
         if (this.debugMode) {
             print(`ImagePipeline: Projecting ${original.length} colors...`);
+        }
+    }
+
+    /**
+     * Re-project the current extracted palette with the updated gamut
+     * Call this when pigment preset changes
+     */
+    public reprojectCurrentPalette(): void {
+        if (this.lastExtractedPalette.length === 0) {
+            if (this.debugMode) {
+                print("ImagePipeline: No palette to re-project");
+            }
+            return;
+        }
+
+        if (!this.projector?.isReady?.()) {
+            print("ImagePipeline: Projector not ready");
+            return;
+        }
+
+        // Invalidate projector cache and re-project
+        this.projector.invalidateResults?.();
+        this.projector.setInputColors(this.lastExtractedPalette);
+        this.pipelineState = "projecting";
+        this.frameCounter = 0;
+
+        if (this.debugMode) {
+            print(`ImagePipeline: Re-projecting ${this.lastExtractedPalette.length} colors with new gamut`);
         }
     }
     

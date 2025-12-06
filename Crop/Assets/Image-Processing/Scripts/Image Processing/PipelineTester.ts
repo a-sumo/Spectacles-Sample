@@ -49,6 +49,14 @@ export class PipelineTester extends BaseScriptComponent {
 	@hint("Auto-run test on start")
 	autoRun: boolean = false;
 
+	@input
+	@hint("PaletteController to listen for preset changes")
+	paletteController: ScriptComponent;
+
+	@input
+	@hint("Auto re-project when preset changes")
+	reprojectOnPresetChange: boolean = true;
+
 	// ============ PRIVATE STATE ============
 
 	private extractor: any;
@@ -77,6 +85,8 @@ export class PipelineTester extends BaseScriptComponent {
 		this.createEvent("UpdateEvent").bind(() => this.onUpdate());
 	}
 
+	private autoRunPending: boolean = false;
+
 	private initialize(): void {
 		this.extractor = this.paletteExtractor as any;
 		this.projector = this.gamutProjector as any;
@@ -88,13 +98,44 @@ export class PipelineTester extends BaseScriptComponent {
 		// Cache preview materials
 		this.setupPreviewMeshes();
 
+		// Listen for preset changes
+		if (this.paletteController && this.reprojectOnPresetChange) {
+			const controller = this.paletteController as any;
+			if (controller.onPresetChanged) {
+				controller.onPresetChanged.add((event: any) => {
+					this.onPresetChanged(event);
+				});
+				print("PipelineTester: Listening for preset changes");
+			}
+		}
+
 		this.isInitialized = true;
 		print("PipelineTester: Ready");
 		print("  Test modes: 1=extraction, 2=projection, 3=regeneration, 4=full");
 
 		if (this.autoRun && this.testMode > 0) {
-			this.runTest(this.testMode);
+			// Don't run immediately - wait for projector to be ready
+			this.autoRunPending = true;
+			print("PipelineTester: Waiting for Projector_Gamut to initialize...");
 		}
+	}
+
+	private onPresetChanged(event: any): void {
+		if (this.extractedPalette.length === 0) {
+			print("PipelineTester: Preset changed but no palette extracted yet");
+			return;
+		}
+
+		print(`PipelineTester: Preset changed to '${event.presetName}', re-projecting...`);
+
+		// Re-project the existing palette with new gamut
+		this.projector.invalidateResults?.();
+		this.projector.setInputColors(this.extractedPalette);
+
+		// Wait for GPU, then update regenerator
+		this.testState = "waiting";
+		this.waitFrames = 2;
+		this.testMode = 5;  // Special mode for preset change re-projection
 	}
 
 	private setupPreviewMeshes(): void {
@@ -199,6 +240,13 @@ export class PipelineTester extends BaseScriptComponent {
 
 	private onUpdate(): void {
 		this.frameCount++;
+
+		// Check if we're waiting to auto-run once projector is ready
+		if (this.autoRunPending && this.projector?.isReady?.()) {
+			this.autoRunPending = false;
+			print("PipelineTester: Projector_Gamut ready, starting auto-run test");
+			this.runTest(this.testMode);
+		}
 
 		if (this.testState === "waiting") {
 			this.waitFrames--;
@@ -318,6 +366,9 @@ export class PipelineTester extends BaseScriptComponent {
 			} else {
 				this.finishProjectionTest();
 			}
+		} else if (this.testMode === 5) {
+			// Preset change re-projection
+			this.finishPresetChangeReproject();
 		} else if (this.testMode === 4) {
 			this.continueFullPipeline();
 		}
@@ -349,6 +400,47 @@ export class PipelineTester extends BaseScriptComponent {
 
 		this.testState = "complete";
 		print("=== PROJECTION TEST COMPLETE ===\n");
+	}
+
+	private finishPresetChangeReproject(): void {
+		this.projectedPalette = this.projector.getProjectedColors();
+		const results = this.projector.getProjectionResults();
+
+		if (this.projectedPalette.length === 0) {
+			print("PipelineTester: Re-projection failed, keeping previous results");
+			this.testState = "complete";
+			return;
+		}
+
+		const avgDeltaE =
+			results.reduce((s: number, r: any) => s + r.deltaE, 0) / results.length;
+		print(`PipelineTester: Re-projected ${this.projectedPalette.length} colors (avg ΔE=${avgDeltaE.toFixed(2)})`);
+
+		// Show first few color mappings
+		print("  New color mapping (first 3):");
+		for (let i = 0; i < Math.min(3, results.length); i++) {
+			const r = results[i];
+			const inHex = this.rgbToHex(r.input);
+			const outHex = this.rgbToHex(r.projected);
+			print(`    [${i}] ${inHex} -> ${outHex} (ΔE=${r.deltaE.toFixed(1)})`);
+		}
+
+		// Update the regenerator with new projected palette
+		this.regenerator.setInputTexture(this.testImage);
+		this.regenerator.setPalette(this.extractedPalette, this.projectedPalette);
+
+		// Re-apply to preview mesh
+		if (this.previewMesh) {
+			const rmv = this.previewMesh.getComponent(
+				"Component.RenderMeshVisual"
+			) as RenderMeshVisual;
+			if (rmv) {
+				this.regenerator.applyToMesh(rmv);
+				print("PipelineTester: Updated preview mesh with new projection");
+			}
+		}
+
+		this.testState = "complete";
 	}
 
 	public testRegeneration(): void {
@@ -465,6 +557,15 @@ export class PipelineTester extends BaseScriptComponent {
 					this.projectedPalette.length
 				} colors (avg ΔE=${avgDeltaE.toFixed(2)})`
 			);
+
+			// Debug: show color mapping for first few colors
+			print("  Color mapping (first 3):");
+			for (let i = 0; i < Math.min(3, results.length); i++) {
+				const r = results[i];
+				const inHex = this.rgbToHex(r.input);
+				const outHex = this.rgbToHex(r.projected);
+				print(`    [${i}] ${inHex} -> ${outHex} (ΔE=${r.deltaE.toFixed(1)})`);
+			}
 		}
 
 		this.finishFullPipeline();

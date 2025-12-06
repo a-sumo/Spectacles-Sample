@@ -31,8 +31,10 @@
     gamutProjector: false
     imageRegenerator: false
     originalMesh: false
+    paletteController: false
     paletteExtractor: false
     previewMesh: false
+    reprojectOnPresetChange: false
     testImage: false
     testMode: false
   ScriptTypesHidden:
@@ -53,6 +55,8 @@
       originalMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       testMode: !<float> 0.000000
       autoRun: false
+      paletteController: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      reprojectOnPresetChange: true
   ScriptTypes:
     -
       {}
@@ -66,3 +70,5 @@
     - '// @input SceneObject originalMesh {"hint":"Also show original on a second mesh"}'
     - '// @input float testMode {"hint":"Which test to run: 0=none, 1=extraction, 2=projection, 3=regeneration, 4=full"}'
     - '// @input bool autoRun {"hint":"Auto-run test on start"}'
+    - '// @input Component.ScriptComponent paletteController {"hint":"PaletteController to listen for preset changes"}'
+    - '// @input bool reprojectOnPresetChange = true {"hint":"Auto re-project when preset changes"}'

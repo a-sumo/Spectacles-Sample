@@ -71,7 +71,6 @@ export class Encoder_FullRGB extends BaseScriptComponent {
 		const rt = global.scene.createRenderTargetTexture();
 		(rt.control as any).useScreenResolution = false;
 		(rt.control as any).resolution = resolution;
-		(rt.control as any).clearColorEnabled = true;
 		return rt;
 	}
 

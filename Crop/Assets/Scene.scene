@@ -16,7 +16,6 @@
     - !<own> 0b38d0e5-ecf0-4c7f-8fae-42a8c5533192
     - !<own> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
     - !<own> ef81a328-fcbd-4491-8899-421f5e8df0bf
-    - !<own> bfc03fef-7d1a-41a5-ac3d-83cec8358135
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -389,7 +388,7 @@
   PrefabRemaps:
     []
   Name: PipelineTester
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -420,7 +419,7 @@
   PrefabRemaps:
     []
   Name: Cursor Plane Controller
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -867,7 +866,7 @@
   PrefabRemaps:
     []
   Name: Image Pipeline
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -1464,7 +1463,7 @@
   PrefabRemaps:
     []
   Name: PictureController
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -10.000000}
@@ -1497,6 +1496,7 @@
   Enabled: true
   ScriptAsset: !<reference> bc81b387-5678-44b5-9b02-b9117da72801
   ScriptInputsDefault:
+    autoReprojectOnPresetChange: true
     debugMode: true
   ScriptTypesDefault:
     {}
@@ -1506,7 +1506,9 @@
       gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
       imageRegenerator: !<reference.ScriptComponent> afb6da78-469a-4973-a79f-9ab22e13ea8a
       inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      paletteSize: !<float> 6.000000
+      paletteSize: !<float> 8.000000
+      paletteController: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
+      autoReprojectOnPresetChange: true
       debugMode: true
   ScriptTypes:
     "":
@@ -1619,7 +1621,7 @@
   PrefabRemaps:
     []
   Name: ComponentOrchestrator
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -1685,7 +1687,7 @@
   Enabled: true
   ScriptAsset: !<reference> 934e535a-dd42-41e3-8f7f-63c175af5009
   ScriptInputsDefault:
-    extractColors: true
+    reprojectOnPresetChange: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1694,11 +1696,13 @@
       gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
       imageRegenerator: !<reference.ScriptComponent> afb6da78-469a-4973-a79f-9ab22e13ea8a
       testImage: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      extractColors: !<float> 12.000000
+      extractColors: !<float> 24.000000
       previewMesh: !<reference.SceneObject> ef81a328-fcbd-4491-8899-421f5e8df0bf
       originalMesh: !<reference.SceneObject> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
-      testMode: !<float> 2.000000
+      testMode: !<float> 4.000000
       autoRun: true
+      paletteController: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
+      reprojectOnPresetChange: true
   ScriptTypes:
     "":
       {}
@@ -2246,38 +2250,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<ScriptComponent/66163c09-b5b2-441d-8852-dbec2b7bfcb5>
-  PrefabRemaps:
-    []
-  Name: PaletteProjector
-  Enabled: true
-  ScriptAsset: !<reference> 72a584d4-7214-45f5-8039-19f8408203c4
-  ScriptInputsDefault:
-    paletteSize: true
-    pig0: true
-    pig1: true
-    pig2: true
-    pig3: true
-    pig4: true
-    mixSteps: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      outputMesh: !<reference.SceneObject> ef81a328-fcbd-4491-8899-421f5e8df0bf
-      outputMaterial: !<reference.Material> 8779a953-a9f5-4d0d-813f-5c081eefd2b2
-      paletteSize: !<float> 12.000000
-      pig0: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
-      pig1: !<Vec3> {x: 0.080000, y: 0.080000, z: 0.080000}
-      pig2: !<Vec3> {x: 1.000000, y: 0.920000, z: 0.000000}
-      pig3: !<Vec3> {x: 0.890000, y: 0.000000, z: 0.130000}
-      pig4: !<Vec3> {x: 0.100000, y: 0.100000, z: 0.700000}
-      pig5: !<Vec3> {x: 1.000000, y: 0.028077, z: 0.000000}
-      mixSteps: !<float> 12.000000
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/67a26cfa-2422-444c-b770-4cf98c7748a4>
   PrefabRemaps:
     []
@@ -2731,10 +2703,8 @@
   ScriptAsset: !<reference> 48ceee92-eb88-445f-8ae2-fa7b9ee1c680
   ScriptInputsDefault:
     pig0Color: true
-    pig1Color: true
     pig2Color: true
     pig3Color: true
-    pig4Color: true
     pig5Color: true
   ScriptTypesDefault:
     {}
@@ -2742,14 +2712,15 @@
     "":
       encoderMaterial: !<reference.Material> 4d05b8e4-db8a-423c-8e6d-2b5ccc4e70dc
       vfxComponent: !<reference.VFXComponent> 9f71fac4-5d9b-404a-89cd-37beddeddfc8
+      paletteController: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
       texSize: !<float> 124.000000
       mixSteps: !<float> 40.000000
       scale: !<float> 1.000000
       pig0Color: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
-      pig1Color: !<Vec3> {x: 0.080000, y: 0.080000, z: 0.080000}
+      pig1Color: !<Vec3> {x: 0.098528, y: 1.000000, z: 0.272953}
       pig2Color: !<Vec3> {x: 1.000000, y: 0.920000, z: 0.000000}
       pig3Color: !<Vec3> {x: 0.890000, y: 0.000000, z: 0.130000}
-      pig4Color: !<Vec3> {x: 0.100000, y: 0.100000, z: 0.700000}
+      pig4Color: !<Vec3> {x: 0.000000, y: 0.717464, z: 0.724239}
       pig5Color: !<Vec3> {x: 0.000000, y: 0.470000, z: 0.440000}
   ScriptTypes:
     "":
@@ -4366,7 +4337,7 @@
   PrefabRemaps:
     []
   Name: Palette Controller
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -20.000000, z: 0.000000}
@@ -4398,21 +4369,6 @@
     []
   Components:
     - !<own> 243b58e3-d805-481a-80b3-1076b9c8e1e3
-- !<SceneObject/bfc03fef-7d1a-41a5-ac3d-83cec8358135>
-  PrefabRemaps:
-    []
-  Name: PaletteProjector
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 66163c09-b5b2-441d-8852-dbec2b7bfcb5
 - !<Text/bfcf8058-e3d4-4898-8cc9-08646cd93b91>
   PrefabRemaps:
     []
@@ -4513,7 +4469,7 @@
   PrefabRemaps:
     []
   Name: CameraService
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4870,7 +4826,6 @@
   Enabled: true
   ScriptAsset: !<reference> f2f41dee-9d37-4ad5-92bb-fac658ef1f55
   ScriptInputsDefault:
-    paletteSize: true
     maxIterations: true
     sampleSize: true
     debugMode: true
@@ -4879,7 +4834,7 @@
   ScriptInputs:
     "":
       inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      paletteSize: !<float> 24.000000
+      paletteSize: !<float> 2.000000
       maxIterations: !<float> 30.000000
       sampleSize: !<float> 5000.000000
       gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
@@ -5228,12 +5183,15 @@
   Enabled: true
   ScriptAsset: !<reference> 7100dc9a-700e-49d8-8a1b-d3040a8fb5a5
   ScriptInputsDefault:
-    {}
+    maxColors: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       encoder: !<reference.ScriptComponent> 7a878e16-7e28-490b-844e-a6c28260c933
+      projectionMaterial: !<reference.Material> 42decfe2-1dc6-4f65-8c66-2ffe83e2b25e
+      vfxComponent: !<reference.VFXComponent> 2560ef30-0958-471a-9bde-7caa7a88078c
+      maxColors: !<float> 64.000000
   ScriptTypes:
     "":
       {}

@@ -27,6 +27,9 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     encoder: false
+    maxColors: false
+    projectionMaterial: false
+    vfxComponent: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -37,8 +40,14 @@
     []
   DefaultScriptInputs:
     - encoder: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      projectionMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+      maxColors: !<float> 64.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @input Component.ScriptComponent encoder {"hint":"Encoder script (Encoder_PigmentMix or Encoder_FullRGB)"}'
+    - '// @input Component.ScriptComponent encoder {"hint":"Encoder script (Encoder_PigmentMix, Encoder_FullRGB, etc.)"}'
+    - '// @input Asset.Material projectionMaterial {"hint":"Material with Gamut Projection shader"}'
+    - '// @input Component.VFXComponent vfxComponent {"hint":"VFX component to display projected colors (optional)"}'
+    - '// @input float maxColors = 64 {"hint":"Maximum colors to support (determines texture size)"}'

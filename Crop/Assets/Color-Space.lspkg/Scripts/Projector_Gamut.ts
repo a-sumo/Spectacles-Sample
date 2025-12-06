@@ -1,128 +1,242 @@
 // Projector_Gamut.ts
-// CPU-based gamut projection - finds nearest achievable color for each input
-// No GPU shader dependency - reads encoder textures directly
+// GPU-based gamut projection - finds nearest achievable color for each input
+// Standalone component that can receive colors from any source via setInputColors()
 
 @component
 export class Projector_Gamut extends BaseScriptComponent {
 
+    // ============ INPUTS ============
+
     @input
-    @hint("Encoder script (Encoder_PigmentMix or Encoder_FullRGB)")
+    @hint("Encoder script (Encoder_PigmentMix, Encoder_FullRGB, etc.)")
     encoder: ScriptComponent;
+
+    @input
+    @hint("Material with Gamut Projection shader")
+    projectionMaterial: Material;
+
+    @input
+    @hint("VFX component to display projected colors (optional)")
+    vfxComponent: VFXComponent;
+
+    @input
+    @hint("Maximum colors to support (determines texture size)")
+    maxColors: number = 64;
 
     // ============ PRIVATE STATE ============
 
+    private inputTexture: Texture;
+    private inputProvider: ProceduralTextureProvider;
+    private projectedPosRT: Texture;
+    private projectedColorRT: Texture;
+    private projectionMaterialInstance: Material;
+
+    private isInitialized: boolean = false;
+    private initAttempts: number = 0;
     private gamutTexSize: number = 64;
-    private gamutColors: vec3[] = [];  // RGB colors from encoder
-    private gamutLAB: vec3[] = [];     // LAB positions from encoder
+    private gamutValidCount: number = 0;
+
+    private texWidth: number = 8;
+    private texHeight: number = 8;
+
+    // For CPU readback of results
     private inputColors: vec3[] = [];
     private projectedColors: vec3[] = [];
     private projectedLAB: vec3[] = [];
-    private isInitialized: boolean = false;
+    private resultsReady: boolean = false;
+    private colorCount: number = 0;
+    private framesSinceInput: number = 0;
+    private inputPending: boolean = false;
 
     onAwake(): void {
-        this.createEvent("UpdateEvent").bind(() => this.tryInit());
+        // Calculate texture dimensions from maxColors
+        this.texWidth = Math.ceil(Math.sqrt(this.maxColors));
+        this.texHeight = Math.ceil(this.maxColors / this.texWidth);
+
+        // Try to initialize early on start
+        this.createEvent("OnStartEvent").bind(() => this.tryInit());
+        // Continue trying on update if not ready yet
+        this.createEvent("UpdateEvent").bind(() => this.onUpdate());
     }
 
-    private initAttempts: number = 0;
+    private onUpdate(): void {
+        if (!this.isInitialized) {
+            this.tryInit();
+        }
+
+        // Track frames since input was set (GPU needs time to render)
+        if (this.inputPending) {
+            this.framesSinceInput++;
+        }
+    }
+
+    /**
+     * Invalidate cached results - call this when the gamut changes (e.g., preset change)
+     * The GPU projection updates automatically, but CPU readback cache needs refresh.
+     */
+    public invalidateResults(): void {
+        this.resultsReady = false;
+        print("Projector_Gamut: Results invalidated, will re-read on next get");
+    }
+
+    /**
+     * Re-project the current input colors (call after gamut changes)
+     */
+    public reproject(): void {
+        if (this.inputColors.length > 0) {
+            this.resultsReady = false;
+            this.inputPending = true;
+            this.framesSinceInput = 0;
+            print(`Projector_Gamut: Re-projecting ${this.inputColors.length} colors`);
+        }
+    }
 
     private tryInit(): void {
-        if (this.isInitialized) return;
-
         this.initAttempts++;
 
-        // Debug every 10 attempts
         if (this.initAttempts % 10 === 1) {
             print(`Projector_Gamut: Init attempt ${this.initAttempts}`);
             print(`  encoder assigned: ${this.encoder != null}`);
-            if (this.encoder) {
-                const enc = this.encoder as any;
-                print(`  encoder.isReady exists: ${typeof enc.isReady === 'function'}`);
-                if (typeof enc.isReady === 'function') {
-                    print(`  encoder.isReady(): ${enc.isReady()}`);
-                }
-            }
+            print(`  projectionMaterial assigned: ${this.projectionMaterial != null}`);
         }
 
-        if (!this.encoder) return;
+        if (!this.encoder || !this.projectionMaterial) return;
 
         const enc = this.encoder as any;
-        if (!enc.isReady || !enc.isReady()) return;
+        if (!enc.isReady || !enc.isReady()) {
+            if (this.initAttempts % 10 === 1) {
+                print(`  encoder.isReady(): false`);
+            }
+            return;
+        }
 
         // Get encoder data
         this.gamutTexSize = enc.getTexSize();
-        const posRT = enc.getPosRenderTarget();
-        const colorRT = enc.getColorRenderTarget();
+        const gamutPosRT = enc.getPosRenderTarget();
+        const gamutColorRT = enc.getColorRenderTarget();
 
-        if (!posRT || !colorRT) {
+        if (!gamutPosRT || !gamutColorRT) {
             print("Projector_Gamut: Encoder textures not ready");
             return;
         }
 
-        // Read gamut data from render targets
-        this.loadGamutData(posRT, colorRT);
+        if (typeof enc.getGamutValidCount === 'function') {
+            this.gamutValidCount = enc.getGamutValidCount();
+        } else {
+            this.gamutValidCount = this.gamutTexSize * this.gamutTexSize;
+        }
+
+        // Create input texture for colors to project
+        this.createInputTexture();
+
+        // Create output render targets
+        this.createOutputRenderTargets();
+
+        // Setup projection camera and material
+        this.setupProjectionPipeline(gamutPosRT, gamutColorRT);
+
+        // Assign outputs to VFX if provided
+        this.assignToVFX();
 
         this.isInitialized = true;
-        print(`Projector_Gamut: Ready (${this.gamutColors.length} gamut colors loaded)`);
+        print(`Projector_Gamut: Ready`);
+        print(`  gamutTexSize=${this.gamutTexSize}, gamutValidCount=${this.gamutValidCount}`);
+        print(`  maxColors=${this.maxColors}, texSize=${this.texWidth}x${this.texHeight}`);
     }
 
-    private loadGamutData(posRT: Texture, colorRT: Texture): void {
-        try {
-            const size = this.gamutTexSize;
+    private createInputTexture(): void {
+        this.inputTexture = ProceduralTextureProvider.createWithFormat(
+            this.texWidth,
+            this.texHeight,
+            TextureFormat.RGBA8Unorm
+        );
+        this.inputProvider = this.inputTexture.control as ProceduralTextureProvider;
 
-            // Read position texture (LAB encoded)
-            const posTemp = ProceduralTextureProvider.createFromTexture(posRT);
-            const posProvider = posTemp.control as ProceduralTextureProvider;
-            const posPixels = new Uint8Array(size * size * 4);
-            posProvider.getPixels(0, 0, size, size, posPixels);
+        // Initialize with invalid pixels (alpha = 0)
+        const pixels = new Uint8Array(this.texWidth * this.texHeight * 4);
+        this.inputProvider.setPixels(0, 0, this.texWidth, this.texHeight, pixels);
+    }
 
-            // Read color texture (RGB)
-            const colorTemp = ProceduralTextureProvider.createFromTexture(colorRT);
-            const colorProvider = colorTemp.control as ProceduralTextureProvider;
-            const colorPixels = new Uint8Array(size * size * 4);
-            colorProvider.getPixels(0, 0, size, size, colorPixels);
+    private createOutputRenderTargets(): void {
+        const res = new vec2(this.texWidth, this.texHeight);
+        this.projectedPosRT = this.createRenderTarget(res);
+        this.projectedColorRT = this.createRenderTarget(res);
+    }
 
-            // Parse pixels into arrays
-            this.gamutColors = [];
-            this.gamutLAB = [];
+    private createRenderTarget(resolution: vec2): Texture {
+        const rt = global.scene.createRenderTargetTexture();
+        const control = rt.control as any;
+        control.useScreenResolution = false;
+        control.resolution = resolution;
+        control.clearColorEnabled = true;
+        return rt;
+    }
 
-            for (let i = 0; i < size * size; i++) {
-                const idx = i * 4;
-                const alpha = posPixels[idx + 3];
+    private setupProjectionPipeline(gamutPosRT: Texture, gamutColorRT: Texture): void {
+        this.projectionMaterialInstance = this.projectionMaterial.clone();
+        const pass = this.projectionMaterialInstance.mainPass;
 
-                // Skip invalid entries (alpha < 128)
-                if (alpha < 128) continue;
+        pass.gamutPosTex = gamutPosRT;
+        pass.gamutColorTex = gamutColorRT;
+        pass.inputPosTex = this.inputTexture;
+        pass.gamutTexSize = this.gamutTexSize;
+        pass.inputTexWidth = this.texWidth;
+        pass.inputTexHeight = this.texHeight;
+        pass.gamutValidCount = this.gamutValidCount;
 
-                // Decode LAB from position texture
-                // Format: R = normA, G = normL, B = normB (same as input encoding)
-                const normA = posPixels[idx + 0] / 255;
-                const normL = posPixels[idx + 1] / 255;
-                const normB = posPixels[idx + 2] / 255;
+        const layer = LayerSet.makeUnique();
+        const cameraObj = this.createCameraMRT(layer);
+        this.createPostEffect(cameraObj, this.projectionMaterialInstance, layer);
+    }
 
-                const L = normL * 100;
-                const a = normA * 255 - 128;
-                const b = normB * 255 - 128;
+    private createCameraMRT(layer: LayerSet): SceneObject {
+        const obj = global.scene.createSceneObject("Projector_Gamut_Camera");
+        const cam = obj.createComponent("Component.Camera") as Camera;
 
-                this.gamutLAB.push(new vec3(L, a, b));
+        cam.enabled = true;
+        cam.type = Camera.Type.Orthographic;
+        cam.size = 2.0;
+        cam.aspect = 1.0;
+        cam.near = 0.5;
+        cam.far = 100.0;
+        cam.renderLayer = layer;
+        cam.renderOrder = -90;
+        cam.devicePropertyUsage = Camera.DeviceProperty.None;
+        cam.renderTarget = this.projectedPosRT;
 
-                // Decode RGB from color texture
-                const r = colorPixels[idx + 0] / 255;
-                const g = colorPixels[idx + 1] / 255;
-                const bCol = colorPixels[idx + 2] / 255;
+        const colorRenderTargets = cam.colorRenderTargets;
+        while (colorRenderTargets.length < 2) {
+            colorRenderTargets.push(Camera.createColorRenderTarget());
+        }
+        colorRenderTargets[0].targetTexture = this.projectedPosRT;
+        colorRenderTargets[0].clearColor = new vec4(0, 0, 0, 0);
+        colorRenderTargets[1].targetTexture = this.projectedColorRT;
+        colorRenderTargets[1].clearColor = new vec4(0, 0, 0, 0);
+        cam.colorRenderTargets = colorRenderTargets;
 
-                this.gamutColors.push(new vec3(r, g, bCol));
-            }
+        return obj;
+    }
 
-            print(`Projector_Gamut: Loaded ${this.gamutColors.length} valid gamut entries`);
+    private createPostEffect(cameraObj: SceneObject, material: Material, layer: LayerSet): void {
+        const obj = global.scene.createSceneObject("Projector_Gamut_Quad");
+        obj.setParent(cameraObj);
+        obj.layer = layer;
+        const pe = obj.createComponent("Component.PostEffectVisual") as PostEffectVisual;
+        pe.mainMaterial = material;
+    }
 
-            // Debug: print first few colors
-            for (let i = 0; i < Math.min(3, this.gamutColors.length); i++) {
-                const c = this.gamutColors[i];
-                const lab = this.gamutLAB[i];
-                print(`  [${i}] RGB(${(c.x*255).toFixed(0)}, ${(c.y*255).toFixed(0)}, ${(c.z*255).toFixed(0)}) LAB(${lab.x.toFixed(1)}, ${lab.y.toFixed(1)}, ${lab.z.toFixed(1)})`);
-            }
-
-        } catch (e) {
-            print("Projector_Gamut: Error loading gamut data: " + e);
+    private assignToVFX(): void {
+        if (this.vfxComponent?.asset) {
+            const props = this.vfxComponent.asset.properties as any;
+            // inputPosMap = LAB positions of input colors BEFORE projection
+            props["inputPosMap"] = this.inputTexture;
+            // posMap = LAB positions of projected colors (nearest gamut match)
+            props["posMap"] = this.projectedPosRT;
+            // colorMap = RGB colors of projected results
+            props["colorMap"] = this.projectedColorRT;
+            props["texWidth"] = this.texWidth;
+            props["texHeight"] = this.texHeight;
+            print("Projector_Gamut: Assigned to VFX (inputPosMap, posMap, colorMap)");
         }
     }
 
@@ -150,60 +264,117 @@ export class Projector_Gamut extends BaseScriptComponent {
         return new vec3(116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz));
     }
 
-    // ============ PROJECTION (CPU) ============
-
-    private findNearestGamutColor(inputLAB: vec3): { rgb: vec3; lab: vec3; deltaE: number } {
-        let bestRGB = new vec3(0.5, 0.5, 0.5);
-        let bestLAB = new vec3(50, 0, 0);
-        let minDistSq = Infinity;
-
-        for (let i = 0; i < this.gamutLAB.length; i++) {
-            const gamutLab = this.gamutLAB[i];
-
-            const dL = inputLAB.x - gamutLab.x;
-            const da = inputLAB.y - gamutLab.y;
-            const db = inputLAB.z - gamutLab.z;
-            const distSq = dL * dL + da * da + db * db;
-
-            if (distSq < minDistSq) {
-                minDistSq = distSq;
-                bestRGB = this.gamutColors[i];
-                bestLAB = gamutLab;
-            }
-        }
-
-        return {
-            rgb: bestRGB,
-            lab: bestLAB,
-            deltaE: Math.sqrt(minDistSq)
-        };
-    }
-
     // ============ PUBLIC API ============
 
     public isReady(): boolean {
-        return this.isInitialized && this.gamutColors.length > 0;
+        return this.isInitialized;
     }
 
+    /**
+     * Set input colors to project onto the gamut.
+     * Can be called from PaletteExtractor, manual input, or any other source.
+     * Colors are converted to LAB and written to the input texture.
+     */
     public setInputColors(colors: vec3[]): void {
-        this.inputColors = colors.slice();
-        this.projectColors();
-    }
-
-    private projectColors(): void {
-        if (!this.isReady()) {
-            print("Projector_Gamut: Not ready, cannot project");
+        if (!this.isInitialized) {
+            print("Projector_Gamut: Not ready, cannot set input colors");
             return;
         }
 
-        this.projectedColors = [];
-        this.projectedLAB = [];
+        this.inputColors = colors.slice();
+        this.colorCount = Math.min(colors.length, this.texWidth * this.texHeight);
+        this.resultsReady = false;
 
-        for (const inputRGB of this.inputColors) {
-            const inputLAB = this.rgb2lab(inputRGB);
-            const result = this.findNearestGamutColor(inputLAB);
-            this.projectedColors.push(result.rgb);
-            this.projectedLAB.push(result.lab);
+        const pixels = new Uint8Array(this.texWidth * this.texHeight * 4);
+
+        for (let i = 0; i < this.colorCount; i++) {
+            const rgb = colors[i];
+            const lab = this.rgb2lab(rgb);
+
+            // Encode LAB to texture format: R = normA, G = normL, B = normB
+            const normA = (lab.y + 128) / 255;
+            const normL = lab.x / 100;
+            const normB = (lab.z + 128) / 255;
+
+            const idx = i * 4;
+            pixels[idx + 0] = Math.round(normA * 255);
+            pixels[idx + 1] = Math.round(normL * 255);
+            pixels[idx + 2] = Math.round(normB * 255);
+            pixels[idx + 3] = 255;  // Valid
+        }
+
+        // Remaining pixels are invalid (alpha = 0, already initialized)
+
+        this.inputProvider.setPixels(0, 0, this.texWidth, this.texHeight, pixels);
+
+        // Mark that we're waiting for GPU to render
+        this.inputPending = true;
+        this.framesSinceInput = 0;
+
+        print(`Projector_Gamut: Projecting ${this.colorCount} colors`);
+    }
+
+    /**
+     * Check if projection results are ready (GPU has had time to render)
+     */
+    public areResultsReady(): boolean {
+        // Need at least 1 frame for GPU to render after input was set
+        return this.isInitialized && this.inputPending && this.framesSinceInput >= 1;
+    }
+
+    /**
+     * Read back projected results from GPU.
+     * Called automatically by getProjectedColors() if needed.
+     */
+    public readProjectedColors(): void {
+        if (!this.isInitialized || this.colorCount === 0) return;
+
+        if (this.framesSinceInput < 1) {
+            print(`Projector_Gamut: WARNING - reading results before GPU rendered (frame ${this.framesSinceInput})`);
+        }
+
+        try {
+            const w = this.texWidth;
+            const h = this.texHeight;
+
+            const posTemp = ProceduralTextureProvider.createFromTexture(this.projectedPosRT);
+            const posProvider = posTemp.control as ProceduralTextureProvider;
+            const posPixels = new Uint8Array(w * h * 4);
+            posProvider.getPixels(0, 0, w, h, posPixels);
+
+            const colorTemp = ProceduralTextureProvider.createFromTexture(this.projectedColorRT);
+            const colorProvider = colorTemp.control as ProceduralTextureProvider;
+            const colorPixels = new Uint8Array(w * h * 4);
+            colorProvider.getPixels(0, 0, w, h, colorPixels);
+
+            this.projectedColors = [];
+            this.projectedLAB = [];
+
+            for (let i = 0; i < this.colorCount; i++) {
+                const idx = i * 4;
+
+                const normA = posPixels[idx + 0] / 255;
+                const normL = posPixels[idx + 1] / 255;
+                const normB = posPixels[idx + 2] / 255;
+
+                const L = normL * 100;
+                const a = normA * 255 - 128;
+                const b = normB * 255 - 128;
+                this.projectedLAB.push(new vec3(L, a, b));
+
+                const r = colorPixels[idx + 0] / 255;
+                const g = colorPixels[idx + 1] / 255;
+                const bCol = colorPixels[idx + 2] / 255;
+                this.projectedColors.push(new vec3(r, g, bCol));
+            }
+
+            this.resultsReady = true;
+            this.inputPending = false;
+
+            print(`Projector_Gamut: Read back ${this.colorCount} projected colors`);
+
+        } catch (e) {
+            print("Projector_Gamut: Error reading projected colors: " + e);
         }
     }
 
@@ -212,17 +383,34 @@ export class Projector_Gamut extends BaseScriptComponent {
     }
 
     public getProjectedColors(): vec3[] {
+        if (!this.resultsReady && this.colorCount > 0) {
+            this.readProjectedColors();
+        }
+
+        // Debug: show first few colors
+        if (this.projectedColors.length > 0) {
+            const c = this.projectedColors[0];
+            print(`Projector_Gamut: First projected color RGB(${(c.x*255).toFixed(0)}, ${(c.y*255).toFixed(0)}, ${(c.z*255).toFixed(0)})`);
+        }
+
         return [...this.projectedColors];
     }
 
     public getProjectedLAB(): vec3[] {
+        if (!this.resultsReady && this.colorCount > 0) {
+            this.readProjectedColors();
+        }
         return [...this.projectedLAB];
     }
 
     public getProjectionResults(): { input: vec3; projected: vec3; inputLAB: vec3; projectedLAB: vec3; deltaE: number }[] {
+        if (!this.resultsReady && this.colorCount > 0) {
+            this.readProjectedColors();
+        }
+
         const results: { input: vec3; projected: vec3; inputLAB: vec3; projectedLAB: vec3; deltaE: number }[] = [];
 
-        for (let i = 0; i < this.inputColors.length; i++) {
+        for (let i = 0; i < this.colorCount; i++) {
             const inputRGB = this.inputColors[i];
             const inputLAB = this.rgb2lab(inputRGB);
             const projRGB = this.projectedColors[i] || new vec3(0.5, 0.5, 0.5);
@@ -239,7 +427,29 @@ export class Projector_Gamut extends BaseScriptComponent {
         return results;
     }
 
+    public getColorCount(): number {
+        return this.colorCount;
+    }
+
     public getGamutSize(): number {
-        return this.gamutColors.length;
+        return this.gamutValidCount;
+    }
+
+    // ============ RENDER TARGET GETTERS ============
+
+    public getPosRenderTarget(): Texture {
+        return this.projectedPosRT;
+    }
+
+    public getColorRenderTarget(): Texture {
+        return this.projectedColorRT;
+    }
+
+    public getInputTexture(): Texture {
+        return this.inputTexture;
+    }
+
+    public getTexDimensions(): vec2 {
+        return new vec2(this.texWidth, this.texHeight);
     }
 }

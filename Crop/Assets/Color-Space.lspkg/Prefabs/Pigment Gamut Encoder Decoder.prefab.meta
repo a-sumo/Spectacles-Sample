@@ -72,6 +72,7 @@
   Enabled: true
   ScriptAsset: !<reference> 48ceee92-eb88-445f-8ae2-fa7b9ee1c680
   ScriptInputsDefault:
+    paletteController: true
     pig0Color: true
     pig1Color: true
     pig2Color: true
@@ -84,6 +85,7 @@
     "":
       encoderMaterial: !<reference.Material> 4d05b8e4-db8a-423c-8e6d-2b5ccc4e70dc
       vfxComponent: !<reference.VFXComponent> 1125213e-109b-4a98-6147-96eb0a41d471
+      paletteController: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       texSize: !<float> 124.000000
       mixSteps: !<float> 40.000000
       scale: !<float> 5.000000

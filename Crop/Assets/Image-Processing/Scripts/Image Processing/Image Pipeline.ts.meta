@@ -26,10 +26,12 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    autoReprojectOnPresetChange: false
     debugMode: false
     gamutProjector: false
     imageRegenerator: false
     inputTexture: false
+    paletteController: false
     paletteExtractor: false
     paletteSize: false
   ScriptTypesHidden:
@@ -46,6 +48,8 @@
       imageRegenerator: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       inputTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       paletteSize: !<float> 24.000000
+      paletteController: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      autoReprojectOnPresetChange: true
       debugMode: true
   ScriptTypes:
     -
@@ -56,4 +60,6 @@
     - // @input Component.ScriptComponent imageRegenerator
     - // @input Asset.Texture inputTexture
     - '// @input float paletteSize = 24 {"hint":"Number of colors to extract"}'
+    - '// @input Component.ScriptComponent paletteController {"hint":"PaletteController to listen for preset changes"}'
+    - '// @input bool autoReprojectOnPresetChange = true {"hint":"Auto re-project when pigment preset changes"}'
     - // @input bool debugMode = true
