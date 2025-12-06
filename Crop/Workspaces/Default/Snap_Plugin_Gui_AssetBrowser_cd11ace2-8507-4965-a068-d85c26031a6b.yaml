@@ -1,9 +1,11 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 930
+    size: 1037
     values:
+      - ""
       - Camera Object.prefab
+      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Images/lab_color(1).png
       - Color-Space.lspkg/Images/lab_x(1).png
@@ -25,6 +27,8 @@ CollapsedEntities:
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
       - Color-Space.lspkg/Materials/LabEncoder.mat
       - Color-Space.lspkg/Materials/LabEncoder.ss_graph
+      - Color-Space.lspkg/Materials/Palette Remap.mat
+      - Color-Space.lspkg/Materials/Palette Remap.ss_graph
       - Color-Space.lspkg/Materials/Pigment Gamut Encoder Hi Res.mat
       - Color-Space.lspkg/Materials/Pigment Gamut Encoder Hi Res.ss_graph
       - Color-Space.lspkg/Materials/Pigment Gamut Encoder.mat
@@ -56,6 +60,7 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/Test_GamutProjector.ts
       - Color-Space.lspkg/Scripts/Test_MinimalEncoder.ts
       - Color-Space.lspkg/Scripts/Util_SpectralMix.ts
+      - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Decode From Texture File.vfxgraph
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/VFX/LAB Decoder.vfxgraph
@@ -65,14 +70,115 @@ CollapsedEntities:
       - Color-Space.lspkg/VFX/Test Particle Encoding.vfxgraph
       - Color-Space.lspkg/VFX/TestDecoder.vfxgraph
       - Color-Space.lspkg/package.native
+      - DEPENDENCY_ANALYSIS.md
       - Image-Processing/3DModels
+      - Image-Processing/3DModels/ButtonSphereMesh.mesh
+      - Image-Processing/3DModels/SWIS_Frame.mesh
+      - Image-Processing/3DModels/SWIS_tile_solid.mesh
+      - Image-Processing/3DModels/Unit Box.mesh
+      - Image-Processing/3DModels/Unit Plane.mesh
+      - Image-Processing/3DModels/Unit Sphere.mesh
       - Image-Processing/Images
+      - Image-Processing/Images/990px-1897_Schischkin_Im_Park_anagoria.jpg
+      - Image-Processing/Images/PicMask.png
+      - Image-Processing/Images/PicOutline.png
+      - Image-Processing/Images/SWIS_frame.jpg
+      - Image-Processing/Images/grey_square.png
+      - Image-Processing/Images/loading.gif
+      - Image-Processing/Images/thinOutline.png
+      - Image-Processing/Images/webIcon.png
       - Image-Processing/Materials
+      - Image-Processing/Materials/Background Material.mat
+      - Image-Processing/Materials/Background Material.ss_graph
+      - Image-Processing/Materials/Base.png
+      - Image-Processing/Materials/Black.mat
+      - Image-Processing/Materials/CamFeedCrop.mat
+      - Image-Processing/Materials/CamFeedMat.mat
+      - Image-Processing/Materials/CaptureVisual.mat
+      - Image-Processing/Materials/CaptureVisual.ss_graph
+      - Image-Processing/Materials/CaptureVisualOpacityMask.mat
+      - Image-Processing/Materials/CaptureVisualOpacityMask.ss_graph
+      - Image-Processing/Materials/Corners.mat
+      - Image-Processing/Materials/Corners.ss_graph
+      - Image-Processing/Materials/GrayTrans.mat
+      - Image-Processing/Materials/Green.mat
+      - Image-Processing/Materials/Image Input.mat
+      - Image-Processing/Materials/Image Output.mat
+      - Image-Processing/Materials/LensExp_hover_frame.ss_graph
+      - Image-Processing/Materials/Palette Color.mat
+      - Image-Processing/Materials/PinchButtonDarkRadial.mat
+      - Image-Processing/Materials/PinchDarkRadial.ss_graph
+      - Image-Processing/Materials/Rectangle Border.mat
+      - Image-Processing/Materials/Rectangle Border.ss_graph
+      - Image-Processing/Materials/SWIS_flat_color.ss_graph
+      - Image-Processing/Materials/SWIS_frame.mat
+      - Image-Processing/Materials/SWIS_tile.mat
+      - Image-Processing/Materials/Sampled Color Material.mat
+      - Image-Processing/Materials/Sampled Color Material.ss_graph
+      - Image-Processing/Materials/Shapes
+      - Image-Processing/Materials/Shapes/Rounded Corners
+      - Image-Processing/Materials/Shapes/Rounded Corners/Rounded Corner Construction.png
+      - Image-Processing/Materials/Shapes/Rounded Corners/Rounded Corners.ss_graph
+      - Image-Processing/Materials/Shapes/Rounded Rectangle Fill
+      - Image-Processing/Materials/Shapes/Rounded Rectangle Fill/Rounded Rectangle Fill.ss_graph
+      - Image-Processing/Materials/Shapes/Rounded Stroke
+      - Image-Processing/Materials/Shapes/Rounded Stroke/Rounded Square Stroke.ss_graph
+      - Image-Processing/Materials/SphereOutline.mat
+      - Image-Processing/Materials/TestScaling.mat
+      - Image-Processing/Materials/TestScaling.ss_graph
+      - Image-Processing/Materials/TextureSampleGrid.mat
+      - Image-Processing/Materials/TextureSampleGrid.ss_graph
+      - Image-Processing/Materials/loadingGif.mat
+      - Image-Processing/Materials/loadingGif.ss_graph
+      - Image-Processing/Materials/unlitColor.ss_graph
+      - Image-Processing/Materials/unlitTexture.ss_graph
+      - Image-Processing/Materials/unlitTextureColor.ss_graph
+      - Image-Processing/Materials/webIcon.mat
       - Image-Processing/Prefabs
-      - Image-Processing/Scripts
+      - Image-Processing/Prefabs/Basic Sphere 2.prefab
+      - Image-Processing/Prefabs/Basic Sphere.prefab
+      - Image-Processing/Prefabs/Button.prefab
+      - Image-Processing/Prefabs/Color Slot.prefab
+      - Image-Processing/Prefabs/Colored Square.prefab
+      - Image-Processing/Prefabs/Palette.prefab
+      - Image-Processing/Prefabs/Scanner.prefab
+      - Image-Processing/Prefabs/SceneHierarchy.prefab
+      - Image-Processing/Prefabs/Test SceneObject VFXParticle Sync.prefab
+      - Image-Processing/Scripts/APIKeyHint.ts
+      - Image-Processing/Scripts/CameraService.ts
+      - Image-Processing/Scripts/CaptionBehavior.ts
+      - Image-Processing/Scripts/ChatGPT.ts
+      - Image-Processing/Scripts/Core
+      - Image-Processing/Scripts/Core/ARCHITECTURE_GUIDE.md
+      - Image-Processing/Scripts/Core/ComponentOrchestrator.ts
+      - Image-Processing/Scripts/Core/ServiceLocator.ts
+      - Image-Processing/Scripts/CropAreaSelector.ts
+      - Image-Processing/Scripts/CropRegion.ts
+      - Image-Processing/Scripts/CursorPlaneController.ts
+      - Image-Processing/Scripts/GridTestOrchestrator.ts
       - Image-Processing/Scripts/Image Processing/Image Pipeline.ts
+      - Image-Processing/Scripts/Image Processing/PaletteExtractor.ts
+      - Image-Processing/Scripts/Image Processing/PaletteProjector.ts
       - Image-Processing/Scripts/Image Processing/PipelineTester.ts
+      - Image-Processing/Scripts/InteractableUVMapper.ts
+      - Image-Processing/Scripts/PaletteController.ts
+      - Image-Processing/Scripts/PictureBehavior.ts
+      - Image-Processing/Scripts/PictureController.ts
+      - Image-Processing/Scripts/PresetTester.ts
+      - Image-Processing/Scripts/PresetToggleController.ts
+      - Image-Processing/Scripts/SelectionUVController.ts
+      - Image-Processing/Scripts/SimpleGridPositionSync.ts
+      - Image-Processing/Scripts/Templates
+      - Image-Processing/Scripts/Templates/InstanceControllerTemplate.ts
+      - Image-Processing/Scripts/Testing
+      - Image-Processing/Scripts/Testing/TexturePositionOrchestrator.ts
+      - Image-Processing/Scripts/TexturePositionSync.ts
+      - Image-Processing/Scripts/UI
+      - Image-Processing/Scripts/UI/SwitchToggleGroupExtended.ts
+      - Image-Processing/Scripts/Utils
+      - Image-Processing/Scripts/Utils/color.ts
       - Image-Processing/VFX
+      - Image-Processing/VFX/SimpleGridPosition.vfxgraph
       - LSTween.lspkg
       - LSTween.lspkg/Examples
       - LSTween.lspkg/Examples/Assets
@@ -98,6 +204,7 @@ CollapsedEntities:
       - LSTween.lspkg/TweenJS/Version.ts
       - LSTween.lspkg/TweenJS/mainGroup.ts
       - LSTween.lspkg/package.native
+      - Prefabs
       - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
       - RemoteServiceGateway.lspkg/Helpers/AudioProcessor.ts

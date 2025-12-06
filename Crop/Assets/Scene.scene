@@ -2,20 +2,17 @@
   PackagePath: ""
   objects:
     - !<own> 0005641c-028d-459a-0000-000000014b4d
-    - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> b586a2d3-476c-4f34-8ead-ce537d16b6d8
+    - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> 1d26d745-b0fb-44ff-bf89-b09fac1f3d91
     - !<own> c40411fe-69a7-45fa-88dd-61a4550224a0
+    - !<own> c0072f4c-32ac-4857-a49c-7bb9e34e5d4f
+    - !<own> 085dea40-ce0b-4e35-8bea-4e2ba84c810f
     - !<own> 489d37b0-e03f-4b40-9738-a3b6ef8188ab
-    - !<own> 3f2b6956-2aad-451e-9555-fe237a9f8383
     - !<own> 09e1cdaa-09ec-475f-9e7d-d882305446d4
     - !<own> bdd5726a-01e5-4183-8c06-f5b80b011f33
     - !<own> 7f006e39-6408-49f5-9149-059bc4fd9329
-    - !<own> 1ec66e2f-7489-471e-8e24-c262829a6ba4
-    - !<own> 085dea40-ce0b-4e35-8bea-4e2ba84c810f
     - !<own> 0b38d0e5-ecf0-4c7f-8fae-42a8c5533192
-    - !<own> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
-    - !<own> ef81a328-fcbd-4491-8899-421f5e8df0bf
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -384,10 +381,10 @@
     - !<own> 3e00e273-0f14-47cf-b6a2-496aef455054
   Components:
     []
-- !<SceneObject/085dea40-ce0b-4e35-8bea-4e2ba84c810f>
+- !<SceneObject/065155a7-364a-47b2-a25f-f256d729884c>
   PrefabRemaps:
     []
-  Name: PipelineTester
+  Name: PaletteExtractor
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -397,6 +394,24 @@
     HasSegmentScaleCompensation: false
   Children:
     []
+  Components:
+    - !<own> d9361c0b-29c6-4926-8824-dbe3aec049f6
+- !<SceneObject/085dea40-ce0b-4e35-8bea-4e2ba84c810f>
+  PrefabRemaps:
+    []
+  Name: PIPELINE
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 065155a7-364a-47b2-a25f-f256d729884c
+    - !<own> 5e8e7446-7430-41e1-b52c-f2ad3337a989
+    - !<own> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
+    - !<own> ef81a328-fcbd-4491-8899-421f5e8df0bf
   Components:
     - !<own> 4f598828-e592-42a7-8680-fdf613f1c41d
 - !<SceneObject/08d7c7e5-4bc2-43da-980a-18c6ad3b068f>
@@ -862,22 +877,6 @@
     []
   Components:
     - !<own> 1d88044d-8781-4736-b2fd-4fba1a32457d
-- !<SceneObject/1ec66e2f-7489-471e-8e24-c262829a6ba4>
-  PrefabRemaps:
-    []
-  Name: Image Pipeline
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 69589a3b-3a5f-4b77-98d1-99ece2eb2e3d
-    - !<own> 5c0ffd9d-ce22-40ec-bc50-897b621c939a
-  Components:
-    - !<own> 414fb637-8eec-48fa-9074-409ace540fb6
 - !<SceneObject/1f35bbcf-41b3-4ff1-80d9-91bc3da069cc>
   PrefabRemaps:
     []
@@ -1060,6 +1059,28 @@
     - !<own> 017d3718-a161-48c8-bf21-86bf49f41918
   Components:
     []
+- !<ScriptComponent/29d5a7d5-b36f-4f84-b282-f55b3d7bcc30>
+  PrefabRemaps:
+    []
+  Name: Image Regenerator
+  Enabled: true
+  ScriptAsset: !<reference> 6e583192-4389-4d5a-a18c-d8c4394f8f44
+  ScriptInputsDefault:
+    enableDither: true
+    ditherStrength: true
+    debugMode: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      remapMaterial: !<reference.Material> 8779a953-a9f5-4d0d-813f-5c081eefd2b2
+      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
+      enableDither: true
+      ditherStrength: 0.850000
+      debugMode: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/29ea81df-28ee-4678-8ad3-c1410afbf7ed>
   PrefabRemaps:
     []
@@ -1291,17 +1312,17 @@
   Enabled: true
   ScriptAsset: !<reference> 9b4878bb-7749-4db9-8307-9b6688df894c
   ScriptInputsDefault:
-    _allowAllTogglesOff: true
     addCallbacks: true
     onToggleSelectedCallbacks: true
     selectedLabelColor: true
     unselectedLabelColor: true
     defaultSelectedIndex: true
+    allowNoSelection: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      _allowAllTogglesOff: false
+      _allowAllTogglesOff: true
       addCallbacks: false
       onToggleSelectedCallbacks:
         []
@@ -1317,6 +1338,7 @@
       selectedLabelColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.000000, w: 1.000000}
       unselectedLabelColor: !<Vec4> {x: 0.700000, y: 0.700000, z: 0.700000, w: 1.000000}
       defaultSelectedIndex: !<float> 0.000000
+      allowNoSelection: true
   ScriptTypes:
     "":
       {}
@@ -1459,21 +1481,23 @@
     - !<own> a890df31-eb50-48e1-bfa9-14ba0d1dbe9e
   Components:
     []
-- !<SceneObject/3f2b6956-2aad-451e-9555-fe237a9f8383>
+- !<ScriptComponent/3f29e489-fd86-4f86-a59e-ab7e981d8513>
   PrefabRemaps:
     []
   Name: PictureController
   Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: -10.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 698f5e89-f8f4-4e32-8008-0ad83d59f853
+  ScriptAsset: !<reference> dbe1d244-10d6-49c4-acda-7dac03f0eb03
+  ScriptInputsDefault:
+    interactablePath: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      scannerPrefab: !<reference.ObjectPrefab> c475918d-699f-44b3-bb86-b68c3360300d
+      interactablePath: ImageAnchor/CameraCrop
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/3fc47e57-f34c-4ed1-afb8-922c693071cf>
   PrefabRemaps:
     []
@@ -1489,30 +1513,6 @@
     - !<own> 14ff6a28-3cb1-4927-a808-9d37cf2edc25
   Components:
     []
-- !<ScriptComponent/414fb637-8eec-48fa-9074-409ace540fb6>
-  PrefabRemaps:
-    []
-  Name: Image Pipeline
-  Enabled: true
-  ScriptAsset: !<reference> bc81b387-5678-44b5-9b02-b9117da72801
-  ScriptInputsDefault:
-    autoReprojectOnPresetChange: true
-    debugMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      paletteExtractor: !<reference.ScriptComponent> d1550b87-cf5e-480d-8fa6-411d3028c84c
-      gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
-      imageRegenerator: !<reference.ScriptComponent> afb6da78-469a-4973-a79f-9ab22e13ea8a
-      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      paletteSize: !<float> 8.000000
-      paletteController: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
-      autoReprojectOnPresetChange: true
-      debugMode: true
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/42b5b00c-8a41-443e-aaf7-5bcb02a94686>
   PrefabRemaps:
     []
@@ -1621,7 +1621,7 @@
   PrefabRemaps:
     []
   Name: ComponentOrchestrator
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -1692,9 +1692,9 @@
     {}
   ScriptInputs:
     "":
-      paletteExtractor: !<reference.ScriptComponent> d1550b87-cf5e-480d-8fa6-411d3028c84c
+      paletteExtractor: !<reference.ScriptComponent> d9361c0b-29c6-4926-8824-dbe3aec049f6
       gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
-      imageRegenerator: !<reference.ScriptComponent> afb6da78-469a-4973-a79f-9ab22e13ea8a
+      imageRegenerator: !<reference.ScriptComponent> 29d5a7d5-b36f-4f84-b282-f55b3d7bcc30
       testImage: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
       extractColors: !<float> 24.000000
       previewMesh: !<reference.SceneObject> ef81a328-fcbd-4491-8899-421f5e8df0bf
@@ -2054,21 +2054,6 @@
   ScriptTypes:
     "":
       {}
-- !<SceneObject/5c0ffd9d-ce22-40ec-bc50-897b621c939a>
-  PrefabRemaps:
-    []
-  Name: Image Regenerator
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> afb6da78-469a-4973-a79f-9ab22e13ea8a
 - !<SceneObject/5d5dc618-ccfb-4fd9-a7d8-3e4fce2f9d5c>
   PrefabRemaps:
     []
@@ -2104,6 +2089,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/5e8e7446-7430-41e1-b52c-f2ad3337a989>
+  PrefabRemaps:
+    []
+  Name: Image Regenerator
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 29d5a7d5-b36f-4f84-b282-f55b3d7bcc30
 - !<SceneObject/607bbea6-a918-46e1-ac91-ed27dffab0f9>
   PrefabRemaps:
     []
@@ -2405,38 +2405,6 @@
     - !<own> 4f2b04f9-f1d8-4c8b-b7eb-0a3e6b770296
   Components:
     []
-- !<SceneObject/69589a3b-3a5f-4b77-98d1-99ece2eb2e3d>
-  PrefabRemaps:
-    []
-  Name: PaletteExtractor
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> d1550b87-cf5e-480d-8fa6-411d3028c84c
-- !<ScriptComponent/698f5e89-f8f4-4e32-8008-0ad83d59f853>
-  PrefabRemaps:
-    []
-  Name: PictureController
-  Enabled: true
-  ScriptAsset: !<reference> dbe1d244-10d6-49c4-acda-7dac03f0eb03
-  ScriptInputsDefault:
-    interactablePath: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      scannerPrefab: !<reference.ObjectPrefab> c475918d-699f-44b3-bb86-b68c3360300d
-      interactablePath: ImageAnchor/CameraCrop
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/6c2c236b-149f-4834-8f15-51dd0563ba5c>
   PrefabRemaps:
     []
@@ -2764,7 +2732,7 @@
   PrefabRemaps:
     []
   Name: TexturePositionSync
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -3220,7 +3188,7 @@
       _defaultToOn: false
       addCallbacks: true
       triggerUpCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 698f5e89-f8f4-4e32-8008-0ad83d59f853
+        - scriptComponent: !<reference.ScriptComponent> 3f29e489-fd86-4f86-a59e-ab7e981d8513
           functionName: editorTest
       triggerDownCallbacks:
         []
@@ -3927,28 +3895,6 @@
     []
   Components:
     - !<own> c7e0a5ed-333d-4f03-8134-7b2a1425a28e
-- !<ScriptComponent/afb6da78-469a-4973-a79f-9ab22e13ea8a>
-  PrefabRemaps:
-    []
-  Name: Image Regenerator
-  Enabled: true
-  ScriptAsset: !<reference> 6e583192-4389-4d5a-a18c-d8c4394f8f44
-  ScriptInputsDefault:
-    enableDither: true
-    ditherStrength: true
-    debugMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      remapMaterial: !<reference.Material> 8779a953-a9f5-4d0d-813f-5c081eefd2b2
-      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      enableDither: true
-      ditherStrength: 0.850000
-      debugMode: true
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/b0484c38-55be-4c24-9363-5e5a88b392e0>
   PrefabRemaps:
     []
@@ -4195,18 +4141,15 @@
     - b586a2d3-476c-4f34-8ead-ce537d16b6d8: ac190d7f-8f8a-427c-4cd7-034d38e5ab1c
     - b5ff693c-56ce-4a2f-bd91-36adcb12714d: 89b8d96b-b23a-4c1d-6502-15a525899ccf
     - b97486fa-780f-41f4-8885-5c6278f4c2a0: b1c0f72d-600f-41a7-449d-ce9138b8c201
-    - b984d835-6a17-4864-a11c-8d1bdb924651: cae2d8c6-0879-4b17-53a5-209c43754d6d
     - bba8fbaa-7e03-41a1-b20b-836861b95809: c0fbe2e8-b696-42bd-55f2-d73736d535ee
     - bbed82a5-e2cb-4ae3-a49f-2d390d886361: 001d8b74-6a85-4cdd-4dce-02e42037172f
     - bc319a5e-e7c2-4e13-8a7c-c8b96916f25b: e7c7be4e-0d9b-4cd3-4515-578e27dfee29
     - bf35eadf-9585-4120-bbe0-4392fbf9fe2a: 215027b3-748f-4737-7518-2cebfc1589c7
-    - c0af51e4-8d6a-48ce-a659-d35fa29e8af8: b8018fa2-37b3-496d-4d03-42eecbd9c50a
     - c49f8969-4efb-4c20-951e-d59037e4a275: ac3ceda4-1236-4a0b-4ad5-1758a5487e41
     - c4fa0867-ed05-401c-88a1-5f12c53ded3d: 20700869-1aef-485f-5ff2-9b6bc13d5693
     - c7eb7de5-8058-479a-8813-bc835a108f4a: 51baf90b-86de-4a7e-789b-349c4b72393c
     - c906a6f9-42a8-428d-9300-997343a6cb55: b9d14d3a-7945-428c-5897-be96d3d145eb
     - ca7107ea-df9e-460f-b07d-04bdd12c8d6e: b1a805b2-6eb9-49e5-6e71-24f9f72dd3fb
-    - cb99cd36-5f9b-4d36-89bd-01303407aee6: 360ccda0-8a8e-4d47-4b6f-89d32e9a3390
     - cbb15420-16bb-403a-a7c3-d3af3f9d1b55: a7ac0bc1-703e-43f5-70cb-91e33cf39e04
     - cc80db17-5863-4fa0-9a51-76e6afda8848: b1f777fc-9def-4cf7-6afb-038a1427adc4
     - d4e4bf56-fa5e-4e5f-a300-f3d93779c106: 82686826-4088-45dd-570f-fc97c8693187
@@ -4450,6 +4393,21 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<SceneObject/c0072f4c-32ac-4857-a49c-7bb9e34e5d4f>
+  PrefabRemaps:
+    []
+  Name: PictureBehavior
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 3f29e489-fd86-4f86-a59e-ab7e981d8513
 - !<SceneObject/c2e1e25c-cf35-49cd-85c6-44bf0984712f>
   PrefabRemaps:
     []
@@ -4819,29 +4777,6 @@
     []
   Components:
     - !<own> 7a878e16-7e28-490b-844e-a6c28260c933
-- !<ScriptComponent/d1550b87-cf5e-480d-8fa6-411d3028c84c>
-  PrefabRemaps:
-    []
-  Name: PaletteExtractor
-  Enabled: true
-  ScriptAsset: !<reference> f2f41dee-9d37-4ad5-92bb-fac658ef1f55
-  ScriptInputsDefault:
-    maxIterations: true
-    sampleSize: true
-    debugMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      paletteSize: !<float> 2.000000
-      maxIterations: !<float> 30.000000
-      sampleSize: !<float> 5000.000000
-      gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
-      debugMode: true
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/d4e4bf56-fa5e-4e5f-a300-f3d93779c106>
   PrefabRemaps:
     []
@@ -4930,6 +4865,30 @@
       _triggerStartAudioTrack: !<reference.AudioTrackAsset> edad7d53-55da-40b1-9025-fad0e7207862
       _playAudioOnTriggerEnd: true
       _triggerEndAudioTrack: !<reference.AudioTrackAsset> 82028831-1631-4d7b-b548-ff6be4e0a2ba
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/d9361c0b-29c6-4926-8824-dbe3aec049f6>
+  PrefabRemaps:
+    []
+  Name: PaletteExtractor
+  Enabled: true
+  ScriptAsset: !<reference> f2f41dee-9d37-4ad5-92bb-fac658ef1f55
+  ScriptInputsDefault:
+    paletteSize: true
+    maxIterations: true
+    sampleSize: true
+    debugMode: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
+      paletteSize: !<float> 24.000000
+      maxIterations: !<float> 30.000000
+      sampleSize: !<float> 5000.000000
+      gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
+      debugMode: true
   ScriptTypes:
     "":
       {}

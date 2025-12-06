@@ -30,6 +30,7 @@
     _labels: false
     _switches: false
     addCallbacks: false
+    allowNoSelection: false
     defaultSelectedIndex: false
     labelTexts: false
     onToggleSelectedCallbacks: false
@@ -56,6 +57,7 @@
       selectedLabelColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.000000, w: 1.000000}
       unselectedLabelColor: !<Vec4> {x: 0.700000, y: 0.700000, z: 0.700000, w: 1.000000}
       defaultSelectedIndex: !<float> 0.000000
+      allowNoSelection: true
   ScriptTypes:
     -
       {}
@@ -74,3 +76,4 @@
     - "// @input vec4 selectedLabelColor = {1,0.85,0,1} {\"hint\":\"Color for selected toggle's label\"}"
     - "// @input vec4 unselectedLabelColor = {0.7,0.7,0.7,1} {\"hint\":\"Color for unselected toggle's label\"}"
     - '// @input float defaultSelectedIndex {"hint":"Default selected index (-1 for none)"}'
+    - '// @input bool allowNoSelection = true {"hint":"Allow deselecting all toggles (no selection)"}'

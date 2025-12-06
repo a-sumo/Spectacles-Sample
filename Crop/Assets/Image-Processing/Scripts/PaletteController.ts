@@ -192,6 +192,11 @@ export class PaletteController extends BaseScriptComponent {
 	private currentPresetIndex: number = -1;
 	private presetToggleGroup: ScriptComponent | null = null;
 
+	// Palette history for undo functionality
+	private paletteHistory: vec4[][] = [];
+	private maxHistorySize: number = 20;
+	private prePresetPalette: vec4[] | null = null; // Stored palette before a preset was applied
+
 	private onSelectionChangedEvent: Event<PaletteSelectionEvent> =
 		new Event<PaletteSelectionEvent>();
 	public readonly onSelectionChanged: PublicApi<PaletteSelectionEvent> =
@@ -201,6 +206,18 @@ export class PaletteController extends BaseScriptComponent {
 		new Event<PresetChangedEvent>();
 	public readonly onPresetChanged: PublicApi<PresetChangedEvent> =
 		this.onPresetChangedEvent.publicApi();
+
+	private onPaletteRestoredEvent: Event<vec4[]> = new Event<vec4[]>();
+	public readonly onPaletteRestored: PublicApi<vec4[]> =
+		this.onPaletteRestoredEvent.publicApi();
+
+	// Fires when colors are changed manually (not via preset)
+	private onColorsManuallyChangedEvent: Event<vec4[]> = new Event<vec4[]>();
+	public readonly onColorsManuallyChanged: PublicApi<vec4[]> =
+		this.onColorsManuallyChangedEvent.publicApi();
+
+	// Flag to prevent feedback loops when updating toggle group
+	private isUpdatingFromPreset: boolean = false;
 
 	onAwake(): void {
 		this.createEvent("OnStartEvent").bind(this.initialize.bind(this));
@@ -282,7 +299,20 @@ export class PaletteController extends BaseScriptComponent {
 					this.onToggleGroupSelectionChanged(event);
 				});
 
-				print("PaletteController: Connected to preset toggle group");
+				// Listen for all-deselected event (SwitchToggleGroupExtended)
+				if (
+					scriptAny.onAllDeselected &&
+					typeof scriptAny.onAllDeselected.add === "function"
+				) {
+					scriptAny.onAllDeselected.add(() => {
+						this.onToggleGroupAllDeselected();
+					});
+					print(
+						"PaletteController: Connected to preset toggle group with deselection support"
+					);
+				} else {
+					print("PaletteController: Connected to preset toggle group");
+				}
 				return;
 			}
 
@@ -331,6 +361,60 @@ export class PaletteController extends BaseScriptComponent {
 		}
 	}
 
+	private onToggleGroupAllDeselected(): void {
+		// Ignore if we're the ones who cleared it
+		if (this.isUpdatingFromPreset) return;
+
+		print("PaletteController: All presets deselected, restoring previous palette");
+		this.deselectPreset(true);
+	}
+
+	/**
+	 * Clear the preset toggle group selection (when user manually changes colors)
+	 * This is called internally when colors are changed outside of preset application
+	 */
+	private clearPresetToggleSelection(): void {
+		if (!this.presetToggleGroup) return;
+
+		const toggleGroupAny = this.presetToggleGroup as any;
+
+		// Set flag to prevent feedback loop
+		this.isUpdatingFromPreset = true;
+
+		try {
+			if (typeof toggleGroupAny.clearSelection === "function") {
+				// SwitchToggleGroupExtended has clearSelection
+				toggleGroupAny.clearSelection(false); // false = don't notify (we're already handling)
+				print("PaletteController: Cleared preset toggle selection");
+			} else if (typeof toggleGroupAny.deselectAll === "function") {
+				// Fallback for other toggle group implementations
+				toggleGroupAny.deselectAll();
+			}
+		} finally {
+			this.isUpdatingFromPreset = false;
+		}
+	}
+
+	/**
+	 * Programmatically select a preset in the toggle group
+	 * Call this to sync UI when reactivating a preset
+	 */
+	public selectPresetToggle(index: number): void {
+		if (!this.presetToggleGroup) return;
+
+		const toggleGroupAny = this.presetToggleGroup as any;
+
+		this.isUpdatingFromPreset = true;
+
+		try {
+			if (typeof toggleGroupAny.setSelectedIndex === "function") {
+				toggleGroupAny.setSelectedIndex(index, false); // false = don't notify
+			}
+		} finally {
+			this.isUpdatingFromPreset = false;
+		}
+	}
+
 	public applyPresetByIndex(index: number, notify: boolean = true): void {
 		if (index < 0 || index >= PRESET_ORDER.length) {
 			print(`PaletteController: Invalid preset index ${index}`);
@@ -339,6 +423,43 @@ export class PaletteController extends BaseScriptComponent {
 
 		const presetName = PRESET_ORDER[index];
 		this.applyPreset(presetName, index, notify);
+	}
+
+	/**
+	 * Reactivate a preset - applies colors AND updates toggle UI
+	 * Use this when you want to restore a preset from code
+	 * @param index - Preset index (0-4 for classic, zorn, primary, impressionist, earth)
+	 * @param notify - Whether to fire onPresetChanged event
+	 */
+	public reactivatePreset(index: number, notify: boolean = true): void {
+		if (index < 0 || index >= PRESET_ORDER.length) {
+			print(`PaletteController: Invalid preset index ${index}`);
+			return;
+		}
+
+		// Apply the preset colors
+		const presetName = PRESET_ORDER[index];
+		this.applyPreset(presetName, index, notify);
+
+		// Sync the toggle UI
+		this.selectPresetToggle(index);
+
+		print(`PaletteController: Reactivated preset '${presetName}' with UI sync`);
+	}
+
+	/**
+	 * Reactivate a preset by name - applies colors AND updates toggle UI
+	 */
+	public reactivatePresetByName(
+		presetName: PigmentPresetName,
+		notify: boolean = true
+	): void {
+		const index = PRESET_ORDER.indexOf(presetName);
+		if (index < 0) {
+			print(`PaletteController: Unknown preset '${presetName}'`);
+			return;
+		}
+		this.reactivatePreset(index, notify);
 	}
 
 	public setOilPigmentPreset(
@@ -370,6 +491,17 @@ export class PaletteController extends BaseScriptComponent {
 		) {
 			return;
 		}
+
+		// Save current palette before applying preset (if not already a preset)
+		if (this.currentPreset === null && this.prePresetPalette === null) {
+			this.prePresetPalette = this.getAllColors();
+			print(
+				"PaletteController: Saved pre-preset palette for later restoration"
+			);
+		}
+
+		// Also save to history
+		this.pushToHistory();
 
 		this.currentPreset = presetName;
 		this.currentPresetIndex = presetIndex;
@@ -458,6 +590,168 @@ export class PaletteController extends BaseScriptComponent {
 	 */
 	public isCleared(): boolean {
 		return this.currentPreset === null && this.currentPresetIndex === -1;
+	}
+
+	// ============ HISTORY MANAGEMENT ============
+
+	/**
+	 * Push current palette state to history
+	 */
+	private pushToHistory(): void {
+		const currentColors = this.getAllColors();
+		this.paletteHistory.push(currentColors);
+
+		// Limit history size
+		if (this.paletteHistory.length > this.maxHistorySize) {
+			this.paletteHistory.shift();
+		}
+	}
+
+	/**
+	 * Undo the last palette change
+	 * @returns true if undo was performed, false if no history
+	 */
+	public undo(): boolean {
+		if (this.paletteHistory.length === 0) {
+			print("PaletteController: No history to undo");
+			return false;
+		}
+
+		const previousColors = this.paletteHistory.pop()!;
+		this.applyColorsInternal(previousColors, false);
+
+		// Reset preset state since we're restoring custom colors
+		this.currentPreset = null;
+		this.currentPresetIndex = -1;
+
+		this.syncPigmentColors();
+		this.onPaletteRestoredEvent.invoke(previousColors);
+
+		print(
+			`PaletteController: Undone to previous state (${this.paletteHistory.length} states remaining)`
+		);
+		return true;
+	}
+
+	/**
+	 * Get the number of undo steps available
+	 */
+	public getUndoCount(): number {
+		return this.paletteHistory.length;
+	}
+
+	/**
+	 * Check if undo is available
+	 */
+	public canUndo(): boolean {
+		return this.paletteHistory.length > 0;
+	}
+
+	/**
+	 * Clear history
+	 */
+	public clearHistory(): void {
+		this.paletteHistory = [];
+		print("PaletteController: History cleared");
+	}
+
+	/**
+	 * Restore the palette to what it was before any preset was applied
+	 * Call this when all presets are deselected
+	 */
+	public restorePrePresetPalette(notify: boolean = true): boolean {
+		if (this.prePresetPalette === null) {
+			print("PaletteController: No pre-preset palette to restore");
+			return false;
+		}
+
+		// Save current state to history before restoring
+		this.pushToHistory();
+
+		this.applyColorsInternal(this.prePresetPalette, false);
+
+		// Reset preset state
+		this.currentPreset = null;
+		this.currentPresetIndex = -1;
+
+		// Clear the pre-preset palette (it's now the current palette)
+		const restoredColors = [...this.prePresetPalette];
+		this.prePresetPalette = null;
+
+		this.syncPigmentColors();
+
+		print("PaletteController: Restored pre-preset palette");
+
+		if (notify) {
+			this.onPaletteRestoredEvent.invoke(restoredColors);
+			// Also fire preset changed with null to indicate no preset
+			this.onPresetChangedEvent.invoke(
+				new PresetChangedEvent(null, -1, restoredColors)
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if there's a pre-preset palette that can be restored
+	 */
+	public hasPrePresetPalette(): boolean {
+		return this.prePresetPalette !== null;
+	}
+
+	/**
+	 * Internal method to apply colors without affecting history
+	 */
+	private applyColorsInternal(colors: vec4[], updatePresetState: boolean): void {
+		const count = Math.min(this.itemList.length, colors.length);
+
+		for (let i = 0; i < count; i++) {
+			const item = this.itemList[i];
+			item.color = colors[i];
+
+			const itemData = this.items.get(item.id);
+			if (itemData) {
+				itemData.color = colors[i];
+			}
+
+			if (item.coloredSquareMaterial) {
+				item.coloredSquareMaterial.mainPass.mainColor = colors[i];
+			}
+		}
+
+		if (updatePresetState) {
+			this.currentPreset = null;
+			this.currentPresetIndex = -1;
+		}
+	}
+
+	/**
+	 * Deselect current preset and restore previous palette
+	 * This is the main method to call when all presets are toggled off
+	 */
+	public deselectPreset(notify: boolean = true): void {
+		if (this.currentPreset === null) {
+			print("PaletteController: No preset currently selected");
+			return;
+		}
+
+		// Try to restore pre-preset palette first
+		if (this.restorePrePresetPalette(notify)) {
+			return;
+		}
+
+		// If no pre-preset palette, just reset preset state
+		this.currentPreset = null;
+		this.currentPresetIndex = -1;
+
+		if (notify) {
+			this.onPresetChangedEvent.invoke(
+				new PresetChangedEvent(null, -1, this.getAllColors())
+			);
+		}
+
+		print("PaletteController: Preset deselected");
 	}
 
 	/**
@@ -905,9 +1199,14 @@ export class PaletteController extends BaseScriptComponent {
 		this.setItemColor(this.activeItemId, color);
 	}
 
-	public setItemColor(id: string, color: vec4): void {
+	public setItemColor(id: string, color: vec4, saveHistory: boolean = true): void {
 		const item = this.items.get(id);
 		if (!item) return;
+
+		// Save to history before changing
+		if (saveHistory) {
+			this.pushToHistory();
+		}
 
 		item.color = color;
 
@@ -920,11 +1219,21 @@ export class PaletteController extends BaseScriptComponent {
 			item.coloredSquareMaterial.mainPass.mainColor = color;
 		}
 
-		// Mark as custom preset
+		// Mark as custom preset and clear pre-preset palette
+		const wasPreset = this.currentPreset !== null;
 		this.currentPreset = null;
 		this.currentPresetIndex = -1;
+		this.prePresetPalette = null;
 
 		this.syncPigmentColors();
+
+		// If we were on a preset, clear the toggle group selection
+		if (wasPreset) {
+			this.clearPresetToggleSelection();
+		}
+
+		// Fire manual change event
+		this.onColorsManuallyChangedEvent.invoke(this.getAllColors());
 	}
 
 	public setItemColorByIndex(index: number, color: vec4): void {
@@ -973,7 +1282,12 @@ export class PaletteController extends BaseScriptComponent {
 		);
 	}
 
-	public setColorsFromArray(colors: vec4[]): void {
+	public setColorsFromArray(colors: vec4[], saveHistory: boolean = true): void {
+		// Save to history before changing
+		if (saveHistory) {
+			this.pushToHistory();
+		}
+
 		const count = Math.min(this.itemList.length, colors.length);
 		for (let i = 0; i < count; i++) {
 			const item = this.itemList[i];
@@ -983,11 +1297,21 @@ export class PaletteController extends BaseScriptComponent {
 			}
 		}
 
-		// Mark as custom
+		// Mark as custom and clear pre-preset palette
+		const wasPreset = this.currentPreset !== null;
 		this.currentPreset = null;
 		this.currentPresetIndex = -1;
+		this.prePresetPalette = null;
 
 		this.syncPigmentColors();
+
+		// If we were on a preset, clear the toggle group selection
+		if (wasPreset) {
+			this.clearPresetToggleSelection();
+		}
+
+		// Fire manual change event
+		this.onColorsManuallyChangedEvent.invoke(this.getAllColors());
 	}
 
 	public logCurrentPalette(): void {

@@ -293,21 +293,6 @@
     - !<own> e54e9514-91f3-4922-781f-1d53ce33b7aa
   Components:
     []
-- !<SceneObject/360ccda0-8a8e-4d47-4b6f-89d32e9a3390>
-  PrefabRemaps:
-    []
-  Name: "[OPTIONAL] Connected Lens"
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> b8018fa2-37b3-496d-4d03-42eecbd9c50a
-  Components:
-    []
 - !<SceneObject/37a62259-1ce7-4744-4915-23d3aa0cacd7>
   PrefabRemaps:
     []
@@ -1588,7 +1573,6 @@
   Children:
     - !<own> 70290c16-3e1e-4ebd-77be-11f99a7f536a
     - !<own> e7c7be4e-0d9b-4cd3-4515-578e27dfee29
-    - !<own> 360ccda0-8a8e-4d47-4b6f-89d32e9a3390
   Components:
     []
 - !<SceneObject/ac31778e-bd43-42a4-6843-b0b7a04f6a03>
@@ -1757,21 +1741,6 @@
     []
   Components:
     - !<own> 8e635d88-9a0d-4a5d-60c9-6384382137db
-- !<SceneObject/b8018fa2-37b3-496d-4d03-42eecbd9c50a>
-  PrefabRemaps:
-    []
-  Name: SyncInteractionManager
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> cae2d8c6-0879-4b17-53a5-209c43754d6d
 - !<SceneObject/b92e7c34-d016-4929-6b50-64cda20106b3>
   PrefabRemaps:
     []
@@ -1957,22 +1926,6 @@
     - !<own> 9ed0157f-fd08-47e6-6e7f-261559f25171
   Components:
     []
-- !<ScriptComponent/cae2d8c6-0879-4b17-53a5-209c43754d6d>
-  PrefabRemaps:
-    []
-  Name: SyncInteractionManager
-  Enabled: true
-  ScriptAsset: !<reference> 8a9b1d02-a363-4339-be4e-9951baeeae9b
-  ScriptInputsDefault:
-    enableSyncCursors: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      enableSyncCursors: true
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/d2fbbe47-d72e-4471-5e0e-fd0043416ded>
   PrefabRemaps:
     []

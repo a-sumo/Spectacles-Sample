@@ -49,17 +49,27 @@ export class SwitchToggleGroupExtended extends BaseToggleGroup {
     @input
     @hint("Default selected index (-1 for none)")
     private defaultSelectedIndex: number = 0
-    
+
+    @input
+    @hint("Allow deselecting all toggles (no selection)")
+    private allowNoSelection: boolean = true
+
     // Selection tracking
     private _selectedIndex: number = -1
     private _previousSelectedIndex: number = -1
-    
+
+    // Flag to prevent event firing during programmatic updates
+    private _isProgrammaticUpdate: boolean = false
+
     // Events
     private onSelectionChangedEvent: Event<ToggleSelectionEvent> = new Event<ToggleSelectionEvent>()
     public readonly onSelectionChanged: PublicApi<ToggleSelectionEvent> = this.onSelectionChangedEvent.publicApi()
-    
+
     private onDeselectionEvent: Event<ToggleSelectionEvent> = new Event<ToggleSelectionEvent>()
     public readonly onDeselection: PublicApi<ToggleSelectionEvent> = this.onDeselectionEvent.publicApi()
+
+    private onAllDeselectedEvent: Event<void> = new Event<void>()
+    public readonly onAllDeselected: PublicApi<void> = this.onAllDeselectedEvent.publicApi()
     
     // BaseToggleGroup implementation
     get toggleables(): Toggleable[] {
@@ -109,13 +119,16 @@ export class SwitchToggleGroupExtended extends BaseToggleGroup {
     }
     
     private handleSwitchValueChanged(index: number, value: number): void {
+        // Skip event handling if this is a programmatic update
+        if (this._isProgrammaticUpdate) return
+
         if (value === 1) {
             // Switch turned ON
             this._previousSelectedIndex = this._selectedIndex
             this._selectedIndex = index
-            
+
             this.updateLabelColors()
-            
+
             // Invoke selection event
             const event = new ToggleSelectionEvent(
                 index,
@@ -124,7 +137,7 @@ export class SwitchToggleGroupExtended extends BaseToggleGroup {
                 this._switches[index].sceneObject
             )
             this.onSelectionChangedEvent.invoke(event)
-            
+
             // Invoke deselection event for previous
             if (this._previousSelectedIndex >= 0 && this._previousSelectedIndex !== index) {
                 const deselectionEvent = new ToggleSelectionEvent(
@@ -135,6 +148,26 @@ export class SwitchToggleGroupExtended extends BaseToggleGroup {
                 )
                 this.onDeselectionEvent.invoke(deselectionEvent)
             }
+        } else if (value === 0 && this.allowNoSelection && index === this._selectedIndex) {
+            // Switch turned OFF - only handle if this is the currently selected one
+            // and allowNoSelection is enabled
+            this._previousSelectedIndex = this._selectedIndex
+            this._selectedIndex = -1
+
+            this.updateLabelColors()
+
+            // Invoke deselection event for this switch
+            const deselectionEvent = new ToggleSelectionEvent(
+                index,
+                this._switches[index],
+                this.getLabelText(index),
+                this._switches[index].sceneObject
+            )
+            this.onDeselectionEvent.invoke(deselectionEvent)
+
+            // Invoke all-deselected event
+            this.onAllDeselectedEvent.invoke()
+            print("SwitchToggleGroupExtended: All toggles deselected")
         }
     }
     
@@ -165,38 +198,102 @@ export class SwitchToggleGroupExtended extends BaseToggleGroup {
     public getPreviousSelectedIndex(): number {
         return this._previousSelectedIndex
     }
-    
+
+    /**
+     * Check if any toggle is selected
+     */
+    public hasSelection(): boolean {
+        return this._selectedIndex >= 0
+    }
+
+    /**
+     * Clear selection (deselect all toggles)
+     * Only works if allowNoSelection is true
+     * @param notify - If false, events won't be fired (use when calling from external controller)
+     */
+    public clearSelection(notify: boolean = true): void {
+        if (!this.allowNoSelection) {
+            print("SwitchToggleGroupExtended: Cannot clear selection when allowNoSelection is false")
+            return
+        }
+
+        if (this._selectedIndex < 0) return
+
+        const previousIndex = this._selectedIndex
+
+        // Set flag to prevent event handling during switch update
+        this._isProgrammaticUpdate = !notify
+
+        try {
+            // Turn off the current switch
+            if (previousIndex >= 0 && previousIndex < this._switches.length) {
+                this._switches[previousIndex].isOn = false
+            }
+
+            this._previousSelectedIndex = previousIndex
+            this._selectedIndex = -1
+
+            this.updateLabelColors()
+
+            if (notify) {
+                // Fire deselection event
+                const deselectionEvent = new ToggleSelectionEvent(
+                    previousIndex,
+                    this._switches[previousIndex],
+                    this.getLabelText(previousIndex),
+                    this._switches[previousIndex].sceneObject
+                )
+                this.onDeselectionEvent.invoke(deselectionEvent)
+
+                // Fire all-deselected event
+                this.onAllDeselectedEvent.invoke()
+            }
+        } finally {
+            this._isProgrammaticUpdate = false
+        }
+
+        print("SwitchToggleGroupExtended: Selection cleared programmatically")
+    }
+
     /**
      * Set the selected index programmatically
+     * @param notify - If false, events won't be fired (use when calling from external controller)
      */
     public setSelectedIndex(index: number, notify: boolean = true): void {
         if (index < 0 || index >= this._switches.length) {
             print(`SwitchToggleGroupExtended: Index ${index} out of range`)
             return
         }
-        
+
         if (index === this._selectedIndex) return
-        
-        // Turn off current selection
-        if (this._selectedIndex >= 0 && this._selectedIndex < this._switches.length) {
-            this._switches[this._selectedIndex].isOn = false
-        }
-        
-        // Turn on new selection
-        this._previousSelectedIndex = this._selectedIndex
-        this._selectedIndex = index
-        this._switches[index].isOn = true
-        
-        this.updateLabelColors()
-        
-        if (notify) {
-            const event = new ToggleSelectionEvent(
-                index,
-                this._switches[index],
-                this.getLabelText(index),
-                this._switches[index].sceneObject
-            )
-            this.onSelectionChangedEvent.invoke(event)
+
+        // Set flag to prevent event handling during switch updates
+        this._isProgrammaticUpdate = !notify
+
+        try {
+            // Turn off current selection
+            if (this._selectedIndex >= 0 && this._selectedIndex < this._switches.length) {
+                this._switches[this._selectedIndex].isOn = false
+            }
+
+            // Turn on new selection
+            this._previousSelectedIndex = this._selectedIndex
+            this._selectedIndex = index
+            this._switches[index].isOn = true
+
+            this.updateLabelColors()
+
+            if (notify) {
+                const event = new ToggleSelectionEvent(
+                    index,
+                    this._switches[index],
+                    this.getLabelText(index),
+                    this._switches[index].sceneObject
+                )
+                this.onSelectionChangedEvent.invoke(event)
+            }
+        } finally {
+            this._isProgrammaticUpdate = false
         }
     }
     
