@@ -4,6 +4,7 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> b586a2d3-476c-4f34-8ead-ce537d16b6d8
+    - !<own> 489d37b0-e03f-4b40-9738-a3b6ef8188ab
     - !<own> 1d26d745-b0fb-44ff-bf89-b09fac1f3d91
     - !<own> c40411fe-69a7-45fa-88dd-61a4550224a0
     - !<own> 3f2b6956-2aad-451e-9555-fe237a9f8383
@@ -1605,6 +1606,21 @@
     []
   Components:
     - !<own> 65baa3c1-dae1-4ad6-b9e2-2ff0e7d758a0
+- !<SceneObject/489d37b0-e03f-4b40-9738-a3b6ef8188ab>
+  PrefabRemaps:
+    []
+  Name: ComponentOrchestrator
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9af31c50-5a63-4b23-99ec-c4e2ca82b728
 - !<SceneObject/4a9b0152-cf65-483d-aa2d-ee36dc58317a>
   PrefabRemaps:
     []
@@ -3513,6 +3529,22 @@
     []
   Components:
     - !<own> 196d9376-0850-40d5-b09a-c955e2fa1631
+- !<ScriptComponent/9af31c50-5a63-4b23-99ec-c4e2ca82b728>
+  PrefabRemaps:
+    []
+  Name: ComponentOrchestrator
+  Enabled: true
+  ScriptAsset: !<reference> f58880df-8e85-4777-9458-4477f0d06119
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<VFXComponent/9f71fac4-5d9b-404a-89cd-37beddeddfc8>
   PrefabRemaps:
     []
@@ -4420,7 +4452,7 @@
   PrefabRemaps:
     []
   Name: CameraService
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}

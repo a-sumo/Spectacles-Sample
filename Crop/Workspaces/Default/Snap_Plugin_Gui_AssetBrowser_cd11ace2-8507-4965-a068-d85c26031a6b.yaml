@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 786
+    size: 789
     values:
       - 3DModels
       - 3DModels/ButtonSphereMesh.mesh
@@ -10,6 +10,7 @@ CollapsedEntities:
       - 3DModels/Unit Box.mesh
       - 3DModels/Unit Plane.mesh
       - 3DModels/Unit Sphere.mesh
+      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Gamut Projection.mat
@@ -18,7 +19,6 @@ CollapsedEntities:
       - Color-Space.lspkg/Materials/Palette Remap.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
       - Color-Space.lspkg/Prefabs
-      - Color-Space.lspkg/Scripts
       - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
       - Color-Space.lspkg/Scripts/GamutProjector.ts
       - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
@@ -28,6 +28,7 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/PigmentGamutEncoderHiRes.ts
       - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
       - Color-Space.lspkg/Scripts/RGBCubeEncoder.ts
+      - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
       - Color-Space.lspkg/VFX/RGB Decoder.vfxgraph
       - Color-Space.lspkg/package.native
@@ -149,11 +150,13 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
-      - Scripts
       - Scripts/APIKeyHint.ts
       - Scripts/CameraService.ts
       - Scripts/CaptionBehavior.ts
       - Scripts/ChatGPT.ts
+      - Scripts/Core/ARCHITECTURE_GUIDE.md
+      - Scripts/Core/ComponentOrchestrator.ts
+      - Scripts/Core/ServiceLocator.ts
       - Scripts/CropRegion.ts
       - Scripts/GridTestOrchestrator.ts
       - Scripts/Image Processing/Image Pipeline.ts

@@ -270,6 +270,8 @@ export class PipelineTester extends BaseScriptComponent {
 		print("=== EXTRACTION TEST COMPLETE ===\n");
 	}
 
+	private projectionRetryCount: number = 0;
+
 	public testProjection(): void {
 		print("\n=== TEST 2: GAMUT PROJECTION ===");
 
@@ -279,10 +281,20 @@ export class PipelineTester extends BaseScriptComponent {
 		}
 
 		if (!this.projector.isReady?.()) {
-			print("ERROR: GamutProjector not ready (waiting for encoder)");
+			this.projectionRetryCount++;
+			if (this.projectionRetryCount > 50) {
+				print("ERROR: GamutProjector failed to initialize after 50 retries");
+				this.testState = "complete";
+				return;
+			}
+			print(`WARNING: GamutProjector not ready, retrying... (${this.projectionRetryCount})`);
+			this.testState = "waiting";
+			this.waitFrames = 3;
+			this.testMode = 2; // Ensure continueTest calls the right method
 			return;
 		}
 
+		this.projectionRetryCount = 0;
 		this.testState = "running";
 
 		const inputPalette =
@@ -300,7 +312,12 @@ export class PipelineTester extends BaseScriptComponent {
 
 	private continueTest(): void {
 		if (this.testMode === 2) {
-			this.finishProjectionTest();
+			// Check if we're still waiting for projector to be ready
+			if (this.projectionRetryCount > 0 && !this.projector.isReady?.()) {
+				this.testProjection();
+			} else {
+				this.finishProjectionTest();
+			}
 		} else if (this.testMode === 4) {
 			this.continueFullPipeline();
 		}
@@ -459,15 +476,15 @@ export class PipelineTester extends BaseScriptComponent {
 		this.regenerator.setInputTexture(this.testImage);
 		this.regenerator.setPalette(this.extractedPalette, this.projectedPalette);
 
-		const startTime = Date.now();
-		this.outputTexture = this.regenerator.processCPU();
-		const elapsed = Date.now() - startTime;
-
-		if (this.outputTexture) {
-			print(`  Regenerated in ${elapsed}ms`);
-			this.updatePreview();
-		} else {
-			print("ERROR: Regeneration failed");
+		// Apply to preview mesh using GPU-based material
+		if (this.previewMesh) {
+			const rmv = this.previewMesh.getComponent(
+				"Component.RenderMeshVisual"
+			) as RenderMeshVisual;
+			if (rmv) {
+				this.regenerator.applyToMesh(rmv);
+				print("  Applied remapped material to preview mesh");
+			}
 		}
 
 		this.testState = "complete";
@@ -483,12 +500,7 @@ export class PipelineTester extends BaseScriptComponent {
 		);
 		print(`Palette: ${this.extractedPalette.length} colors extracted`);
 		print(`Projection: ${this.projectedPalette.length} colors mapped`);
-
-		if (this.outputTexture) {
-			print(
-				`Output: ${this.outputTexture.getWidth()}x${this.outputTexture.getHeight()}`
-			);
-		}
+		print(`Output: GPU material applied`);
 
 		if (this.previewMesh) {
 			print(`Preview: Updated on ${this.previewMesh.name}`);

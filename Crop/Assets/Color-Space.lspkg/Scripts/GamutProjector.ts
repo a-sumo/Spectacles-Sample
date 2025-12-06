@@ -1,7 +1,16 @@
 // Projects a set of colors (set2) onto the pigment gamut (set1) → outputs set3
 
+import { IInitializable, ComponentOrchestrator } from "../../Scripts/Core/ComponentOrchestrator";
+import { ServiceLocator, Service } from "../../Scripts/Core/ServiceLocator";
+import { PigmentGamutEncoder } from "./PigmentGamutEncoder";
+
+@Service("GamutProjector")
 @component
-export class GamutProjector extends BaseScriptComponent {
+export class GamutProjector extends BaseScriptComponent implements IInitializable {
+
+    // IInitializable implementation
+    readonly componentId = "GamutProjector";
+    readonly dependencies: string[] = ["PigmentGamutEncoder"];
     @input
     @hint("Material with GamutProjection shader")
     projectionMaterial: Material;
@@ -66,19 +75,132 @@ export class GamutProjector extends BaseScriptComponent {
     private inputTextureProvider: ProceduralTextureProvider | null = null;
 
     onAwake(): void {
+        // Register with orchestrator
+        const orchestrator = ComponentOrchestrator.getInstance();
+        if (orchestrator) {
+            orchestrator.registerComponent(this);
+        }
+
+        // Register with service locator
+        const locator = ServiceLocator.getInstance();
+        locator.registerService(this.componentId, this);
+
+        // Keep legacy behavior for fallback
         this.createEvent("UpdateEvent").bind(() => this.tryInitialize());
+    }
+
+    // IInitializable implementation
+    public initialize(): boolean {
+        if (this.isInitialized) return true;
+
+        if (!this.projectionMaterial) {
+            print("GamutProjector: Missing projection material");
+            return false;
+        }
+
+        // Get encoder from service locator if not assigned
+        if (!this.gamutEncoder) {
+            const locator = ServiceLocator.getInstance();
+            this.gamutEncoder = locator.getService<PigmentGamutEncoder>("PigmentGamutEncoder") as any;
+        }
+
+        if (!this.gamutEncoder) {
+            print("GamutProjector: PigmentGamutEncoder not available");
+            return false;
+        }
+
+        const encoder = this.gamutEncoder as any;
+        if (!encoder.isReady()) {
+            print("GamutProjector: Waiting for encoder to be ready");
+            return false;
+        }
+
+        this.gamutPosTexture = encoder.getPosRenderTarget?.() || encoder.posRenderTarget;
+        this.gamutColorTexture = encoder.getColorRenderTarget?.() || encoder.colorRenderTarget;
+
+        if (!this.gamutPosTexture || !this.gamutColorTexture) {
+            print("GamutProjector: Encoder render targets not available");
+            return false;
+        }
+
+        return this.completeInitialization();
+    }
+
+    public onDependenciesReady(): void {
+        print("GamutProjector: Dependencies ready, initializing...");
+        this.initialize();
+    }
+
+    private completeInitialization(): boolean {
+        try {
+            const encoder = this.gamutEncoder as any;
+            const encoderValidCount = encoder.getGamutValidCount?.();
+            if (encoderValidCount !== undefined) {
+                this.gamutValidCount = encoderValidCount;
+            }
+
+            // Collect inspector colors as default
+            this.inputColors = [
+                this.input0, this.input1, this.input2,
+                this.input3, this.input4, this.input5
+            ];
+
+            // Create input texture
+            this.inputPosTexture = ProceduralTextureProvider.createWithFormat(
+                this.inputTexWidth,
+                this.inputTexHeight,
+                TextureFormat.RGBA8Unorm
+            );
+            this.inputTextureProvider = this.inputPosTexture.control as ProceduralTextureProvider;
+            this.updateInputTexture();
+
+            // Create output render targets
+            const outputRes = new vec2(this.inputTexWidth, this.inputTexHeight);
+            this.projectedPosRT = this.createRenderTarget(outputRes);
+            this.projectedColorRT = this.createRenderTarget(outputRes);
+
+            // Setup material
+            const material = this.projectionMaterial.clone();
+            material.mainPass.gamutPosTex = this.gamutPosTexture;
+            material.mainPass.gamutColorTex = this.gamutColorTexture;
+            material.mainPass.inputPosTex = this.inputPosTexture;
+            material.mainPass.gamutTexSize = this.gamutTexSize;
+            material.mainPass.inputTexWidth = this.inputTexWidth;
+            material.mainPass.inputTexHeight = this.inputTexHeight;
+            material.mainPass.gamutValidCount = this.gamutValidCount;
+
+            // Create render pipeline
+            const layer = LayerSet.makeUnique();
+            const cameraObj = this.createProjectionCamera(layer);
+            this.createPostEffect(cameraObj, material, layer);
+
+            this.isInitialized = true;
+            print(`GamutProjector: Initialized (${this.inputColors.length} colors)`);
+
+            this.assignToVFX();
+            return true;
+        } catch (error) {
+            print(`GamutProjector: Initialization failed: ${error}`);
+            return false;
+        }
     }
 
     private tryInitialize(): void {
         if (this.isInitialized) return;
 
-        if (!this.projectionMaterial || !this.gamutEncoder) return;
+        if (!this.projectionMaterial || !this.gamutEncoder) {
+            print("GamutProjector: Waiting for material and encoder...");
+            return;
+        }
 
         const encoder = this.gamutEncoder as any;
         this.gamutPosTexture = encoder.getPosRenderTarget?.() || encoder.posRenderTarget;
         this.gamutColorTexture = encoder.getColorRenderTarget?.() || encoder.colorRenderTarget;
 
-        if (!this.gamutPosTexture || !this.gamutColorTexture) return;
+        if (!this.gamutPosTexture || !this.gamutColorTexture) {
+            print("GamutProjector: Waiting for encoder render targets...");
+            return;
+        }
 
         const encoderValidCount = encoder.getGamutValidCount?.();
         if (encoderValidCount !== undefined) {

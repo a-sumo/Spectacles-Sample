@@ -1,6 +1,8 @@
 // PigmentGamutEncoder.ts
 // Encodes the gamut of mixable colors from pigments to LAB space
 
+import { ServiceLocator } from "../../Scripts/Core/ServiceLocator";
+
 @component
 export class PigmentGamutEncoder extends BaseScriptComponent {
     
@@ -54,8 +56,13 @@ export class PigmentGamutEncoder extends BaseScriptComponent {
     private posRenderTarget: Texture;
     private colorRenderTarget: Texture;
     private pigmentTexture: Texture;
+    private initialized: boolean = false;
     
     onAwake(): void {
+        // Register with service locator
+        const locator = ServiceLocator.getInstance();
+        locator.registerService("PigmentGamutEncoder", this);
+
         if (!this.encoderMaterial) {
             print("ERROR: encoderMaterial not set");
             return;
@@ -104,6 +111,9 @@ export class PigmentGamutEncoder extends BaseScriptComponent {
                 // this.debugReadRenderTargets();
             }
         });
+
+        this.initialized = true;
+        print("PigmentGamutEncoder: Ready");
     }
     
     private updatePigmentTexture(): void {
@@ -268,7 +278,11 @@ export class PigmentGamutEncoder extends BaseScriptComponent {
         }
     }
     // ============ PUBLIC GETTERS ============
-    
+
+    isReady(): boolean {
+        return this.initialized && this.posRenderTarget != null && this.colorRenderTarget != null;
+    }
+
     getPosRenderTarget(): Texture {
         return this.posRenderTarget;
     }
