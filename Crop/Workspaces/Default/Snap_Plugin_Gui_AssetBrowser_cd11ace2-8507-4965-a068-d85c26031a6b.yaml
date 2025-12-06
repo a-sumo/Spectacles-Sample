@@ -1,11 +1,11 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 1043
+    size: 1039
     values:
+      - ""
       - Base.png
       - Camera Object.prefab
-      - Color-Space.lspkg
       - Color-Space.lspkg/Images
       - Color-Space.lspkg/Images/lab_color(1).png
       - Color-Space.lspkg/Images/lab_x(1).png
@@ -20,6 +20,7 @@ CollapsedEntities:
       - Color-Space.lspkg/Images/test_encoding/pos_x.png
       - Color-Space.lspkg/Images/test_encoding/pos_y.png
       - Color-Space.lspkg/Images/test_encoding/pos_z.png
+      - Color-Space.lspkg/Materials
       - Color-Space.lspkg/Materials/Color Mix Test.mat
       - Color-Space.lspkg/Materials/Color Mix Test.ss_graph
       - Color-Space.lspkg/Materials/Gamut Projection.mat
@@ -39,14 +40,8 @@ CollapsedEntities:
       - Color-Space.lspkg/Materials/TestEncoder.mat
       - Color-Space.lspkg/Materials/TestEncoder.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
-      - Color-Space.lspkg/Prefabs
-      - Color-Space.lspkg/Prefabs/LAB Encoder Decoder.prefab
-      - Color-Space.lspkg/Prefabs/Pigment Gamut Encoder Decoder Hi Res.prefab
-      - Color-Space.lspkg/Prefabs/Pigment Gamut Encoder Decoder.prefab
-      - Color-Space.lspkg/Prefabs/RGB Encoder Decoder.prefab
       - Color-Space.lspkg/Prefabs/Simple Mix Test.prefab
       - Color-Space.lspkg/Prefabs/Spectral Mix Test.prefab
-      - Color-Space.lspkg/Prefabs/Test Encoder Decoder.prefab
       - Color-Space.lspkg/Scripts
       - Color-Space.lspkg/Scripts/Encoder_FullRGB.ts
       - Color-Space.lspkg/Scripts/Encoder_PigmentMix.ts
@@ -59,15 +54,8 @@ CollapsedEntities:
       - Color-Space.lspkg/Scripts/Test_GamutProjector.ts
       - Color-Space.lspkg/Scripts/Test_MinimalEncoder.ts
       - Color-Space.lspkg/Scripts/Util_SpectralMix.ts
-      - Color-Space.lspkg/VFX
       - Color-Space.lspkg/VFX/Decode From Texture File.vfxgraph
-      - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
-      - Color-Space.lspkg/VFX/LAB Decoder.vfxgraph
-      - Color-Space.lspkg/VFX/Pigment Gamut Decoder Hi Res.vfxgraph
-      - Color-Space.lspkg/VFX/Pigment Gamut Decoder.vfxgraph
-      - Color-Space.lspkg/VFX/RGB Decoder.vfxgraph
       - Color-Space.lspkg/VFX/Test Particle Encoding.vfxgraph
-      - Color-Space.lspkg/VFX/TestDecoder.vfxgraph
       - Color-Space.lspkg/package.native
       - DEPENDENCY_ANALYSIS.md
       - Image-Processing
@@ -134,12 +122,14 @@ CollapsedEntities:
       - Image-Processing/Materials/unlitTexture.ss_graph
       - Image-Processing/Materials/unlitTextureColor.ss_graph
       - Image-Processing/Materials/webIcon.mat
+      - Image-Processing/Prefabs
       - Image-Processing/Prefabs/Basic Sphere 2.prefab
       - Image-Processing/Prefabs/Basic Sphere.prefab
       - Image-Processing/Prefabs/Button.prefab
       - Image-Processing/Prefabs/Color Slot.prefab
       - Image-Processing/Prefabs/Colored Square.prefab
       - Image-Processing/Prefabs/Palette.prefab
+      - Image-Processing/Prefabs/Scanner.prefab
       - Image-Processing/Prefabs/SceneHierarchy.prefab
       - Image-Processing/Prefabs/Test SceneObject VFXParticle Sync.prefab
       - Image-Processing/Scripts
@@ -178,6 +168,7 @@ CollapsedEntities:
       - Image-Processing/Scripts/UI/FrameMoveToggle.ts
       - Image-Processing/Scripts/UI/SwitchToggleGroupExtended.ts
       - Image-Processing/Scripts/UI/TransformFollower.ts
+      - Image-Processing/Scripts/UI/TransformTweener.ts
       - Image-Processing/Scripts/Utils
       - Image-Processing/Scripts/Utils/color.ts
       - Image-Processing/VFX
@@ -928,6 +919,7 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Materials/RoundedRectangleStrokeShader.ss_graph
       - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMask.mat
       - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMaskShader.ss_graph
+      - SpectaclesUIKit.lspkg/Meshes
       - SpectaclesUIKit.lspkg/Meshes/CapsuleSphere.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultButton.mesh
       - SpectaclesUIKit.lspkg/Meshes/DefaultCapsule.mesh
@@ -936,6 +928,7 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchKnob.mesh
       - SpectaclesUIKit.lspkg/Meshes/StretchableCircle.mesh
       - SpectaclesUIKit.lspkg/Meshes/Unit Plane.mesh
+      - SpectaclesUIKit.lspkg/Prefabs
       - SpectaclesUIKit.lspkg/Prefabs/DropShadow.prefab
       - SpectaclesUIKit.lspkg/Prefabs/ExampleInterface.prefab
       - SpectaclesUIKit.lspkg/Prefabs/FrameButton.prefab
@@ -943,7 +936,10 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Prefabs/LabelledButton.prefab
       - SpectaclesUIKit.lspkg/Prefabs/LabelledToggle.prefab
       - SpectaclesUIKit.lspkg/README.md
+      - SpectaclesUIKit.lspkg/Scripts
       - SpectaclesUIKit.lspkg/Scripts/BackPlate.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/BaseButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/CapsuleButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/RectangleButton.ts

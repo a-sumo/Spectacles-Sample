@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/86ac4b08-35fe-4c06-afbb-e39f968b83e1>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 6f8edf22-61f3-4a1a-af82-dbcfeca3f36f
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 6f8edf22-61f3-4a1a-af82-dbcfeca3f36f
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 7fe3dfeb-6cec-43f9-84ca-6e6363baa129
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/7fe3dfeb-6cec-43f9-84ca-6e6363baa129>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 416a62ad-922b-4fa0-a979-ae85afceb298
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    duration: false
+    easingType: false
+    matchRotation: false
+    offset: false
+    startAtTarget: false
+    target: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - target: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      offset: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      duration: 0.300000
+      matchRotation: false
+      easingType: !<float> 1.000000
+      startAtTarget: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject target {"hint":"The target object to tween toward"}'
+    - "// @input vec3 offset = {0,0,0} {\"hint\":\"Offset from target in target's local space (affected by target's rotation/scale)\"}"
+    - '// @input float duration = 0.3 {"hint":"Duration of the tween in seconds"}'
+    - "// @input bool matchRotation {\"hint\":\"Also match target's rotation when at target\"}"
+    - '// @input float easingType = 1 {"hint":"Easing type", "widget":"combobox", "values":[{"label":"Linear", "value":0}, {"label":"EaseInOut", "value":1}, {"label":"EaseIn", "value":2}, {"label":"EaseOut", "value":3}, {"label":"EaseOutBack", "value":4}, {"label":"EaseInBack", "value":5}]}'
+    - '// @input bool startAtTarget {"hint":"Start at target position on awake"}'

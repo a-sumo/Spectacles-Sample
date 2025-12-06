@@ -252,7 +252,7 @@ export class PaletteController extends BaseScriptComponent {
 		if (this.presetToggleGroupObject) {
 			this.connectToToggleGroup();
 		}
-
+		// TODO: check if this works
 		let initialPresetIndex = this.defaultPresetIndex;
 
 		if (this.presetToggleGroup) {

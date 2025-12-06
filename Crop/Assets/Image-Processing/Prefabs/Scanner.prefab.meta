@@ -50,7 +50,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: true
+  ShowCollider: false
 - !<SceneObject/1a1043c4-0901-45fc-5d7a-8f54c7a0cb91>
   PrefabRemaps:
     []
