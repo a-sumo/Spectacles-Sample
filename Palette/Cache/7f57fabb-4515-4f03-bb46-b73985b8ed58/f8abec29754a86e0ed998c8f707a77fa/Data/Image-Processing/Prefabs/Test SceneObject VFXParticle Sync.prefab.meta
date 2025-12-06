@@ -1,0 +1,158 @@
+- !<AssetImportMetadata/5521e014-1efb-4682-ae5d-92fb607769d7>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> 899df0bb-9777-498b-87a9-a15e4cb285f7
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> 899df0bb-9777-498b-87a9-a15e4cb285f7
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> c1470506-4a5b-4c06-85b4-7dfe3e2039bd
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/0a614910-65d0-404d-7fa2-ad20d5bc3e28>
+  PrefabRemaps:
+    []
+  Name: SimpleGridPosition
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 90.138802, y: 0.098165, z: -35.270317}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 889ae4c5-1309-4829-6e4f-fbdb39017a19
+- !<SceneObject/28f421bb-bf39-4b77-7f8e-0d276617de1e>
+  PrefabRemaps:
+    []
+  Name: Test SceneObject VFXParticle Sync
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 4aabe579-3885-4305-5e19-08ff921a0bde
+    - !<own> 0a614910-65d0-404d-7fa2-ad20d5bc3e28
+    - !<own> 2eb5b66c-2535-41a6-5012-ea5ead7dd182
+  Components:
+    []
+- !<SceneObject/2eb5b66c-2535-41a6-5012-ea5ead7dd182>
+  PrefabRemaps:
+    []
+  Name: GridTestOrchestrator
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 81b46ac3-b5be-4268-5cd7-8f85f4f7d8bc
+- !<SceneObject/4aabe579-3885-4305-5e19-08ff921a0bde>
+  PrefabRemaps:
+    []
+  Name: SimpleGridPositionSync
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d17ebc54-f42d-4083-51ba-28feaf85a750
+- !<ScriptComponent/81b46ac3-b5be-4268-5cd7-8f85f4f7d8bc>
+  PrefabRemaps:
+    []
+  Name: GridTestOrchestrator
+  Enabled: true
+  ScriptAsset: !<reference> d96ee435-2ad8-414a-98e8-ba31234cc4a5
+  ScriptInputsDefault:
+    autoToggleInterval: true
+    autoToggleEnabled: true
+    debugMode: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      gridSync: !<reference.ScriptComponent> d17ebc54-f42d-4083-51ba-28feaf85a750
+      autoToggleInterval: !<float> 3.000000
+      autoToggleEnabled: true
+      debugMode: true
+  ScriptTypes:
+    "":
+      {}
+- !<VFXComponent/889ae4c5-1309-4829-6e4f-fbdb39017a19>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 8f67465c-4222-4bbe-bc49-5906a9660e16
+- !<ObjectPrefabAssetData/c1470506-4a5b-4c06-85b4-7dfe3e2039bd>
+  Prototype: !<ObjectOwner/bf82e4c1-102d-479b-ad9f-6e526c099ec0>
+    PackagePath: ""
+    objects:
+      - !<own> 28f421bb-bf39-4b77-7f8e-0d276617de1e
+- !<ScriptComponent/d17ebc54-f42d-4083-51ba-28feaf85a750>
+  PrefabRemaps:
+    []
+  Name: SimpleGridPositionSync
+  Enabled: true
+  ScriptAsset: !<reference> 67247a6a-bcdd-4e3a-8d37-65b11245e6e5
+  ScriptInputsDefault:
+    gridWidth: true
+    gridHeight: true
+    pos: true
+    rot: true
+    circleCenter: true
+    circleRotationOffset: true
+    circlePlane: true
+    atParticlePositions: true
+    tweenDuration: true
+    staggerDelay: true
+    debugMode: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      objectPrefab: !<reference.ObjectPrefab> fff6efad-106f-4485-b6ec-300a4b1a2e4d
+      gridWidth: !<float> 4.000000
+      gridHeight: !<float> 4.000000
+      pos: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      scale: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
+      rot: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      vfxComponent: !<reference.VFXComponent> 889ae4c5-1309-4829-6e4f-fbdb39017a19
+      circleCenter: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      circleRadius: !<float> 1.000000
+      circleRotationOffset: !<float> 0.000000
+      circlePlane: !<float> 0.000000
+      atParticlePositions: false
+      tweenDuration: !<float> 500.000000
+      staggerDelay: !<float> 50.000000
+      continuousUpdate: true
+      debugMode: true
+  ScriptTypes:
+    "":
+      {}

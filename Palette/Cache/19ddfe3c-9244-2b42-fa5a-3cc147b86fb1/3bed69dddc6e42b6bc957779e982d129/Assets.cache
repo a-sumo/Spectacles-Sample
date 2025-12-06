@@ -1,0 +1,18 @@
+- !<AssetCache>
+  AssetFiles:
+    c08513f1-e561-4891-98c0-552973b9ef21: 19ddfe3c-9244-2b42-fa5a-3cc147b86fb1/3bed69dddc6e42b6bc957779e982d129/Data/SysSettings_settings_button.mesh
+  Assets:
+    - !<FileMesh/c08513f1-e561-4891-98c0-552973b9ef21>
+      PackagePath: ""
+      Info: !<MeshInfo>
+        Triangles: 1024
+        Vertices: 546
+        Blendshapes:
+          - Pinch
+          - Z depth
+        Joints: 0
+        AabbSize: {x: 2.202462, y: 2.202462, z: 2.218727}
+  SourceHash: 3bed69dddc6e42b6bc957779e982d129
+  FileHash: 65644ad9ec8957406276a893a7be3648
+  NativePackageItems:
+    []

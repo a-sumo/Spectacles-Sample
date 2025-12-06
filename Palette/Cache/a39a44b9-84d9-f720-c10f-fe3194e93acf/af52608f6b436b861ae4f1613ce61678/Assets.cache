@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    c30d011f-099e-42cb-ae04-cac9b928ef4a: a39a44b9-84d9-f720-c10f-fe3194e93acf/af52608f6b436b861ae4f1613ce61678/Data/rgb_y.png
+  Assets:
+    - !<FileTexture/c30d011f-099e-42cb-ae04-cac9b928ef4a>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: af52608f6b436b861ae4f1613ce61678
+  FileHash: 20ef61fafb350334e0333959d3c40b77
+  NativePackageItems:
+    []

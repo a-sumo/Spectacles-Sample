@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    01ec8c0b-65c9-4de6-ada8-1802ae24d49b: 225327b7-3cac-20f1-259d-f568054f6114/edea3c677d2062fb049445b05ea4175e/Data/Rounded Corner Construction.png
+  Assets:
+    - !<FileTexture/01ec8c0b-65c9-4de6-ada8-1802ae24d49b>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 824
+        Height: 549
+  SourceHash: edea3c677d2062fb049445b05ea4175e
+  FileHash: bcfa8d8e3beb1446598aaddbb7f86950
+  NativePackageItems:
+    []

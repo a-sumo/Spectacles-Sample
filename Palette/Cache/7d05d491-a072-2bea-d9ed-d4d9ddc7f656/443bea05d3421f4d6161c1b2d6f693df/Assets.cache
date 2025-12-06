@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    652ff70b-fbca-4d4a-871c-ce5cbb94e2db: 7d05d491-a072-2bea-d9ed-d4d9ddc7f656/443bea05d3421f4d6161c1b2d6f693df/Data/scale-tl.png
+  Assets:
+    - !<FileTexture/652ff70b-fbca-4d4a-871c-ce5cbb94e2db>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 96
+        Height: 96
+  SourceHash: 443bea05d3421f4d6161c1b2d6f693df
+  FileHash: a0bb458ca46062677ff7e238d68536d4
+  NativePackageItems:
+    []

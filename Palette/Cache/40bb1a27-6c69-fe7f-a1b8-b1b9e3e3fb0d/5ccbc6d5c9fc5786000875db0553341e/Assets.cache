@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    e810323a-496e-49a2-9970-cf159589ab35: 40bb1a27-6c69-fe7f-a1b8-b1b9e3e3fb0d/5ccbc6d5c9fc5786000875db0553341e/Data/lab_x(1).png
+  Assets:
+    - !<FileTexture/e810323a-496e-49a2-9970-cf159589ab35>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: 5ccbc6d5c9fc5786000875db0553341e
+  FileHash: 12d3b24a7dd0fc042e41c1f6901d4139
+  NativePackageItems:
+    []

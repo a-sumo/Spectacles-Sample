@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    f45cfc6e-64e1-4c8c-9a95-60e31189e4ad: f080f4ee-1be2-754f-aec8-0e46fa88f2e3/e2e8cacf409d78496a3e68dd5d472a7b/Data/color.png
+  Assets:
+    - !<FileTexture/f45cfc6e-64e1-4c8c-9a95-60e31189e4ad>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 4
+        Height: 4
+  SourceHash: e2e8cacf409d78496a3e68dd5d472a7b
+  FileHash: ed9cf38bc331e306fd6da746279ff5bc
+  NativePackageItems:
+    []

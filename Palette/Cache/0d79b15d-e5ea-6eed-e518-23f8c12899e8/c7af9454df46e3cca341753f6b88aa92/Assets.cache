@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    fef5a3ff-1d75-43b9-be7f-16aa5120071f: 0d79b15d-e5ea-6eed-e518-23f8c12899e8/c7af9454df46e3cca341753f6b88aa92/Data/rgb_z.png
+  Assets:
+    - !<FileTexture/fef5a3ff-1d75-43b9-be7f-16aa5120071f>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: c7af9454df46e3cca341753f6b88aa92
+  FileHash: 5938b8d06b2ed4596f284b0385514b3a
+  NativePackageItems:
+    []

@@ -1,0 +1,70 @@
+- !<Material/7dcb9ef3-a29e-43ed-8517-ce474bf1b758>
+  PackagePath: ""
+  PassesInfo:
+    - !<own> 33674537-94ea-42ff-a5fb-3eb9f287a9f3
+- !<PassInfo/33674537-94ea-42ff-a5fb-3eb9f287a9f3>
+  CachedProperties:
+    - renderTarget0:
+        typeIdx: 9
+        value:
+          id: ffffffff-ffff-ffff-ffff-ffffffffffff
+          sampler:
+            filteringMode: Trilinear
+            wrapModeU: Repeat
+            wrapModeV: Repeat
+            wrapModeW: ClampToEdge
+            borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+            mipmaps: false
+          type: Texture2D
+    - renderTarget1:
+        typeIdx: 9
+        value:
+          id: ffffffff-ffff-ffff-ffff-ffffffffffff
+          sampler:
+            filteringMode: Trilinear
+            wrapModeU: Repeat
+            wrapModeV: Repeat
+            wrapModeW: ClampToEdge
+            borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+            mipmaps: false
+          type: Texture2D
+    - renderTarget2:
+        typeIdx: 9
+        value:
+          id: ffffffff-ffff-ffff-ffff-ffffffffffff
+          sampler:
+            filteringMode: Trilinear
+            wrapModeU: Repeat
+            wrapModeV: Repeat
+            wrapModeW: ClampToEdge
+            borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+            mipmaps: false
+          type: Texture2D
+    - renderTarget3:
+        typeIdx: 9
+        value:
+          id: ffffffff-ffff-ffff-ffff-ffffffffffff
+          sampler:
+            filteringMode: Trilinear
+            wrapModeU: Repeat
+            wrapModeV: Repeat
+            wrapModeW: ClampToEdge
+            borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+            mipmaps: false
+          type: Texture2D
+  DepthWrite: true
+  DepthTest: true
+  DepthFunction: LessEqual
+  TwoSided: true
+  ColorMask: {x: true, y: true, z: true, w: true}
+  CullMode: Back
+  PolygonOffset: {x: 0.000000, y: 0.000000}
+  FrustumCulling: Auto
+  FrustumCullPad: 0.000000
+  InstanceCount: 1
+  Defines:
+    []
+  BlendMode: Disabled
+  Properties:
+    {}
+  Pass: !<reference> 0c4f3235-8d06-46aa-8358-eeec671493c6

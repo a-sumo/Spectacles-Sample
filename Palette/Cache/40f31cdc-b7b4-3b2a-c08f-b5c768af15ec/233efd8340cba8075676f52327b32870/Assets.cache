@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    a3baa17e-ede0-4b03-abd6-075e3367c927: 40f31cdc-b7b4-3b2a-c08f-b5c768af15ec/233efd8340cba8075676f52327b32870/Data/pos_z.png
+  Assets:
+    - !<FileTexture/a3baa17e-ede0-4b03-abd6-075e3367c927>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 4
+        Height: 4
+  SourceHash: 233efd8340cba8075676f52327b32870
+  FileHash: b88d3db2a68141082a9224b3bed2cdf5
+  NativePackageItems:
+    []

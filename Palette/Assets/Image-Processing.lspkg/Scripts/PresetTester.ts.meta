@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/bc8d2486-39d2-252e-8482-247077ef83da>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 50d02db8-d4b7-466a-992d-bd0fb96315bf
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 50d02db8-d4b7-466a-992d-bd0fb96315bf
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> b968bde5-ec3f-4759-a040-d4cb35f2713d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/b968bde5-ec3f-4759-a040-d4cb35f2713d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 28121441-6a5a-4a1f-b7d4-2e224dee4162
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    debugMode: false
+    paletteController: false
+    toggleGroup: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - toggleGroup: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      paletteController: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      debugMode: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.ScriptComponent toggleGroup {"hint":"Reference to SwitchToggleGroupExtended component"}'
+    - '// @input Component.ScriptComponent paletteController {"hint":"Reference to PaletteController component"}'
+    - '// @input bool debugMode = true {"hint":"Enable debug logging"}'

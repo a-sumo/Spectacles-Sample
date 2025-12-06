@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    899de27b-1114-4719-8332-2854d48cc168: 7c19754d-33f9-073c-bbe0-a0151b7ba52d/1ec992424cd124a5cfad7b037a0e2116/Data/follow-black.png
+  Assets:
+    - !<FileTexture/899de27b-1114-4719-8332-2854d48cc168>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 96
+        Height: 96
+  SourceHash: 1ec992424cd124a5cfad7b037a0e2116
+  FileHash: 1804504c66036dc2df6c9268693d92dc
+  NativePackageItems:
+    []

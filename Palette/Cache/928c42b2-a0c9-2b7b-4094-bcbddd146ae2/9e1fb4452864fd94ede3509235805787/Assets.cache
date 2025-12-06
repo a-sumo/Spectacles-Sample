@@ -1,0 +1,17 @@
+- !<AssetCache>
+  AssetFiles:
+    1ac39fa1-3d7c-4f5e-a867-2bb615dbdfa9: 928c42b2-a0c9-2b7b-4094-bcbddd146ae2/9e1fb4452864fd94ede3509235805787/Data/StretchableCircle.mesh
+  Assets:
+    - !<FileMesh/1ac39fa1-3d7c-4f5e-a867-2bb615dbdfa9>
+      PackagePath: ""
+      Info: !<MeshInfo>
+        Triangles: 578
+        Vertices: 336
+        Blendshapes:
+          []
+        Joints: 0
+        AabbSize: {x: 2.000000, y: 2.000000, z: 0.000000}
+  SourceHash: 9e1fb4452864fd94ede3509235805787
+  FileHash: 2169f057742d16e86694f76825f4e918
+  NativePackageItems:
+    []

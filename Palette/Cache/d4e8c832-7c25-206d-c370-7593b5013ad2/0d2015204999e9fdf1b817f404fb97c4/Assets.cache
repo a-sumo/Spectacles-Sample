@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    53d734c2-4905-40cc-9509-0140b77d677a: d4e8c832-7c25-206d-c370-7593b5013ad2/0d2015204999e9fdf1b817f404fb97c4/Data/rgb_color.png
+  Assets:
+    - !<FileTexture/53d734c2-4905-40cc-9509-0140b77d677a>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: 0d2015204999e9fdf1b817f404fb97c4
+  FileHash: 8c29334cb22c119fe32e1a6edbc4dda5
+  NativePackageItems:
+    []

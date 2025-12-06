@@ -1,0 +1,10 @@
+- !<AssetCache>
+  AssetFiles:
+    b6179540-0c17-41af-99a2-366ce8c53292: 7ed8f2ce-18a7-cb58-cabc-f08412af81c1/30e2793fdde5a3bfa1f7c07f74cd95f9/Data/ARCHITECTURE_GUIDE.md
+  Assets:
+    - !<MarkdownAsset/b6179540-0c17-41af-99a2-366ce8c53292>
+      PackagePath: ""
+  SourceHash: 30e2793fdde5a3bfa1f7c07f74cd95f9
+  FileHash: 5fec0a3befd65e61de867047aa6027f8
+  NativePackageItems:
+    []

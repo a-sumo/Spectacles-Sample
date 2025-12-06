@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    a66fb07b-dd4a-463d-8db0-832841c4ec99: 21d1c28c-2f96-0072-522a-e0c6b98f7ee3/0246ea6cb08d6da742b29c92cb50cc88/Data/MaskMap.png
+  Assets:
+    - !<FileTexture/a66fb07b-dd4a-463d-8db0-832841c4ec99>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 512
+        Height: 512
+  SourceHash: 0246ea6cb08d6da742b29c92cb50cc88
+  FileHash: 00a91febbef5ebf9b0d76d8b51336d8b
+  NativePackageItems:
+    []

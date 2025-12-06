@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    526751ca-a1ea-46b0-92ad-79b50056a56c: 73877ade-a429-986e-2e32-a371c9a2afcb/f3ecbf3ee936d186eef1b88e6ac04d38/Data/circle-lut-128.png
+  Assets:
+    - !<FileTexture/526751ca-a1ea-46b0-92ad-79b50056a56c>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 128
+        Height: 128
+  SourceHash: f3ecbf3ee936d186eef1b88e6ac04d38
+  FileHash: 6aa910bcf7906de93e75ebad1e85bf7a
+  NativePackageItems:
+    []

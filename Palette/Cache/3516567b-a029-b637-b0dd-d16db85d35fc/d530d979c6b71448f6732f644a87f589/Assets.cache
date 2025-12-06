@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    130d9740-34ea-433f-90c1-34d50ebc6f8c: 3516567b-a029-b637-b0dd-d16db85d35fc/d530d979c6b71448f6732f644a87f589/Data/PicOutline.png
+  Assets:
+    - !<FileTexture/130d9740-34ea-433f-90c1-34d50ebc6f8c>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 512
+        Height: 512
+  SourceHash: d530d979c6b71448f6732f644a87f589
+  FileHash: 3cda36505c78342b26819f56021fe021
+  NativePackageItems:
+    []

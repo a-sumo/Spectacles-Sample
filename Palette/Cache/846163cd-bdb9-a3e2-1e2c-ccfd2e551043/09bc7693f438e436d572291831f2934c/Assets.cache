@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    28661942-4ea2-4b9c-8054-c95e9d3f1218: 846163cd-bdb9-a3e2-1e2c-ccfd2e551043/09bc7693f438e436d572291831f2934c/Data/lab_y(1).png
+  Assets:
+    - !<FileTexture/28661942-4ea2-4b9c-8054-c95e9d3f1218>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: 09bc7693f438e436d572291831f2934c
+  FileHash: 59a03331e5dd722d6807115db8d3dd2c
+  NativePackageItems:
+    []

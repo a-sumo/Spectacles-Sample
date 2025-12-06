@@ -1,0 +1,136 @@
+- !<AssetCache>
+  AssetFiles:
+    09dae399-9874-4171-b402-8d244af10806: ad66fa40-3257-f5ed-2e26-502fca743318/83bd8d5aecde107de88b3d6e67ab7209/Data/TestScaling.ss_graph
+  Assets:
+    - !<ShaderGraphPass/09dae399-9874-4171-b402-8d244af10806>
+      PackagePath: ""
+      DefaultDefines:
+        []
+      DefaultProperties:
+        Port_Depth_N004:
+          typeIdx: 1
+          value: 1.000000
+        Port_FinalColor1_N004:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_FinalColor2_N004:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_FinalColor3_N004:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_GSplatPointSize_N004:
+          typeIdx: 1
+          value: 0.000000
+        Port_GSplatRotation_N004:
+          typeIdx: 5
+          value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+        Port_GSplatScale_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_PrevWorldPosition_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_RayDirection_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 1.000000, z: 0.000000}
+        Port_RayOrigin_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_Switch_N002:
+          typeIdx: 1
+          value: 0.000000
+        Port_WorldNormal_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 1.000000, z: 0.000000}
+        Port_WorldPosition_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_WorldTangent_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 1.000000}
+        Port_cornerLength_N018:
+          typeIdx: 1
+          value: 0.100000
+        Port_feather_N029:
+          typeIdx: 1
+          value: 0.000000
+        Port_fillColor_N005:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_gridColor_N029:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_gridCountX_N029:
+          typeIdx: 1
+          value: 7.000000
+        Port_gridCountY_N029:
+          typeIdx: 1
+          value: 7.000000
+        Port_radius_N005:
+          typeIdx: 1
+          value: 0.200000
+        Port_radius_N018:
+          typeIdx: 1
+          value: 0.020000
+        Port_size_N005:
+          typeIdx: 3
+          value: {x: 1.000000, y: 1.000000}
+        Port_size_N018:
+          typeIdx: 3
+          value: {x: 1.000000, y: 1.000000}
+        Port_softness_N029:
+          typeIdx: 1
+          value: 0.000000
+        Port_strokeColor_N005:
+          typeIdx: 5
+          value: {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+        Port_strokeColor_N018:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_strokeWidth_N005:
+          typeIdx: 1
+          value: 0.050000
+        Port_strokeWidth_N018:
+          typeIdx: 1
+          value: 0.010000
+        Port_strokeWidth_N029:
+          typeIdx: 1
+          value: 0.020000
+        Port_uvOffset_N005:
+          typeIdx: 3
+          value: {x: 0.500000, y: 0.500000}
+        Port_uvOffset_N018:
+          typeIdx: 3
+          value: {x: 0.500000, y: 0.500000}
+        Port_uvOffset_N029:
+          typeIdx: 3
+          value: {x: 0.500000, y: 0.500000}
+      PassUiData: !<PassUiData>
+        ExtraDefines:
+          - SC_ENABLE_RT_CASTER
+        PassBindings:
+          - mLabel: Alpha Test Threshold
+            mType: Property
+            mName: alphaTestThreshold
+            mWidget: slider
+            mHint: |-
+              Property: alphaTestThreshold
+              
+              When the 'Alpha Test' blend mode is enabled, pixels with alpha values lower than this disappear.
+            mMin: 0.000000
+            mMax: 1.000000
+            mStep: 0.001000
+            mDefaultVal: 0.500000
+            mValues:
+              []
+        ShaderType: Mesh3d
+      ShaderPath: ad66fa40-3257-f5ed-2e26-502fca743318/83bd8d5aecde107de88b3d6e67ab7209/Data/b01d0f7/TestScaling.glsl
+      Defines:
+        []
+      Properties:
+        {}
+  SourceHash: 83bd8d5aecde107de88b3d6e67ab7209
+  FileHash: fdf8a052262eb5f4668696a869c53bb0
+  NativePackageItems:
+    []

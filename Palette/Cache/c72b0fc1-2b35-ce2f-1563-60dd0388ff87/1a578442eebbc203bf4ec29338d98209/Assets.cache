@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    55a337f6-73f3-45c1-af52-bec7f78a95f9: c72b0fc1-2b35-ce2f-1563-60dd0388ff87/1a578442eebbc203bf4ec29338d98209/Data/webIcon.png
+  Assets:
+    - !<FileTexture/55a337f6-73f3-45c1-af52-bec7f78a95f9>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 256
+        Height: 256
+  SourceHash: 1a578442eebbc203bf4ec29338d98209
+  FileHash: b78034d501d9da28d2b05a175a7ae84b
+  NativePackageItems:
+    []

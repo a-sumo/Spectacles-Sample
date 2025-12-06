@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    ef6e35fe-8c58-4bfd-8e22-c98d1664f91b: ae1bc625-7ef8-c1fc-6003-88afdc98bdff/a9fa58db13a0d14194cd16bb4d435737/Data/grey_square.png
+  Assets:
+    - !<FileTexture/ef6e35fe-8c58-4bfd-8e22-c98d1664f91b>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 1
+        Height: 1
+  SourceHash: a9fa58db13a0d14194cd16bb4d435737
+  FileHash: 56a304b80c04e3fa4fe3337c93704cd9
+  NativePackageItems:
+    []

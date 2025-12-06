@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    01a9096c-068e-4767-9c41-dc87e493c757: e9517081-34ab-fd5f-0fe1-5395a0c4ebfd/c311127c5bf9b6ee39c04ae77cf0e162/Data/pos_x.png
+  Assets:
+    - !<FileTexture/01a9096c-068e-4767-9c41-dc87e493c757>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 4
+        Height: 4
+  SourceHash: c311127c5bf9b6ee39c04ae77cf0e162
+  FileHash: 07846e818aef682049ca6128eefe1ca4
+  NativePackageItems:
+    []

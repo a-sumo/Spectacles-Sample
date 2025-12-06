@@ -1,0 +1,89 @@
+- !<AssetImportMetadata/948104ae-797b-4788-b0da-6e4bd28e7796>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 67247a6a-bcdd-4e3a-8d37-65b11245e6e5
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 67247a6a-bcdd-4e3a-8d37-65b11245e6e5
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> e3e5ff50-854b-4ce1-9785-27142ff25dc0
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/e3e5ff50-854b-4ce1-9785-27142ff25dc0>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 19048678-1258-4932-8a2f-a1d22759e0e2
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    atParticlePositions: false
+    circleCenter: false
+    circlePlane: false
+    circleRadius: false
+    circleRotationOffset: false
+    continuousUpdate: false
+    debugMode: false
+    gridHeight: false
+    gridWidth: false
+    objectPrefab: false
+    pos: false
+    rot: false
+    scale: false
+    staggerDelay: false
+    tweenDuration: false
+    vfxComponent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - objectPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      gridWidth: !<float> 4.000000
+      gridHeight: !<float> 4.000000
+      pos: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      scale: !<Vec3> {x: 100.000000, y: 100.000000, z: 100.000000}
+      rot: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+      circleCenter: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      circleRadius: !<float> 50.000000
+      circleRotationOffset: !<float> 0.000000
+      circlePlane: !<float> 0.000000
+      atParticlePositions: false
+      tweenDuration: !<float> 500.000000
+      staggerDelay: !<float> 50.000000
+      continuousUpdate: false
+      debugMode: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.ObjectPrefab objectPrefab {"hint":"Prefab to instantiate for each grid position"}'
+    - '// @input float gridWidth = 4 {"hint":"Number of columns in grid"}'
+    - '// @input float gridHeight = 4 {"hint":"Number of rows in grid"}'
+    - "// @input vec3 pos = {0,0,0} {\"hint\":\"Shader position offset (matches 'pos' in shader)\"}"
+    - "// @input vec3 scale = {1,1,1} {\"hint\":\"Shader scale multiplier (matches 'scale' in shader)\"}"
+    - "// @input vec3 rot = {0,0,0} {\"hint\":\"Shader rotation in degrees (matches 'rot' in shader)\"}"
+    - '// @input Component.VFXComponent vfxComponent {"hint":"VFX component - REQUIRED for world transform"}'
+    - '// @input vec3 circleCenter = {0,0,0} {"hint":"Center point for circular rest layout"}'
+    - '// @input float circleRadius = 1 {"hint":"Radius of the circle"}'
+    - '// @input float circleRotationOffset {"hint":"Rotation offset for circle (degrees)"}'
+    - '// @input float circlePlane {"hint":"Plane for circle: 0=XZ (horizontal), 1=XY (vertical), 2=YZ"}'
+    - '// @input bool atParticlePositions {"hint":"TRUE = at VFX particle positions, FALSE = at circular rest positions"}'
+    - '// @input float tweenDuration = 500 {"hint":"Tween duration in milliseconds"}'
+    - '// @input float staggerDelay = 30 {"hint":"Stagger delay between objects (ms)"}'
+    - '// @input bool continuousUpdate = true {"hint":"Update positions every frame (for moving VFX)"}'
+    - '// @input bool debugMode = true {"hint":"Log debug info"}'

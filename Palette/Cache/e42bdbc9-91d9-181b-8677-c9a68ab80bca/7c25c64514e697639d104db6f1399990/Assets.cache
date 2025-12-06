@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    c728ec28-98d1-44d3-9a14-9aee3ffc5843: e42bdbc9-91d9-181b-8677-c9a68ab80bca/7c25c64514e697639d104db6f1399990/Data/lab_z(1).png
+  Assets:
+    - !<FileTexture/c728ec28-98d1-44d3-9a14-9aee3ffc5843>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: 7c25c64514e697639d104db6f1399990
+  FileHash: a09e112856a3f556ead9b747d6dc553b
+  NativePackageItems:
+    []

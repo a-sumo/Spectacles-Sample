@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/e7c24416-e501-4447-9cea-f8a5d1b7c538>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 4693912b-8b86-4d8d-b31c-70bdf7b95c44
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 4693912b-8b86-4d8d-b31c-70bdf7b95c44
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 3013798e-25cc-4f8b-9ad8-8d7e90fcedf6
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/3013798e-25cc-4f8b-9ad8-8d7e90fcedf6>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 3dce6026-d025-474a-8ae3-df772bb7ab40
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    gamutColorTexture: false
+    gamutPosTexture: false
+    gamutTexSize: false
+    lutResolution: false
+    projectionMaterial: false
+    projectionMethod: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - gamutPosTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      gamutColorTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      lutResolution: !<float> 32.000000
+      gamutTexSize: !<float> 64.000000
+      projectionMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      projectionMethod: !<float> 0.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Texture gamutPosTexture {"hint":"Texture with gamut LAB positions (from encoder)"}'
+    - '// @input Asset.Texture gamutColorTexture {"hint":"Texture with gamut RGB colors (from encoder)"}'
+    - '// @input float lutResolution = 32 {"hint":"LUT resolution per axis (32 = 32x32x32 = 32K entries)"}'
+    - '// @input float gamutTexSize = 64 {"hint":"Gamut texture size (must match encoder)"}'
+    - '// @input Asset.Material projectionMaterial {"hint":"Material to receive LUT"}'
+    - '// @input float projectionMethod {"hint":"0 = closest (min ΔE), 1 = hue-preserving"}'

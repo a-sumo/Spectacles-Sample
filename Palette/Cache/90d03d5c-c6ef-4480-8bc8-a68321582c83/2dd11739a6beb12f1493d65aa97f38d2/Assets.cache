@@ -1,0 +1,183 @@
+- !<AssetCache>
+  AssetFiles:
+    515f3e11-d2c1-48b4-a071-f44c4860fffe: 90d03d5c-c6ef-4480-8bc8-a68321582c83/2dd11739a6beb12f1493d65aa97f38d2/Data/Gamut Projection.ss_graph
+  Assets:
+    - !<ShaderGraphPass/515f3e11-d2c1-48b4-a071-f44c4860fffe>
+      PackagePath: ""
+      DefaultDefines:
+        []
+      DefaultProperties:
+        Port_Depth_N004:
+          typeIdx: 1
+          value: 1.000000
+        Port_FinalColor2_N004:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_FinalColor3_N004:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        Port_GSplatPointSize_N004:
+          typeIdx: 1
+          value: 0.000000
+        Port_GSplatRotation_N004:
+          typeIdx: 5
+          value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+        Port_GSplatScale_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_PrevWorldPosition_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_RayDirection_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 1.000000, z: 0.000000}
+        Port_RayOrigin_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_WorldNormal_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 1.000000, z: 0.000000}
+        Port_WorldPosition_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 0.000000}
+        Port_WorldTangent_N004:
+          typeIdx: 4
+          value: {x: 0.000000, y: 0.000000, z: 1.000000}
+      PassUiData: !<PassUiData>
+        ExtraDefines:
+          - SC_ENABLE_RT_CASTER
+        PassBindings:
+          - mLabel: Graph Parameters
+            mType: Invalid
+            mName: ""
+            mWidget: group_start
+            mHint: ""
+            mMin: ~
+            mMax: ~
+            mStep: ~
+            mDefaultVal: ~
+            mValues:
+              []
+          - mLabel: DebugMode
+            mType: Property
+            mName: debugMode
+            mWidget: slider
+            mHint: "Property: debugMode"
+            mMin: 0.000000
+            mMax: 1.000000
+            mStep: 1.000000
+            mDefaultVal: 0.000000
+            mValues:
+              []
+          - mLabel: Gamut Position Texture
+            mType: Property
+            mName: gamutPosTex
+            mWidget: texture_group
+            mHint: "Property: gamutPosTex"
+            mMin: ~
+            mMax: ~
+            mStep: ~
+            mDefaultVal: ~
+            mValues:
+              []
+          - mLabel: Gamut Color Texture
+            mType: Property
+            mName: gamutColorTex
+            mWidget: texture_group
+            mHint: "Property: gamutColorTex"
+            mMin: ~
+            mMax: ~
+            mStep: ~
+            mDefaultVal: ~
+            mValues:
+              []
+          - mLabel: Input Position Texture
+            mType: Property
+            mName: inputPosTex
+            mWidget: texture_group
+            mHint: "Property: inputPosTex"
+            mMin: ~
+            mMax: ~
+            mStep: ~
+            mDefaultVal: ~
+            mValues:
+              []
+          - mLabel: Gamut Tex Size
+            mType: Property
+            mName: gamutTexSize
+            mWidget: spinbox
+            mHint: "Property: gamutTexSize"
+            mMin: ~
+            mMax: ~
+            mStep: 0.010000
+            mDefaultVal: 1.000000
+            mValues:
+              []
+          - mLabel: Input Tex Width
+            mType: Property
+            mName: inputTexWidth
+            mWidget: spinbox
+            mHint: "Property: inputTexWidth"
+            mMin: ~
+            mMax: ~
+            mStep: 0.010000
+            mDefaultVal: 1.000000
+            mValues:
+              []
+          - mLabel: Input Tex Height
+            mType: Property
+            mName: inputTexHeight
+            mWidget: spinbox
+            mHint: "Property: inputTexHeight"
+            mMin: ~
+            mMax: ~
+            mStep: 0.010000
+            mDefaultVal: 1.000000
+            mValues:
+              []
+          - mLabel: Gamut Valid Count
+            mType: Property
+            mName: gamutValidCount
+            mWidget: spinbox
+            mHint: "Property: gamutValidCount"
+            mMin: ~
+            mMax: ~
+            mStep: 0.010000
+            mDefaultVal: 1.000000
+            mValues:
+              []
+          - mLabel: ""
+            mType: GroupEnd
+            mName: ""
+            mWidget: group_end
+            mHint: ""
+            mMin: ~
+            mMax: ~
+            mStep: ~
+            mDefaultVal: ~
+            mValues:
+              []
+          - mLabel: Alpha Test Threshold
+            mType: Property
+            mName: alphaTestThreshold
+            mWidget: slider
+            mHint: |-
+              Property: alphaTestThreshold
+              
+              When the 'Alpha Test' blend mode is enabled, pixels with alpha values lower than this disappear.
+            mMin: 0.000000
+            mMax: 1.000000
+            mStep: 0.001000
+            mDefaultVal: 0.500000
+            mValues:
+              []
+        ShaderType: Mesh3d
+      ShaderPath: 90d03d5c-c6ef-4480-8bc8-a68321582c83/2dd11739a6beb12f1493d65aa97f38d2/Data/b01d0f7/Gamut Projection.glsl
+      Defines:
+        []
+      Properties:
+        {}
+  SourceHash: 2dd11739a6beb12f1493d65aa97f38d2
+  FileHash: f1f3226985cd3eaf16a32a8497b22a58
+  NativePackageItems:
+    []

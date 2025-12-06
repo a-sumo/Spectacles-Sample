@@ -1,0 +1,77 @@
+- !<AssetImportMetadata/db4a12c1-74ec-3e70-fd6a-bec61999fa77>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> d7aff878-4352-482a-84a2-2c728edc3e08
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 77d1bc44-917c-436a-a6d9-9f9ffd31f90d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/77d1bc44-917c-436a-a6d9-9f9ffd31f90d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: d10d0762-4a12-4358-8140-e89182cbf99a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    beta: false
+    cameraCrop: false
+    cursorPlane: false
+    dcutoff: false
+    gridSize: false
+    initialUV: false
+    minCutoff: false
+    normalOffset: false
+    sampledColorObject: false
+    sampledColorText: false
+    useFilter: false
+    uvOffset: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cameraCrop: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      initialUV: !<Vec2> {x: 0.500000, y: 0.500000}
+      cursorPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      sampledColorText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      sampledColorObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      normalOffset: 0.500000
+      uvOffset: !<Vec2> {x: 0.000000, y: 0.000000}
+      gridSize: !<float> 9.000000
+      useFilter: true
+      minCutoff: !<float> 2.000000
+      beta: 0.015000
+      dcutoff: !<float> 1.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject cameraCrop {"hint":"Camera Crop with the material whose selectionUV will be updated."}'
+    - '// @input vec2 initialUV = {0.5,0.5} {"hint":"Initial selection UV position"}'
+    - "// @input SceneObject cursorPlane {\"hint\":\"Cursor plane that follows the selection with normal offset. Will be scaled to match cameraCrop's aspect ratio.\"}"
+    - '// @input Component.Text sampledColorText {"hint":"Text component to display the sampled color as HEX code"}'
+    - '// @input SceneObject sampledColorObject {"hint":"Object whose material mainColor will be set to the sampled color"}'
+    - "// @input float normalOffset = 0.5 {\"hint\":\"Offset distance along the plane's normal direction (positive = towards viewer)\"}"
+    - '// @input vec2 uvOffset = {0,0} {"hint":"Additional offset in UV space (applied before world conversion)"}'
+    - '// @input float gridSize = 9 {"hint":"Grid size for cursor plane texture (odd number, e.g., 9 = 9x9 grid)"}'
+    - '// @input bool useFilter = true {"hint":"Apply filtering to smooth interaction"}'
+    - '// @input float minCutoff = 2 {"hint":"Filter min cutoff - lower = smoother but more lag", "showIf":"useFilter", "showIfValue":true}'
+    - '// @input float beta = 0.015 {"hint":"Filter beta - higher = less lag but more jitter", "showIf":"useFilter", "showIfValue":true}'
+    - '// @input float dcutoff = 1 {"hint":"Filter derivative cutoff", "showIf":"useFilter", "showIfValue":true}'

@@ -1,0 +1,47 @@
+- !<AssetImportMetadata/8b986ec1-3468-9116-3a4f-3b8e6451b010>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 31ec92b0-5ab8-46bf-9e33-f8f23ac27d9c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 31ec92b0-5ab8-46bf-9e33-f8f23ac27d9c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 5a6647ce-ffd9-436b-b23e-cc33cd9e3044
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/5a6647ce-ffd9-436b-b23e-cc33cd9e3044>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 95117fee-3814-487d-80b5-d8e821c2daea
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cameraCropPath: false
+    clampToBounds: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - clampToBounds: true
+      cameraCropPath: imageAnchor/cameraCrop
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input bool clampToBounds = true {"hint":"Should UV coordinates be clamped to 0-1 range?"}'
+    - "// @input string cameraCropPath = \"ImageAnchor/CameraCrop\" {\"hint\":\"Path to cameraCrop within scanner hierarchy (e.g., 'ImageAnchor/CameraCrop')\"}"

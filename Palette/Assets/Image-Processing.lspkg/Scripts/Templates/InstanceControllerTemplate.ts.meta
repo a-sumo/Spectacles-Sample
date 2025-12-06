@@ -1,0 +1,47 @@
+- !<AssetImportMetadata/0a2138e3-57a3-3521-f051-6bb7026b71ce>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 85f9bf3b-2d75-42c9-b6fd-038b07b64dc2
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 85f9bf3b-2d75-42c9-b6fd-038b07b64dc2
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2db97ea6-75c2-48df-9d12-5c4aed8670d5
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2db97ea6-75c2-48df-9d12-5c4aed8670d5>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: daf01bf8-c6d5-4910-a768-48a826d98098
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    prefab: false
+    spacing: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - prefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      spacing: !<float> 20.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Asset.ObjectPrefab prefab
+    - // @input float spacing = 20

@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/134cbd2d-234c-4f4b-9bb1-e599a71e24a1>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 3da99cd8-818c-490f-bb50-0167986570bf
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 3da99cd8-818c-490f-bb50-0167986570bf
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 347c28b1-b9ef-4d2a-919d-d5ad160fbb42
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/347c28b1-b9ef-4d2a-919d-d5ad160fbb42>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 45e80774-85bd-4f0b-90e8-3b468e6eac8f
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoToggleEnabled: false
+    autoToggleInterval: false
+    debugMode: false
+    positionSync: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - positionSync: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      autoToggleInterval: !<float> 3.000000
+      autoToggleEnabled: true
+      debugMode: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.ScriptComponent positionSync {"hint":"Reference to TexturePositionSync script"}'
+    - '// @input float autoToggleInterval = 3 {"hint":"Auto-toggle interval (seconds)"}'
+    - '// @input bool autoToggleEnabled = true {"hint":"Enable auto-toggle"}'
+    - // @input bool debugMode = true

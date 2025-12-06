@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/80d32d45-f577-406d-731c-4205221fbb66>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 6e583192-4389-4d5a-a18c-d8c4394f8f44
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 6e583192-4389-4d5a-a18c-d8c4394f8f44
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 9a33b9fd-18c3-4006-afd1-2b24e9439623
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/9a33b9fd-18c3-4006-afd1-2b24e9439623>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: c6880a67-3526-489d-a353-ad56561921e6
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    debugMode: false
+    ditherStrength: false
+    enableDither: false
+    inputTexture: false
+    remapMaterial: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - remapMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      inputTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      enableDither: true
+      ditherStrength: 0.850000
+      debugMode: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material remapMaterial {"hint":"Material with PaletteRemap shader"}'
+    - '// @input Asset.Texture inputTexture {"hint":"Input image texture"}'
+    - '// @input bool enableDither = true {"hint":"Enable ordered dithering"}'
+    - '// @input float ditherStrength = 0.15 {"hint":"Dithering strength 0-1"}'
+    - // @input bool debugMode = true

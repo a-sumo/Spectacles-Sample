@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    1914efde-fb17-4899-986d-3d5e04c5f6c9: 821fdc52-4200-0681-a2f1-9795894a125b/d32404a0b3e74042ad9eb475abe8e1a8/Data/eye-icon.png
+  Assets:
+    - !<FileTexture/1914efde-fb17-4899-986d-3d5e04c5f6c9>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 96
+        Height: 96
+  SourceHash: d32404a0b3e74042ad9eb475abe8e1a8
+  FileHash: f5eee05e3ec3f55f6d7bb182415c9221
+  NativePackageItems:
+    []

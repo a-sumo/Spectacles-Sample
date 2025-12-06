@@ -1,0 +1,10 @@
+- !<AssetCache>
+  AssetFiles:
+    ba124435-80d8-4747-b6fb-876ff67baec4: 72f9f0d7-fa10-db77-056e-550796ef7b84/9081158604a384b4cfee191c44e4e9c4/Data/SliderProgressionAudioTrack.wav
+  Assets:
+    - !<FileAudioTrack/ba124435-80d8-4747-b6fb-876ff67baec4>
+      PackagePath: ""
+  SourceHash: 9081158604a384b4cfee191c44e4e9c4
+  FileHash: 531c243f9101e955ba9a50563774eaa2
+  NativePackageItems:
+    []

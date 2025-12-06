@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    9b023d84-2797-4122-ad9f-4d1aa734e50f: 076ce22e-642f-4f0c-ff91-8b7e3a24e547/0d2015204999e9fdf1b817f404fb97c4/Data/lab_color(1).png
+  Assets:
+    - !<FileTexture/9b023d84-2797-4122-ad9f-4d1aa734e50f>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: 0d2015204999e9fdf1b817f404fb97c4
+  FileHash: 8c29334cb22c119fe32e1a6edbc4dda5
+  NativePackageItems:
+    []

@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    5c7bd341-f67e-47d3-a300-e65a16e1c177: aef3b7ea-a49d-78e9-006c-fcb6b3590beb/5cce2090167252a8c4d45a98dac91575/Data/rgb_x.png
+  Assets:
+    - !<FileTexture/5c7bd341-f67e-47d3-a300-e65a16e1c177>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 64
+        Height: 64
+  SourceHash: 5cce2090167252a8c4d45a98dac91575
+  FileHash: 44d1c662bbf8ee739d286995c73a4651
+  NativePackageItems:
+    []

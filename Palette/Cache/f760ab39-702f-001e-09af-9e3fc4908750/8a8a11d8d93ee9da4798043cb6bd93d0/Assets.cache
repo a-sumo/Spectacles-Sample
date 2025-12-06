@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    a45355bb-ade6-46f8-8462-f071a2e43c58: f760ab39-702f-001e-09af-9e3fc4908750/8a8a11d8d93ee9da4798043cb6bd93d0/Data/pos_y.png
+  Assets:
+    - !<FileTexture/a45355bb-ade6-46f8-8462-f071a2e43c58>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 4
+        Height: 4
+  SourceHash: 8a8a11d8d93ee9da4798043cb6bd93d0
+  FileHash: 69cf2b2fa0f441569ec2fd229f47e045
+  NativePackageItems:
+    []

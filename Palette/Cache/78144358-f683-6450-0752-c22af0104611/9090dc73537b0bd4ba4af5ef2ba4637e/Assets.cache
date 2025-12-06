@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    69c81b3f-97b5-40d9-94a5-72ce5f0de46c: 78144358-f683-6450-0752-c22af0104611/9090dc73537b0bd4ba4af5ef2ba4637e/Data/990px-1897_Schischkin_Im_Park_anagoria.jpg
+  Assets:
+    - !<FileTexture/69c81b3f-97b5-40d9-94a5-72ce5f0de46c>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 990
+        Height: 720
+  SourceHash: 9090dc73537b0bd4ba4af5ef2ba4637e
+  FileHash: 106bce51dfebab8795ff5d05914a8135
+  NativePackageItems:
+    []
