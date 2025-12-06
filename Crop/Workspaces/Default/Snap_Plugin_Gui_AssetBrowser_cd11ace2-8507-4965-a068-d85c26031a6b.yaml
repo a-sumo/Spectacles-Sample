@@ -1,84 +1,107 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 789
+    size: 927
     values:
-      - 3DModels
-      - 3DModels/ButtonSphereMesh.mesh
-      - 3DModels/SWIS_Frame.mesh
-      - 3DModels/SWIS_tile_solid.mesh
-      - 3DModels/Unit Box.mesh
-      - 3DModels/Unit Plane.mesh
-      - 3DModels/Unit Sphere.mesh
-      - Color-Space.lspkg
+      - Camera Object.prefab
       - Color-Space.lspkg/Images
+      - Color-Space.lspkg/Images/lab_color(1).png
+      - Color-Space.lspkg/Images/lab_x(1).png
+      - Color-Space.lspkg/Images/lab_y(1).png
+      - Color-Space.lspkg/Images/lab_z(1).png
+      - Color-Space.lspkg/Images/rgb_color.png
+      - Color-Space.lspkg/Images/rgb_x.png
+      - Color-Space.lspkg/Images/rgb_y.png
+      - Color-Space.lspkg/Images/rgb_z.png
+      - Color-Space.lspkg/Images/test_encoding
+      - Color-Space.lspkg/Images/test_encoding/color.png
+      - Color-Space.lspkg/Images/test_encoding/pos_x.png
+      - Color-Space.lspkg/Images/test_encoding/pos_y.png
+      - Color-Space.lspkg/Images/test_encoding/pos_z.png
       - Color-Space.lspkg/Materials
+      - Color-Space.lspkg/Materials/Color Mix Test.mat
+      - Color-Space.lspkg/Materials/Color Mix Test.ss_graph
       - Color-Space.lspkg/Materials/Gamut Projection.mat
       - Color-Space.lspkg/Materials/Gamut Projection.ss_graph
-      - Color-Space.lspkg/Materials/Palette Remap.mat
-      - Color-Space.lspkg/Materials/Palette Remap.ss_graph
+      - Color-Space.lspkg/Materials/LabEncoder.mat
+      - Color-Space.lspkg/Materials/LabEncoder.ss_graph
+      - Color-Space.lspkg/Materials/Pigment Gamut Encoder Hi Res.mat
+      - Color-Space.lspkg/Materials/Pigment Gamut Encoder Hi Res.ss_graph
+      - Color-Space.lspkg/Materials/Pigment Gamut Encoder.mat
+      - Color-Space.lspkg/Materials/Pigment Gamut Encoder.ss_graph
+      - Color-Space.lspkg/Materials/RGB Encoder.mat
+      - Color-Space.lspkg/Materials/RGB Encoder.ss_graph
+      - Color-Space.lspkg/Materials/Spectral Mix.mat
+      - Color-Space.lspkg/Materials/Spectral Mix.ss_graph
+      - Color-Space.lspkg/Materials/TestEncoder.mat
+      - Color-Space.lspkg/Materials/TestEncoder.ss_graph
       - Color-Space.lspkg/Materials/empty.ss_graph
       - Color-Space.lspkg/Prefabs
-      - Color-Space.lspkg/Scripts/GamutProjectionLUT.ts
-      - Color-Space.lspkg/Scripts/GamutProjector.ts
-      - Color-Space.lspkg/Scripts/GamutProjectorTest.ts
-      - Color-Space.lspkg/Scripts/LABGamutEncoder.ts
-      - Color-Space.lspkg/Scripts/MinimalEncoderTest.ts
-      - Color-Space.lspkg/Scripts/PigmentGamutEncoder.ts
-      - Color-Space.lspkg/Scripts/PigmentGamutEncoderHiRes.ts
-      - Color-Space.lspkg/Scripts/ProjectedPositionController.ts
-      - Color-Space.lspkg/Scripts/RGBCubeEncoder.ts
+      - Color-Space.lspkg/Prefabs/LAB Encoder Decoder.prefab
+      - Color-Space.lspkg/Prefabs/Pigment Gamut Encoder Decoder Hi Res.prefab
+      - Color-Space.lspkg/Prefabs/Pigment Gamut Encoder Decoder.prefab
+      - Color-Space.lspkg/Prefabs/RGB Encoder Decoder.prefab
+      - Color-Space.lspkg/Prefabs/Simple Mix Test.prefab
+      - Color-Space.lspkg/Prefabs/Spectral Mix Test.prefab
+      - Color-Space.lspkg/Prefabs/Test Encoder Decoder.prefab
+      - Color-Space.lspkg/Scripts
+      - Color-Space.lspkg/Scripts/Encoder_FullRGB.ts
+      - Color-Space.lspkg/Scripts/Encoder_PigmentMix.ts
+      - Color-Space.lspkg/Scripts/Encoder_PigmentMixHiRes.ts
+      - Color-Space.lspkg/Scripts/Encoder_RGBCube.ts
+      - Color-Space.lspkg/Scripts/Projector_Controller.ts
+      - Color-Space.lspkg/Scripts/Projector_Gamut.ts
+      - Color-Space.lspkg/Scripts/Projector_LUT.ts
+      - Color-Space.lspkg/Scripts/Test_Colormix.js
+      - Color-Space.lspkg/Scripts/Test_GamutProjector.ts
+      - Color-Space.lspkg/Scripts/Test_MinimalEncoder.ts
+      - Color-Space.lspkg/Scripts/Util_SpectralMix.ts
       - Color-Space.lspkg/VFX
+      - Color-Space.lspkg/VFX/Decode From Texture File.vfxgraph
       - Color-Space.lspkg/VFX/Gamut Projector Decoder.vfxgraph
+      - Color-Space.lspkg/VFX/LAB Decoder.vfxgraph
+      - Color-Space.lspkg/VFX/Pigment Gamut Decoder Hi Res.vfxgraph
+      - Color-Space.lspkg/VFX/Pigment Gamut Decoder.vfxgraph
       - Color-Space.lspkg/VFX/RGB Decoder.vfxgraph
+      - Color-Space.lspkg/VFX/Test Particle Encoding.vfxgraph
+      - Color-Space.lspkg/VFX/TestDecoder.vfxgraph
       - Color-Space.lspkg/package.native
-      - Images
-      - Images/990px-1897_Schischkin_Im_Park_anagoria.jpg
-      - Images/PicMask.png
-      - Images/PicOutline.png
-      - Images/SWIS_frame.jpg
-      - Images/loading.gif
-      - Images/thinOutline.png
-      - Images/webIcon.png
+      - Image-Processing/3DModels
+      - Image-Processing/Images
+      - Image-Processing/Materials
+      - Image-Processing/Scripts
       - LSTween.lspkg
+      - LSTween.lspkg/Examples
+      - LSTween.lspkg/Examples/Assets
+      - LSTween.lspkg/Examples/Assets/Box.mesh
+      - LSTween.lspkg/Examples/Assets/Simple Diffuse.mat
+      - LSTween.lspkg/Examples/Assets/Simple Diffuse.ss_graph
+      - LSTween.lspkg/Examples/Assets/Sphere.mesh
+      - LSTween.lspkg/Examples/Example__ADD_TO_SCENE.prefab
+      - LSTween.lspkg/Examples/Scripts
+      - LSTween.lspkg/Examples/Scripts/Example_ChainTween.ts
+      - LSTween.lspkg/Examples/Scripts/Example_RawTween.ts
+      - LSTween.lspkg/Examples/Scripts/Example_YoyoTween.ts
+      - LSTween.lspkg/LSTween.ts
+      - LSTween.lspkg/RotationInterpolationType.ts
+      - LSTween.lspkg/TweenJS
+      - LSTween.lspkg/TweenJS/Easing.ts
+      - LSTween.lspkg/TweenJS/Group.ts
+      - LSTween.lspkg/TweenJS/Index.ts
+      - LSTween.lspkg/TweenJS/Interpolation.ts
+      - LSTween.lspkg/TweenJS/Now.ts
+      - LSTween.lspkg/TweenJS/Sequence.ts
+      - LSTween.lspkg/TweenJS/Tween.ts
+      - LSTween.lspkg/TweenJS/Version.ts
+      - LSTween.lspkg/TweenJS/mainGroup.ts
       - LSTween.lspkg/package.native
-      - Materials
-      - Materials/CamFeedCrop.mat
-      - Materials/CamFeedMat.mat
-      - Materials/CaptureVisual.mat
-      - Materials/CaptureVisual.ss_graph
-      - Materials/GrayTrans.mat
-      - Materials/Green.mat
-      - Materials/Image Input.mat
-      - Materials/Image Output.mat
-      - Materials/LensExp_hover_frame.ss_graph
-      - Materials/PinchButtonDarkRadial.mat
-      - Materials/PinchDarkRadial.ss_graph
-      - Materials/SWIS_flat_color.ss_graph
-      - Materials/SWIS_frame.mat
-      - Materials/SWIS_tile.mat
-      - Materials/Shapes
-      - Materials/SphereOutline.mat
-      - Materials/loadingGif.mat
-      - Materials/loadingGif.ss_graph
-      - Materials/unlitColor.ss_graph
-      - Materials/unlitTexture.ss_graph
-      - Materials/unlitTextureColor.ss_graph
-      - Materials/webIcon.mat
-      - Prefabs
-      - Prefabs/Basic Sphere 2.prefab
-      - Prefabs/Basic Sphere.prefab
-      - Prefabs/Button.prefab
-      - Prefabs/Scanner.prefab
-      - Prefabs/SceneHierarchy.prefab
-      - Prefabs/Test SceneObject VFXParticle Sync.prefab
-      - Refraction Material
       - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
       - RemoteServiceGateway.lspkg/Helpers/AudioProcessor.ts
       - RemoteServiceGateway.lspkg/Helpers/DynamicAudioOutput.ts
       - RemoteServiceGateway.lspkg/Helpers/MicrophoneRecorder.ts
       - RemoteServiceGateway.lspkg/Helpers/VideoController.ts
+      - RemoteServiceGateway.lspkg/HostedExternal
       - RemoteServiceGateway.lspkg/HostedExternal/Examples
       - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiCalls.ts
       - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiLive.ts
@@ -150,32 +173,6 @@ CollapsedEntities:
       - Rendering/Render Target.renderTarget
       - Rendering/Screen Crop Texture.screenCropTexture
       - Scene.scene
-      - Scripts/APIKeyHint.ts
-      - Scripts/CameraService.ts
-      - Scripts/CaptionBehavior.ts
-      - Scripts/ChatGPT.ts
-      - Scripts/Core/ARCHITECTURE_GUIDE.md
-      - Scripts/Core/ComponentOrchestrator.ts
-      - Scripts/Core/ServiceLocator.ts
-      - Scripts/CropRegion.ts
-      - Scripts/GridTestOrchestrator.ts
-      - Scripts/Image Processing/Image Pipeline.ts
-      - Scripts/Image Processing/Image Regenerator.ts
-      - Scripts/Image Processing/PaletteExtractor.ts
-      - Scripts/Image Processing/PipelineTester.ts
-      - Scripts/PaletteController.ts
-      - Scripts/PictureBehavior.ts
-      - Scripts/PictureController.ts
-      - Scripts/PresetTester.ts
-      - Scripts/PresetToggleController.ts
-      - Scripts/SimpleGridPositionSync.ts
-      - Scripts/Templates
-      - Scripts/Testing
-      - Scripts/Testing/TexturePositionOrchestrator.ts
-      - Scripts/TexturePositionSync.ts
-      - Scripts/UI
-      - Scripts/UI/SwitchToggleGroupExtended.ts
-      - Scripts/Utils
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
@@ -335,6 +332,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Textures/SIKContainerExampleImage.jpg
       - SpectaclesInteractionKit.lspkg/Assets/Textures/SIKLogo.png
       - SpectaclesInteractionKit.lspkg/Assets/Textures/ScrollBarRectangle.png
+      - SpectaclesInteractionKit.lspkg/Components
       - SpectaclesInteractionKit.lspkg/Components/Helpers
       - SpectaclesInteractionKit.lspkg/Components/Helpers/ButtonFeedback.ts
       - SpectaclesInteractionKit.lspkg/Components/Helpers/CapsuleMeshCustomizer.ts
@@ -390,7 +388,10 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorLineVisual/InteractorLineVisual.ts
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorRayVisual
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorRayVisual/InteractorRayVisual.ts
+      - SpectaclesInteractionKit.lspkg/Components/UI
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/ContainerFrame.ts
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/FrameMaterial.mat
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/FrameMaterial.ss_graph
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/Ghost Material.mat
@@ -769,27 +770,164 @@ CollapsedEntities:
       - SpectaclesInteractionKitExamples.lspkg/Examples/SIK Examples.prefab
       - SpectaclesInteractionKitExamples.lspkg/package.native
       - SpectaclesInteractionKitExamples.lspkg/package_dependencies.json
+      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
+      - SpectaclesUIKit.lspkg/Audio/HoverAudioTrack.wav
+      - SpectaclesUIKit.lspkg/Audio/SliderProgressionAudioTrack.wav
+      - SpectaclesUIKit.lspkg/Audio/TriggerEndAudioTrack.wav
+      - SpectaclesUIKit.lspkg/Audio/TriggerStartAudioTrack.wav
       - SpectaclesUIKit.lspkg/Materials
+      - SpectaclesUIKit.lspkg/Materials/BaseRoundedRectangle.mat
+      - SpectaclesUIKit.lspkg/Materials/BaseRoundedRectangle.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/CapsuleSphere.mat
+      - SpectaclesUIKit.lspkg/Materials/CapsuleSphere.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/CapsuleSphereDarkGlass.mat
+      - SpectaclesUIKit.lspkg/Materials/CapsuleSphereDarkGlass.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/CapsuleSphereTextField.mat
+      - SpectaclesUIKit.lspkg/Materials/CapsuleSphereTextField.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/ConfirmationSlider.mat
+      - SpectaclesUIKit.lspkg/Materials/ConfirmationSlider.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultButton.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultButton.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultCapsule.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultCapsuleShader.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultRadioButtonCheck.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultSphere.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultSphereMat.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultSphereSimple.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultSphereSimpleShader.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultSwitch.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/DefaultSwitchBackground.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultSwitchKnob.mat
+      - SpectaclesUIKit.lspkg/Materials/DefaultSwitchKnob.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/FragRoundedRectangle.mat
+      - SpectaclesUIKit.lspkg/Materials/FragRoundedRectangle.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/Frame.mat
+      - SpectaclesUIKit.lspkg/Materials/Frame.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/Image.mat
+      - SpectaclesUIKit.lspkg/Materials/ImageShader.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/RoundedRectangleStroke.mat
+      - SpectaclesUIKit.lspkg/Materials/RoundedRectangleStrokeShader.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMask.mat
+      - SpectaclesUIKit.lspkg/Materials/ScrollWindowFadeMaskShader.ss_graph
       - SpectaclesUIKit.lspkg/Meshes
+      - SpectaclesUIKit.lspkg/Meshes/CapsuleSphere.mesh
+      - SpectaclesUIKit.lspkg/Meshes/DefaultButton.mesh
+      - SpectaclesUIKit.lspkg/Meshes/DefaultCapsule.mesh
+      - SpectaclesUIKit.lspkg/Meshes/DefaultSphere.mesh
+      - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchBackground.mesh
+      - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchKnob.mesh
+      - SpectaclesUIKit.lspkg/Meshes/StretchableCircle.mesh
+      - SpectaclesUIKit.lspkg/Meshes/Unit Plane.mesh
       - SpectaclesUIKit.lspkg/Prefabs
+      - SpectaclesUIKit.lspkg/Prefabs/DropShadow.prefab
+      - SpectaclesUIKit.lspkg/Prefabs/ExampleInterface.prefab
+      - SpectaclesUIKit.lspkg/Prefabs/FrameButton.prefab
+      - SpectaclesUIKit.lspkg/Prefabs/ImageButton.prefab
+      - SpectaclesUIKit.lspkg/Prefabs/LabelledButton.prefab
+      - SpectaclesUIKit.lspkg/Prefabs/LabelledToggle.prefab
+      - SpectaclesUIKit.lspkg/README.md
       - SpectaclesUIKit.lspkg/Scripts
+      - SpectaclesUIKit.lspkg/Scripts/BackPlate.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components
       - SpectaclesUIKit.lspkg/Scripts/Components/Button
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button/BaseButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button/CapsuleButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button/RectangleButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Element.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/Frame.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/ButtonHandler.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/CursorHandler.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/FrameButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/FrameInputHandler.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/HoverBehavior.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/SmoothFollow.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/SnappingHandler.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout
+      - SpectaclesUIKit.lspkg/Scripts/Components/GridLayout/GridLayout.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow
+      - SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow/ScrollWindow.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Slider
+      - SpectaclesUIKit.lspkg/Scripts/Components/Slider/ConfirmationSlider.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Slider/Slider.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Switch
+      - SpectaclesUIKit.lspkg/Scripts/Components/Switch/Switch.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/TextInputField
+      - SpectaclesUIKit.lspkg/Scripts/Components/TextInputField/TextInputField.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/TextInputField/TextInputFieldManager.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Toggle
+      - SpectaclesUIKit.lspkg/Scripts/Components/Toggle/BaseToggleGroup.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Toggle/SwitchToggleGroup.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Toggle/ToggleGroup.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Toggle/Toggleable.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/VisualElement.ts
+      - SpectaclesUIKit.lspkg/Scripts/DropShadow.ts
       - SpectaclesUIKit.lspkg/Scripts/Example
       - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D
+      - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D/Capsule3DButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D/Visual
+      - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D/Visual/Capsule3D.ts
+      - SpectaclesUIKit.lspkg/Scripts/Example/Capsule3D/Visual/Capsule3DVisual.ts
       - SpectaclesUIKit.lspkg/Scripts/Example/Sphere
+      - SpectaclesUIKit.lspkg/Scripts/Example/Sphere/SphereButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Example/Sphere/Visual
+      - SpectaclesUIKit.lspkg/Scripts/Example/Sphere/Visual/Sphere.ts
+      - SpectaclesUIKit.lspkg/Scripts/Example/Sphere/Visual/SphereVisual.ts
+      - SpectaclesUIKit.lspkg/Scripts/ScrollBar.ts
       - SpectaclesUIKit.lspkg/Scripts/Themes
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Colors.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Gradients
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Gradients/GhostGradients.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Gradients/PrimaryGradients.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Gradients/PrimaryNeutralGradients.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Gradients/SecondaryGradients.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Gradients/SpecialGradients.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/SnapOS2.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Styles
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Styles/CapsuleButtonParameters.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Styles/RectangleButtonParameters.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/SnapOS-2.0/Styles/RoundButtonParameters.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/Style.ts
+      - SpectaclesUIKit.lspkg/Scripts/Themes/Theme.ts
+      - SpectaclesUIKit.lspkg/Scripts/Tooltip.ts
       - SpectaclesUIKit.lspkg/Scripts/Utility
+      - SpectaclesUIKit.lspkg/Scripts/Utility/DebugCamera
+      - SpectaclesUIKit.lspkg/Scripts/Utility/DebugCamera/DebugCamera.ts
+      - SpectaclesUIKit.lspkg/Scripts/Utility/DebugCamera/Unit Plane.mesh
+      - SpectaclesUIKit.lspkg/Scripts/Utility/DebugCamera/ViewingPlane.mat
+      - SpectaclesUIKit.lspkg/Scripts/Utility/DebugCamera/ViewingPlane.ss_graph
+      - SpectaclesUIKit.lspkg/Scripts/Utility/Frustum.ts
+      - SpectaclesUIKit.lspkg/Scripts/Utility/InteractableStateMachine.ts
+      - SpectaclesUIKit.lspkg/Scripts/Utility/ScaleResetter.ts
+      - SpectaclesUIKit.lspkg/Scripts/Utility/SceneUtilities.ts
+      - SpectaclesUIKit.lspkg/Scripts/Utility/UIKitUtilities.ts
       - SpectaclesUIKit.lspkg/Scripts/Visuals
+      - SpectaclesUIKit.lspkg/Scripts/Visuals/RoundedRectangle
+      - SpectaclesUIKit.lspkg/Scripts/Visuals/RoundedRectangle/RoundedRectangle.ts
+      - SpectaclesUIKit.lspkg/Scripts/Visuals/RoundedRectangle/RoundedRectangleVisual.ts
+      - SpectaclesUIKit.lspkg/Scripts/Visuals/Visual.ts
       - SpectaclesUIKit.lspkg/Textures
+      - SpectaclesUIKit.lspkg/Textures/DefaultSphere_reflection_map.jpg
+      - SpectaclesUIKit.lspkg/Textures/ReflectionCubeMap.png
+      - SpectaclesUIKit.lspkg/Textures/circle-distance-lut.png
+      - SpectaclesUIKit.lspkg/Textures/circle-lut-128.png
+      - SpectaclesUIKit.lspkg/Textures/close-icon-1.png
+      - SpectaclesUIKit.lspkg/Textures/eye-icon.png
+      - SpectaclesUIKit.lspkg/Textures/eye-off-icon.png
+      - SpectaclesUIKit.lspkg/Textures/follow-black.png
+      - SpectaclesUIKit.lspkg/Textures/follow-white.png
+      - SpectaclesUIKit.lspkg/Textures/test-image.jpg
       - SpectaclesUIKit.lspkg/package.native
+      - SpectaclesUIKit.lspkg/package_dependencies.json
       - Text Logger V2.lspkg
+      - Text Logger V2.lspkg/Scripts
+      - Text Logger V2.lspkg/Scripts/TextLogger.js
+      - Text Logger V2.lspkg/Scripts/TextLoggerExample.js
+      - Text Logger V2.lspkg/Scripts/TextLoggerModule.js
+      - Text Logger V2.lspkg/TextLogger__PLACE_IN_SCENE.prefab
       - Text Logger V2.lspkg/package.native
-      - VFX/SimpleGridPosition.vfxgraph
   options: 4

@@ -1,0 +1,68 @@
+- !<AssetImportMetadata/40209c56-dc61-481c-9291-ab251b35187d>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 934e535a-dd42-41e3-8f7f-63c175af5009
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 934e535a-dd42-41e3-8f7f-63c175af5009
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2b12a8bb-74bb-45a9-9d7c-0d44f84b709a
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2b12a8bb-74bb-45a9-9d7c-0d44f84b709a>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 9bfa4848-b256-4ca5-9801-a71e7edc9cd6
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoRun: false
+    extractColors: false
+    gamutProjector: false
+    imageRegenerator: false
+    originalMesh: false
+    paletteExtractor: false
+    previewMesh: false
+    testImage: false
+    testMode: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - paletteExtractor: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      gamutProjector: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      imageRegenerator: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      testImage: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      extractColors: !<float> 12.000000
+      previewMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      originalMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      testMode: !<float> 0.000000
+      autoRun: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.ScriptComponent paletteExtractor {"hint":"PaletteExtractor script"}'
+    - '// @input Component.ScriptComponent gamutProjector {"hint":"Projector_Gamut script"}'
+    - '// @input Component.ScriptComponent imageRegenerator {"hint":"ImageRegenerator script"}'
+    - '// @input Asset.Texture testImage {"hint":"Test image for extraction"}'
+    - '// @input float extractColors = 12 {"hint":"Number of colors to extract"}'
+    - '// @input SceneObject previewMesh {"hint":"SceneObject with RenderMeshVisual to display output"}'
+    - '// @input SceneObject originalMesh {"hint":"Also show original on a second mesh"}'
+    - '// @input float testMode {"hint":"Which test to run: 0=none, 1=extraction, 2=projection, 3=regeneration, 4=full"}'
+    - '// @input bool autoRun {"hint":"Auto-run test on start"}'

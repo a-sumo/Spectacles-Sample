@@ -22,7 +22,7 @@
 - !<ScriptComponent/2a09ef7c-2bbc-42cb-4f30-25d67dc3e4d2>
   PrefabRemaps:
     []
-  Name: ColormixTest
+  Name: Test_Colormix
   Enabled: true
   ScriptAsset: !<reference> 1146df87-fa30-4ba0-b22e-c9c86c76fbe7
   ScriptInputsDefault:

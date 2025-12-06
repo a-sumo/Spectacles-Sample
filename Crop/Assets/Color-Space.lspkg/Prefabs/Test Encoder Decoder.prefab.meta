@@ -81,7 +81,7 @@
 - !<ScriptComponent/fc255693-567b-42a1-7f45-8ce5ffbaa933>
   PrefabRemaps:
     []
-  Name: MinimalEncoderTest
+  Name: Test_MinimalEncoder
   Enabled: true
   ScriptAsset: !<reference> efc0901d-4180-4175-a318-b21522b5062c
   ScriptInputsDefault:

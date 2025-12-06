@@ -4,17 +4,19 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> b586a2d3-476c-4f34-8ead-ce537d16b6d8
-    - !<own> 489d37b0-e03f-4b40-9738-a3b6ef8188ab
     - !<own> 1d26d745-b0fb-44ff-bf89-b09fac1f3d91
     - !<own> c40411fe-69a7-45fa-88dd-61a4550224a0
+    - !<own> 489d37b0-e03f-4b40-9738-a3b6ef8188ab
     - !<own> 3f2b6956-2aad-451e-9555-fe237a9f8383
     - !<own> 09e1cdaa-09ec-475f-9e7d-d882305446d4
     - !<own> bdd5726a-01e5-4183-8c06-f5b80b011f33
     - !<own> 7f006e39-6408-49f5-9149-059bc4fd9329
     - !<own> 1ec66e2f-7489-471e-8e24-c262829a6ba4
     - !<own> 085dea40-ce0b-4e35-8bea-4e2ba84c810f
+    - !<own> 0b38d0e5-ecf0-4c7f-8fae-42a8c5533192
     - !<own> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
     - !<own> ef81a328-fcbd-4491-8899-421f5e8df0bf
+    - !<own> bfc03fef-7d1a-41a5-ac3d-83cec8358135
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -44,7 +46,15 @@
   PhysicsRootWorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/00000000-0000-0065-0000-000000000064>
   PrefabRemaps:
-    []
+    - 00000000-0000-0065-0000-000000000064: af0c9608-9ab7-4426-6def-0f73e4719fcd
+    - 00000000-0000-0065-0000-000000000065: 1751c280-d73b-4e5b-7082-5ade928918b2
+    - 026777c9-2a55-4715-b0df-6e70af6e279d: d76e75ef-12a6-4c76-6594-513e951c8e86
+    - 1d88044d-8781-4736-b2fd-4fba1a32457d: 82e56bdf-6355-485f-7a7f-e35b9ac46746
+    - 1ebba6b5-4e0d-484c-ab8a-26199ae8dd76: 62d9503c-ae6e-4b23-40f7-91d4f57662b6
+    - b75a7331-f6c9-4be7-8927-1ffb5efb626d: fc5725e2-7728-49d9-6231-1a47f1a3d9bc
+    - e05c734e-e8cb-44ec-a60c-ec7b366eebdc: e2da0824-3fe8-46be-42f5-d786f5ae650e
+    - f3280b3a-c7da-4d79-bd27-659dcd704ab1: 49013ace-1143-4e4a-4505-4e83e345af74
+    - f48e5894-5df8-4e80-a834-dc72f3afb4c8: 86ef7bd5-2419-4b95-4cfc-eeccb6fa6675
   Name: Camera Object
   Enabled: true
   Layers: 1
@@ -379,7 +389,7 @@
   PrefabRemaps:
     []
   Name: PipelineTester
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -410,7 +420,7 @@
   PrefabRemaps:
     []
   Name: Cursor Plane Controller
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -426,11 +436,11 @@
 - !<SceneObject/0b38d0e5-ecf0-4c7f-8fae-42a8c5533192>
   PrefabRemaps:
     []
-  Name: Toggle Project Color
-  Enabled: false
+  Name: Toggle Btn
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 6.000000, z: 0.030000}
+    Position: {x: 0.000000, y: -14.000000, z: 0.030000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -857,7 +867,7 @@
   PrefabRemaps:
     []
   Name: Image Pipeline
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -1054,7 +1064,7 @@
 - !<SceneObject/29ea81df-28ee-4678-8ad3-c1410afbf7ed>
   PrefabRemaps:
     []
-  Name: Gamut Projector Encoder
+  Name: Encoder_Projector_Gamut
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -1359,7 +1369,7 @@
 - !<ScriptComponent/3c424957-eb93-4da8-822d-e383c7f6094d>
   PrefabRemaps:
     []
-  Name: LABGamutEncoder
+  Name: Encoder_FullRGB
   Enabled: true
   ScriptAsset: !<reference> 2d57b839-30be-46f0-b491-d7a3bc219be2
   ScriptInputsDefault:
@@ -1454,7 +1464,7 @@
   PrefabRemaps:
     []
   Name: PictureController
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -10.000000}
@@ -1487,7 +1497,6 @@
   Enabled: true
   ScriptAsset: !<reference> bc81b387-5678-44b5-9b02-b9117da72801
   ScriptInputsDefault:
-    paletteSize: true
     debugMode: true
   ScriptTypesDefault:
     {}
@@ -1497,7 +1506,7 @@
       gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
       imageRegenerator: !<reference.ScriptComponent> afb6da78-469a-4973-a79f-9ab22e13ea8a
       inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      paletteSize: !<float> 24.000000
+      paletteSize: !<float> 6.000000
       debugMode: true
   ScriptTypes:
     "":
@@ -1610,7 +1619,7 @@
   PrefabRemaps:
     []
   Name: ComponentOrchestrator
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -1824,7 +1833,7 @@
   PrefabRemaps:
     []
   Name: Pigment Gamut Decoder
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -2237,6 +2246,38 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/66163c09-b5b2-441d-8852-dbec2b7bfcb5>
+  PrefabRemaps:
+    []
+  Name: PaletteProjector
+  Enabled: true
+  ScriptAsset: !<reference> 72a584d4-7214-45f5-8039-19f8408203c4
+  ScriptInputsDefault:
+    paletteSize: true
+    pig0: true
+    pig1: true
+    pig2: true
+    pig3: true
+    pig4: true
+    mixSteps: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
+      outputMesh: !<reference.SceneObject> ef81a328-fcbd-4491-8899-421f5e8df0bf
+      outputMaterial: !<reference.Material> 8779a953-a9f5-4d0d-813f-5c081eefd2b2
+      paletteSize: !<float> 12.000000
+      pig0: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
+      pig1: !<Vec3> {x: 0.080000, y: 0.080000, z: 0.080000}
+      pig2: !<Vec3> {x: 1.000000, y: 0.920000, z: 0.000000}
+      pig3: !<Vec3> {x: 0.890000, y: 0.000000, z: 0.130000}
+      pig4: !<Vec3> {x: 0.100000, y: 0.100000, z: 0.700000}
+      pig5: !<Vec3> {x: 1.000000, y: 0.028077, z: 0.000000}
+      mixSteps: !<float> 12.000000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/67a26cfa-2422-444c-b770-4cf98c7748a4>
   PrefabRemaps:
     []
@@ -2442,8 +2483,8 @@
 - !<SceneObject/6e25e929-0022-406c-84fc-32411ef1a3d6>
   PrefabRemaps:
     []
-  Name: Gamut Projector Decoder
-  Enabled: false
+  Name: Decoder_Projector_Gamut
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -2515,7 +2556,7 @@
 - !<SceneObject/7070560f-1971-457f-86de-893d6a73f94b>
   PrefabRemaps:
     []
-  Name: Gamut Projector Encoder Decoder
+  Name: Gamut Projector Interactable
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -2671,7 +2712,7 @@
   PrefabRemaps:
     []
   Name: LAB Decoder
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -2685,12 +2726,16 @@
 - !<ScriptComponent/7a878e16-7e28-490b-844e-a6c28260c933>
   PrefabRemaps:
     []
-  Name: PigmentGamutEncoder
+  Name: Encoder_PigmentMix
   Enabled: true
   ScriptAsset: !<reference> 48ceee92-eb88-445f-8ae2-fa7b9ee1c680
   ScriptInputsDefault:
     pig0Color: true
+    pig1Color: true
+    pig2Color: true
     pig3Color: true
+    pig4Color: true
+    pig5Color: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2699,13 +2744,13 @@
       vfxComponent: !<reference.VFXComponent> 9f71fac4-5d9b-404a-89cd-37beddeddfc8
       texSize: !<float> 124.000000
       mixSteps: !<float> 40.000000
-      scale: !<float> 5.000000
+      scale: !<float> 1.000000
       pig0Color: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
-      pig1Color: !<Vec3> {x: 0.996612, y: 0.006668, z: 0.009293}
-      pig2Color: !<Vec3> {x: 0.601419, y: 0.982971, z: 0.000000}
+      pig1Color: !<Vec3> {x: 0.080000, y: 0.080000, z: 0.080000}
+      pig2Color: !<Vec3> {x: 1.000000, y: 0.920000, z: 0.000000}
       pig3Color: !<Vec3> {x: 0.890000, y: 0.000000, z: 0.130000}
-      pig4Color: !<Vec3> {x: 0.724239, y: 0.185718, z: 0.069276}
-      pig5Color: !<Vec3> {x: 1.000000, y: 0.577066, z: 0.000000}
+      pig4Color: !<Vec3> {x: 0.100000, y: 0.100000, z: 0.700000}
+      pig5Color: !<Vec3> {x: 0.000000, y: 0.470000, z: 0.440000}
   ScriptTypes:
     "":
       {}
@@ -3140,7 +3185,7 @@
 - !<SceneObject/896271e5-e2e3-49d6-b013-df20f92d49ae>
   PrefabRemaps:
     []
-  Name: Basic Pigment Gamut Encoder Decoder
+  Name: Pigment Mix
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -3261,8 +3306,8 @@
       _defaultToOn: false
       addCallbacks: true
       triggerUpCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 5877bde5-e67d-43ae-844f-992f70203d59
-          functionName: toggle
+        - scriptComponent: !<reference.ScriptComponent> 66163c09-b5b2-441d-8852-dbec2b7bfcb5
+          functionName: process
       triggerDownCallbacks:
         []
       onValueChangeCallbacks:
@@ -3615,7 +3660,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Project Colors
+  Text: |
+    Process
+
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -3732,7 +3779,7 @@
 - !<SceneObject/a81bf743-34c5-40ab-8c98-0777bbb92a6f>
   PrefabRemaps:
     []
-  Name: LAB Encoder Decoder
+  Name: LAB Space Interactable
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -4319,7 +4366,7 @@
   PrefabRemaps:
     []
   Name: Palette Controller
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -20.000000, z: 0.000000}
@@ -4332,7 +4379,6 @@
     - !<own> 61026ad9-de22-4899-9e2d-ba2f1a53079f
     - !<own> 35ad36df-f760-46f3-bf55-f45a46b45fa1
     - !<own> 432a62d2-69b2-4c93-865d-8e3cfc71b040
-    - !<own> 0b38d0e5-ecf0-4c7f-8fae-42a8c5533192
     - !<own> ff26c496-3618-443c-a8a0-99ba0f44e049
   Components:
     - !<own> 734aea69-f183-4638-868d-fb871edfd11a
@@ -4352,6 +4398,21 @@
     []
   Components:
     - !<own> 243b58e3-d805-481a-80b3-1076b9c8e1e3
+- !<SceneObject/bfc03fef-7d1a-41a5-ac3d-83cec8358135>
+  PrefabRemaps:
+    []
+  Name: PaletteProjector
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 66163c09-b5b2-441d-8852-dbec2b7bfcb5
 - !<Text/bfcf8058-e3d4-4898-8cc9-08646cd93b91>
   PrefabRemaps:
     []
@@ -4436,7 +4497,7 @@
 - !<SceneObject/c2e1e25c-cf35-49cd-85c6-44bf0984712f>
   PrefabRemaps:
     []
-  Name: LAB Encoder
+  Name: Endoder_FullRGB
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -4452,7 +4513,7 @@
   PrefabRemaps:
     []
   Name: CameraService
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4790,7 +4851,7 @@
 - !<SceneObject/ccbd46ba-8157-4ee8-9dfd-6bf39bdb3df0>
   PrefabRemaps:
     []
-  Name: PigmentGamutEncoder
+  Name: Encoder_PigmentMix
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -5163,36 +5224,16 @@
 - !<ScriptComponent/e6022c88-92cb-488f-b6e6-8f5208967fe0>
   PrefabRemaps:
     []
-  Name: GamutProjector
+  Name: Projector_Gamut
   Enabled: true
   ScriptAsset: !<reference> 7100dc9a-700e-49d8-8a1b-d3040a8fb5a5
   ScriptInputsDefault:
-    gamutTexSize: true
-    inputTexWidth: true
-    inputTexHeight: true
-    input0: true
-    input1: true
-    input2: true
-    input3: true
-    input4: true
-    input5: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      projectionMaterial: !<reference.Material> 42decfe2-1dc6-4f65-8c66-2ffe83e2b25e
-      gamutEncoder: !<reference.ScriptComponent> 3c424957-eb93-4da8-822d-e383c7f6094d
-      vfxComponent: !<reference.VFXComponent> 2560ef30-0958-471a-9bde-7caa7a88078c
-      gamutTexSize: !<float> 64.000000
-      gamutValidCount: !<float> 4096.000000
-      inputTexWidth: !<float> 8.000000
-      inputTexHeight: !<float> 8.000000
-      input0: !<Vec3> {x: 1.000000, y: 0.500000, z: 0.000000}
-      input1: !<Vec3> {x: 0.000000, y: 1.000000, z: 0.500000}
-      input2: !<Vec3> {x: 0.500000, y: 0.000000, z: 1.000000}
-      input3: !<Vec3> {x: 1.000000, y: 1.000000, z: 0.000000}
-      input4: !<Vec3> {x: 0.000000, y: 0.500000, z: 0.300000}
-      input5: !<Vec3> {x: 0.800000, y: 0.200000, z: 0.200000}
+      encoder: !<reference.ScriptComponent> 7a878e16-7e28-490b-844e-a6c28260c933
   ScriptTypes:
     "":
       {}

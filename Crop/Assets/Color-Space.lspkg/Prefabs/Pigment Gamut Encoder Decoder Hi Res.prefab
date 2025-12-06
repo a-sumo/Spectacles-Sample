@@ -151,7 +151,7 @@
 - !<ScriptComponent/ef6eb983-ae07-4eac-a9b6-e93ad8044934>
   PrefabRemaps:
     []
-  Name: PigmentGamutEncoderHiRes
+  Name: Encoder_PigmentMixHiRes
   Enabled: true
   ScriptAsset: !<reference> 01562774-795c-49a2-93ab-149ba2f43a8a
   ScriptInputsDefault:
