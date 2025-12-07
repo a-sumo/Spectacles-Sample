@@ -89,10 +89,10 @@
       value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
     radius:
       typeIdx: 1
-      value: 0.100000
+      value: 0.020000
     size:
       typeIdx: 3
-      value: {x: 1.000000, y: 1.000000}
+      value: {x: 1.000000, y: 0.100000}
     strokeColor:
       typeIdx: 5
       value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
