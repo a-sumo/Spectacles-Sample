@@ -372,7 +372,7 @@
   Enabled: true
   ScriptAsset: !<reference> 2780cbc4-fc22-4209-a193-2e86cb12c031
   ScriptInputsDefault:
-    {}
+    meshCornerProvider: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -384,6 +384,7 @@
         - !<reference> 3ee60331-cd4d-4cc5-bf60-e4a79f463846
         - !<reference> 1e2d65dc-7d6c-4ed1-953a-7cb6be5822ef
         - !<reference> 1a1043c4-0901-45fc-a285-70ab385f346e
+      meshCornerProvider: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":
       {}

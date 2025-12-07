@@ -1,10 +1,16 @@
 import { CameraService } from "./CameraService";
+import { MeshCornerProvider } from "./MeshCornerProvider";
 
 @component
 export class CropRegion extends BaseScriptComponent {
   @input cameraService: CameraService;
   @input screenCropTexture: Texture;
-  @input pointsToTrack: SceneObject[];
+  @input
+  @hint("Option 1: Assign individual corner SceneObjects")
+  pointsToTrack: SceneObject[];
+  @input
+  @hint("Option 2: Assign a MeshCornerProvider to auto-get corners")
+  meshCornerProvider: MeshCornerProvider;
 
   private isEditor = global.deviceInfoSystem.isEditor();
   private cropProvider = null;
@@ -13,14 +19,30 @@ export class CropRegion extends BaseScriptComponent {
 
   onAwake() {
     this.cropProvider = this.screenCropTexture.control as CameraTextureProvider;
-    for (var i = 0; i < this.pointsToTrack.length; i++) {
-      this.transformsToTrack.push(this.pointsToTrack[i].getTransform());
+
+    // Use MeshCornerProvider if assigned, otherwise use manual pointsToTrack
+    this.createEvent("OnStartEvent").bind(() => this.initialize());
+  }
+
+  private initialize(): void {
+    let points: SceneObject[] = [];
+
+    if (this.meshCornerProvider) {
+      points = this.meshCornerProvider.getCorners();
+    } else if (this.pointsToTrack && this.pointsToTrack.length > 0) {
+      points = this.pointsToTrack;
+    }
+
+    for (const point of points) {
+      this.transformsToTrack.push(point.getTransform());
     }
 
     if (this.transformsToTrack.length < 1) {
-      print("No points to track!");
+      print("CropRegion: No points to track!");
       return;
     }
+
+    print(`CropRegion: Tracking ${this.transformsToTrack.length} points`);
     this.createEvent("UpdateEvent").bind(this.update.bind(this));
   }
 

@@ -27,6 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     cameraService: false
+    meshCornerProvider: false
     pointsToTrack: false
     screenCropTexture: false
   ScriptTypesHidden:
@@ -42,10 +43,12 @@
       screenCropTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       pointsToTrack: !<reference.SceneObject[]>
         []
+      meshCornerProvider: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
   InputLines:
     - // @input AssignableType cameraService
     - // @input Asset.Texture screenCropTexture
-    - "// @input SceneObject[] pointsToTrack"
+    - '// @input SceneObject[] pointsToTrack {"hint":"Option 1: Assign individual corner SceneObjects"}'
+    - '// @input AssignableType_1 meshCornerProvider {"hint":"Option 2: Assign a MeshCornerProvider to auto-get corners"}'

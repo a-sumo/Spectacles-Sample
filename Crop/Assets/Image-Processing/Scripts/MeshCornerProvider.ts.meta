@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/8211e257-d8cb-4a50-8570-0e4e46082495>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> e6c68f82-bd0f-4d7b-84d4-c01f325cbf2c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> e6c68f82-bd0f-4d7b-84d4-c01f325cbf2c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f9432147-c02e-459e-a4c1-f4d6ece51c20
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f9432147-c02e-459e-a4c1-f4d6ece51c20>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: cf442476-9b1d-4055-a0b2-076bcd199fa2
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoCreateCorners: false
+    cornerBottomLeft: false
+    cornerBottomRight: false
+    cornerTopLeft: false
+    cornerTopRight: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - autoCreateCorners: true
+      cornerTopLeft: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cornerTopRight: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cornerBottomLeft: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cornerBottomRight: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input bool autoCreateCorners = true {"hint":"If true, creates corner objects automatically on start"}'
+    - '// @input SceneObject cornerTopLeft {"hint":"Optional: manually assign corner objects instead of auto-creating"}'
+    - // @input SceneObject cornerTopRight
+    - // @input SceneObject cornerBottomLeft
+    - // @input SceneObject cornerBottomRight
