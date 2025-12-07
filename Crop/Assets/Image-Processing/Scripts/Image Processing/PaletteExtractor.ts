@@ -2,10 +2,8 @@
 
 @component
 export class PaletteExtractor extends BaseScriptComponent {
-    
-    @input
-    @hint("Input texture to extract palette from")
-    inputTexture: Texture;
+
+    private inputTexture: Texture;
     
     @input
     @hint("Number of colors to extract")
@@ -36,23 +34,10 @@ export class PaletteExtractor extends BaseScriptComponent {
     }
     
     private initialize(): void {
-        if (!this.inputTexture) {
-            print("PaletteExtractor ERROR: No inputTexture assigned!");
-            return;
-        }
-        
-        try {
-            const temp = ProceduralTextureProvider.createFromTexture(this.inputTexture);
-            this.textureProvider = temp.control as ProceduralTextureProvider;
-        } catch (e) {
-            print(`PaletteExtractor ERROR: Cannot read texture: ${e}`);
-            return;
-        }
-        
         this.isInitialized = true;
-        
+
         if (this.debugMode) {
-            print("PaletteExtractor: Initialized");
+            print("PaletteExtractor: Initialized (awaiting texture via setInputTexture)");
         }
     }
     
@@ -252,6 +237,19 @@ export class PaletteExtractor extends BaseScriptComponent {
      */
     public setInputTexture(texture: Texture): void {
         this.inputTexture = texture;
+
+        const colorspace = texture.getColorspace();
+        const width = texture.getWidth();
+        const height = texture.getHeight();
+
+        if (this.debugMode) {
+            print(`PaletteExtractor: setInputTexture - ${width}x${height}, colorspace=${colorspace}`);
+        }
+
+        if (colorspace !== 3 || width <= 0 || height <= 0) {
+            print(`PaletteExtractor: Warning - Texture not ready (colorspace=${colorspace}, size=${width}x${height})`);
+        }
+
         try {
             const temp = ProceduralTextureProvider.createFromTexture(texture);
             this.textureProvider = temp.control as ProceduralTextureProvider;

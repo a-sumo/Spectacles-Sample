@@ -85,8 +85,6 @@ export class PipelineTester extends BaseScriptComponent {
 		this.createEvent("UpdateEvent").bind(() => this.onUpdate());
 	}
 
-	private autoRunPending: boolean = false;
-
 	private initialize(): void {
 		this.extractor = this.paletteExtractor as any;
 		this.projector = this.gamutProjector as any;
@@ -124,9 +122,23 @@ export class PipelineTester extends BaseScriptComponent {
 		print("  Test modes: 1=extraction, 2=projection, 3=regeneration, 4=full");
 
 		if (this.autoRun && this.testMode > 0) {
-			// Don't run immediately - wait for projector to be ready
-			this.autoRunPending = true;
-			print("PipelineTester: Waiting for Projector_Gamut to initialize...");
+			print("PipelineTester: Waiting for projector and texture to be ready...");
+			this.waitForReadyAndRun();
+		}
+	}
+
+	private waitForReadyAndRun(): void {
+		const projectorReady = this.projector?.isReady?.();
+		const textureReady = this.isTextureReady(this.testImage);
+
+		if (projectorReady && textureReady) {
+			print("PipelineTester: Projector and texture ready, starting auto-run test");
+			this.runTest(this.testMode);
+		} else {
+			// Check again after 100ms
+			const delayEvent = this.createEvent("DelayedCallbackEvent");
+			delayEvent.bind(() => this.waitForReadyAndRun());
+			delayEvent.reset(0.1);
 		}
 	}
 
@@ -249,15 +261,16 @@ export class PipelineTester extends BaseScriptComponent {
 		];
 	}
 
+	private isTextureReady(texture: Texture): boolean {
+		if (!texture) return false;
+		const colorspace = texture.getColorspace();
+		const width = texture.getWidth();
+		const height = texture.getHeight();
+		return colorspace === 3 && width > 0 && height > 0;
+	}
+
 	private onUpdate(): void {
 		this.frameCount++;
-
-		// Check if we're waiting to auto-run once projector is ready
-		if (this.autoRunPending && this.projector?.isReady?.()) {
-			this.autoRunPending = false;
-			print("PipelineTester: Projector_Gamut ready, starting auto-run test");
-			this.runTest(this.testMode);
-		}
 
 		if (this.testState === "waiting") {
 			this.waitFrames--;
@@ -526,7 +539,7 @@ export class PipelineTester extends BaseScriptComponent {
 		}
 
 		// Step 1: Extract
-		this.regenerator.inputTexture = this.testImage;
+		this.extractor.setInputTexture(this.testImage);
 		this.extractor.paletteSize = this.extractColors;
 		this.extractedPalette = this.extractor.extractPalette();
 

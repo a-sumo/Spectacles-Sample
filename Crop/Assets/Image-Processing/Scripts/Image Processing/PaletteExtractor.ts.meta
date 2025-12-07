@@ -28,7 +28,6 @@
   ScriptInputsHidden:
     debugMode: false
     gamutProjector: false
-    inputTexture: false
     maxIterations: false
     paletteSize: false
     sampleSize: false
@@ -41,8 +40,7 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - inputTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      paletteSize: !<float> 24.000000
+    - paletteSize: !<float> 24.000000
       maxIterations: !<float> 30.000000
       sampleSize: !<float> 5000.000000
       gamutProjector: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
@@ -51,7 +49,6 @@
     -
       {}
   InputLines:
-    - '// @input Asset.Texture inputTexture {"hint":"Input texture to extract palette from"}'
     - '// @input float paletteSize = 24 {"hint":"Number of colors to extract"}'
     - '// @input float maxIterations = 30 {"hint":"Max iterations for k-means"}'
     - '// @input float sampleSize = 5000 {"hint":"Sample size for faster processing"}'

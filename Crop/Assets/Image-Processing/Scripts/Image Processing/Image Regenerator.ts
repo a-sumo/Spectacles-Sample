@@ -4,10 +4,8 @@ export class ImageRegenerator extends BaseScriptComponent {
     @input
     @hint("Material with PaletteRemap shader")
     remapMaterial: Material;
-    
-    @input
-    @hint("Input image texture")
-    inputTexture: Texture;
+
+    private inputTexture: Texture;
     
     @input
     @hint("Enable ordered dithering")
@@ -97,11 +95,12 @@ export class ImageRegenerator extends BaseScriptComponent {
         if (!this.isInitialized) {
             return null;
         }
-        
+
         if (this.inputTexture) {
             this.material.mainPass.inputTex = this.inputTexture;
+            this.material.mainPass.baseTex = this.inputTexture;
         }
-        
+
         return this.material;
     }
     
@@ -109,6 +108,7 @@ export class ImageRegenerator extends BaseScriptComponent {
         this.inputTexture = tex;
         if (this.material) {
             this.material.mainPass.inputTex = tex;
+            this.material.mainPass.baseTex = tex;
         }
     }
     
@@ -116,13 +116,14 @@ export class ImageRegenerator extends BaseScriptComponent {
         if (!this.isInitialized) {
             return;
         }
-        
+
         if (this.inputTexture) {
             this.material.mainPass.inputTex = this.inputTexture;
+            this.material.mainPass.baseTex = this.inputTexture;
         }
-        
+
         meshVisual.mainMaterial = this.material;
-        
+
         if (this.debugMode) {
             print("ImageRegenerator: Applied to mesh");
         }

@@ -12,7 +12,6 @@
     - !<own> 09e1cdaa-09ec-475f-9e7d-d882305446d4
     - !<own> 7f006e39-6408-49f5-9149-059bc4fd9329
     - !<own> 8695943a-acf0-46ff-97b4-7f1ac328f3d1
-    - !<own> 601cb9c3-810a-4260-9b67-3e2e6fb486aa
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -1058,7 +1057,6 @@
   ScriptInputs:
     "":
       remapMaterial: !<reference.Material> 8779a953-a9f5-4d0d-813f-5c081eefd2b2
-      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
       enableDither: true
       ditherStrength: 0.850000
       debugMode: true
@@ -1613,32 +1611,6 @@
     []
   Components:
     - !<own> 65baa3c1-dae1-4ad6-b9e2-2ff0e7d758a0
-- !<ScriptComponent/4726cd68-3f8b-4ed7-9ac1-0215fe8084b2>
-  PrefabRemaps:
-    []
-  Name: SourceImageController
-  Enabled: true
-  ScriptAsset: !<reference> d00d852e-d447-4815-b374-996509114a3a
-  ScriptInputsDefault:
-    sourceImagePrefab: true
-    captureImagePath: true
-    cropRegionPath: true
-    autoTriggerPipeline: true
-    imagePipeline: true
-    debugMode: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      sourceImagePrefab: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      captureImagePath: ImageAnchor/CameraCrop
-      cropRegionPath: ""
-      autoTriggerPipeline: true
-      imagePipeline: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      debugMode: false
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/4a9b0152-cf65-483d-aa2d-ee36dc58317a>
   PrefabRemaps:
     []
@@ -1702,9 +1674,7 @@
       paletteExtractor: !<reference.ScriptComponent> d9361c0b-29c6-4926-8824-dbe3aec049f6
       gamutProjector: !<reference.ScriptComponent> e6022c88-92cb-488f-b6e6-8f5208967fe0
       imageRegenerator: !<reference.ScriptComponent> 29d5a7d5-b36f-4f84-b282-f55b3d7bcc30
-      testImage: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
-      sourceImageController: !<reference.ScriptComponent> 0d68b1e4-2f86-46b0-86d4-492c12e2279c
-      autoRunOnSourceCapture: false
+      testImage: !<reference.Texture> cd12b01a-61d6-4671-bba2-6c3bde1a9812
       extractColors: !<float> 24.000000
       previewMesh: !<reference.SceneObject> ef81a328-fcbd-4491-8899-421f5e8df0bf
       originalMesh: !<reference.SceneObject> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
@@ -2098,21 +2068,6 @@
     []
   Components:
     - !<own> 29d5a7d5-b36f-4f84-b282-f55b3d7bcc30
-- !<SceneObject/601cb9c3-810a-4260-9b67-3e2e6fb486aa>
-  PrefabRemaps:
-    []
-  Name: SourceImageController
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 4726cd68-3f8b-4ed7-9ac1-0215fe8084b2
 - !<SceneObject/607bbea6-a918-46e1-ac91-ed27dffab0f9>
   PrefabRemaps:
     []
@@ -4609,7 +4564,6 @@
     {}
   ScriptInputs:
     "":
-      inputTexture: !<reference.Texture> 69c81b3f-97b5-40d9-94a5-72ce5f0de46c
       paletteSize: !<float> 24.000000
       maxIterations: !<float> 30.000000
       sampleSize: !<float> 5000.000000
