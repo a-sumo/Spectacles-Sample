@@ -11,7 +11,6 @@
     - !<own> 085dea40-ce0b-4e35-8bea-4e2ba84c810f
     - !<own> 09e1cdaa-09ec-475f-9e7d-d882305446d4
     - !<own> 7f006e39-6408-49f5-9149-059bc4fd9329
-    - !<own> 8695943a-acf0-46ff-97b4-7f1ac328f3d1
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -261,76 +260,6 @@
     - !<own> 92cb4c5a-96b1-4d62-8c82-5e1046c38b9a
   Components:
     []
-- !<ScriptComponent/01f19423-3cb4-4c56-87cd-3d249d06cd24>
-  PrefabRemaps:
-    []
-  Name: Frame
-  Enabled: true
-  ScriptAsset: !<reference> 3b46d829-f6db-432a-914c-3551904d3994
-  ScriptInputsDefault:
-    allowScaling: true
-    autoScaleContent: true
-    relativeZ: true
-    _onlyInteractOnBorder: true
-    allowTranslation: true
-    _cutOutCenter: true
-    minimumSize: true
-    maximumSize: true
-    useBillboarding: true
-    xOnTranslate: true
-    xAlways: true
-    xBufferDegrees: true
-    yOnTranslate: true
-    yAlways: true
-    yBufferDegrees: true
-    useSnapping: true
-    itemSnapping: true
-    worldSnapping: true
-    _showFollowButton: true
-    useFollowBehavior: true
-    _following: true
-    _showCloseButton: true
-    _enableInteractionPlane: true
-    _interactionPlaneOffset: true
-    _interactionPlanePadding: true
-    _targetingVisual: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      autoShowHide: false
-      _appearance: Small
-      _innerSize: !<Vec2> {x: 1.000000, y: 1.000000}
-      _padding: !<Vec2> {x: 0.000000, y: 2.000000}
-      allowScaling: true
-      autoScaleContent: true
-      relativeZ: true
-      _onlyInteractOnBorder: false
-      allowTranslation: true
-      _cutOutCenter: false
-      minimumSize: !<Vec2> {x: 10.000000, y: 10.000000}
-      maximumSize: !<Vec2> {x: 150.000000, y: 150.000000}
-      useBillboarding: true
-      xOnTranslate: true
-      xAlways: false
-      xBufferDegrees: !<float> 0.000000
-      yOnTranslate: true
-      yAlways: false
-      yBufferDegrees: !<float> 0.000000
-      useSnapping: false
-      itemSnapping: false
-      worldSnapping: false
-      _showFollowButton: false
-      useFollowBehavior: false
-      _following: false
-      _showCloseButton: false
-      _enableInteractionPlane: true
-      _interactionPlaneOffset: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
-      _interactionPlanePadding: !<Vec2> {x: 0.000000, y: 0.000000}
-      _targetingVisual: !<float> 1.000000
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/026777c9-2a55-4715-b0df-6e70af6e279d>
   PrefabRemaps:
     []
@@ -480,7 +409,7 @@
     - !<own> 065155a7-364a-47b2-a25f-f256d729884c
     - !<own> 5e8e7446-7430-41e1-b52c-f2ad3337a989
     - !<own> ef81a328-fcbd-4491-8899-421f5e8df0bf
-    - !<own> ffbf2e5a-4b51-4640-aec9-a9904f81fef8
+    - !<own> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
   Components:
     - !<own> 4f598828-e592-42a7-8680-fdf613f1c41d
 - !<SceneObject/08d7c7e5-4bc2-43da-980a-18c6ad3b068f>
@@ -1638,34 +1567,6 @@
     - !<own> 71b52915-4ccd-4f76-ad34-ecbb948a8bd9
   Components:
     []
-- !<ScriptComponent/456972c3-354d-464f-84de-288307469868>
-  PrefabRemaps:
-    []
-  Name: ScrollWindow
-  Enabled: true
-  ScriptAsset: !<reference> 8ca0ce82-b275-4551-8560-820c44a54276
-  ScriptInputsDefault:
-    vertical: true
-    horizontal: true
-    windowSize: true
-    scrollDimensions: true
-    _scrollSnapping: true
-    _snapRegion: true
-    edgeFade: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      vertical: true
-      horizontal: false
-      windowSize: !<Vec2> {x: 32.000000, y: 32.000000}
-      scrollDimensions: !<Vec2> {x: 32.000000, y: 100.000000}
-      _scrollSnapping: false
-      _snapRegion: !<Vec2> {x: 8.000000, y: 8.000000}
-      edgeFade: false
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/46f46cd0-c48d-4ddb-b3ee-c1f112d710c5>
   PrefabRemaps:
     []
@@ -3005,21 +2906,6 @@
     - !<own> 224c339b-5033-470b-9197-088f46597772
   Components:
     []
-- !<SceneObject/8695943a-acf0-46ff-97b4-7f1ac328f3d1>
-  PrefabRemaps:
-    []
-  Name: ScrollWindow
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 5.000000, z: -1.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 456972c3-354d-464f-84de-288307469868
 - !<SceneObject/87367008-eb8c-4238-bcba-c69b6dd451d3>
   PrefabRemaps:
     []
@@ -5189,7 +5075,7 @@
   LocalTransform: !<TransformEntity>
     Position: {x: 7.000000, y: 10.000000, z: -100.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 9.900000, y: 7.200000, z: 1.000000}
+    Scale: {x: 9.890000, y: 7.200000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -5398,9 +5284,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.020000}
+    Position: {x: -7.000000, y: 10.000000, z: -99.980003}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 9.890000, y: 7.200000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> bf45d1e7-c30c-4de1-9978-f6a59c6705b2
@@ -5581,18 +5467,3 @@
     - !<own> c49f8969-4efb-4c20-951e-d59037e4a275
   Components:
     []
-- !<SceneObject/ffbf2e5a-4b51-4640-aec9-a9904f81fef8>
-  PrefabRemaps:
-    []
-  Name: Anchor
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: -7.000000, y: 10.000000, z: -100.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> f700bf9a-cbb8-46e1-9e54-fc3def8fbf57
-  Components:
-    - !<own> 01f19423-3cb4-4c56-87cd-3d249d06cd24

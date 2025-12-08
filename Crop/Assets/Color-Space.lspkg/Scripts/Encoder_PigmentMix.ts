@@ -277,6 +277,10 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
         return this.texSize;
     }
 
+    getScale(): number {
+        return this.scale;
+    }
+
     /**
      * Set pigment colors directly (alternative to PaletteController)
      */
