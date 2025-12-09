@@ -9,6 +9,7 @@ export class CropRegion extends BaseScriptComponent {
   @hint("Option 1: Assign individual corner SceneObjects")
   pointsToTrack: SceneObject[];
   @input
+  @allowUndefined
   @hint("Option 2: Assign a MeshCornerProvider to auto-get corners")
   meshCornerProvider: MeshCornerProvider;
 

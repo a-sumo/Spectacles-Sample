@@ -27,13 +27,16 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     autoReprojectOnPresetChange: false
+    autoRun: false
     debugMode: false
     gamutProjector: false
     imageRegenerator: false
     inputTexture: false
+    originalMesh: false
     paletteController: false
     paletteExtractor: false
     paletteSize: false
+    previewMesh: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -48,6 +51,9 @@
       imageRegenerator: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       inputTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       paletteSize: !<float> 24.000000
+      previewMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      originalMesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      autoRun: false
       paletteController: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       autoReprojectOnPresetChange: true
       debugMode: true
@@ -55,11 +61,14 @@
     -
       {}
   InputLines:
-    - // @input Component.ScriptComponent paletteExtractor
-    - // @input Component.ScriptComponent gamutProjector
-    - // @input Component.ScriptComponent imageRegenerator
-    - // @input Asset.Texture inputTexture
-    - '// @input float paletteSize = 24 {"hint":"Number of colors to extract"}'
+    - '// @input Component.ScriptComponent paletteExtractor {"hint":"PaletteExtractor script"}'
+    - '// @input Component.ScriptComponent gamutProjector {"hint":"Projector_Gamut script"}'
+    - '// @input Component.ScriptComponent imageRegenerator {"hint":"ImageRegenerator script"}'
+    - '// @input Asset.Texture inputTexture {"hint":"Input image for extraction"}'
+    - '// @input float paletteSize = 12 {"hint":"Number of colors to extract"}'
+    - '// @input SceneObject previewMesh {"hint":"SceneObject with RenderMeshVisual to display output"}'
+    - '// @input SceneObject originalMesh {"hint":"Also show original on a second mesh"}'
+    - '// @input bool autoRun {"hint":"Auto-run pipeline on start"}'
     - '// @input Component.ScriptComponent paletteController {"hint":"PaletteController to listen for preset changes"}'
-    - '// @input bool autoReprojectOnPresetChange = true {"hint":"Auto re-project when pigment preset changes"}'
+    - '// @input bool autoReprojectOnPresetChange = true {"hint":"Auto re-project when preset changes"}'
     - // @input bool debugMode = true

@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/eae7bec5-ac61-4bc5-b5d3-484ebdb41ca0>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> ae7bcd76-c846-4fa0-812c-e7d06172946c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> ae7bcd76-c846-4fa0-812c-e7d06172946c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 63a4518d-85a3-433c-b301-053f73d7989c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/63a4518d-85a3-433c-b301-053f73d7989c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 65dea72c-5200-41e6-a672-4477e665c25d
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoRun: false
+    editorTest: false
+    imagePipeline: false
+    scannerPrefab: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - scannerPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      imagePipeline: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      autoRun: true
+      editorTest: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.ObjectPrefab scannerPrefab {"hint":"Scanner prefab with PictureBehavior"}'
+    - '// @input Component.ScriptComponent imagePipeline {"hint":"Reference to ImagePipeline (the orchestrator)"}'
+    - '// @input bool autoRun = true {"hint":"Auto-run pipeline when texture is ready"}'
+    - '// @input bool editorTest {"hint":"Auto-create scanner in editor for testing"}'
