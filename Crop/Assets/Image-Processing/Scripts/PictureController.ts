@@ -41,6 +41,9 @@ export class PictureController extends BaseScriptComponent {
 	private leftHand = SIK.HandInputData.getHand("left");
 	private leftDown = false;
 	private rightDown = false;
+
+	// Gesture control - when false, two-hand pinch won't create scanners
+	public gesturesEnabled: boolean = true;
 	private scannerInstances: SceneObject[] = [];
 	private scannerData: Map<string, ScannerData> = new Map();
 	private activeScanner: SceneObject | null = null;
@@ -285,7 +288,7 @@ export class PictureController extends BaseScriptComponent {
 
 	private leftPinchDown = () => {
 		this.leftDown = true;
-		if (this.rightDown && this.isPinchClose()) {
+		if (this.gesturesEnabled && this.rightDown && this.isPinchClose()) {
 			this.createScanner();
 		}
 	};
@@ -296,7 +299,7 @@ export class PictureController extends BaseScriptComponent {
 
 	private rightPinchDown = () => {
 		this.rightDown = true;
-		if (this.leftDown && this.isPinchClose()) {
+		if (this.gesturesEnabled && this.leftDown && this.isPinchClose()) {
 			this.createScanner();
 		}
 	};

@@ -39,6 +39,9 @@ export class PaletteExtractionController extends BaseScriptComponent {
     private leftDown = false;
     private rightDown = false;
 
+    // Gesture control - when false, two-hand pinch won't create scanner
+    public gesturesEnabled: boolean = true;
+
     // Current scanner (only 1 allowed)
     private activeScanner: SceneObject | null = null;
     private activeBehavior: any = null;
@@ -110,7 +113,7 @@ export class PaletteExtractionController extends BaseScriptComponent {
     };
 
     private checkAndCreate(): void {
-        if (this.leftDown && this.rightDown && this.isPinchClose()) {
+        if (this.gesturesEnabled && this.leftDown && this.rightDown && this.isPinchClose()) {
             this.createScanner();
         }
     }
