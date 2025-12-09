@@ -124,6 +124,7 @@ export class PaletteController extends BaseScriptComponent {
 	itemPrefabs: ObjectPrefab[] = [];
 
 	@input
+	@allowUndefined
 	@hint("Color Gamut SceneObject (already in scene)")
 	colorGamutObject: SceneObject | null = null;
 
@@ -168,6 +169,7 @@ export class PaletteController extends BaseScriptComponent {
 	layoutByRow: boolean = true;
 
 	@input
+	@allowUndefined
 	@hint("In editor scanner creation button")
 	editorTestButton: SceneObject | null = null;
 
