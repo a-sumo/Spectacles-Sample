@@ -144,44 +144,6 @@ export class Encoder_FullRGB extends BaseScriptComponent {
 		}
 	}
 
-	private debugReadRenderTargets(): void {
-		this.debugTexture(this.posRenderTarget, "POS (LAB)");
-		this.debugTexture(this.colorRenderTarget, "COLOR (RGB)");
-	}
-
-	private debugTexture(texture: Texture, name: string): void {
-		if (!texture) {
-			print(`DEBUG: No ${name} texture`);
-			return;
-		}
-
-		try {
-			const tempTexture = ProceduralTextureProvider.createFromTexture(texture);
-			const provider = tempTexture.control as ProceduralTextureProvider;
-
-			const size = this.texSize;
-			const pixelBuffer = new Uint8Array(size * size * 4);
-			provider.getPixels(0, 0, size, size, pixelBuffer);
-
-			print(`=== ${name} DEBUG ===`);
-
-			const printPixel = (idx: number) => {
-				const i = idx * 4;
-				print(
-					`[${idx}]: R=${pixelBuffer[i]}, G=${pixelBuffer[i + 1]}, B=${
-						pixelBuffer[i + 2]
-					}, A=${pixelBuffer[i + 3]}`
-				);
-			};
-
-			printPixel(0); // Black (0,0,0)
-			printPixel(15); // Blue (0,0,1)
-			printPixel(256); // First R step
-			printPixel(4095); // Last valid
-		} catch (e) {
-			print(`DEBUG ERROR ${name}: ` + e);
-		}
-	}
 	// ============ PUBLIC GETTERS ============
 
 	isReady(): boolean {

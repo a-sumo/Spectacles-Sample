@@ -102,15 +102,6 @@ export class Encoder_PigmentMixHiRes extends BaseScriptComponent {
         
         // Update pigments every frame
         this.createEvent("UpdateEvent").bind(() => this.updatePigmentTexture());
-        
-        // Debug after a few frames
-        let frameCount = 0;
-        this.createEvent("UpdateEvent").bind(() => {
-            frameCount++;
-            if (frameCount === 5) {
-                this.debugReadRenderTargets();
-            }
-        });
     }
     
     private updatePigmentTexture(): void {
@@ -258,40 +249,6 @@ export class Encoder_PigmentMixHiRes extends BaseScriptComponent {
         
         if (total > capacity) {
             print(`WARNING: Gamut exceeds texture capacity! Increase texSize or reduce mixSteps.`);
-        }
-    }
-    
-    private debugReadRenderTargets(): void {
-        print("=== DEBUG: Reading render targets ===");
-        this.debugTexture(this.rtLabLA, "labLA");
-        this.debugTexture(this.rtLabBV, "labBV");
-        this.debugTexture(this.rtColor, "color");
-    }
-    
-    private debugTexture(texture: Texture, name: string): void {
-        if (!texture) {
-            print(`DEBUG: No ${name} texture`);
-            return;
-        }
-        
-        try {
-            const tempTexture = ProceduralTextureProvider.createFromTexture(texture);
-            const provider = tempTexture.control as ProceduralTextureProvider;
-            
-            const size = this.texSize;
-            const pixelBuffer = new Uint8Array(size * size * 4);
-            provider.getPixels(0, 0, size, size, pixelBuffer);
-            
-            print(`--- ${name} ---`);
-            
-            // Show first few pixels
-            for (let idx = 0; idx < 6; idx++) {
-                const i = idx * 4;
-                print(`[${idx}]: ${pixelBuffer[i]}, ${pixelBuffer[i+1]}, ${pixelBuffer[i+2]}, ${pixelBuffer[i+3]}`);
-            }
-            
-        } catch (e) {
-            print(`DEBUG ERROR ${name}: ` + e);
         }
     }
     

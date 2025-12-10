@@ -45,20 +45,7 @@ export class Encoder_RGBCube extends BaseScriptComponent {
         this.createPostEffect(cameraObj, material, layer);
         
         this.assignToVFX();
-        
-        print("RGBCubeEncoder: Setup complete");
-        print(`Texture: ${this.texSize}x${this.texSize}`);
-        print(`RGB res: ${this.rgbRes}³ = ${this.rgbRes * this.rgbRes * this.rgbRes} points`);
-        print(`Spawn count needed: ${this.texSize * this.texSize * 2}`);
-        
-        // Debug after a few frames
-        let frameCount = 0;
-        this.createEvent("UpdateEvent").bind(() => {
-            frameCount++;
-            if (frameCount === 5) {
-                this.debugReadRenderTarget();
-            }
-        });
+
     }
     
     private createRenderTarget(resolution: vec2): Texture {
@@ -121,44 +108,5 @@ export class Encoder_RGBCube extends BaseScriptComponent {
             print("ERROR: VFX component or asset is null");
         }
     }
-    
-    private debugReadRenderTarget(): void {
-        if (!this.renderTarget) {
-            print("DEBUG: No render target");
-            return;
-        }
-        
-        try {
-            const tempTexture = ProceduralTextureProvider.createFromTexture(this.renderTarget);
-            const provider = tempTexture.control as ProceduralTextureProvider;
-            
-            const size = this.texSize;
-            const pixelBuffer = new Uint8Array(size * size * 4);
-            provider.getPixels(0, 0, size, size, pixelBuffer);
-            
-            print("=== RENDER TARGET DEBUG ===");
-            
-            const printPixel = (idx: number, label: string) => {
-                const x = idx % size;
-                const y = Math.floor(idx / size);
-                const i = idx * 4;
-                print(`${label} [${idx}] (${x},${y}): R=${pixelBuffer[i]}, G=${pixelBuffer[i+1]}, B=${pixelBuffer[i+2]}, A=${pixelBuffer[i+3]}`);
-            };
-            
-            // Expected for RGB cube with rgbRes=16:
-            // Pixel 0: R=0, G=0, B=0 (black corner)
-            // Pixel 15: R=0, G=0, B=255 (blue)
-            // Pixel 16: R=0, G=17, B=0 (slight green)
-            printPixel(0, "Pixel");
-            printPixel(1, "Pixel");
-            printPixel(15, "Pixel");
-            printPixel(16, "Pixel");
-            printPixel(255, "Pixel");
-            printPixel(4095, "Last valid");
-            
-            print("=== END DEBUG ===");
-        } catch (e) {
-            print("DEBUG ERROR: " + e);
-        }
-    }
+
 }
