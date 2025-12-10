@@ -3820,9 +3820,9 @@
   ScriptAsset: !<reference> 9f8223ea-52a8-43c5-8a46-f3cf2ccc5e16
   ScriptInputsDefault:
     functionName: true
+    inputBucket: true
     outputBucket: true
-    inputImageUrl: true
-    numColors: true
+    inputImagePath: true
     projectionMethod: true
     ditherMethod: true
     ditherStrength: true
@@ -3835,11 +3835,11 @@
     "":
       snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
       functionName: paint-gamut
-      inputBucket: paintings
+      inputBucket: uploads
       outputBucket: processed-images
-      inputImagePath: shishkin/Haystacks-Shishkin.jpg
-      inputImageUrl: ""
-      numColors: !<float> 24.000000
+      inputImagePath: ""
+      inputImageUrl: paintings/shishkin/Haystack-Shishkin.jpg
+      numColors: !<float> 3.000000
       projectionMethod: closest
       ditherMethod: floyd
       ditherStrength: 0.850000

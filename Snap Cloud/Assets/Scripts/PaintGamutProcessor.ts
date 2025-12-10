@@ -24,16 +24,11 @@ interface ProjectedColor extends PaletteColor {
   de: number;
 }
 
-interface PigmentInfo {
-  name: string;
-  rgb: number[];
-}
-
 interface Statistics {
   averageDeltaE: number;
   maxDeltaE: number;
   minDeltaE: number;
-  projectionMethod: string;
+  method: string;
 }
 
 interface PaintGamutResult {
@@ -42,22 +37,22 @@ interface PaintGamutResult {
   extractedPalette: PaletteColor[];
   projectedPalette: ProjectedColor[];
   gamutSize: number;
-  pigments: PigmentInfo[];
+  pigments: { name: string; rgb: number[] }[];
   statistics: Statistics;
-  remappedImageUrl?: string;
-  remappedImagePath?: string;
+  remappedImageBase64?: string;
+  remappedWidth?: number;
+  remappedHeight?: number;
   error?: string;
   details?: string;
 }
 
 // ============================================================================
-// MAIN COMPONENT
+// COMPONENT
 // ============================================================================
 
 @component
 export class PaintGamutProcessor extends BaseScriptComponent {
 
-  // Modules
   private internetModule: InternetModule = require('LensStudio:InternetModule');
   private remoteMediaModule: RemoteMediaModule = require('LensStudio:RemoteMediaModule');
 
@@ -74,19 +69,15 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   functionName: string = "paint-gamut";
 
   @input
-  @hint("Input storage bucket")
+  @hint("Storage bucket for input images")
   inputBucket: string = "uploads";
 
   @input
-  @hint("Output storage bucket")
-  outputBucket: string = "processed-images";
-
-  @input
-  @hint("Input image path in storage (e.g., 'photos/image.jpg')")
+  @hint("Input image path in storage (e.g., 'photos/image.jpg') - relative to bucket")
   inputImagePath: string = "";
 
   @input
-  @hint("OR full URL to input image")
+  @hint("OR full URL to input image (overrides path if set)")
   inputImageUrl: string = "";
 
   // -------------------------------------------------------------------------
@@ -94,39 +85,39 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   // -------------------------------------------------------------------------
 
   @input
-  @hint("Number of colors to extract (2-48)")
+  @hint("Number of colors (2-48)")
   numColors: number = 24;
 
   @input
-  @hint("Projection method: 'closest' or 'hue'")
-  projectionMethod: string = "closest";
-
-  @input
-  @hint("Dither method: 'none', 'floyd', or 'atkinson'")
+  @hint("Dither: 'none', 'floyd', 'atkinson'")
   ditherMethod: string = "floyd";
 
   @input
   @hint("Dither strength (0-1)")
   ditherStrength: number = 0.85;
 
+  @input
+  @hint("Max output image size in pixels")
+  maxOutputSize: number = 512;
+
   // -------------------------------------------------------------------------
   // DISPLAYS
   // -------------------------------------------------------------------------
 
   @input
-  @hint("Image component for original image")
+  @hint("Image component for ORIGINAL/INPUT image")
   originalImageDisplay: Image;
 
   @input
-  @hint("Image component for remapped result")
+  @hint("Image component for REMAPPED/OUTPUT image")
   remappedImageDisplay: Image;
 
   @input
-  @hint("Extracted palette swatches")
+  @hint("Extracted palette swatches (array of Image)")
   extractedPaletteSwatches: Image[];
 
   @input
-  @hint("Projected palette swatches")
+  @hint("Projected palette swatches (array of Image)")
   projectedPaletteSwatches: Image[];
 
   @input
@@ -140,7 +131,8 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   statisticsText: Text;
 
   @input
-  @hint("Process button")
+  @allowUndefined
+  @hint("Process button - triggers processing on press")
   processButton: RectangleButton;
 
   @input
@@ -164,80 +156,128 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   // =========================================================================
 
   onAwake() {
-    this.log("Initializing...");
+    this.log("Initializing PaintGamutProcessor...");
     this.initialize();
     this.setupButton();
   }
 
   private initialize(): void {
-    if (!this.snapCloudRequirements || !this.snapCloudRequirements.isConfigured()) {
+    if (!this.snapCloudRequirements) {
+      this.log("ERROR: SnapCloudRequirements not assigned");
+      this.updateStatus("No config");
+      return;
+    }
+
+    if (!this.snapCloudRequirements.isConfigured()) {
       this.log("ERROR: SnapCloudRequirements not configured");
       this.updateStatus("Not configured");
       return;
     }
 
     this.isInitialized = true;
-    this.log("Initialized");
+    this.log("Initialized successfully");
+    this.log("Storage URL: " + this.snapCloudRequirements.getStorageApiUrl());
+    this.log("Functions URL: " + this.snapCloudRequirements.getFunctionsApiUrl());
     this.updateStatus("Ready");
   }
 
   private setupButton(): void {
     if (this.processButton) {
       this.processButton.onTriggerUp.add(() => {
-        this.log("BUTTON PRESSED");
+        this.log("=== PROCESS BUTTON PRESSED ===");
         this.processImage();
       });
+      this.log("Process button connected");
+    } else {
+      this.log("No process button assigned - call processImage() manually");
     }
+  }
+
+  // =========================================================================
+  // URL BUILDING
+  // =========================================================================
+
+  /**
+   * Build full image URL from either:
+   * 1. inputImageUrl (if set) - used as-is
+   * 2. inputImagePath - combined with storage bucket URL
+   * 
+   * Storage URL format: https://<project>.supabase.co/storage/v1/object/public/<bucket>/<path>
+   */
+  private buildImageUrl(overrideUrl?: string): string | null {
+    // Priority 1: Override URL passed to processImage()
+    if (overrideUrl && overrideUrl.length > 0) {
+      this.log("Using override URL: " + overrideUrl);
+      return overrideUrl;
+    }
+
+    // Priority 2: Full URL in inputImageUrl
+    if (this.inputImageUrl && this.inputImageUrl.length > 0) {
+      this.log("Using inputImageUrl: " + this.inputImageUrl);
+      return this.inputImageUrl;
+    }
+
+    // Priority 3: Build from storage path
+    if (this.inputImagePath && this.inputImagePath.length > 0) {
+      const storageBase = this.snapCloudRequirements.getStorageApiUrl();
+      // Storage URL format: baseUrl + bucket + "/" + path
+      const fullUrl = storageBase + this.inputBucket + "/" + this.inputImagePath;
+      this.log("Built storage URL: " + fullUrl);
+      return fullUrl;
+    }
+
+    return null;
   }
 
   // =========================================================================
   // MAIN PROCESS
   // =========================================================================
 
+  /**
+   * Process an image through the paint gamut pipeline.
+   * @param imageUrl Optional - full URL to image. If not provided, uses inputImageUrl or inputImagePath
+   */
   processImage(imageUrl?: string): void {
+    this.log("processImage() called");
+
     // Validation
     if (!this.isInitialized) {
-      this.notifyError("Not initialized");
+      this.notifyError("Not initialized - check SnapCloudRequirements");
       return;
     }
 
     if (this.isProcessing) {
-      this.log("Already processing");
+      this.log("Already processing - ignoring");
       return;
     }
 
     if (!global.deviceInfoSystem.isInternetAvailable()) {
-      this.updateStatus("No internet");
       this.notifyError("No internet connection");
       return;
     }
 
-    // Determine URL
-    let url = imageUrl || this.inputImageUrl;
-    if (!url && this.inputImagePath) {
-      url = this.snapCloudRequirements.getStorageApiUrl() + this.inputBucket + "/" + this.inputImagePath;
-    }
-
+    // Build URL
+    const url = this.buildImageUrl(imageUrl);
     if (!url) {
-      this.updateStatus("No image");
-      this.notifyError("No input image specified");
+      this.notifyError("No image specified. Set inputImageUrl or inputImagePath");
       return;
     }
 
     // Start processing
     this.isProcessing = true;
     this.updateStatus("Starting...");
-    this.log("Processing: " + url);
+    this.log("Processing image: " + url);
 
-    // Load original image first, then call edge function
-    this.loadOriginalThenProcess(url);
+    // Load and display original, then process
+    this.loadOriginalImage(url);
   }
 
-  private loadOriginalThenProcess(url: string): void {
+  private loadOriginalImage(url: string): void {
     this.updateStatus("Loading original...");
 
-    // If no display, skip to processing
+    // If no original display, skip straight to processing
     if (!this.originalImageDisplay) {
+      this.log("No originalImageDisplay - skipping preview");
       this.callEdgeFunction(url);
       return;
     }
@@ -246,7 +286,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       const resource = (this.internetModule as any).makeResourceFromUrl(url);
 
       if (!resource) {
-        this.log("Failed to create resource, continuing to process");
+        this.log("Failed to create resource for original - continuing anyway");
         this.callEdgeFunction(url);
         return;
       }
@@ -254,8 +294,10 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       this.remoteMediaModule.loadResourceAsImageTexture(
         resource,
         (texture: Texture) => {
-          this.log("Original loaded");
+          this.log("Original image loaded successfully");
           this.originalTexture = texture;
+          
+          // Apply to original display
           this.originalImageDisplay.enabled = true;
           this.originalImageDisplay.mainPass.baseTex = texture;
           
@@ -263,12 +305,12 @@ export class PaintGamutProcessor extends BaseScriptComponent {
           this.callEdgeFunction(url);
         },
         (error: string) => {
-          this.log("Original load failed: " + error + ", continuing");
+          this.log("Original image load failed: " + error + " - continuing anyway");
           this.callEdgeFunction(url);
         }
       );
     } catch (e) {
-      this.log("Error: " + e + ", continuing");
+      this.log("Error loading original: " + e + " - continuing anyway");
       this.callEdgeFunction(url);
     }
   }
@@ -277,19 +319,14 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     this.updateStatus("Processing colors...");
 
     const endpoint = this.snapCloudRequirements.getFunctionsApiUrl() + this.functionName;
-    const timestamp = Date.now();
-    const randomId = Math.random().toString(36).substring(2, 8);
-    const outputPath = "remapped/" + timestamp + "_" + randomId + ".png";
 
     const payload = {
       imageUrl: imageUrl,
       numColors: this.numColors,
-      projectionMethod: this.projectionMethod,
       ditherMethod: this.ditherMethod,
       ditherStrength: this.ditherStrength,
       outputRemappedImage: true,
-      storageBucket: this.outputBucket,
-      storagePath: outputPath
+      maxOutputSize: this.maxOutputSize
     };
 
     this.log("Endpoint: " + endpoint);
@@ -299,6 +336,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     request.url = endpoint;
     request.method = RemoteServiceHttpRequest.HttpRequestMethod.Post;
 
+    // Build headers
     const headers: { [key: string]: string } = {};
     const baseHeaders = this.snapCloudRequirements.getSupabaseHeaders();
     for (const key in baseHeaders) {
@@ -314,7 +352,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   }
 
   private handleResponse(response: RemoteServiceHttpResponse): void {
-    this.log("Status: " + response.statusCode);
+    this.log("Response status: " + response.statusCode);
 
     if (response.statusCode !== 200) {
       this.isProcessing = false;
@@ -322,6 +360,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       try {
         const body = JSON.parse(response.body);
         if (body.error) errorMsg = body.error;
+        if (body.details) errorMsg = errorMsg + ": " + body.details;
       } catch (e) { }
       this.updateStatus("Error");
       this.notifyError(errorMsg);
@@ -343,61 +382,56 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       this.updatePalettes(result);
       this.updateStats(result);
 
-      if (result.remappedImageUrl) {
-        this.loadRemappedImage(result.remappedImageUrl);
+      // Decode base64 image if present
+      if (result.remappedImageBase64) {
+        this.decodeRemappedImage(result.remappedImageBase64);
       } else {
         this.isProcessing = false;
-        this.updateStatus("Done (no image)");
+        this.updateStatus("Done (palette only)");
         this.notifySuccess(result);
       }
 
     } catch (e) {
       this.isProcessing = false;
       this.updateStatus("Parse error");
-      this.notifyError("Failed to parse response");
+      this.notifyError("Failed to parse response: " + e);
     }
   }
 
-  private loadRemappedImage(url: string): void {
-    this.updateStatus("Loading result...");
-    this.log("Loading: " + url);
+  private decodeRemappedImage(base64: string): void {
+    this.updateStatus("Decoding image...");
+    this.log("Decoding base64 image, length: " + base64.length);
 
     try {
-      const resource = (this.internetModule as any).makeResourceFromUrl(url);
-
-      if (!resource) {
-        this.isProcessing = false;
-        this.updateStatus("Load failed");
-        this.notifyError("Failed to create resource");
-        return;
-      }
-
-      this.remoteMediaModule.loadResourceAsImageTexture(
-        resource,
+      Base64.decodeTextureAsync(
+        base64,
         (texture: Texture) => {
           this.isProcessing = false;
           this.remappedTexture = texture;
+          this.log("Remapped image decoded successfully");
 
+          // Apply to remapped/output display
           if (this.remappedImageDisplay) {
             this.remappedImageDisplay.enabled = true;
             this.remappedImageDisplay.mainPass.baseTex = texture;
+            this.log("Applied texture to remappedImageDisplay");
+          } else {
+            this.log("No remappedImageDisplay to show result");
           }
 
           this.updateStatus("Complete!");
-          this.log("Complete!");
           this.notifySuccess(this.lastResult!);
         },
-        (error: string) => {
+        () => {
           this.isProcessing = false;
-          this.updateStatus("Load failed");
-          this.notifyError("Failed to load result: " + error);
+          this.updateStatus("Decode failed");
+          this.notifyError("Failed to decode base64 image");
         }
       );
-
     } catch (e) {
       this.isProcessing = false;
       this.updateStatus("Error");
-      this.notifyError("" + e);
+      this.notifyError("Decode error: " + e);
     }
   }
 
@@ -406,7 +440,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   // =========================================================================
 
   private updatePalettes(result: PaintGamutResult): void {
-    // Extracted
+    // Extracted palette (original colors from image)
     if (this.extractedPaletteSwatches) {
       for (let i = 0; i < this.extractedPaletteSwatches.length; i++) {
         const swatch = this.extractedPaletteSwatches[i];
@@ -424,7 +458,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       }
     }
 
-    // Projected
+    // Projected palette (paint-mixable colors)
     if (this.projectedPaletteSwatches) {
       for (let i = 0; i < this.projectedPaletteSwatches.length; i++) {
         const swatch = this.projectedPaletteSwatches[i];
@@ -445,30 +479,33 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
   private updateStats(result: PaintGamutResult): void {
     if (!this.statisticsText) return;
-
     const s = result.statistics;
-    this.statisticsText.text = 
-      "Avg ΔE: " + s.averageDeltaE.toFixed(2) + "\n" +
-      "Max ΔE: " + s.maxDeltaE.toFixed(2) + "\n" +
-      "Min ΔE: " + s.minDeltaE.toFixed(2) + "\n" +
-      "Method: " + s.projectionMethod + "\n" +
-      "Colors: " + result.projectedPalette.length;
+    this.statisticsText.text =
+      "Avg dE: " + s.averageDeltaE.toFixed(2) + "\n" +
+      "Max dE: " + s.maxDeltaE.toFixed(2) + "\n" +
+      "Min dE: " + s.minDeltaE.toFixed(2) + "\n" +
+      "Colors: " + result.projectedPalette.length + "\n" +
+      "Gamut: " + result.gamutSize;
   }
 
   private logResults(result: PaintGamutResult): void {
     this.log("=== RESULTS ===");
-    this.log("Size: " + result.imageSize.width + "x" + result.imageSize.height);
-    this.log("Gamut: " + result.gamutSize + " colors");
-    this.log("Avg ΔE: " + result.statistics.averageDeltaE);
-    this.log("Max ΔE: " + result.statistics.maxDeltaE);
-    
-    for (let i = 0; i < Math.min(result.projectedPalette.length, 8); i++) {
+    this.log("Input size: " + result.imageSize.width + "x" + result.imageSize.height);
+    this.log("Gamut size: " + result.gamutSize + " colors");
+    this.log("Extracted: " + result.extractedPalette.length + " colors");
+    this.log("Projected: " + result.projectedPalette.length + " colors");
+    this.log("Avg dE: " + result.statistics.averageDeltaE);
+    this.log("Max dE: " + result.statistics.maxDeltaE);
+
+    // Log first few color mappings
+    const maxLog = Math.min(result.projectedPalette.length, 6);
+    for (let i = 0; i < maxLog; i++) {
       const c = result.projectedPalette[i];
-      this.log(c.originalHex + " -> " + c.hex + " (ΔE=" + c.de.toFixed(1) + ")");
+      this.log("  " + c.originalHex + " -> " + c.hex + " (dE=" + c.de.toFixed(1) + ", " + c.population.toFixed(1) + "%)");
     }
-    
-    if (result.remappedImageUrl) {
-      this.log("URL: " + result.remappedImageUrl);
+
+    if (result.remappedImageBase64) {
+      this.log("Remapped image: " + result.remappedWidth + "x" + result.remappedHeight);
     }
   }
 
@@ -478,12 +515,13 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
   private notifySuccess(result: PaintGamutResult): void {
     for (let i = 0; i < this.onCompleteCallbacks.length; i++) {
-      try { this.onCompleteCallbacks[i](result); } catch (e) { }
+      try { this.onCompleteCallbacks[i](result); } catch (e) { this.log("Callback error: " + e); }
     }
   }
 
   private notifyError(error: string): void {
     this.log("ERROR: " + error);
+    this.updateStatus("Error: " + error);
     for (let i = 0; i < this.onErrorCallbacks.length; i++) {
       try { this.onErrorCallbacks[i](error); } catch (e) { }
     }
@@ -539,46 +577,68 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     return this.originalTexture;
   }
 
-  getRemappedImageUrl(): string | null {
-    return this.lastResult?.remappedImageUrl || null;
-  }
-
   isProcessingNow(): boolean {
     return this.isProcessing;
   }
 
-  setOptions(options: {
+  setOptions(opts: {
     numColors?: number;
-    projectionMethod?: string;
     ditherMethod?: string;
     ditherStrength?: number;
+    maxOutputSize?: number;
   }): void {
-    if (options.numColors !== undefined) this.numColors = options.numColors;
-    if (options.projectionMethod !== undefined) this.projectionMethod = options.projectionMethod;
-    if (options.ditherMethod !== undefined) this.ditherMethod = options.ditherMethod;
-    if (options.ditherStrength !== undefined) this.ditherStrength = options.ditherStrength;
+    if (opts.numColors !== undefined) this.numColors = opts.numColors;
+    if (opts.ditherMethod !== undefined) this.ditherMethod = opts.ditherMethod;
+    if (opts.ditherStrength !== undefined) this.ditherStrength = opts.ditherStrength;
+    if (opts.maxOutputSize !== undefined) this.maxOutputSize = opts.maxOutputSize;
+  }
+
+  /**
+   * Set the input image by storage path
+   * @param path Path relative to inputBucket (e.g., "photos/image.jpg")
+   */
+  setInputPath(path: string): void {
+    this.inputImagePath = path;
+    this.inputImageUrl = ""; // Clear URL so path is used
+  }
+
+  /**
+   * Set the input image by full URL
+   * @param url Full URL to the image
+   */
+  setInputUrl(url: string): void {
+    this.inputImageUrl = url;
   }
 
   clearAll(): void {
     this.originalTexture = null;
     this.remappedTexture = null;
     this.lastResult = null;
-    
-    if (this.originalImageDisplay) this.originalImageDisplay.enabled = false;
-    if (this.remappedImageDisplay) this.remappedImageDisplay.enabled = false;
-    
+
+    if (this.originalImageDisplay) {
+      this.originalImageDisplay.enabled = false;
+    }
+    if (this.remappedImageDisplay) {
+      this.remappedImageDisplay.enabled = false;
+    }
+
     if (this.extractedPaletteSwatches) {
       for (let i = 0; i < this.extractedPaletteSwatches.length; i++) {
-        if (this.extractedPaletteSwatches[i]) this.extractedPaletteSwatches[i].enabled = false;
+        if (this.extractedPaletteSwatches[i]) {
+          this.extractedPaletteSwatches[i].enabled = false;
+        }
       }
     }
+
     if (this.projectedPaletteSwatches) {
       for (let i = 0; i < this.projectedPaletteSwatches.length; i++) {
-        if (this.projectedPaletteSwatches[i]) this.projectedPaletteSwatches[i].enabled = false;
+        if (this.projectedPaletteSwatches[i]) {
+          this.projectedPaletteSwatches[i].enabled = false;
+        }
       }
     }
+
     if (this.statisticsText) this.statisticsText.text = "";
-    
     this.updateStatus("Cleared");
   }
 
@@ -587,6 +647,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   // =========================================================================
 
   private updateStatus(status: string): void {
+    this.log("Status: " + status);
     if (this.statusText) this.statusText.text = status;
   }
 
