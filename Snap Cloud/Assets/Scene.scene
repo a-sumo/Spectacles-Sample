@@ -11,6 +11,7 @@
     - !<own> 4187bcaa-046a-43fb-b283-07c270f36dab
     - !<own> c6ed5f31-f774-4df2-b703-653a5a5a187f
     - !<own> a0732ca3-1bd4-4d5e-b506-91206710c302
+    - !<own> e6e9c9ce-1596-4c4e-abc8-7e5176232f94
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -208,6 +209,38 @@
     - !<own> 7f5fe347-83fa-489d-9653-f629b6833fb9
   Components:
     []
+- !<ScriptComponent/0454e060-a0cf-43bd-802f-b422719921ca>
+  PrefabRemaps:
+    []
+  Name: EdgeFunctionPaletteExtraction.ts
+  Enabled: true
+  ScriptAsset: !<reference> 1353c9c3-4c56-4966-b8ec-4e0a19f51d34
+  ScriptInputsDefault:
+    functionName: true
+    imageUrl: true
+    numColors: true
+    sampleSize: true
+    paletteSwatches: true
+    paletteLabels: true
+    enableDebugLogs: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
+      functionName: extract-palette
+      imageUrl: ""
+      numColors: !<float> 8.000000
+      sampleSize: !<float> 10000.000000
+      paletteSwatches: !<reference.Image[]>
+        []
+      paletteLabels: !<reference.Text[]>
+        []
+      extractButton: !<MappingBased.AssignableType_1> 57f91221-0e62-4deb-8a94-a9b75d57f9cd
+      enableDebugLogs: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/04c2beda-4182-4b4f-8d7c-5caf67ef33bb>
   PrefabRemaps:
     []
@@ -2525,7 +2558,7 @@
       broadcastInterval: 0.200000
       movementSpeed: 0.150000
       movementScale: 1.500000
-      cursorZPosition: !<float> -50.000000
+      cursorZPosition: !<float> -30.000000
       heightOffset: !<float> 0.000000
       lsXRange: !<float> 50.000000
       lsYRange: !<float> 30.000000
@@ -2898,8 +2931,8 @@
   ScriptInputs:
     "":
       snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
-      functionName: specs-function
-      imageUrl: "[FUNCTION ENDPOINT HERE]"
+      functionName: image-transform
+      imageUrl: "https://gwedlgetdgjdgkpiptee.snapcloud.dev/storage/v1/object/sign/paintings/Haystacks-Shishkin.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yZjQ2NGZlNi0yODA3LTQ4YzUtOGYwOC03NzFmMmMxNjQ1YWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwYWludGluZ3MvSGF5c3RhY2tzLVNoaXNoa2luLmpwZyIsImlhdCI6MTc2NTM5Mjc1OCwiZXhwIjoxNzY1OTk3NTU4fQ.xkQCUX7lT7b80YY9VoSSeOW3UZ5cQbtsf5dEjCCXP-U"
       outputImage: !<reference.Image> 4f0918a0-47ee-4f22-8ff5-e7444593f7c6
       processButton: !<MappingBased.AssignableType_1> 57f91221-0e62-4deb-8a94-a9b75d57f9cd
       enableDebugLogs: true
@@ -3799,7 +3832,7 @@
   PrefabRemaps:
     []
   Name: Example4-EdgeFunctions
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4383,6 +4416,21 @@
     []
   Components:
     - !<own> 28cf3766-599c-4bd5-8505-2a92bf6606ed
+- !<SceneObject/e6e9c9ce-1596-4c4e-abc8-7e5176232f94>
+  PrefabRemaps:
+    []
+  Name: EdgeFunctionPaletteExtraction.ts
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0454e060-a0cf-43bd-802f-b422719921ca
 - !<SceneObject/e7d04753-28a1-4f9d-bc21-9c8284652226>
   PrefabRemaps:
     []
@@ -4617,7 +4665,7 @@
     {}
   ScriptInputs:
     "":
-      supabaseProject: !<reference.SupabaseProject> d9e4a4f8-aca5-4d5d-993a-819ef7cee186
+      supabaseProject: !<reference.SupabaseProject> 87b43bd3-ca90-47bb-aab0-ae4e87f8cda5
       text: !<reference.Text> ebd0d532-64f3-41cd-89e1-8749a83c2c54
       disableWarningsWhenConfigured: true
       showSetupInstructions: true

@@ -14,7 +14,6 @@
     - !<own> a2c9dccc-74f5-4154-a0fd-2bbbac38747f
     - !<own> 93f2465a-c92a-453b-aacf-a896378fd4d2
     - !<own> 399b9f46-8a72-4eaf-a73a-2ed8b6c9168f
-    - !<own> da76b0f8-948c-4484-96c2-c17a0c84e3be
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -2191,7 +2190,7 @@
   PrefabRemaps:
     []
   Name: Image Pipeline
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -2941,26 +2940,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<RenderMeshVisual/6798a1f2-75ba-4d62-bb6b-76764ccc7827>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    []
-  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<SceneObject/685a3b45-fafd-45d9-8d05-e10545ac43f5>
   PrefabRemaps:
     []
@@ -3290,7 +3269,7 @@
     - e6022c88-92cb-488f-b6e6-8f5208967fe0: abb38042-af65-41a1-6507-285702c35fbe
     - eee4335d-7f95-4aa5-8c16-c210c9c5bb5d: 8b624250-8d50-4432-70c0-f4e7a3b5d105
   Name: Gamut Projector Interactable
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -10.000000, y: -26.000000, z: -97.500000}
@@ -3934,7 +3913,7 @@
     - ccbd46ba-8157-4ee8-9dfd-6bf39bdb3df0: 83e000b2-a67c-4a35-72e0-95ded386aff7
     - d8e90f20-ca29-4c99-907f-f22f722392ef: e6bf495b-774b-42d7-64a8-7d796b3ceb1b
   Name: Pigment Mix
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -10.000000, y: -20.000000, z: -97.500000}
@@ -4198,44 +4177,6 @@
     - !<own> 2ebcc84d-d41d-41a6-9440-77a13aa9fe54
   Components:
     []
-- !<ScriptComponent/9250fc0d-4734-49e3-8657-0029d2131523>
-  PrefabRemaps:
-    []
-  Name: Interactable
-  Enabled: true
-  ScriptAsset: !<reference> 652e631a-22d0-4941-9f74-2943df59f34c
-  ScriptInputsDefault:
-    targetingMode: true
-    targetingVisual: true
-    ignoreInteractionPlane: true
-    keepHoverOnTrigger: true
-    enableInstantDrag: true
-    isScrollable: true
-    allowMultipleInteractors: true
-    enablePokeDirectionality: true
-    acceptableXDirections: true
-    acceptableYDirections: true
-    acceptableZDirections: true
-    useFilteredPinch: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      targetingMode: !<float> 3.000000
-      targetingVisual: !<float> 1.000000
-      ignoreInteractionPlane: false
-      keepHoverOnTrigger: false
-      enableInstantDrag: false
-      isScrollable: false
-      allowMultipleInteractors: true
-      enablePokeDirectionality: false
-      acceptableXDirections: !<float> 0.000000
-      acceptableYDirections: !<float> 0.000000
-      acceptableZDirections: !<float> 1.000000
-      useFilteredPinch: false
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/929d6c47-2ceb-47f4-8c95-f2cb22ae5129>
   PrefabRemaps:
     []
@@ -4271,7 +4212,7 @@
   PrefabRemaps:
     []
   Name: PaletteExtractionController
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4700,7 +4641,7 @@
   PrefabRemaps:
     []
   Name: Palette Anchor Frame
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -20.000000, z: -100.000000}
@@ -4819,7 +4760,7 @@
     - c2e1e25c-cf35-49cd-85c6-44bf0984712f: 337a79f1-b3e4-4a4e-4699-7be2c3a32fcc
     - f6007657-3051-4ca3-9d81-8bc154ac65ee: 53d19557-87b4-4320-61f9-32c01718d424
   Name: LAB Space Interactable
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -10.000000, y: -14.000000, z: -97.500000}
@@ -5632,7 +5573,7 @@
   PrefabRemaps:
     []
   Name: PictureController
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -5677,7 +5618,7 @@
   PrefabRemaps:
     []
   Name: CameraService
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -5718,24 +5659,6 @@
     - !<own> 24b09643-f19b-41e2-9024-1bf80c1f3aaf
   Components:
     []
-- !<ColliderComponent/c71db79f-143a-455f-9851-b0c2d86304da>
-  PrefabRemaps:
-    []
-  Name: Physics Collider
-  Enabled: true
-  Shape: !<Box>
-    FitVisual: true
-    Size: {x: 1.000000, y: 1.000000, z: 1.000000}
-  Matter: !<reference> 00000000-0000-0000-0000-000000000000
-  Filter: !<reference> 00000000-0000-0000-0000-000000000000
-  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
-  WorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
-  EnableSmoothing: false
-  PositionTension: 30.000000
-  RotationTension: 30.000000
-  ForceCompound: false
-  Intangible: false
-  ShowCollider: true
 - !<Text/c7e0a5ed-333d-4f03-8134-7b2a1425a28e>
   PrefabRemaps:
     []
@@ -6436,23 +6359,6 @@
   ScriptTypes:
     "":
       {}
-- !<SceneObject/da76b0f8-948c-4484-96c2-c17a0c84e3be>
-  PrefabRemaps:
-    []
-  Name: Object 0
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: -50.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 10.000000, y: 10.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> c71db79f-143a-455f-9851-b0c2d86304da
-    - !<own> 9250fc0d-4734-49e3-8657-0029d2131523
-    - !<own> 6798a1f2-75ba-4d62-bb6b-76764ccc7827
 - !<SceneObject/dc378326-35d3-4c0c-b4ef-e8bbac5f5679>
   PrefabRemaps:
     []

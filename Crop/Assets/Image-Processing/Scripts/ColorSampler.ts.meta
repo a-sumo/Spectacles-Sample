@@ -22,11 +22,18 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 929227e8-3eea-4c81-9ae1-67b9aece8a8a
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    colorSwatch: false
+    cursor: false
+    gridSize: false
+    hexLabel: false
+    previewGrid: false
+    previewGridOffset: false
+    targets: false
+    textureProperty: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +43,24 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - targets: !<reference.SceneObject[]>
+        []
+      cursor: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      previewGrid: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      previewGridOffset: !<Vec3> {x: 0.000000, y: 0.020000, z: 0.000000}
+      hexLabel: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      colorSwatch: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      gridSize: !<float> 9.000000
+      textureProperty: baseTex
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @input SceneObject[] targets = {} {"hint":"Objects to sample from. Each needs: Image/RenderMeshVisual + Interactable + Collider"}'
+    - '// @input SceneObject cursor {"hint":"Cursor that follows hover position"}'
+    - '// @input SceneObject previewGrid {"hint":"Grid preview showing sampled pixels around cursor"}'
+    - '// @input vec3 previewGridOffset = {0,0.02,0} {"hint":"Offset for preview grid from cursor position (world units)"}'
+    - '// @input Component.Text hexLabel {"hint":"Text component to display hex color value"}'
+    - '// @input SceneObject colorSwatch {"hint":"Image or RenderMeshVisual to show sampled color swatch"}'
+    - '// @input float gridSize = 9 {"hint":"Grid size for pixel sampling (odd number, 1-31)"}'
+    - '// @input string textureProperty = "baseTex" {"hint":"Material texture property name"}'

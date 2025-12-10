@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 814
+    size: 816
     values:
       - ""
       - Examples
@@ -77,6 +77,7 @@ CollapsedEntities:
       - Render/Echopark.hdr/Specular
       - Render/Render Target.renderTarget
       - Scene.scene
+      - Scripts/EdgeFunctionPaletteExtraction.ts.ts
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
@@ -817,4 +818,5 @@ CollapsedEntities:
       - SupabaseClient.lspkg/polyfills/urlsearchparams.d.ts
       - SupabaseClient.lspkg/supabase-snapcloud.d.ts
       - SupabaseClient.lspkg/supabase-snapcloud.js
+      - SupabaseProject Palette.supabaseProject
   options: 4
