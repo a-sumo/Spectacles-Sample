@@ -1,5 +1,7 @@
 import { SnapCloudRequirements } from '../Examples/SnapCloudRequirements';
 import { RectangleButton } from 'SpectaclesUIKit.lspkg/Scripts/Components/Button/RectangleButton';
+import { Gemini } from "RemoteServiceGateway.lspkg/HostedExternal/GoogleGenAI";
+import { GeminiTypes } from "RemoteServiceGateway.lspkg/HostedExternal/GoogleGenAITypes";
 
 // ============================================================================
 // TYPES
@@ -22,6 +24,11 @@ interface ProjectedColor extends PaletteColor {
   originalRgb: number[];
   originalHex: string;
   de: number;
+}
+
+interface ExtractedPigment {
+  name: string;
+  rgb: number[];
 }
 
 interface Statistics {
@@ -72,13 +79,22 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   @hint("Storage bucket for input images")
   inputBucket: string = "uploads";
 
-  @input
-  @hint("Input image path in storage (e.g., 'photos/image.jpg') - relative to bucket")
-  inputImagePath: string = "";
+  // -------------------------------------------------------------------------
+  // INPUT IMAGES
+  // -------------------------------------------------------------------------
 
   @input
-  @hint("OR full URL to input image (overrides path if set)")
-  inputImageUrl: string = "";
+  @hint("URL or path to the PAINTING image to process")
+  paintingImageUrl: string = "";
+
+  @input
+  @hint("URL or path to your PALETTE photo (paint tubes, swatches, etc.)")
+  paletteImageUrl: string = "";
+
+  @input
+  @hint("Texture of palette image (for Gemini)")
+  @allowUndefined
+  paletteTexture: Texture;
 
   // -------------------------------------------------------------------------
   // PROCESSING OPTIONS
@@ -97,43 +113,68 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   ditherStrength: number = 0.85;
 
   @input
-  @hint("Max output image size in pixels")
+  @hint("Max output image size")
   maxOutputSize: number = 512;
+
+  @input
+  @hint("Use default pigments if Gemini extraction fails")
+  useDefaultPigmentsOnFail: boolean = true;
+
+  @input
+  @hint("Automatically extract palette before processing (uses paletteTexture or paletteImageUrl)")
+  autoExtractPalette: boolean = true;
 
   // -------------------------------------------------------------------------
   // DISPLAYS
   // -------------------------------------------------------------------------
 
   @input
-  @hint("Image component for ORIGINAL/INPUT image")
+  @hint("Image for ORIGINAL painting")
   originalImageDisplay: Image;
 
   @input
-  @hint("Image component for REMAPPED/OUTPUT image")
+  @hint("Image for REMAPPED output")
   remappedImageDisplay: Image;
 
   @input
-  @hint("Extracted palette swatches (array of Image)")
+  @hint("Image for PALETTE photo preview")
+  @allowUndefined
+  palettePhotoDisplay: Image;
+
+  @input
+  @hint("Extracted palette swatches")
   extractedPaletteSwatches: Image[];
 
   @input
-  @hint("Projected palette swatches (array of Image)")
+  @hint("Projected palette swatches")
   projectedPaletteSwatches: Image[];
 
   @input
+  @hint("Pigment swatches (from Gemini extraction)")
   @allowUndefined
-  @hint("Status text display")
+  pigmentSwatches: Image[];
+
+  @input
+  @allowUndefined
   statusText: Text;
 
   @input
   @allowUndefined
-  @hint("Statistics text display")
   statisticsText: Text;
 
   @input
   @allowUndefined
-  @hint("Process button - triggers processing on press")
+  pigmentListText: Text;
+
+  @input
+  @allowUndefined
+  @hint("Main process button - extracts palette (if needed) then processes")
   processButton: RectangleButton;
+
+  @input
+  @allowUndefined
+  @hint("Button to ONLY extract palette from photo")
+  extractPaletteButton: RectangleButton;
 
   @input
   enableDebugLogs: boolean = true;
@@ -144,31 +185,35 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
   private isInitialized: boolean = false;
   private isProcessing: boolean = false;
+  private isExtractingPalette: boolean = false;
   private lastResult: PaintGamutResult | null = null;
   private originalTexture: Texture | null = null;
   private remappedTexture: Texture | null = null;
 
+  // Custom pigments extracted from palette photo
+  private customPigments: ExtractedPigment[] = [];
+  private useCustomPigments: boolean = false;
+  private paletteReady: boolean = false;
+
+  // Pending painting URL (when waiting for palette extraction)
+  private pendingPaintingUrl: string | null = null;
+
   private onCompleteCallbacks: ((result: PaintGamutResult) => void)[] = [];
   private onErrorCallbacks: ((error: string) => void)[] = [];
+  private onPigmentsExtractedCallbacks: ((pigments: ExtractedPigment[]) => void)[] = [];
 
   // =========================================================================
   // LIFECYCLE
   // =========================================================================
 
   onAwake() {
-    this.log("Initializing PaintGamutProcessor...");
+    this.log("Initializing PaintGamutProcessor with Gemini support...");
     this.initialize();
-    this.setupButton();
+    this.setupButtons();
   }
 
   private initialize(): void {
-    if (!this.snapCloudRequirements) {
-      this.log("ERROR: SnapCloudRequirements not assigned");
-      this.updateStatus("No config");
-      return;
-    }
-
-    if (!this.snapCloudRequirements.isConfigured()) {
+    if (!this.snapCloudRequirements || !this.snapCloudRequirements.isConfigured()) {
       this.log("ERROR: SnapCloudRequirements not configured");
       this.updateStatus("Not configured");
       return;
@@ -176,20 +221,346 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
     this.isInitialized = true;
     this.log("Initialized successfully");
-    this.log("Storage URL: " + this.snapCloudRequirements.getStorageApiUrl());
-    this.log("Functions URL: " + this.snapCloudRequirements.getFunctionsApiUrl());
     this.updateStatus("Ready");
   }
 
-  private setupButton(): void {
+  private setupButtons(): void {
+    // Main process button - does full workflow
     if (this.processButton) {
       this.processButton.onTriggerUp.add(() => {
         this.log("=== PROCESS BUTTON PRESSED ===");
-        this.processImage();
+        this.startFullWorkflow();
       });
-      this.log("Process button connected");
+    }
+
+    // Palette-only button
+    if (this.extractPaletteButton) {
+      this.extractPaletteButton.onTriggerUp.add(() => {
+        this.log("=== EXTRACT PALETTE BUTTON PRESSED ===");
+        this.extractPaletteFromPhoto();
+      });
+    }
+  }
+
+  // =========================================================================
+  // FULL WORKFLOW (Main Entry Point)
+  // =========================================================================
+
+  /**
+   * Main workflow: Extract palette first (if needed), then process painting.
+   * This is the recommended entry point.
+   */
+  startFullWorkflow(paintingUrl?: string, paletteUrl?: string): void {
+    if (!this.isInitialized) {
+      this.notifyError("Not initialized");
+      return;
+    }
+
+    if (this.isProcessing || this.isExtractingPalette) {
+      this.log("Already busy - ignoring");
+      return;
+    }
+
+    if (!global.deviceInfoSystem.isInternetAvailable()) {
+      this.notifyError("No internet");
+      return;
+    }
+
+    // Determine painting URL
+    const targetPaintingUrl = this.buildImageUrl(paintingUrl || this.paintingImageUrl);
+    if (!targetPaintingUrl) {
+      this.notifyError("No painting image specified");
+      return;
+    }
+
+    // Check if we need to extract palette first
+    const shouldExtractPalette = this.autoExtractPalette && 
+      !this.paletteReady && 
+      (this.paletteTexture || this.paletteImageUrl || paletteUrl);
+
+    if (shouldExtractPalette) {
+      this.log("Starting palette extraction first, then will process painting");
+      // Store the painting URL to process after palette extraction
+      this.pendingPaintingUrl = targetPaintingUrl;
+      // Start palette extraction - it will call processPaintingInternal when done
+      this.extractPaletteFromPhoto(paletteUrl);
     } else {
-      this.log("No process button assigned - call processImage() manually");
+      // No palette extraction needed, process directly
+      this.log("Palette ready or not needed, processing painting directly");
+      this.processPaintingInternal(targetPaintingUrl);
+    }
+  }
+
+  // =========================================================================
+  // GEMINI PALETTE EXTRACTION
+  // =========================================================================
+
+  /**
+   * Extract pigment colors from a photo of your paint palette using Gemini.
+   * Can be called standalone or as part of startFullWorkflow.
+   */
+  extractPaletteFromPhoto(paletteUrl?: string): void {
+    if (this.isExtractingPalette) {
+      this.log("Already extracting palette");
+      return;
+    }
+
+    if (this.isProcessing) {
+      this.log("Cannot extract palette while processing");
+      return;
+    }
+
+    this.isExtractingPalette = true;
+    this.paletteReady = false;
+    this.updateStatus("Loading palette...");
+
+    // If we have a texture, use it directly
+    if (this.paletteTexture) {
+      this.log("Using paletteTexture input");
+      this.encodeAndAnalyzePalette(this.paletteTexture);
+      return;
+    }
+
+    // Otherwise load from URL
+    const url = this.buildImageUrl(paletteUrl || this.paletteImageUrl);
+    if (!url) {
+      this.isExtractingPalette = false;
+      this.handlePaletteExtractionFailed("No palette image specified");
+      return;
+    }
+
+    this.log("Loading palette from URL: " + url);
+    this.loadPaletteFromUrl(url);
+  }
+
+  private loadPaletteFromUrl(url: string): void {
+    try {
+      const resource = (this.internetModule as any).makeResourceFromUrl(url);
+      if (!resource) {
+        this.handlePaletteExtractionFailed("Failed to create resource for palette URL");
+        return;
+      }
+
+      this.remoteMediaModule.loadResourceAsImageTexture(
+        resource,
+        (texture: Texture) => {
+          this.log("Palette image loaded from URL");
+          
+          // Show preview if available
+          if (this.palettePhotoDisplay) {
+            this.palettePhotoDisplay.enabled = true;
+            this.palettePhotoDisplay.mainPass.baseTex = texture;
+          }
+
+          // Now encode and analyze
+          this.encodeAndAnalyzePalette(texture);
+        },
+        (error: string) => {
+          this.handlePaletteExtractionFailed("Failed to load palette image: " + error);
+        }
+      );
+    } catch (e) {
+      this.handlePaletteExtractionFailed("Error loading palette: " + e);
+    }
+  }
+
+  private encodeAndAnalyzePalette(texture: Texture): void {
+    this.updateStatus("Encoding palette...");
+
+    Base64.encodeTextureAsync(
+      texture,
+      (base64: string) => {
+        this.log("Palette texture encoded, length: " + base64.length);
+        this.callGeminiForPalette(base64);
+      },
+      () => {
+        this.handlePaletteExtractionFailed("Failed to encode palette texture");
+      },
+      CompressionQuality.LowQuality,
+      EncodingType.Jpg
+    );
+  }
+
+  private callGeminiForPalette(base64Image: string): void {
+    this.updateStatus("Gemini analyzing...");
+    this.log("Calling Gemini for palette extraction...");
+
+    const systemPrompt = `You are an expert at identifying paint pigments and colors. 
+Analyze the image of paint tubes, swatches, or palette and extract the pigment colors.
+Return ONLY a valid JSON array of pigments, no other text.
+Each pigment should have: name (string) and rgb (array of 3 numbers 0-255).
+Identify the actual pigment names if visible (e.g., "Cadmium Red", "Ultramarine Blue").
+If names aren't visible, use descriptive names (e.g., "Deep Red", "Sky Blue").
+Extract between 4-16 distinct pigments. Include white and black if present.`;
+
+    const userPrompt = `Extract the paint pigment colors from this image. Return ONLY valid JSON in this exact format:
+[{"name": "Pigment Name", "rgb": [R, G, B]}, ...]`;
+
+    const request: GeminiTypes.Models.GenerateContentRequest = {
+      model: "gemini-2.0-flash",
+      type: "generateContent",
+      body: {
+        contents: [
+          {
+            parts: [{ text: systemPrompt }],
+            role: "model",
+          },
+          {
+            parts: [
+              {
+                inlineData: {
+                  mimeType: "image/jpeg",
+                  data: base64Image
+                }
+              },
+              { text: userPrompt }
+            ],
+            role: "user",
+          },
+        ],
+      },
+    };
+
+    Gemini.models(request)
+      .then((response) => {
+        this.log("Gemini response received");
+        this.parseGeminiPaletteResponse(response);
+      })
+      .catch((error) => {
+        this.log("Gemini error: " + error);
+        this.handlePaletteExtractionFailed("Gemini failed: " + error);
+      });
+  }
+
+  private parseGeminiPaletteResponse(response: any): void {
+    try {
+      const textResponse = response.candidates[0]?.content?.parts?.[0]?.text;
+      if (!textResponse) {
+        throw new Error("No text in Gemini response");
+      }
+
+      this.log("Gemini text: " + textResponse);
+
+      // Extract JSON from response (might have markdown code blocks)
+      let jsonStr = textResponse;
+
+      // Remove markdown code blocks if present
+      const jsonMatch = textResponse.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (jsonMatch) {
+        jsonStr = jsonMatch[1].trim();
+      } else {
+        // Try to find array brackets
+        const arrayMatch = textResponse.match(/\[[\s\S]*\]/);
+        if (arrayMatch) {
+          jsonStr = arrayMatch[0];
+        }
+      }
+
+      const pigments = JSON.parse(jsonStr) as ExtractedPigment[];
+
+      if (!Array.isArray(pigments) || pigments.length === 0) {
+        throw new Error("Invalid pigments array");
+      }
+
+      // Validate pigments
+      const validPigments: ExtractedPigment[] = [];
+      for (let i = 0; i < pigments.length; i++) {
+        const p = pigments[i];
+        if (p.name && Array.isArray(p.rgb) && p.rgb.length === 3) {
+          validPigments.push({
+            name: String(p.name),
+            rgb: [
+              Math.max(0, Math.min(255, Math.round(Number(p.rgb[0])))),
+              Math.max(0, Math.min(255, Math.round(Number(p.rgb[1])))),
+              Math.max(0, Math.min(255, Math.round(Number(p.rgb[2]))))
+            ]
+          });
+        }
+      }
+
+      if (validPigments.length < 2) {
+        throw new Error("Need at least 2 valid pigments, got " + validPigments.length);
+      }
+
+      // Success!
+      this.customPigments = validPigments;
+      this.useCustomPigments = true;
+      this.paletteReady = true;
+      this.isExtractingPalette = false;
+
+      this.log("Extracted " + validPigments.length + " pigments:");
+      for (let i = 0; i < validPigments.length; i++) {
+        const p = validPigments[i];
+        this.log("  " + p.name + ": RGB(" + p.rgb[0] + "," + p.rgb[1] + "," + p.rgb[2] + ")");
+      }
+
+      this.updatePigmentDisplay();
+      this.updateStatus("Palette ready!");
+      this.notifyPigmentsExtracted(validPigments);
+
+      // If there's a pending painting, process it now
+      this.processPendingPainting();
+
+    } catch (e) {
+      this.log("Parse error: " + e);
+      this.handlePaletteExtractionFailed("Failed to parse Gemini response: " + e);
+    }
+  }
+
+  private handlePaletteExtractionFailed(error: string): void {
+    this.log("Palette extraction failed: " + error);
+    this.isExtractingPalette = false;
+
+    if (this.useDefaultPigmentsOnFail) {
+      this.log("Using default pigments as fallback");
+      this.useCustomPigments = false;
+      this.paletteReady = true; // Mark as ready with defaults
+      this.updateStatus("Using defaults");
+      
+      // Still process pending painting with defaults
+      this.processPendingPainting();
+    } else {
+      this.pendingPaintingUrl = null;
+      this.notifyError(error);
+    }
+  }
+
+  private processPendingPainting(): void {
+    if (this.pendingPaintingUrl) {
+      const url = this.pendingPaintingUrl;
+      this.pendingPaintingUrl = null;
+      this.log("Processing pending painting: " + url);
+      this.processPaintingInternal(url);
+    }
+  }
+
+  private updatePigmentDisplay(): void {
+    // Update pigment list text
+    if (this.pigmentListText && this.customPigments.length > 0) {
+      let text = "Pigments:\n";
+      for (let i = 0; i < this.customPigments.length; i++) {
+        const p = this.customPigments[i];
+        text += p.name + "\n";
+      }
+      this.pigmentListText.text = text;
+    }
+
+    // Update pigment swatches
+    if (this.pigmentSwatches) {
+      for (let i = 0; i < this.pigmentSwatches.length; i++) {
+        const swatch = this.pigmentSwatches[i];
+        if (!swatch) continue;
+
+        if (i < this.customPigments.length) {
+          const p = this.customPigments[i];
+          swatch.enabled = true;
+          if (swatch.mainPass) {
+            swatch.mainPass.baseColor = new vec4(p.rgb[0] / 255, p.rgb[1] / 255, p.rgb[2] / 255, 1.0);
+          }
+        } else {
+          swatch.enabled = false;
+        }
+      }
     }
   }
 
@@ -197,96 +568,71 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   // URL BUILDING
   // =========================================================================
 
-  /**
-   * Build full image URL from either:
-   * 1. inputImageUrl (if set) - used as-is
-   * 2. inputImagePath - combined with storage bucket URL
-   * 
-   * Storage URL format: https://<project>.supabase.co/storage/v1/object/public/<bucket>/<path>
-   */
-  private buildImageUrl(overrideUrl?: string): string | null {
-    // Priority 1: Override URL passed to processImage()
-    if (overrideUrl && overrideUrl.length > 0) {
-      this.log("Using override URL: " + overrideUrl);
-      return overrideUrl;
+  private buildImageUrl(urlOrPath: string): string | null {
+    if (!urlOrPath || urlOrPath.length === 0) return null;
+
+    // Check if it's already a full URL
+    if (urlOrPath.startsWith("http://") || urlOrPath.startsWith("https://")) {
+      return urlOrPath;
     }
 
-    // Priority 2: Full URL in inputImageUrl
-    if (this.inputImageUrl && this.inputImageUrl.length > 0) {
-      this.log("Using inputImageUrl: " + this.inputImageUrl);
-      return this.inputImageUrl;
-    }
-
-    // Priority 3: Build from storage path
-    if (this.inputImagePath && this.inputImagePath.length > 0) {
-      const storageBase = this.snapCloudRequirements.getStorageApiUrl();
-      // Storage URL format: baseUrl + bucket + "/" + path
-      const fullUrl = storageBase + this.inputBucket + "/" + this.inputImagePath;
-      this.log("Built storage URL: " + fullUrl);
-      return fullUrl;
-    }
-
-    return null;
+    // Build from storage path
+    const storageBase = this.snapCloudRequirements.getStorageApiUrl();
+    return storageBase + this.inputBucket + "/" + urlOrPath;
   }
 
   // =========================================================================
-  // MAIN PROCESS
+  // PAINTING PROCESSING (Internal)
   // =========================================================================
 
   /**
-   * Process an image through the paint gamut pipeline.
-   * @param imageUrl Optional - full URL to image. If not provided, uses inputImageUrl or inputImagePath
+   * Process painting directly (called internally after palette is ready)
    */
-  processImage(imageUrl?: string): void {
-    this.log("processImage() called");
-
-    // Validation
-    if (!this.isInitialized) {
-      this.notifyError("Not initialized - check SnapCloudRequirements");
-      return;
-    }
-
+  private processPaintingInternal(imageUrl: string): void {
     if (this.isProcessing) {
-      this.log("Already processing - ignoring");
+      this.log("Already processing painting");
       return;
     }
 
-    if (!global.deviceInfoSystem.isInternetAvailable()) {
-      this.notifyError("No internet connection");
+    if (this.isExtractingPalette) {
+      this.log("Cannot process while extracting palette - queuing");
+      this.pendingPaintingUrl = imageUrl;
       return;
     }
 
-    // Build URL
-    const url = this.buildImageUrl(imageUrl);
-    if (!url) {
-      this.notifyError("No image specified. Set inputImageUrl or inputImagePath");
-      return;
-    }
-
-    // Start processing
     this.isProcessing = true;
-    this.updateStatus("Starting...");
-    this.log("Processing image: " + url);
+    this.updateStatus("Loading painting...");
+    this.log("Processing painting: " + imageUrl);
+    this.loadOriginalImage(imageUrl);
+  }
 
-    // Load and display original, then process
-    this.loadOriginalImage(url);
+  /**
+   * Public method to process painting directly (skips palette extraction)
+   */
+  processImageDirect(imageUrl?: string): void {
+    if (!this.isInitialized) {
+      this.notifyError("Not initialized");
+      return;
+    }
+
+    const url = this.buildImageUrl(imageUrl || this.paintingImageUrl);
+    if (!url) {
+      this.notifyError("No painting image specified");
+      return;
+    }
+
+    this.processPaintingInternal(url);
   }
 
   private loadOriginalImage(url: string): void {
-    this.updateStatus("Loading original...");
-
-    // If no original display, skip straight to processing
     if (!this.originalImageDisplay) {
-      this.log("No originalImageDisplay - skipping preview");
       this.callEdgeFunction(url);
       return;
     }
 
     try {
       const resource = (this.internetModule as any).makeResourceFromUrl(url);
-
       if (!resource) {
-        this.log("Failed to create resource for original - continuing anyway");
         this.callEdgeFunction(url);
         return;
       }
@@ -294,23 +640,18 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       this.remoteMediaModule.loadResourceAsImageTexture(
         resource,
         (texture: Texture) => {
-          this.log("Original image loaded successfully");
           this.originalTexture = texture;
-          
-          // Apply to original display
           this.originalImageDisplay.enabled = true;
           this.originalImageDisplay.mainPass.baseTex = texture;
-          
-          // Continue to edge function
           this.callEdgeFunction(url);
         },
         (error: string) => {
-          this.log("Original image load failed: " + error + " - continuing anyway");
+          this.log("Original load failed: " + error + " - continuing");
           this.callEdgeFunction(url);
         }
       );
     } catch (e) {
-      this.log("Error loading original: " + e + " - continuing anyway");
+      this.log("Error: " + e + " - continuing");
       this.callEdgeFunction(url);
     }
   }
@@ -320,7 +661,8 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
     const endpoint = this.snapCloudRequirements.getFunctionsApiUrl() + this.functionName;
 
-    const payload = {
+    // Build payload
+    const payload: any = {
       imageUrl: imageUrl,
       numColors: this.numColors,
       ditherMethod: this.ditherMethod,
@@ -329,6 +671,14 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       maxOutputSize: this.maxOutputSize
     };
 
+    // Add custom pigments if available
+    if (this.useCustomPigments && this.customPigments.length >= 2) {
+      payload.customPigments = this.customPigments;
+      this.log("Sending " + this.customPigments.length + " custom pigments to edge function");
+    } else {
+      this.log("Using default pigments (server-side)");
+    }
+
     this.log("Endpoint: " + endpoint);
     this.log("Payload: " + JSON.stringify(payload));
 
@@ -336,7 +686,6 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     request.url = endpoint;
     request.method = RemoteServiceHttpRequest.HttpRequestMethod.Post;
 
-    // Build headers
     const headers: { [key: string]: string } = {};
     const baseHeaders = this.snapCloudRequirements.getSupabaseHeaders();
     for (const key in baseHeaders) {
@@ -360,7 +709,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       try {
         const body = JSON.parse(response.body);
         if (body.error) errorMsg = body.error;
-        if (body.details) errorMsg = errorMsg + ": " + body.details;
+        if (body.details) errorMsg += ": " + body.details;
       } catch (e) { }
       this.updateStatus("Error");
       this.notifyError(errorMsg);
@@ -382,7 +731,6 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       this.updatePalettes(result);
       this.updateStats(result);
 
-      // Decode base64 image if present
       if (result.remappedImageBase64) {
         this.decodeRemappedImage(result.remappedImageBase64);
       } else {
@@ -400,7 +748,6 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
   private decodeRemappedImage(base64: string): void {
     this.updateStatus("Decoding image...");
-    this.log("Decoding base64 image, length: " + base64.length);
 
     try {
       Base64.decodeTextureAsync(
@@ -408,15 +755,10 @@ export class PaintGamutProcessor extends BaseScriptComponent {
         (texture: Texture) => {
           this.isProcessing = false;
           this.remappedTexture = texture;
-          this.log("Remapped image decoded successfully");
 
-          // Apply to remapped/output display
           if (this.remappedImageDisplay) {
             this.remappedImageDisplay.enabled = true;
             this.remappedImageDisplay.mainPass.baseTex = texture;
-            this.log("Applied texture to remappedImageDisplay");
-          } else {
-            this.log("No remappedImageDisplay to show result");
           }
 
           this.updateStatus("Complete!");
@@ -425,12 +767,11 @@ export class PaintGamutProcessor extends BaseScriptComponent {
         () => {
           this.isProcessing = false;
           this.updateStatus("Decode failed");
-          this.notifyError("Failed to decode base64 image");
+          this.notifyError("Failed to decode image");
         }
       );
     } catch (e) {
       this.isProcessing = false;
-      this.updateStatus("Error");
       this.notifyError("Decode error: " + e);
     }
   }
@@ -440,12 +781,10 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   // =========================================================================
 
   private updatePalettes(result: PaintGamutResult): void {
-    // Extracted palette (original colors from image)
     if (this.extractedPaletteSwatches) {
       for (let i = 0; i < this.extractedPaletteSwatches.length; i++) {
         const swatch = this.extractedPaletteSwatches[i];
         if (!swatch) continue;
-
         if (i < result.extractedPalette.length) {
           const c = result.extractedPalette[i];
           swatch.enabled = true;
@@ -458,12 +797,10 @@ export class PaintGamutProcessor extends BaseScriptComponent {
       }
     }
 
-    // Projected palette (paint-mixable colors)
     if (this.projectedPaletteSwatches) {
       for (let i = 0; i < this.projectedPaletteSwatches.length; i++) {
         const swatch = this.projectedPaletteSwatches[i];
         if (!swatch) continue;
-
         if (i < result.projectedPalette.length) {
           const c = result.projectedPalette[i];
           swatch.enabled = true;
@@ -480,32 +817,30 @@ export class PaintGamutProcessor extends BaseScriptComponent {
   private updateStats(result: PaintGamutResult): void {
     if (!this.statisticsText) return;
     const s = result.statistics;
-    this.statisticsText.text =
-      "Avg dE: " + s.averageDeltaE.toFixed(2) + "\n" +
+    let text = "Avg dE: " + s.averageDeltaE.toFixed(2) + "\n" +
       "Max dE: " + s.maxDeltaE.toFixed(2) + "\n" +
-      "Min dE: " + s.minDeltaE.toFixed(2) + "\n" +
       "Colors: " + result.projectedPalette.length + "\n" +
-      "Gamut: " + result.gamutSize;
+      "Gamut: " + result.gamutSize + "\n" +
+      "Pigments: " + result.pigments.length;
+
+    if (this.useCustomPigments) {
+      text += " (custom)";
+    }
+
+    this.statisticsText.text = text;
   }
 
   private logResults(result: PaintGamutResult): void {
     this.log("=== RESULTS ===");
-    this.log("Input size: " + result.imageSize.width + "x" + result.imageSize.height);
-    this.log("Gamut size: " + result.gamutSize + " colors");
-    this.log("Extracted: " + result.extractedPalette.length + " colors");
-    this.log("Projected: " + result.projectedPalette.length + " colors");
+    this.log("Gamut: " + result.gamutSize + " colors from " + result.pigments.length + " pigments");
+    this.log("Pigments used: " + result.pigments.map(p => p.name).join(", "));
     this.log("Avg dE: " + result.statistics.averageDeltaE);
     this.log("Max dE: " + result.statistics.maxDeltaE);
 
-    // Log first few color mappings
-    const maxLog = Math.min(result.projectedPalette.length, 6);
+    const maxLog = Math.min(result.projectedPalette.length, 5);
     for (let i = 0; i < maxLog; i++) {
       const c = result.projectedPalette[i];
-      this.log("  " + c.originalHex + " -> " + c.hex + " (dE=" + c.de.toFixed(1) + ", " + c.population.toFixed(1) + "%)");
-    }
-
-    if (result.remappedImageBase64) {
-      this.log("Remapped image: " + result.remappedWidth + "x" + result.remappedHeight);
+      this.log("  " + c.originalHex + " -> " + c.hex + " (dE=" + c.de.toFixed(1) + ")");
     }
   }
 
@@ -515,7 +850,7 @@ export class PaintGamutProcessor extends BaseScriptComponent {
 
   private notifySuccess(result: PaintGamutResult): void {
     for (let i = 0; i < this.onCompleteCallbacks.length; i++) {
-      try { this.onCompleteCallbacks[i](result); } catch (e) { this.log("Callback error: " + e); }
+      try { this.onCompleteCallbacks[i](result); } catch (e) { }
     }
   }
 
@@ -524,6 +859,12 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     this.updateStatus("Error: " + error);
     for (let i = 0; i < this.onErrorCallbacks.length; i++) {
       try { this.onErrorCallbacks[i](error); } catch (e) { }
+    }
+  }
+
+  private notifyPigmentsExtracted(pigments: ExtractedPigment[]): void {
+    for (let i = 0; i < this.onPigmentsExtractedCallbacks.length; i++) {
+      try { this.onPigmentsExtractedCallbacks[i](pigments); } catch (e) { }
     }
   }
 
@@ -539,6 +880,37 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     this.onErrorCallbacks.push(callback);
   }
 
+  addOnPigmentsExtracted(callback: (pigments: ExtractedPigment[]) => void): void {
+    this.onPigmentsExtractedCallbacks.push(callback);
+  }
+
+  getCustomPigments(): ExtractedPigment[] {
+    return this.customPigments;
+  }
+
+  setCustomPigments(pigments: ExtractedPigment[]): void {
+    this.customPigments = pigments;
+    this.useCustomPigments = pigments.length >= 2;
+    this.paletteReady = pigments.length >= 2;
+    this.updatePigmentDisplay();
+  }
+
+  clearCustomPigments(): void {
+    this.customPigments = [];
+    this.useCustomPigments = false;
+    this.paletteReady = false;
+    if (this.pigmentListText) this.pigmentListText.text = "";
+    if (this.pigmentSwatches) {
+      for (let i = 0; i < this.pigmentSwatches.length; i++) {
+        if (this.pigmentSwatches[i]) this.pigmentSwatches[i].enabled = false;
+      }
+    }
+  }
+
+  isPaletteReady(): boolean {
+    return this.paletteReady;
+  }
+
   getLastResult(): PaintGamutResult | null {
     return this.lastResult;
   }
@@ -548,16 +920,6 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     const result: vec4[] = [];
     for (let i = 0; i < this.lastResult.projectedPalette.length; i++) {
       const c = this.lastResult.projectedPalette[i];
-      result.push(new vec4(c.rgb[0] / 255, c.rgb[1] / 255, c.rgb[2] / 255, 1.0));
-    }
-    return result;
-  }
-
-  getExtractedPaletteVec4(): vec4[] {
-    if (!this.lastResult) return [];
-    const result: vec4[] = [];
-    for (let i = 0; i < this.lastResult.extractedPalette.length; i++) {
-      const c = this.lastResult.extractedPalette[i];
       result.push(new vec4(c.rgb[0] / 255, c.rgb[1] / 255, c.rgb[2] / 255, 1.0));
     }
     return result;
@@ -581,63 +943,49 @@ export class PaintGamutProcessor extends BaseScriptComponent {
     return this.isProcessing;
   }
 
+  isExtractingPaletteNow(): boolean {
+    return this.isExtractingPalette;
+  }
+
+  isBusy(): boolean {
+    return this.isProcessing || this.isExtractingPalette;
+  }
+
   setOptions(opts: {
     numColors?: number;
     ditherMethod?: string;
     ditherStrength?: number;
     maxOutputSize?: number;
+    autoExtractPalette?: boolean;
   }): void {
     if (opts.numColors !== undefined) this.numColors = opts.numColors;
     if (opts.ditherMethod !== undefined) this.ditherMethod = opts.ditherMethod;
     if (opts.ditherStrength !== undefined) this.ditherStrength = opts.ditherStrength;
     if (opts.maxOutputSize !== undefined) this.maxOutputSize = opts.maxOutputSize;
-  }
-
-  /**
-   * Set the input image by storage path
-   * @param path Path relative to inputBucket (e.g., "photos/image.jpg")
-   */
-  setInputPath(path: string): void {
-    this.inputImagePath = path;
-    this.inputImageUrl = ""; // Clear URL so path is used
-  }
-
-  /**
-   * Set the input image by full URL
-   * @param url Full URL to the image
-   */
-  setInputUrl(url: string): void {
-    this.inputImageUrl = url;
+    if (opts.autoExtractPalette !== undefined) this.autoExtractPalette = opts.autoExtractPalette;
   }
 
   clearAll(): void {
     this.originalTexture = null;
     this.remappedTexture = null;
     this.lastResult = null;
+    this.pendingPaintingUrl = null;
+    this.clearCustomPigments();
 
-    if (this.originalImageDisplay) {
-      this.originalImageDisplay.enabled = false;
-    }
-    if (this.remappedImageDisplay) {
-      this.remappedImageDisplay.enabled = false;
-    }
+    if (this.originalImageDisplay) this.originalImageDisplay.enabled = false;
+    if (this.remappedImageDisplay) this.remappedImageDisplay.enabled = false;
+    if (this.palettePhotoDisplay) this.palettePhotoDisplay.enabled = false;
 
     if (this.extractedPaletteSwatches) {
       for (let i = 0; i < this.extractedPaletteSwatches.length; i++) {
-        if (this.extractedPaletteSwatches[i]) {
-          this.extractedPaletteSwatches[i].enabled = false;
-        }
+        if (this.extractedPaletteSwatches[i]) this.extractedPaletteSwatches[i].enabled = false;
       }
     }
-
     if (this.projectedPaletteSwatches) {
       for (let i = 0; i < this.projectedPaletteSwatches.length; i++) {
-        if (this.projectedPaletteSwatches[i]) {
-          this.projectedPaletteSwatches[i].enabled = false;
-        }
+        if (this.projectedPaletteSwatches[i]) this.projectedPaletteSwatches[i].enabled = false;
       }
     }
-
     if (this.statisticsText) this.statisticsText.text = "";
     this.updateStatus("Cleared");
   }

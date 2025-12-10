@@ -29,21 +29,26 @@
     ditherMethod: false
     ditherStrength: false
     enableDebugLogs: false
+    extractPaletteButton: false
     extractedPaletteSwatches: false
     functionName: false
     inputBucket: false
-    inputImagePath: false
-    inputImageUrl: false
+    maxOutputSize: false
     numColors: false
     originalImageDisplay: false
-    outputBucket: false
+    paintingImageUrl: false
+    paletteImageUrl: false
+    palettePhotoDisplay: false
+    paletteTexture: false
+    pigmentListText: false
+    pigmentSwatches: false
     processButton: false
     projectedPaletteSwatches: false
-    projectionMethod: false
     remappedImageDisplay: false
     snapCloudRequirements: false
     statisticsText: false
     statusText: false
+    useDefaultPigmentsOnFail: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -56,22 +61,28 @@
     - snapCloudRequirements: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       functionName: paint-gamut
       inputBucket: uploads
-      outputBucket: processed-images
-      inputImagePath: ""
-      inputImageUrl: ""
+      paintingImageUrl: ""
+      paletteImageUrl: ""
+      paletteTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       numColors: !<float> 24.000000
-      projectionMethod: closest
       ditherMethod: floyd
       ditherStrength: 0.850000
+      maxOutputSize: !<float> 512.000000
+      useDefaultPigmentsOnFail: true
       originalImageDisplay: !<reference.Image> 00000000-0000-0000-0000-000000000000
       remappedImageDisplay: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      palettePhotoDisplay: !<reference.Image> 00000000-0000-0000-0000-000000000000
       extractedPaletteSwatches: !<reference.Image[]>
         []
       projectedPaletteSwatches: !<reference.Image[]>
         []
+      pigmentSwatches: !<reference.Image[]>
+        []
       statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       statisticsText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      pigmentListText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       processButton: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      extractPaletteButton: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
       enableDebugLogs: true
   ScriptTypes:
     -
@@ -79,19 +90,24 @@
   InputLines:
     - '// @input AssignableType snapCloudRequirements {"hint":"Reference to SnapCloudRequirements"}'
     - '// @input string functionName = "paint-gamut" {"hint":"Edge Function name"}'
-    - '// @input string inputBucket = "uploads" {"hint":"Input storage bucket"}'
-    - '// @input string outputBucket = "processed-images" {"hint":"Output storage bucket"}'
-    - "// @input string inputImagePath {\"hint\":\"Input image path in storage (e.g., 'photos/image.jpg')\"}"
-    - '// @input string inputImageUrl {"hint":"OR full URL to input image"}'
-    - '// @input float numColors = 24 {"hint":"Number of colors to extract (2-48)"}'
-    - "// @input string projectionMethod = \"closest\" {\"hint\":\"Projection method: 'closest' or 'hue'\"}"
-    - "// @input string ditherMethod = \"floyd\" {\"hint\":\"Dither method: 'none', 'floyd', or 'atkinson'\"}"
+    - '// @input string inputBucket = "uploads" {"hint":"Storage bucket for input images"}'
+    - '// @input string paintingImageUrl {"hint":"URL or path to the PAINTING image to process"}'
+    - '// @input string paletteImageUrl {"hint":"URL or path to your PALETTE photo (paint tubes, swatches, etc.)"}'
+    - '// @input Asset.Texture paletteTexture {"hint":"Texture of palette image (for Gemini - optional, can use URL instead)"}'
+    - '// @input float numColors = 24 {"hint":"Number of colors (2-48)"}'
+    - "// @input string ditherMethod = \"floyd\" {\"hint\":\"Dither: 'none', 'floyd', 'atkinson'\"}"
     - '// @input float ditherStrength = 0.85 {"hint":"Dither strength (0-1)"}'
-    - '// @input Component.Image originalImageDisplay {"hint":"Image component for original image"}'
-    - '// @input Component.Image remappedImageDisplay {"hint":"Image component for remapped result"}'
+    - '// @input float maxOutputSize = 512 {"hint":"Max output image size"}'
+    - '// @input bool useDefaultPigmentsOnFail = true {"hint":"Use default pigments if Gemini extraction fails"}'
+    - '// @input Component.Image originalImageDisplay {"hint":"Image for ORIGINAL painting"}'
+    - '// @input Component.Image remappedImageDisplay {"hint":"Image for REMAPPED output"}'
+    - '// @input Component.Image palettePhotoDisplay {"hint":"Image for PALETTE photo preview"}'
     - '// @input Component.Image[] extractedPaletteSwatches {"hint":"Extracted palette swatches"}'
     - '// @input Component.Image[] projectedPaletteSwatches {"hint":"Projected palette swatches"}'
-    - '// @input Component.Text statusText {"hint":"Status text display"}'
-    - '// @input Component.Text statisticsText {"hint":"Statistics text display"}'
-    - '// @input AssignableType_1 processButton {"hint":"Process button"}'
+    - '// @input Component.Image[] pigmentSwatches {"hint":"Pigment swatches (from Gemini extraction)"}'
+    - // @input Component.Text statusText
+    - // @input Component.Text statisticsText
+    - // @input Component.Text pigmentListText
+    - // @input AssignableType_1 processButton
+    - '// @input AssignableType_2 extractPaletteButton {"hint":"Button to extract palette from photo first"}'
     - // @input bool enableDebugLogs = true

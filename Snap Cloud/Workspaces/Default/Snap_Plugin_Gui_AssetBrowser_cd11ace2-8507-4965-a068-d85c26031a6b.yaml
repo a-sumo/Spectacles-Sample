@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 822
+    size: 920
     values:
       - ""
       - Examples
@@ -26,21 +26,29 @@ CollapsedEntities:
       - Examples/Data/testAssets-ADD TO STORAGE BUCKET/rabbit.glb/Textures
       - Examples/Data/testAssets-ADD TO STORAGE BUCKET/rabbit.glb/Textures/360_F_179077796_P6UNHX6KBpb1hITJSF1gN173qw4GF98U
       - Examples/Data/testAssets-ADD TO STORAGE BUCKET/rabbit.glb/Textures/white-rabbit
+      - Examples/Data/testAssets-ADD TO STORAGE BUCKET/rabbit.glb/rabbit
       - Examples/Data/testAssets-ADD TO STORAGE BUCKET/spectacles.jpg
+      - Examples/Data/testData-ADD TO TABLES
       - Examples/Data/testData-ADD TO TABLES/cursor_debug.csv
       - Examples/Data/testData-ADD TO TABLES/user_interactions.csv
       - Examples/Data/testData-ADD TO TABLES/user_preferences.csv
       - Examples/Data/testEdgeFunction-ADD TO EDGE FUNCTION CODE
       - Examples/Data/testEdgeFunction-ADD TO EDGE FUNCTION CODE/index.txt
       - Examples/Example1-SupabaseConnector
+      - Examples/Example1-SupabaseConnector/TableConnector.ts
       - Examples/Example2-RealTimeCursor
       - Examples/Example2-RealTimeCursor/RealtimeCursor.ts
       - Examples/Example3-LoadAssets
       - Examples/Example3-LoadAssets/StorageLoader.ts
       - Examples/Example4-EdgeFunctions
+      - Examples/Example4-EdgeFunctions/EdgeFunctionImgProcessing.ts
       - Examples/SnapCloudRequirements.ts
+      - Images
+      - Images/plein-air-Celeste-Bergin.jpg
+      - Materials
       - Materials/Input Image.mat
       - Materials/Output Image.mat
+      - Materials/Palette Image.mat
       - Project
       - Project/Arrow
       - Project/Arrow/source
@@ -72,6 +80,69 @@ CollapsedEntities:
       - Project/Texture/Normal.png
       - Project/Texture/SnapCloud-1.png
       - Project/Texture/SnapCloud-2.png
+      - RemoteServiceGateway.lspkg/Helpers
+      - RemoteServiceGateway.lspkg/Helpers/AudioProcessor.ts
+      - RemoteServiceGateway.lspkg/Helpers/DynamicAudioOutput.ts
+      - RemoteServiceGateway.lspkg/Helpers/MicrophoneRecorder.ts
+      - RemoteServiceGateway.lspkg/Helpers/VideoController.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiCalls.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiLive.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleImagenCalls.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleLyriaCall.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleOAICalls.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleOAIRealtime.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Gemini.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/GoogleGenAI.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/GoogleGenAITypes.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Imagen.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/Lyria.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/OpenAI.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/OpenAITypes.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Gemini_Live.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Gemini_Sync.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Imagen_Sync.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Lyria_Sync.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_Completions.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_Generations.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_ImageEdits.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_Realtime.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_Speech.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedSnap/DeepSeekTypes.ts
+      - RemoteServiceGateway.lspkg/HostedSnap/Deepseek.ts
+      - RemoteServiceGateway.lspkg/HostedSnap/Examples
+      - RemoteServiceGateway.lspkg/HostedSnap/Examples/ExampleDeepseekCalls.ts
+      - RemoteServiceGateway.lspkg/HostedSnap/Examples/ExampleSnap3D.ts
+      - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Deepseek_Completions.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Remote Media Module.remoteMediaModule
+      - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Snap3D_GetStatus.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Snap3D_Submit.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedSnap/Snap3D.ts
+      - RemoteServiceGateway.lspkg/HostedSnap/Snap3DTypes.ts
+      - RemoteServiceGateway.lspkg/README.md
+      - RemoteServiceGateway.lspkg/Resources
+      - RemoteServiceGateway.lspkg/Resources/Audio Output.audioOutput
+      - RemoteServiceGateway.lspkg/Resources/Microphone Audio.micaudio
+      - RemoteServiceGateway.lspkg/Resources/Visuals
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner/LoadingSpinner
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner/LoadingSpinner.prefab
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner/LoadingSpinner/LoadingSpinner.mat
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner/LoadingSpinner/LoadingSpinner.mesh
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner/LoadingSpinner/LoadingSpinner.ss_graph
+      - RemoteServiceGateway.lspkg/Resources/Visuals/LoadingSpinner/LoadingSpinner/LoadingSpinner.ts
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials/Image.mat
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials/Image.png
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials/SnapImage3D.mat
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials/Unlit.mat
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials/flat.ss_graph
+      - RemoteServiceGateway.lspkg/Resources/Visuals/Materials/unlit.ss_graph
+      - RemoteServiceGateway.lspkg/Utils
+      - RemoteServiceGateway.lspkg/Utils/Event.ts
+      - RemoteServiceGateway.lspkg/Utils/Promisfy.ts
+      - RemoteServiceGateway.lspkg/package.native
       - Render
       - Render/Device Camera Texture.deviceCameraTexture
       - Render/Echopark.hdr
@@ -243,6 +314,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Assets/Textures/SIKContainerExampleImage.jpg
       - SpectaclesInteractionKit.lspkg/Assets/Textures/SIKLogo.png
       - SpectaclesInteractionKit.lspkg/Assets/Textures/ScrollBarRectangle.png
+      - SpectaclesInteractionKit.lspkg/Components
       - SpectaclesInteractionKit.lspkg/Components/Helpers
       - SpectaclesInteractionKit.lspkg/Components/Helpers/ButtonFeedback.ts
       - SpectaclesInteractionKit.lspkg/Components/Helpers/CapsuleMeshCustomizer.ts
@@ -298,6 +370,12 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorLineVisual/InteractorLineVisual.ts
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorRayVisual
       - SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorRayVisual/InteractorRayVisual.ts
+      - SpectaclesInteractionKit.lspkg/Components/UI
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/ContainerFrame.ts
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/FrameMaterial.mat
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/FrameMaterial.ss_graph
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/Ghost Material.mat
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/Ghost Material.ss_graph
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/Image.mat
@@ -305,9 +383,15 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/container-button.mat
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/container-button.ss_graph
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Materials/flat.ss_graph
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes/Frame.mesh
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes/Frame_High.mesh
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes/Frame_Mid.mesh
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes/SphereButton.mesh
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes/SysSettings_settings_button.mesh
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Meshes/pinch-depth-button.mesh
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Prefabs
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Prefabs/FramePrefab.prefab
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Prefabs/container-button.prefab
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/README.md
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Textures
@@ -321,8 +405,10 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Textures/reflection-map-1.jpg
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/Textures/soft-reflection.jpg
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/container-ui.png
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules/CursorHandler.ts
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules/ForceContainerParent.ts
+      - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules/FrameInputHandler.ts
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules/HoverBehavior.ts
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules/LabeledPinchButton.ts
       - SpectaclesInteractionKit.lspkg/Components/UI/ContainerFrame/modules/SimpleLODRenderMeshVisual
@@ -672,6 +758,7 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Audio/SliderProgressionAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/TriggerEndAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/TriggerStartAudioTrack.wav
+      - SpectaclesUIKit.lspkg/Materials
       - SpectaclesUIKit.lspkg/Materials/BaseRoundedRectangle.mat
       - SpectaclesUIKit.lspkg/Materials/BaseRoundedRectangle.ss_graph
       - SpectaclesUIKit.lspkg/Materials/CapsuleSphere.mat
@@ -697,6 +784,8 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Materials/DefaultSwitchKnob.ss_graph
       - SpectaclesUIKit.lspkg/Materials/FragRoundedRectangle.mat
       - SpectaclesUIKit.lspkg/Materials/FragRoundedRectangle.ss_graph
+      - SpectaclesUIKit.lspkg/Materials/Frame.mat
+      - SpectaclesUIKit.lspkg/Materials/Frame.ss_graph
       - SpectaclesUIKit.lspkg/Materials/Image.mat
       - SpectaclesUIKit.lspkg/Materials/ImageShader.ss_graph
       - SpectaclesUIKit.lspkg/Materials/RoundedRectangleStroke.mat
@@ -712,21 +801,30 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Meshes/DefaultSwitchKnob.mesh
       - SpectaclesUIKit.lspkg/Meshes/StretchableCircle.mesh
       - SpectaclesUIKit.lspkg/Meshes/Unit Plane.mesh
+      - SpectaclesUIKit.lspkg/Prefabs
       - SpectaclesUIKit.lspkg/Prefabs/DropShadow.prefab
       - SpectaclesUIKit.lspkg/Prefabs/ExampleInterface.prefab
+      - SpectaclesUIKit.lspkg/Prefabs/FrameButton.prefab
       - SpectaclesUIKit.lspkg/Prefabs/ImageButton.prefab
       - SpectaclesUIKit.lspkg/Prefabs/LabelledButton.prefab
       - SpectaclesUIKit.lspkg/Prefabs/LabelledToggle.prefab
       - SpectaclesUIKit.lspkg/README.md
+      - SpectaclesUIKit.lspkg/Scripts
       - SpectaclesUIKit.lspkg/Scripts/BackPlate.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components
       - SpectaclesUIKit.lspkg/Scripts/Components/Button
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/BaseButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/CapsuleButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/RectangleButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Element.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/Frame.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/ButtonHandler.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/CursorHandler.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/FrameButton.ts
+      - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/FrameInputHandler.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/HoverBehavior.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/SmoothFollow.ts
       - SpectaclesUIKit.lspkg/Scripts/Components/Frame/modules/SnappingHandler.ts
