@@ -1,0 +1,97 @@
+- !<AssetImportMetadata/e825c09d-3791-485f-ab14-db5f4f19bc05>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9f8223ea-52a8-43c5-8a46-f3cf2ccc5e16
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9f8223ea-52a8-43c5-8a46-f3cf2ccc5e16
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 79e37838-458b-4177-b12f-67f5984d8ec1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/79e37838-458b-4177-b12f-67f5984d8ec1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 9b27ff2f-ad18-4bbc-b5e0-45eae0fc91bd
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    ditherMethod: false
+    ditherStrength: false
+    enableDebugLogs: false
+    extractedPaletteSwatches: false
+    functionName: false
+    inputBucket: false
+    inputImagePath: false
+    inputImageUrl: false
+    numColors: false
+    originalImageDisplay: false
+    outputBucket: false
+    processButton: false
+    projectedPaletteSwatches: false
+    projectionMethod: false
+    remappedImageDisplay: false
+    snapCloudRequirements: false
+    statisticsText: false
+    statusText: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - snapCloudRequirements: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      functionName: paint-gamut
+      inputBucket: uploads
+      outputBucket: processed-images
+      inputImagePath: ""
+      inputImageUrl: ""
+      numColors: !<float> 24.000000
+      projectionMethod: closest
+      ditherMethod: floyd
+      ditherStrength: 0.850000
+      originalImageDisplay: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      remappedImageDisplay: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      extractedPaletteSwatches: !<reference.Image[]>
+        []
+      projectedPaletteSwatches: !<reference.Image[]>
+        []
+      statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      statisticsText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      processButton: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      enableDebugLogs: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType snapCloudRequirements {"hint":"Reference to SnapCloudRequirements"}'
+    - '// @input string functionName = "paint-gamut" {"hint":"Edge Function name"}'
+    - '// @input string inputBucket = "uploads" {"hint":"Input storage bucket"}'
+    - '// @input string outputBucket = "processed-images" {"hint":"Output storage bucket"}'
+    - "// @input string inputImagePath {\"hint\":\"Input image path in storage (e.g., 'photos/image.jpg')\"}"
+    - '// @input string inputImageUrl {"hint":"OR full URL to input image"}'
+    - '// @input float numColors = 24 {"hint":"Number of colors to extract (2-48)"}'
+    - "// @input string projectionMethod = \"closest\" {\"hint\":\"Projection method: 'closest' or 'hue'\"}"
+    - "// @input string ditherMethod = \"floyd\" {\"hint\":\"Dither method: 'none', 'floyd', or 'atkinson'\"}"
+    - '// @input float ditherStrength = 0.85 {"hint":"Dither strength (0-1)"}'
+    - '// @input Component.Image originalImageDisplay {"hint":"Image component for original image"}'
+    - '// @input Component.Image remappedImageDisplay {"hint":"Image component for remapped result"}'
+    - '// @input Component.Image[] extractedPaletteSwatches {"hint":"Extracted palette swatches"}'
+    - '// @input Component.Image[] projectedPaletteSwatches {"hint":"Projected palette swatches"}'
+    - '// @input Component.Text statusText {"hint":"Status text display"}'
+    - '// @input Component.Text statisticsText {"hint":"Statistics text display"}'
+    - '// @input AssignableType_1 processButton {"hint":"Process button"}'
+    - // @input bool enableDebugLogs = true

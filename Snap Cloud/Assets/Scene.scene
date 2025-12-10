@@ -11,6 +11,7 @@
     - !<own> 4187bcaa-046a-43fb-b283-07c270f36dab
     - !<own> c6ed5f31-f774-4df2-b703-653a5a5a187f
     - !<own> a0732ca3-1bd4-4d5e-b506-91206710c302
+    - !<own> dfee132d-7c9c-456b-9aa2-ef3184a3606a
     - !<own> e6e9c9ce-1596-4c4e-abc8-7e5176232f94
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
@@ -212,12 +213,11 @@
 - !<ScriptComponent/0454e060-a0cf-43bd-802f-b422719921ca>
   PrefabRemaps:
     []
-  Name: EdgeFunctionPaletteExtraction.ts
+  Name: EdgeFunctionPaletteExtraction
   Enabled: true
   ScriptAsset: !<reference> 1353c9c3-4c56-4966-b8ec-4e0a19f51d34
   ScriptInputsDefault:
     functionName: true
-    imageUrl: true
     numColors: true
     sampleSize: true
     paletteSwatches: true
@@ -229,7 +229,7 @@
     "":
       snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
       functionName: extract-palette
-      imageUrl: ""
+      imageUrl: "https://gwedlgetdgjdgkpiptee.snapcloud.dev/storage/v1/object/sign/paintings/Haystacks-Shishkin.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yZjQ2NGZlNi0yODA3LTQ4YzUtOGYwOC03NzFmMmMxNjQ1YWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwYWludGluZ3MvSGF5c3RhY2tzLVNoaXNoa2luLmpwZyIsImlhdCI6MTc2NTM5Mzk0OSwiZXhwIjoxNzY1OTk4NzQ5fQ.Dg7DdD027eBhXNipQe_VKTcVGXqtUek_u9IVa6oaGM4"
       numColors: !<float> 8.000000
       sampleSize: !<float> 10000.000000
       paletteSwatches: !<reference.Image[]>
@@ -271,6 +271,89 @@
     []
   Components:
     - !<own> 682d3659-c47d-450c-ae60-38fe8bbfc6a0
+- !<Text/07d9e19b-c40c-45ce-a69f-ee8c32c59c9e>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: |
+    logs
+
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 30
+  Font: !<reference> 709203b6-8b83-40d7-8dda-e5adc4fd2875
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 0.975570, y: 1.000000, z: 0.977920, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  BlendMode: PremultipliedAlpha
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
 - !<SceneObject/0f704a07-d079-4984-9aaf-bf4a989b3490>
   PrefabRemaps:
     []
@@ -428,6 +511,21 @@
     - !<own> 298f274e-575f-40f7-a4f3-e4eaeaaecd67
   Components:
     []
+- !<SceneObject/1ed57731-4072-4496-9544-35b1c7bf26d0>
+  PrefabRemaps:
+    []
+  Name: OUT Image
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 5.000000, y: 5.000000, z: -20.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2018dfa3-b695-45bc-86c1-fa3adfe469b6
 - !<SceneObject/1fbad860-d2cc-4f57-a307-5ac38abfa448>
   PrefabRemaps:
     []
@@ -458,6 +556,25 @@
     - !<own> d491b31f-c593-49a0-932a-b8bbe817b1bf
   Components:
     []
+- !<Image/2018dfa3-b695-45bc-86c1-fa3adfe469b6>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 7df6edfa-5811-4fad-851a-7472b57c519c
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/2153b6bf-a479-4099-aade-b47df58fc906>
   PrefabRemaps:
     []
@@ -771,6 +888,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/33bfe44a-fd66-473c-be11-9442a3c35a4d>
+  PrefabRemaps:
+    []
+  Name: IN Image
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -5.000000, y: 5.000000, z: -20.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5bfdd136-62bf-4174-8189-0fd95e7ff549
 - !<SceneObject/38525cab-c9f5-4965-814b-8eb0d8b9ad55>
   PrefabRemaps:
     []
@@ -1195,9 +1327,9 @@
   ScriptInputs:
     "":
       snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
-      storageBucket: specs-bucket
+      storageBucket: paintings
       modelFileName: models/rabbit.glb
-      imageFileName: images/spectacles.jpg
+      imageFileName: shishkin/Haystacks-Shishkin.jpg
       audioFileName: audio/chill.mp3
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       modelParent: !<reference.SceneObject> f4b718d1-d1cc-47ab-9c6a-cfcbdcf5e4b3
@@ -1881,6 +2013,25 @@
     - !<own> eeefed81-5683-4d40-9498-fd8984e6e8f6
   Components:
     []
+- !<Image/5bfdd136-62bf-4174-8189-0fd95e7ff549>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 32dc9263-452d-4115-a73c-d2f3783ac8cf
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/5d0fd01d-a7f6-432e-b50e-d0c6a689b942>
   PrefabRemaps:
     []
@@ -1912,6 +2063,89 @@
     []
   Components:
     - !<own> 8d686cac-3e9e-493d-a387-4d12062c08f7
+- !<Text/5eb504a7-ec30-4cc8-8c98-518ceff1390c>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: |
+    logs
+
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 30
+  Font: !<reference> 709203b6-8b83-40d7-8dda-e5adc4fd2875
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 0.975570, y: 1.000000, z: 0.977920, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  BlendMode: PremultipliedAlpha
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
 - !<RenderMeshVisual/60bdc8a7-3a1c-4d7f-bde7-0d266fd28552>
   PrefabRemaps:
     []
@@ -2101,6 +2335,21 @@
     - !<own> fc530e67-51dc-4b55-8306-a92acdd025f6
   Components:
     []
+- !<SceneObject/6c058ee7-5347-42b8-a0b4-17e523569066>
+  PrefabRemaps:
+    []
+  Name: StatisticsText
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: -26.109146, z: 1.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 07d9e19b-c40c-45ce-a69f-ee8c32c59c9e
 - !<RenderMeshVisual/6cac85a8-f502-4056-881b-db428723681c>
   PrefabRemaps:
     []
@@ -3563,6 +3812,50 @@
     - !<own> ed7074f4-802d-4336-9588-237c5c48f33e
   Components:
     []
+- !<ScriptComponent/bbabcd7b-245b-45cd-b9fc-1c87a0ca466d>
+  PrefabRemaps:
+    []
+  Name: PaintGamutProcessor
+  Enabled: true
+  ScriptAsset: !<reference> 9f8223ea-52a8-43c5-8a46-f3cf2ccc5e16
+  ScriptInputsDefault:
+    functionName: true
+    outputBucket: true
+    inputImageUrl: true
+    numColors: true
+    projectionMethod: true
+    ditherMethod: true
+    ditherStrength: true
+    extractedPaletteSwatches: true
+    projectedPaletteSwatches: true
+    enableDebugLogs: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
+      functionName: paint-gamut
+      inputBucket: paintings
+      outputBucket: processed-images
+      inputImagePath: shishkin/Haystacks-Shishkin.jpg
+      inputImageUrl: ""
+      numColors: !<float> 24.000000
+      projectionMethod: closest
+      ditherMethod: floyd
+      ditherStrength: 0.850000
+      originalImageDisplay: !<reference.Image> 5bfdd136-62bf-4174-8189-0fd95e7ff549
+      remappedImageDisplay: !<reference.Image> 2018dfa3-b695-45bc-86c1-fa3adfe469b6
+      extractedPaletteSwatches: !<reference.Image[]>
+        []
+      projectedPaletteSwatches: !<reference.Image[]>
+        []
+      statusText: !<reference.Text> 5eb504a7-ec30-4cc8-8c98-518ceff1390c
+      statisticsText: !<reference.Text> 07d9e19b-c40c-45ce-a69f-ee8c32c59c9e
+      processButton: !<MappingBased.AssignableType_1> 57f91221-0e62-4deb-8a94-a9b75d57f9cd
+      enableDebugLogs: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/bec767b4-d2eb-4f84-9c87-9ada0da91c24>
   PrefabRemaps:
     []
@@ -3832,7 +4125,7 @@
   PrefabRemaps:
     []
   Name: Example4-EdgeFunctions
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4346,6 +4639,24 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<SceneObject/dfee132d-7c9c-456b-9aa2-ef3184a3606a>
+  PrefabRemaps:
+    []
+  Name: PaintGamutProcessor
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 33bfe44a-fd66-473c-be11-9442a3c35a4d
+    - !<own> 1ed57731-4072-4496-9544-35b1c7bf26d0
+    - !<own> f034cc14-9a9c-4234-b3c7-a0074a6b0de3
+    - !<own> 6c058ee7-5347-42b8-a0b4-17e523569066
+  Components:
+    - !<own> bbabcd7b-245b-45cd-b9fc-1c87a0ca466d
 - !<SceneObject/e0b103d0-c0f0-4704-a927-287d342f0319>
   PrefabRemaps:
     []
@@ -4420,7 +4731,7 @@
   PrefabRemaps:
     []
   Name: EdgeFunctionPaletteExtraction.ts
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4621,6 +4932,21 @@
     - !<own> c5f1f0e9-6707-4a13-9453-fbf92b4eba12
   Components:
     []
+- !<SceneObject/f034cc14-9a9c-4234-b3c7-a0074a6b0de3>
+  PrefabRemaps:
+    []
+  Name: StatusText
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 1.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5eb504a7-ec30-4cc8-8c98-518ceff1390c
 - !<SceneObject/f0e33766-c981-4f7a-b17b-a50e70c8b6bc>
   PrefabRemaps:
     []

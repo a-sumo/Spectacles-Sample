@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 816
+    size: 822
     values:
       - ""
       - Examples
@@ -39,6 +39,8 @@ CollapsedEntities:
       - Examples/Example3-LoadAssets/StorageLoader.ts
       - Examples/Example4-EdgeFunctions
       - Examples/SnapCloudRequirements.ts
+      - Materials/Input Image.mat
+      - Materials/Output Image.mat
       - Project
       - Project/Arrow
       - Project/Arrow/source
@@ -77,7 +79,11 @@ CollapsedEntities:
       - Render/Echopark.hdr/Specular
       - Render/Render Target.renderTarget
       - Scene.scene
-      - Scripts/EdgeFunctionPaletteExtraction.ts.ts
+      - Scripts
+      - Scripts/EdgeFunctionPaletteExtraction.ts
+      - Scripts/PaintGamutProcessor.ts
+      - Shaders
+      - Shaders/image_unlit.ss_graph
       - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets
       - SpectaclesInteractionKit.lspkg/Assets/Audio
