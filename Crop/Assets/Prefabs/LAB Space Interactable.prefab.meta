@@ -123,6 +123,7 @@
   ScriptInputsDefault:
     texSize: true
     rgbRes: true
+    scale: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -131,7 +132,7 @@
       vfxComponent: !<reference.VFXComponent> 53d19557-87b4-4320-61f9-32c01718d424
       texSize: !<float> 64.000000
       rgbRes: !<float> 16.000000
-      scale: !<float> 1.000000
+      scale: !<float> 100.000000
   ScriptTypes:
     "":
       {}

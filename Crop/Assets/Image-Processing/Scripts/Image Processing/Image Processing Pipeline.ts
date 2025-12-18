@@ -1,8 +1,7 @@
-// ImagePipeline.ts
-// Orchestrates the full image → palette → projection → regeneration pipeline
+// Orchestrates the image → palette → projection → regeneration pipeline
 
 @component
-export class ImagePipeline extends BaseScriptComponent {
+export class ImageProcessingPipeline extends BaseScriptComponent {
     // ============ COMPONENT REFERENCES ============
 
     @input

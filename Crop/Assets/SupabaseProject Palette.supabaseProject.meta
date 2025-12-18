@@ -1,8 +1,8 @@
-- !<AssetImportMetadata/6943fe55-fd23-4606-bdd8-42a8e749a0b6>
+- !<AssetImportMetadata/c375ed9c-c5ee-49bc-a214-b048ced40319>
   ImportedAssetIds:
-    ShaderGraph: !<reference> 0dc4b1eb-167b-4959-b07f-a64a07e17d13
-  ImporterName: ShaderGraphPassImporter
-  PrimaryAsset: !<reference> 0dc4b1eb-167b-4959-b07f-a64a07e17d13
+    SupabaseProject: !<reference> 226fc2af-cd16-46a7-b920-36318b8e773f
+  ImporterName: SupabaseProjectImporter
+  PrimaryAsset: !<reference> 226fc2af-cd16-46a7-b920-36318b8e773f
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:

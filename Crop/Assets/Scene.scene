@@ -1965,6 +1965,7 @@
   ScriptInputsDefault:
     texSize: true
     rgbRes: true
+    scale: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1973,7 +1974,7 @@
       vfxComponent: !<reference.VFXComponent> f6007657-3051-4ca3-9d81-8bc154ac65ee
       texSize: !<float> 64.000000
       rgbRes: !<float> 16.000000
-      scale: !<float> 1.000000
+      scale: !<float> 100.000000
   ScriptTypes:
     "":
       {}
@@ -2190,7 +2191,7 @@
   PrefabRemaps:
     []
   Name: Image Pipeline
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -3269,7 +3270,7 @@
     - e6022c88-92cb-488f-b6e6-8f5208967fe0: abb38042-af65-41a1-6507-285702c35fbe
     - eee4335d-7f95-4aa5-8c16-c210c9c5bb5d: 8b624250-8d50-4432-70c0-f4e7a3b5d105
   Name: Gamut Projector Interactable
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -10.000000, y: -26.000000, z: -97.500000}
@@ -3467,7 +3468,7 @@
   PrefabRemaps:
     []
   Name: LAB Decoder
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -3913,7 +3914,7 @@
     - ccbd46ba-8157-4ee8-9dfd-6bf39bdb3df0: 83e000b2-a67c-4a35-72e0-95ded386aff7
     - d8e90f20-ca29-4c99-907f-f22f722392ef: e6bf495b-774b-42d7-64a8-7d796b3ceb1b
   Name: Pigment Mix
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -10.000000, y: -20.000000, z: -97.500000}
@@ -4641,7 +4642,7 @@
   PrefabRemaps:
     []
   Name: Palette Anchor Frame
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -20.000000, z: -100.000000}
@@ -5573,7 +5574,7 @@
   PrefabRemaps:
     []
   Name: PictureController
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}

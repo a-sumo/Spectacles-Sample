@@ -1,6 +1,3 @@
-// Encoder_RGBCube.ts
-// Encodes RGB color space as a 3D cube visualization
-
 @component
 export class Encoder_RGBCube extends BaseScriptComponent {
     
@@ -70,7 +67,6 @@ export class Encoder_RGBCube extends BaseScriptComponent {
         cam.devicePropertyUsage = Camera.DeviceProperty.None;
         cam.renderTarget = renderTarget;
         
-        // Must set up colorRenderTargets - this is what makes it work!
         const colorRenderTargets = cam.colorRenderTargets;
         if (colorRenderTargets.length === 0) {
             colorRenderTargets.push(Camera.createColorRenderTarget());

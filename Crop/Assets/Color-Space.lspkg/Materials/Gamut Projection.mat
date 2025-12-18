@@ -142,9 +142,6 @@
     - correctedIntensity:
         typeIdx: 1
         value: 0.000000
-    - debugMode:
-        typeIdx: 1
-        value: 0.000000
     - gamutColTex:
         typeIdx: 9
         value:
@@ -190,12 +187,6 @@
     - inputPosTexUvMinMax:
         typeIdx: 5
         value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    - inputTexHeight:
-        typeIdx: 1
-        value: 1.000000
-    - inputTexWidth:
-        typeIdx: 1
-        value: 1.000000
     - intensityTexture:
         typeIdx: 9
         value:
@@ -249,6 +240,9 @@
     PreviewEnabled:
       typeIdx: 0
       value: 0
+    debugMode:
+      typeIdx: 1
+      value: 0.000000
     gamutColorTex:
       typeIdx: 9
       value:
@@ -306,4 +300,10 @@
         0: {x: 1.000000, y: 0.000000, z: 0.000000}
         1: {x: 0.000000, y: 1.000000, z: 0.000000}
         2: {x: 0.000000, y: 0.000000, z: 1.000000}
+    inputTexHeight:
+      typeIdx: 1
+      value: 1.000000
+    inputTexWidth:
+      typeIdx: 1
+      value: 1.000000
   Pass: !<reference> 515f3e11-d2c1-48b4-a071-f44c4860fffe
