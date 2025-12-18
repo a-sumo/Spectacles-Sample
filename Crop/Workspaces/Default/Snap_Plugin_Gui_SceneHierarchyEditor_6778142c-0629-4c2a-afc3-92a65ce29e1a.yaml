@@ -1,12 +1,13 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 23
+    size: 24
     values:
       - 00000000-0000-0065-0000-000000000064
       - 0005641c-028d-459a-0000-000000014b4d
       - 065155a7-364a-47b2-a25f-f256d729884c
       - 2310748e-3e41-4936-b360-c12b066baa43
+      - 3076a67d-d683-45c7-8bf4-1b8714d3b742
       - 32684cee-d594-427e-ab74-b0772bf5d9dd
       - 43e33155-da16-44a2-aa3c-f56e41c1663f
       - 54cac479-e5d8-43e3-89b0-47972db79ace
