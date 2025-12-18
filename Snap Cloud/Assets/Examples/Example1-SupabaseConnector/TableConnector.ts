@@ -29,7 +29,7 @@ export class TableConnector extends BaseScriptComponent {
   private maxLogMessages: number = 20;
   
   // The three tables in your database
-  private readonly tableName: string = "test_table";
+  private readonly tableName: string = "captured_objects";
 
   onAwake() {
     this.setupInteractions();
@@ -189,7 +189,7 @@ export class TableConnector extends BaseScriptComponent {
   public async testAllTables() {
     this.log("Testing all database tables...");
 
-    const tables = ["user_interactions", "user_preferences"];
+    const tables = [];
 
     for (const table of tables) {
       try {
@@ -216,7 +216,7 @@ export class TableConnector extends BaseScriptComponent {
     }
 
     // Test inserting into other tables
-    await this.testOtherTableInserts();
+    // await this.testOtherTableInserts();
   }
 
   /**

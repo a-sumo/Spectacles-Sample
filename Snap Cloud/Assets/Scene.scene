@@ -14,6 +14,7 @@
     - !<own> dfee132d-7c9c-456b-9aa2-ef3184a3606a
     - !<own> 101cdbbf-ad06-414c-a1be-00666f5cb0b3
     - !<own> e6e9c9ce-1596-4c4e-abc8-7e5176232f94
+    - !<own> 58e8c6f7-51b0-4e9a-8454-b796104bfb9f
     - !<own> 5d0c913f-394d-4d6b-a013-f72c14094b32
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
@@ -247,7 +248,7 @@
     "":
       snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
       functionName: extract-palette
-      imageUrl: "https://gwedlgetdgjdgkpiptee.snapcloud.dev/storage/v1/object/sign/paintings/Haystacks-Shishkin.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yZjQ2NGZlNi0yODA3LTQ4YzUtOGYwOC03NzFmMmMxNjQ1YWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwYWludGluZ3MvSGF5c3RhY2tzLVNoaXNoa2luLmpwZyIsImlhdCI6MTc2NTM5Mzk0OSwiZXhwIjoxNzY1OTk4NzQ5fQ.Dg7DdD027eBhXNipQe_VKTcVGXqtUek_u9IVa6oaGM4"
+      imageUrl: "https://gwedlgetdgjdgkpiptee.snapcloud.dev/storage/v1/object/public/paintings/shishkin/Haystacks-Shishkin.jpg"
       numColors: !<float> 8.000000
       sampleSize: !<float> 10000.000000
       paletteSwatches: !<reference.Image[]>
@@ -436,7 +437,7 @@
   PrefabRemaps:
     []
   Name: RemoteServiceGatewayCredentials
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -660,7 +661,7 @@
   PrefabRemaps:
     []
   Name: External Hosted Examples
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 40.000000, z: -180.000000}
@@ -1291,7 +1292,7 @@
   PrefabRemaps:
     []
   Name: Example1-SupabaseConnector
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -51.073563, z: 0.000000}
@@ -1793,6 +1794,89 @@
   ScriptTypes:
     "":
       {}
+- !<Text/3d03d29a-1faa-4d75-ba23-26c68ddff2e6>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: |
+    logs
+
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 30
+  Font: !<reference> 709203b6-8b83-40d7-8dda-e5adc4fd2875
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 0.975570, y: 1.000000, z: 0.977920, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  BlendMode: PremultipliedAlpha
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
 - !<SceneObject/3d7828ee-2891-4454-9f06-7d3aa618c06b>
   PrefabRemaps:
     []
@@ -2735,6 +2819,25 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/583eb03a-efbe-4d9b-9624-91e43b092e81>
+  PrefabRemaps:
+    []
+  Name: AnalyzeStoreGemini
+  Enabled: true
+  ScriptAsset: !<reference> 7818c6b0-2c93-4fdc-91f3-06f16fee7686
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
+      imageTexture: !<reference.Texture> 47691bfc-e6bc-433c-97c8-8b2c3e9c36f9
+      captureButton: !<MappingBased.AssignableType_1> 57f91221-0e62-4deb-8a94-a9b75d57f9cd
+      resultText: !<reference.Text> 3d03d29a-1faa-4d75-ba23-26c68ddff2e6
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/588110f3-3012-439b-a320-d46363f566df>
   PrefabRemaps:
     []
@@ -2751,6 +2854,22 @@
     - !<own> 0b8cdce7-b3eb-45c5-b450-30cf5187ff99
   Components:
     - !<own> 22b9e548-5c22-45d4-b804-98d8461d5d5c
+- !<SceneObject/58e8c6f7-51b0-4e9a-8454-b796104bfb9f>
+  PrefabRemaps:
+    []
+  Name: ObjectAnalyzerGeminiCall
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 7311192f-9cb2-4cac-8d39-74cdd0b175f0
+  Components:
+    - !<own> 583eb03a-efbe-4d9b-9624-91e43b092e81
+    - !<own> eced35cc-520c-4643-ba19-d972d98e0459
 - !<SceneObject/5a2ca1a2-f292-4079-aebb-f491bb9f5bf5>
   PrefabRemaps:
     []
@@ -3324,7 +3443,7 @@
     "":
       snapCloudRequirements: !<MappingBased.AssignableType> f34b2ca9-bb3e-4714-ac7f-815de53c88ba
       dataRetrievalButton: !<MappingBased.AssignableType_1> 6ee5906a-c3c1-431b-aff5-03d881491f47
-      logText: !<reference.Text> de5d58f5-adcc-4384-8c47-239a34ce0b88
+      logText: !<reference.Text> 3d03d29a-1faa-4d75-ba23-26c68ddff2e6
   ScriptTypes:
     "":
       {}
@@ -3659,6 +3778,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/7311192f-9cb2-4cac-8d39-74cdd0b175f0>
+  PrefabRemaps:
+    []
+  Name: ResultsText
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: -5.000000, z: 1.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 3d03d29a-1faa-4d75-ba23-26c68ddff2e6
 - !<SceneObject/73b7e3d8-b7f3-4c24-9f65-4ecfc6871b0d>
   PrefabRemaps:
     []
@@ -5764,6 +5898,7 @@
     ditherStrength: true
     maxOutputSize: true
     useDefaultPigmentsOnFail: true
+    autoExtractPalette: true
     extractedPaletteSwatches: true
     projectedPaletteSwatches: true
     pigmentSwatches: true
@@ -5783,6 +5918,7 @@
       ditherStrength: 0.850000
       maxOutputSize: !<float> 512.000000
       useDefaultPigmentsOnFail: true
+      autoExtractPalette: true
       originalImageDisplay: !<reference.Image> 5bfdd136-62bf-4174-8189-0fd95e7ff549
       remappedImageDisplay: !<reference.Image> 2018dfa3-b695-45bc-86c1-fa3adfe469b6
       palettePhotoDisplay: !<reference.Image> 4d6166ab-0a38-47b2-a98b-218fa3cff246
@@ -6517,7 +6653,7 @@
   PrefabRemaps:
     []
   Name: Snap Hosted Examples
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -10.000000, z: -180.000000}
@@ -6904,7 +7040,7 @@
   PrefabRemaps:
     []
   Name: PaintGamutProcessor
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -7246,6 +7382,24 @@
     - !<own> cc851f59-7d95-4dbe-a9c0-c336f5593682
   Components:
     []
+- !<ScriptComponent/eced35cc-520c-4643-ba19-d972d98e0459>
+  PrefabRemaps:
+    []
+  Name: ObjectAnalyzerGeminiCall
+  Enabled: false
+  ScriptAsset: !<reference> 9c2866bd-6e0b-4846-833b-ca073c32a554
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      imageTexture: !<reference.Texture> 319d19de-6245-46d8-838d-f53fd5ec61bf
+      analyzeButton: !<MappingBased.AssignableType> 57f91221-0e62-4deb-8a94-a9b75d57f9cd
+      resultText: !<reference.Text> 3d03d29a-1faa-4d75-ba23-26c68ddff2e6
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/ed7074f4-802d-4336-9588-237c5c48f33e>
   PrefabRemaps:
     []
@@ -7380,7 +7534,7 @@
     {}
   ScriptInputs:
     "":
-      supabaseProject: !<reference.SupabaseProject> 87b43bd3-ca90-47bb-aab0-ae4e87f8cda5
+      supabaseProject: !<reference.SupabaseProject> 9029f6f8-32bb-439a-a859-c68e992c3d05
       text: !<reference.Text> ebd0d532-64f3-41cd-89e1-8749a83c2c54
       disableWarningsWhenConfigured: true
       showSetupInstructions: true

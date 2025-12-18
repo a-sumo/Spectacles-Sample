@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/ce2c9e36-6ad4-4c0b-9408-b0e2378f88e8>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 7818c6b0-2c93-4fdc-91f3-06f16fee7686
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 7818c6b0-2c93-4fdc-91f3-06f16fee7686
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f6c9a558-a44b-43f7-b73a-83d6dee68e52
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f6c9a558-a44b-43f7-b73a-83d6dee68e52>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 3326e7b7-7816-40a3-bcff-f1f9755e75be
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    captureButton: false
+    imageTexture: false
+    resultText: false
+    snapCloudRequirements: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - snapCloudRequirements: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      imageTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      captureButton: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      resultText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType snapCloudRequirements {"hint":"Reference to SnapCloudRequirements for centralized Supabase configuration"}'
+    - '// @input Asset.Texture imageTexture {"hint":"Image texture to analyze"}'
+    - '// @input AssignableType_1 captureButton {"hint":"Optional: RectangleButton to trigger capture and store"}'
+    - '// @input Component.Text resultText {"hint":"Optional: Text component to display results"}'

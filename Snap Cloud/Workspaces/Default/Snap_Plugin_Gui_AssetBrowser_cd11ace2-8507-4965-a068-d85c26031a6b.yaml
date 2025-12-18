@@ -1,10 +1,9 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 920
+    size: 924
     values:
-      - ""
-      - Examples
+      - DatabaseTypes.ts
       - Examples/Data
       - Examples/Data/testAssets-ADD TO STORAGE BUCKET
       - Examples/Data/testAssets-ADD TO STORAGE BUCKET/chill.mp3
@@ -42,14 +41,14 @@ CollapsedEntities:
       - Examples/Example3-LoadAssets/StorageLoader.ts
       - Examples/Example4-EdgeFunctions
       - Examples/Example4-EdgeFunctions/EdgeFunctionImgProcessing.ts
-      - Examples/SnapCloudRequirements.ts
       - Images
-      - Images/plein-air-Celeste-Bergin.jpg
+      - Images/joshua-hoehne-nPAkHRbKf3k-unsplash(1).jpg
+      - Images/marla-gottschalk-OllcNaGl7rI-unsplash.jpg
+      - Images/phillip-goldsberry-fZuleEfeA1Q-unsplash.jpg
       - Materials
       - Materials/Input Image.mat
       - Materials/Output Image.mat
       - Materials/Palette Image.mat
-      - Project
       - Project/Arrow
       - Project/Arrow/source
       - Project/Arrow/source/arrow.glb
@@ -73,18 +72,17 @@ CollapsedEntities:
       - Project/Shaders
       - Project/Shaders/image_unlit.ss_graph
       - Project/Shaders/pbr.ss_graph
-      - Project/Texture
       - Project/Texture/Base.png
       - Project/Texture/LogoDark.png
       - Project/Texture/MaterialParams.png
       - Project/Texture/Normal.png
-      - Project/Texture/SnapCloud-1.png
-      - Project/Texture/SnapCloud-2.png
+      - RemoteServiceGateway.lspkg
       - RemoteServiceGateway.lspkg/Helpers
       - RemoteServiceGateway.lspkg/Helpers/AudioProcessor.ts
       - RemoteServiceGateway.lspkg/Helpers/DynamicAudioOutput.ts
       - RemoteServiceGateway.lspkg/Helpers/MicrophoneRecorder.ts
       - RemoteServiceGateway.lspkg/Helpers/VideoController.ts
+      - RemoteServiceGateway.lspkg/HostedExternal
       - RemoteServiceGateway.lspkg/HostedExternal/Examples
       - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiCalls.ts
       - RemoteServiceGateway.lspkg/HostedExternal/Examples/ExampleGeminiLive.ts
@@ -100,6 +98,7 @@ CollapsedEntities:
       - RemoteServiceGateway.lspkg/HostedExternal/Lyria.ts
       - RemoteServiceGateway.lspkg/HostedExternal/OpenAI.ts
       - RemoteServiceGateway.lspkg/HostedExternal/OpenAITypes.ts
+      - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules
       - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Gemini_Live.remoteServiceModule
       - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Gemini_Sync.remoteServiceModule
       - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/Imagen_Sync.remoteServiceModule
@@ -109,11 +108,13 @@ CollapsedEntities:
       - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_ImageEdits.remoteServiceModule
       - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_Realtime.remoteServiceModule
       - RemoteServiceGateway.lspkg/HostedExternal/RemoteServiceModules/OpenAi_Speech.remoteServiceModule
+      - RemoteServiceGateway.lspkg/HostedSnap
       - RemoteServiceGateway.lspkg/HostedSnap/DeepSeekTypes.ts
       - RemoteServiceGateway.lspkg/HostedSnap/Deepseek.ts
       - RemoteServiceGateway.lspkg/HostedSnap/Examples
       - RemoteServiceGateway.lspkg/HostedSnap/Examples/ExampleDeepseekCalls.ts
       - RemoteServiceGateway.lspkg/HostedSnap/Examples/ExampleSnap3D.ts
+      - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules
       - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Deepseek_Completions.remoteServiceModule
       - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Remote Media Module.remoteMediaModule
       - RemoteServiceGateway.lspkg/HostedSnap/RemoteServiceModules/Snap3D_GetStatus.remoteServiceModule
@@ -121,6 +122,8 @@ CollapsedEntities:
       - RemoteServiceGateway.lspkg/HostedSnap/Snap3D.ts
       - RemoteServiceGateway.lspkg/HostedSnap/Snap3DTypes.ts
       - RemoteServiceGateway.lspkg/README.md
+      - RemoteServiceGateway.lspkg/RemoteServiceGatewayCredentials.ts
+      - RemoteServiceGateway.lspkg/RemoteServiceGatewayExamples__PLACE_IN_SCENE.prefab
       - RemoteServiceGateway.lspkg/Resources
       - RemoteServiceGateway.lspkg/Resources/Audio Output.audioOutput
       - RemoteServiceGateway.lspkg/Resources/Microphone Audio.micaudio
@@ -151,8 +154,11 @@ CollapsedEntities:
       - Render/Render Target.renderTarget
       - Scene.scene
       - Scripts
+      - Scripts/AnalyzeStoreGemini.ts
       - Scripts/EdgeFunctionPaletteExtraction.ts
+      - Scripts/ObjectAnalyzerGeminiCall.ts
       - Scripts/PaintGamutProcessor.ts
+      - Scripts/README.md
       - Shaders
       - Shaders/image_unlit.ss_graph
       - SpectaclesInteractionKit.lspkg
@@ -905,7 +911,6 @@ CollapsedEntities:
       - SpectaclesUIKit.lspkg/Textures/test-image.jpg
       - SpectaclesUIKit.lspkg/package.native
       - SpectaclesUIKit.lspkg/package_dependencies.json
-      - SupabaseClient.lspkg
       - SupabaseClient.lspkg/package.native
       - SupabaseClient.lspkg/polyfills
       - SupabaseClient.lspkg/polyfills/FormData.d.ts
@@ -920,7 +925,6 @@ CollapsedEntities:
       - SupabaseClient.lspkg/polyfills/timers.d.ts
       - SupabaseClient.lspkg/polyfills/url.d.ts
       - SupabaseClient.lspkg/polyfills/urlsearchparams.d.ts
-      - SupabaseClient.lspkg/supabase-snapcloud.d.ts
-      - SupabaseClient.lspkg/supabase-snapcloud.js
+      - SupabaseProject DbStorage.supabaseProject
       - SupabaseProject Palette.supabaseProject
   options: 4

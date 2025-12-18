@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/255bbf5c-1b0d-40c9-baa7-36d6bebd75e2>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9c2866bd-6e0b-4846-833b-ca073c32a554
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9c2866bd-6e0b-4846-833b-ca073c32a554
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 316e9f33-444f-4c6f-865f-14757bf2fce4
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/316e9f33-444f-4c6f-865f-14757bf2fce4>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 6ee16fcc-e561-4d37-b9b3-4ab4188703e2
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    analyzeButton: false
+    imageTexture: false
+    resultText: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - imageTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      analyzeButton: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      resultText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Texture imageTexture {"hint":"Image texture to analyze"}'
+    - '// @input AssignableType analyzeButton {"hint":"Optional: RectangleButton to trigger analysis (from Spectacles UI Kit)"}'
+    - '// @input Component.Text resultText {"hint":"Optional: Text component to display results"}'
