@@ -29,6 +29,8 @@
     debugMode: false
     ditherStrength: false
     enableDither: false
+    paletteDebugQuad: false
+    projectionMode: false
     remapMaterial: false
   ScriptTypesHidden:
     {}
@@ -43,6 +45,8 @@
       enableDither: true
       ditherStrength: 0.850000
       debugMode: true
+      paletteDebugQuad: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      projectionMode: !<float> 0.000000
   ScriptTypes:
     -
       {}
@@ -51,3 +55,5 @@
     - '// @input bool enableDither = true {"hint":"Enable ordered dithering"}'
     - '// @input float ditherStrength = 0.15 {"hint":"Dithering strength 0-1"}'
     - // @input bool debugMode = true
+    - '// @input SceneObject paletteDebugQuad {"hint":"Optional: Quad to display palette texture for debugging (top half = extracted, bottom half = projected)"}'
+    - '// @input float projectionMode {"hint":"Projection mode: 0 = Min ΔE2000, 1 = Constant Hue, 2 = Constant Lightness"}'

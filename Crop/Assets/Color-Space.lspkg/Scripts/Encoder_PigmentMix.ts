@@ -170,20 +170,40 @@ export class Encoder_PigmentMix extends BaseScriptComponent {
         // Get initial colors if available
         if (typeof controller.getAllColors === 'function') {
             const colors = controller.getAllColors();
+            print(`Encoder_PigmentMix: getAllColors returned ${colors ? colors.length : 'null'} colors`);
             if (colors && colors.length > 0) {
                 this.onPaletteColorsChanged(colors);
                 print(`Encoder_PigmentMix: Got ${colors.length} initial colors from PaletteController`);
+                // Debug: log first color
+                const c = colors[0];
+                print(`  First color: RGB(${(c.r*255).toFixed(0)}, ${(c.g*255).toFixed(0)}, ${(c.b*255).toFixed(0)})`);
+            } else {
+                print(`Encoder_PigmentMix: WARNING - getAllColors returned empty, using fallback`);
+                this.logCurrentPigments();
             }
+        } else {
+            print(`Encoder_PigmentMix: WARNING - getAllColors not found on controller`);
+        }
+    }
+
+    private logCurrentPigments(): void {
+        print("Encoder_PigmentMix: Current pigments:");
+        for (let i = 0; i < this.currentPigments.length; i++) {
+            const p = this.currentPigments[i];
+            print(`  [${i}] RGB(${(p.x*255).toFixed(0)}, ${(p.y*255).toFixed(0)}, ${(p.z*255).toFixed(0)})`);
         }
     }
 
     private onPaletteColorsChanged(colors: vec4[]): void {
         if (!colors || colors.length === 0) return;
 
+        print(`Encoder_PigmentMix: Updating pigments from ${colors.length} palette colors`);
+
         // Update current pigments from palette colors (convert vec4 to vec3)
         for (let i = 0; i < Math.min(colors.length, Encoder_PigmentMix.NUM_PIGMENTS); i++) {
             const c = colors[i];
             this.currentPigments[i] = new vec3(c.r, c.g, c.b);
+            print(`  Pigment[${i}] = RGB(${(c.r*255).toFixed(0)}, ${(c.g*255).toFixed(0)}, ${(c.b*255).toFixed(0)})`);
         }
 
         // Pigment texture will be updated in next frame's updatePigmentTexture()

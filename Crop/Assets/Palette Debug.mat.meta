@@ -1,8 +1,8 @@
-- !<AssetImportMetadata/9613b97d-7cdb-4b84-9000-4a96876e109d>
+- !<AssetImportMetadata/c4dbfe60-3838-44f6-ba13-d33101714403>
   ImportedAssetIds:
-    SupabaseProject: !<reference> 36ba89d8-5ea3-4fac-9c42-0a7620adfb39
-  ImporterName: SupabaseProjectImporter
-  PrimaryAsset: !<reference> 36ba89d8-5ea3-4fac-9c42-0a7620adfb39
+    Material: !<reference> b5a858cb-45b2-4377-ae04-cd5a8ab3c8ba
+  ImporterName: MaterialImporter
+  PrimaryAsset: !<reference> b5a858cb-45b2-4377-ae04-cd5a8ab3c8ba
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:

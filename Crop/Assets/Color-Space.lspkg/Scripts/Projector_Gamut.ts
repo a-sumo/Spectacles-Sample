@@ -27,6 +27,10 @@ export class Projector_Gamut extends BaseScriptComponent {
     @hint("PaletteController to listen for color changes (optional, for auto-reproject)")
     paletteController: ScriptComponent;
 
+    @input
+    @hint("Projection mode: 0 = Min ΔE2000, 1 = Constant Hue, 2 = Constant Lightness")
+    projectionMode: number = 0;
+
     // ============ PRIVATE STATE ============
 
     private inputTexture: Texture;
@@ -228,13 +232,14 @@ export class Projector_Gamut extends BaseScriptComponent {
         this.projectionMaterialInstance = this.projectionMaterial.clone();
         const pass = this.projectionMaterialInstance.mainPass;
 
-        pass.gamutPosTex = gamutPosRT;
-        pass.gamutColorTex = gamutColorRT;
-        pass.inputPosTex = this.inputTexture;
-        pass.gamutTexSize = this.gamutTexSize;
-        pass.inputTexWidth = this.texWidth;
-        pass.inputTexHeight = this.texHeight;
-        pass.gamutValidCount = this.gamutValidCount;
+        pass["gamutPosTex"] = gamutPosRT;
+        pass["gamutColorTex"] = gamutColorRT;
+        pass["inputPosTex"] = this.inputTexture;
+        pass["gamutTexSize"] = this.gamutTexSize;
+        pass["inputTexWidth"] = this.texWidth;
+        pass["inputTexHeight"] = this.texHeight;
+        pass["gamutValidCount"] = this.gamutValidCount;
+        pass["projectionMode"] = this.projectionMode;
 
         const layer = LayerSet.makeUnique();
         const cameraObj = this.createCameraMRT(layer);
@@ -503,5 +508,18 @@ export class Projector_Gamut extends BaseScriptComponent {
 
     public getTexDimensions(): vec2 {
         return new vec2(this.texWidth, this.texHeight);
+    }
+
+    public setProjectionMode(mode: number): void {
+        this.projectionMode = mode;
+        if (this.projectionMaterialInstance) {
+            this.projectionMaterialInstance.mainPass["projectionMode"] = mode;
+        }
+        // Invalidate results so they get re-read with new mode
+        this.invalidateResults();
+    }
+
+    public getProjectionMode(): number {
+        return this.projectionMode;
     }
 }

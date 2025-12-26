@@ -30,6 +30,7 @@
     maxColors: false
     paletteController: false
     projectionMaterial: false
+    projectionMode: false
     vfxComponent: false
   ScriptTypesHidden:
     {}
@@ -45,6 +46,7 @@
       vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
       maxColors: !<float> 64.000000
       paletteController: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      projectionMode: !<float> 0.000000
   ScriptTypes:
     -
       {}
@@ -54,3 +56,4 @@
     - '// @input Component.VFXComponent vfxComponent {"hint":"VFX component to display projected colors (optional)"}'
     - '// @input float maxColors = 64 {"hint":"Maximum colors to support (determines texture size)"}'
     - '// @input Component.ScriptComponent paletteController {"hint":"PaletteController to listen for color changes (optional, for auto-reproject)"}'
+    - '// @input float projectionMode {"hint":"Projection mode: 0 = Min ΔE2000, 1 = Constant Hue, 2 = Constant Lightness"}'

@@ -207,6 +207,7 @@
   ScriptAsset: !<reference> 7100dc9a-700e-49d8-8a1b-d3040a8fb5a5
   ScriptInputsDefault:
     maxColors: true
+    projectionMode: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -216,6 +217,7 @@
       vfxComponent: !<reference.VFXComponent> a736cfb1-456e-408f-8097-d91d23f2f1ea
       maxColors: !<float> 64.000000
       paletteController: !<reference.ScriptComponent> 734aea69-f183-4638-868d-fb871edfd11a
+      projectionMode: !<float> 0.000000
   ScriptTypes:
     "":
       {}

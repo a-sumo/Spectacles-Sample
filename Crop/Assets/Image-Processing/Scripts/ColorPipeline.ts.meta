@@ -1,0 +1,86 @@
+- !<AssetImportMetadata/72855661-63c2-47ea-8a17-e5b5cd519b9c>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 2cff4bd1-32cd-4369-a2dd-00d1939618c8
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 2cff4bd1-32cd-4369-a2dd-00d1939618c8
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 989e899b-6da9-47cb-b432-9b6e741a8002
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/989e899b-6da9-47cb-b432-9b6e741a8002>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 01901e7e-f1a8-474a-8cc5-2994025fd6f5
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoRun: false
+    debugMode: false
+    ditherStrength: false
+    enableDither: false
+    encoderMaterial: false
+    gamutTexSize: false
+    inputPlane: false
+    kmeansIterations: false
+    mixSteps: false
+    outputPlane: false
+    paletteSize: false
+    projectionMode: false
+    projectorMaterial: false
+    remapMaterial: false
+    sampleSize: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - encoderMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      projectorMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      remapMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      inputPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      outputPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      autoRun: true
+      gamutTexSize: !<float> 64.000000
+      mixSteps: !<float> 20.000000
+      paletteSize: !<float> 16.000000
+      kmeansIterations: !<float> 30.000000
+      sampleSize: !<float> 5000.000000
+      enableDither: true
+      ditherStrength: 0.150000
+      projectionMode: !<float> 0.000000
+      debugMode: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material encoderMaterial {"hint":"Material with PigmentGamutEncoder shader"}'
+    - '// @input Asset.Material projectorMaterial {"hint":"Material with GamutProjector shader"}'
+    - '// @input Asset.Material remapMaterial {"hint":"Material with PaletteProjection shader"}'
+    - '// @input SceneObject inputPlane {"hint":"Plane to display input texture"}'
+    - '// @input SceneObject outputPlane {"hint":"Plane to display output (processed) texture"}'
+    - '// @input bool autoRun = true {"hint":"Automatically process when input texture is set"}'
+    - '// @input float gamutTexSize = 64 {"hint":"Gamut texture resolution"}'
+    - '// @input float mixSteps = 20 {"hint":"Mix steps for pigment blending"}'
+    - '// @input float paletteSize = 16 {"hint":"Palette size to extract"}'
+    - '// @input float kmeansIterations = 30 {"hint":"K-means iterations"}'
+    - '// @input float sampleSize = 5000 {"hint":"Pixels to sample for extraction"}'
+    - '// @input bool enableDither = true {"hint":"Enable ordered dithering"}'
+    - '// @input float ditherStrength = 0.15 {"hint":"Dithering strength 0-1"}'
+    - '// @input float projectionMode {"hint":"Projection mode: 0=MinΔE, 1=ConstantHue, 2=ConstantLightness"}'
+    - // @input bool debugMode
